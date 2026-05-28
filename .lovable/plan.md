@@ -1,55 +1,43 @@
-## What I'll do
+## Goal
+Fix cropped software/hardware screenshots (dolphin game, EEG software) showing white space, and make mockup sections more visually rich and attractive with added content.
 
-### 1. Add the 4 uploaded banners as full-width scroll sections
-Copy the 4 ChatGPT banner PNGs into `src/assets/banners/`:
-- `banner-hero.png` — "Smart EEG Headband & Live Brainwave Software"
-- `banner-platform.png` — "India's Advanced Neurofeedback & Brainwave Analysis Platform"
-- `banner-assessment.png` — "Brainwave Assessment & Customized Sound Therapy"
-- `banner-training.png` — "Become a Certified Neurofeedback Practitioner"
+## Problems identified
+- In `hardware-software.tsx`, images use `h-56 w-full object-cover` which crops screenshots (especially dolphin game frames with white backgrounds) — losing key content.
+- Software/mockup sections feel flat: plain grid of images on a white card, no captions, no visual framing, no supporting content.
+- Same issue likely on homepage `SoftwareExperience` section.
 
-Create a reusable `BannerSection.tsx` component (full-bleed, rounded on desktop, edge-to-edge on mobile, `object-cover` with proper aspect ratio, lazy-loaded, with subtle parallax/fade-in on scroll).
+## Changes
 
-Place them on the homepage at strategic scroll positions:
-- After Hero → `banner-platform.png` (trust/positioning)
-- Before "Customized Sound Therapy" section → `banner-assessment.png`
-- Before "Training" CTA section → `banner-training.png`
-- Inside Hardware/Software section → `banner-hero.png`
+### 1. Fix image cropping (hardware-software.tsx + index.tsx SoftwareExperience)
+- Replace `object-cover` with `object-contain` for software screenshots (dolphin/game/UI shots) so nothing is clipped.
+- Wrap each screenshot in a device-style frame: subtle gradient background (navy → teal tint), inner padding, rounded-2xl, soft shadow, thin border. This removes the "white blank" feeling by giving the image a colored canvas behind it.
+- For hardware photos (real product shots), keep `object-cover` but increase height on desktop (`h-64 md:h-72`) and add hover zoom.
+- Use `aspect-video` or `aspect-[4/3]` containers so layout stays consistent while image fits fully.
 
-Also reuse the matching banner at the top of the relevant inner routes (assessment, training, hardware-software) below the PageHero.
+### 2. Enrich the Software section on `hardware-software.tsx`
+- Add a 2-column intro: left = heading + descriptive copy about the dolphin neurofeedback game (how focus controls the dolphin, reward-based training, real-time EEG mapping), bullet list of features (Real-time feedback, Reward-based learning, Engaging for kids & adults, Session recording, Progress tracking). Right = featured large screenshot in framed mockup.
+- Below: 3 framed thumbnails of remaining game shots with captions ("Focus Mode", "Reward Animation", "Session Dashboard").
+- Add a stats strip (e.g., "200+ Sessions Delivered • 95% Engagement • Live EEG Sync").
 
-### 2. Scroll-to-top on every route change
-Add a `ScrollToTop` effect in `__root.tsx` that listens to router location changes and calls `window.scrollTo({ top: 0, behavior: "instant" })`. Ensures every page opens from the top.
+### 3. Enrich the Hardware section
+- Add intro paragraph + feature pills (Dry sensors, Bluetooth, Research-grade, Lightweight, Multi-channel).
+- Featured large hero image (headband) on left, 4 thumbnails grid on right (asymmetric layout) instead of uniform grid.
+- Add caption under each thumbnail.
 
-### 3. Fix navbar + hamburger across all breakpoints
-Current navbar only switches to mobile at `xl` (1280px) — at 1018px viewport the desktop nav is cramped/broken. Refactor `SiteNavbar.tsx`:
-- Hamburger visible below `lg` (1024px), full nav at `lg+`.
-- At `lg`–`xl`: shrink nav link padding + font, hide "Book Free Demo" pill, keep links only.
-- At `xl+`: show full nav + CTA button.
-- Tighten logo height on mobile (`h-8`), align with hamburger vertical center.
-- Mobile sheet: proper safe-area padding, scrollable nav list, larger tap targets (min 44px), close on route change.
-- Fix sheet overlay to lock body scroll while open.
+### 4. Homepage SoftwareExperience section
+- Apply same framed-mockup treatment (gradient backdrop, object-contain, captions) so software screenshots aren't cropped on the homepage either.
+- Add a small "What you see" caption strip per screenshot.
 
-### 4. 100% mobile responsiveness pass
-Audit and fix on `index.tsx` and all routes:
-- Replace any fixed `px-8`/`gap-8` with responsive `px-4 sm:px-6 lg:px-8`.
-- Hero split layout: stack on mobile, side-by-side from `md`.
-- Grids: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3/4` instead of fixed multi-col.
-- Typography: clamp hero headings (`text-3xl sm:text-4xl md:text-5xl lg:text-6xl`).
-- Cards: full-width on mobile, prevent horizontal overflow (`overflow-x-hidden` on body wrapper).
-- WhatsApp FAB: ensure it doesn't overlap mobile CTAs (bottom-right with safe spacing).
-- Footer: stack columns on mobile.
-- Images: `max-w-full h-auto`, `loading="lazy"`.
-
-### 5. Alignment cleanup
-- Consistent section vertical rhythm (`py-16 md:py-24`).
-- Centered max-width containers (`max-w-7xl mx-auto`).
-- Card heights equalized with `flex flex-col h-full`.
-- Buttons aligned with `inline-flex items-center justify-center`.
+### 5. Visual polish
+- Add subtle `BrainwaveBackdrop` accent behind software section.
+- Floating teal/orange glow blobs behind featured mockup for depth.
+- Hover lift on cards (`transition hover:-translate-y-1 hover:shadow-xl`).
 
 ## Out of scope
-- No new pages, no copy rewrites, no backend changes.
-- No design system color changes.
+- No new routes, no design-system color changes, no backend.
+- No new AI-generated images — work with existing assets in `src/assets/docx/`.
 
-## Files touched
-- new: `src/assets/banners/*.png` (4 files), `src/components/site/BannerSection.tsx`, `src/components/site/ScrollToTop.tsx`
-- edited: `src/routes/__root.tsx`, `src/routes/index.tsx`, `src/routes/assessment.tsx`, `src/routes/training.tsx`, `src/routes/hardware-software.tsx`, `src/components/site/SiteNavbar.tsx`, `src/components/site/SiteFooter.tsx`, `src/styles.css` (small responsive utilities if needed)
+## Files to edit
+- `src/routes/hardware-software.tsx` — restructure Hardware + Software sections with framed mockups, intro copy, feature lists, stats.
+- `src/routes/index.tsx` — update `SoftwareExperience` block: framed mockups with `object-contain`, captions, gradient backdrop.
+- (Optional small util) inline a `MockupFrame` helper component at top of each file, or create `src/components/site/MockupFrame.tsx` for reuse.
