@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
+import { BannerSection } from "@/components/site/BannerSection";
+import bannerTraining from "@/assets/banners/banner-training.png";
 import { CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/training")({
@@ -28,6 +30,11 @@ function TrainingPage() {
         eyebrow="Practitioner Training"
         title="Become a Certified Neurofeedback Practitioner"
         sub="An intensive, hands-on programme blending theory, practice and mentorship for psychologists, counselors and wellness professionals."
+      />
+      <BannerSection
+        src={bannerTraining}
+        alt="Become a Certified Neurofeedback Practitioner"
+        cta={{ to: "/contact", label: "Talk to an expert" }}
       />
       <section className="bg-white py-20">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-2 lg:px-8">

@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
+import { BannerSection } from "@/components/site/BannerSection";
+import bannerHero from "@/assets/banners/banner-hero.png";
 import hardware1 from "@/assets/docx/hardware-1.png";
 import hardware2 from "@/assets/docx/hardware-2.jpeg";
 import hardware3 from "@/assets/docx/hardware-3.jpeg";
@@ -33,6 +35,11 @@ function HwSwPage() {
         eyebrow="Hardware & Software"
         title="A complete neurofeedback ecosystem"
         sub="Research-grade hardware paired with intuitive software for assessment, training and reporting."
+      />
+      <BannerSection
+        src={bannerHero}
+        alt="Smart EEG Headband & Live Brainwave Software"
+        cta={{ to: "/contact", label: "Book a demo" }}
       />
       <section className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
