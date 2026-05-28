@@ -6,9 +6,15 @@ import {
   Baby, Building2, ArrowRight, CheckCircle2, Play, ChevronDown,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
+import { BannerSection } from "@/components/site/BannerSection";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
+
+import bannerPlatform from "@/assets/banners/banner-platform.png";
+import bannerAssessment from "@/assets/banners/banner-assessment.png";
+import bannerTraining from "@/assets/banners/banner-training.png";
+import bannerHero from "@/assets/banners/banner-hero.png";
 
 import founder from "@/assets/docx/founder-ankit.jpg";
 import hardwareHero from "@/assets/docx/hardware-headband.jpg";
@@ -52,13 +58,33 @@ function HomePage() {
     <>
       <Hero />
       <TrustStrip />
+      <BannerSection
+        src={bannerPlatform}
+        alt="India's Advanced Neurofeedback & Brainwave Analysis Platform"
+        cta={{ to: "/technology", label: "Explore the platform" }}
+      />
       <WhatIsNeurofeedback />
       <HowItWorks />
       <BrainwaveAnalysis />
+      <BannerSection
+        src={bannerAssessment}
+        alt="Brainwave Assessment & Customized Sound Therapy"
+        cta={{ to: "/assessment", label: "Request assessment" }}
+      />
       <SoundTherapy />
       <PractitionerSolution />
+      <BannerSection
+        src={bannerHero}
+        alt="Smart EEG Headband & Live Brainwave Software"
+        cta={{ to: "/hardware-software", label: "Explore hardware & software" }}
+      />
       <SoftwareExperience />
       <WhoBenefits />
+      <BannerSection
+        src={bannerTraining}
+        alt="Become a Certified Neurofeedback Practitioner"
+        cta={{ to: "/training", label: "Apply for training" }}
+      />
       <TrainingCTA />
       <TrustMedia />
       <TeamPreview />

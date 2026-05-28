@@ -12,6 +12,7 @@ import appCss from "../styles.css?url";
 import { SiteNavbar } from "@/components/site/SiteNavbar";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { WhatsAppFab } from "@/components/site/WhatsAppFab";
+import { ScrollToTop } from "@/components/site/ScrollToTop";
 
 function NotFoundComponent() {
   return (
@@ -129,7 +130,8 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
+      <ScrollToTop />
+      <div className="flex min-h-screen flex-col overflow-x-hidden">
         <SiteNavbar />
         <main className="flex-1">
           <Outlet />

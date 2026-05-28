@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
+import { BannerSection } from "@/components/site/BannerSection";
+import bannerAssessment from "@/assets/banners/banner-assessment.png";
 import graph6 from "@/assets/docx/graph-6.jpeg";
 import graph8 from "@/assets/docx/graph-8.jpeg";
 import graph10 from "@/assets/docx/graph-10.jpeg";
@@ -30,6 +32,11 @@ function AssessmentPage() {
         title="Understand your brain in detail"
         sub="A short, non-invasive session captures your live brain activity. Our certified practitioners translate it into an easy-to-understand report."
         cta={{ to: "/contact", label: "Request Assessment" }}
+      />
+      <BannerSection
+        src={bannerAssessment}
+        alt="Brainwave Assessment & Customized Sound Therapy"
+        cta={{ to: "/contact", label: "Start your journey" }}
       />
       <section className="bg-gradient-soft py-20">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
