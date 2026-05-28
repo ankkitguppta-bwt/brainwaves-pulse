@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 
-const imgs = import.meta.glob("@/assets/docx/*", { eager: true, query: "?url", import: "default" }) as Record<string, string>;
+const imgs = import.meta.glob("../assets/docx/*", { eager: true, query: "?url", import: "default" }) as Record<string, string>;
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
