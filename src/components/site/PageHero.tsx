@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
 
 export function PageHero({
@@ -20,6 +20,3 @@ export function PageHero({
     </section>
   );
 }
-
-// dummy export to keep route file out of routes/
-export const __noop = createFileRoute;

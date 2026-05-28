@@ -9,8 +9,62 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrainingRouteImport } from './routes/training'
+import { Route as TechnologyRouteImport } from './routes/technology'
+import { Route as SoundTherapyRouteImport } from './routes/sound-therapy'
+import { Route as HardwareSoftwareRouteImport } from './routes/hardware-software'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as AssessmentRouteImport } from './routes/assessment'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TrainingRoute = TrainingRouteImport.update({
+  id: '/training',
+  path: '/training',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TechnologyRoute = TechnologyRouteImport.update({
+  id: '/technology',
+  path: '/technology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SoundTherapyRoute = SoundTherapyRouteImport.update({
+  id: '/sound-therapy',
+  path: '/sound-therapy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HardwareSoftwareRoute = HardwareSoftwareRouteImport.update({
+  id: '/hardware-software',
+  path: '/hardware-software',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssessmentRoute = AssessmentRouteImport.update({
+  id: '/assessment',
+  path: '/assessment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +73,158 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/assessment': typeof AssessmentRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/hardware-software': typeof HardwareSoftwareRoute
+  '/sound-therapy': typeof SoundTherapyRoute
+  '/technology': typeof TechnologyRoute
+  '/training': typeof TrainingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/assessment': typeof AssessmentRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/hardware-software': typeof HardwareSoftwareRoute
+  '/sound-therapy': typeof SoundTherapyRoute
+  '/technology': typeof TechnologyRoute
+  '/training': typeof TrainingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/assessment': typeof AssessmentRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/hardware-software': typeof HardwareSoftwareRoute
+  '/sound-therapy': typeof SoundTherapyRoute
+  '/technology': typeof TechnologyRoute
+  '/training': typeof TrainingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/assessment'
+    | '/blog'
+    | '/contact'
+    | '/gallery'
+    | '/hardware-software'
+    | '/sound-therapy'
+    | '/technology'
+    | '/training'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/assessment'
+    | '/blog'
+    | '/contact'
+    | '/gallery'
+    | '/hardware-software'
+    | '/sound-therapy'
+    | '/technology'
+    | '/training'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/assessment'
+    | '/blog'
+    | '/contact'
+    | '/gallery'
+    | '/hardware-software'
+    | '/sound-therapy'
+    | '/technology'
+    | '/training'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AssessmentRoute: typeof AssessmentRoute
+  BlogRoute: typeof BlogRoute
+  ContactRoute: typeof ContactRoute
+  GalleryRoute: typeof GalleryRoute
+  HardwareSoftwareRoute: typeof HardwareSoftwareRoute
+  SoundTherapyRoute: typeof SoundTherapyRoute
+  TechnologyRoute: typeof TechnologyRoute
+  TrainingRoute: typeof TrainingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/training': {
+      id: '/training'
+      path: '/training'
+      fullPath: '/training'
+      preLoaderRoute: typeof TrainingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology': {
+      id: '/technology'
+      path: '/technology'
+      fullPath: '/technology'
+      preLoaderRoute: typeof TechnologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sound-therapy': {
+      id: '/sound-therapy'
+      path: '/sound-therapy'
+      fullPath: '/sound-therapy'
+      preLoaderRoute: typeof SoundTherapyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hardware-software': {
+      id: '/hardware-software'
+      path: '/hardware-software'
+      fullPath: '/hardware-software'
+      preLoaderRoute: typeof HardwareSoftwareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assessment': {
+      id: '/assessment'
+      path: '/assessment'
+      fullPath: '/assessment'
+      preLoaderRoute: typeof AssessmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,7 +237,26 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AssessmentRoute: AssessmentRoute,
+  BlogRoute: BlogRoute,
+  ContactRoute: ContactRoute,
+  GalleryRoute: GalleryRoute,
+  HardwareSoftwareRoute: HardwareSoftwareRoute,
+  SoundTherapyRoute: SoundTherapyRoute,
+  TechnologyRoute: TechnologyRoute,
+  TrainingRoute: TrainingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
