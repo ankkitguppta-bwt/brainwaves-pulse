@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import logoLight from "@/assets/brand/logo-light.png";
@@ -19,21 +19,44 @@ export function SiteNavbar() {
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
+  // Close mobile sheet on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll when sheet is open
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-white/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
-        <Link to="/" className="flex items-center gap-2" aria-label="BrainWaves Tech home">
-          <img src={logoLight} alt="BrainWaves Tech" className="h-9 w-auto md:h-10" />
+    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-white/90 backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+        <Link
+          to="/"
+          className="flex shrink-0 items-center gap-2"
+          aria-label="BrainWaves Tech home"
+        >
+          <img
+            src={logoLight}
+            alt="BrainWaves Tech"
+            className="h-8 w-auto sm:h-9 lg:h-10"
+          />
         </Link>
 
-        <nav className="hidden items-center gap-1 xl:flex">
+        {/* Desktop nav — visible from lg (1024px) */}
+        <nav className="hidden flex-1 items-center justify-center gap-0.5 lg:flex">
           {links.map((l) => {
             const active = pathname === l.to;
             return (
               <Link
                 key={l.to}
                 to={l.to}
-                className={`rounded-full px-3 py-2 text-sm font-medium transition ${
+                className={`whitespace-nowrap rounded-full px-2.5 py-2 text-[13px] font-medium transition xl:px-3 xl:text-sm ${
                   active
                     ? "bg-secondary text-navy"
                     : "text-foreground/70 hover:bg-secondary hover:text-navy"
@@ -45,7 +68,8 @@ export function SiteNavbar() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-2 xl:flex">
+        {/* CTA — only at xl+ to avoid crowding */}
+        <div className="hidden shrink-0 xl:flex">
           <Link
             to="/contact"
             className="inline-flex items-center rounded-full bg-navy px-4 py-2 text-sm font-semibold text-white shadow-brand transition hover:bg-navy-soft"
@@ -54,46 +78,72 @@ export function SiteNavbar() {
           </Link>
         </div>
 
+        {/* Hamburger — visible below lg */}
         <button
+          type="button"
           aria-label="Open menu"
-          className="rounded-md p-2 text-navy xl:hidden"
+          aria-expanded={open}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md text-navy transition hover:bg-secondary lg:hidden"
           onClick={() => setOpen(true)}
         >
           <Menu className="h-6 w-6" />
         </button>
       </div>
 
+      {/* Mobile sheet */}
       {open && (
-        <div className="fixed inset-0 z-50 bg-navy/40 backdrop-blur-sm xl:hidden" onClick={() => setOpen(false)}>
+        <div
+          className="fixed inset-0 z-50 bg-navy/50 backdrop-blur-sm lg:hidden"
+          onClick={() => setOpen(false)}
+          role="dialog"
+          aria-modal="true"
+        >
           <div
-            className="ml-auto h-full w-[85%] max-w-sm bg-white p-6 shadow-2xl"
+            className="ml-auto flex h-full w-[88%] max-w-sm flex-col bg-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between">
-              <img src={logoLight} alt="BrainWaves Tech" className="h-8" />
-              <button aria-label="Close menu" onClick={() => setOpen(false)}>
-                <X className="h-6 w-6 text-navy" />
+            <div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4">
+              <img src={logoLight} alt="BrainWaves Tech" className="h-8 w-auto" />
+              <button
+                type="button"
+                aria-label="Close menu"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md text-navy hover:bg-secondary"
+                onClick={() => setOpen(false)}
+              >
+                <X className="h-6 w-6" />
               </button>
             </div>
-            <nav className="mt-6 flex flex-col gap-1">
-              {links.map((l) => (
-                <Link
-                  key={l.to}
-                  to={l.to}
-                  onClick={() => setOpen(false)}
-                  className="rounded-lg px-3 py-3 text-base font-medium text-navy hover:bg-secondary"
-                >
-                  {l.label}
-                </Link>
-              ))}
+            <nav className="flex-1 overflow-y-auto px-4 py-4">
+              <ul className="flex flex-col gap-1">
+                {links.map((l) => {
+                  const active = pathname === l.to;
+                  return (
+                    <li key={l.to}>
+                      <Link
+                        to={l.to}
+                        onClick={() => setOpen(false)}
+                        className={`block min-h-[44px] rounded-lg px-3 py-3 text-base font-medium transition ${
+                          active
+                            ? "bg-secondary text-navy"
+                            : "text-navy hover:bg-secondary"
+                        }`}
+                      >
+                        {l.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+            <div className="border-t border-border p-4">
               <Link
                 to="/contact"
                 onClick={() => setOpen(false)}
-                className="mt-4 inline-flex items-center justify-center rounded-full bg-navy px-4 py-3 text-sm font-semibold text-white"
+                className="flex min-h-[48px] w-full items-center justify-center rounded-full bg-navy px-4 py-3 text-sm font-semibold text-white"
               >
                 Book Free Demo
               </Link>
-            </nav>
+            </div>
           </div>
         </div>
       )}
