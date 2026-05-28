@@ -383,11 +383,17 @@ function PractitionerSolution() {
 
 /* ───── Software Experience ───── */
 function SoftwareExperience() {
-  const screens = [game1, game2, game3];
+  const thumbs = [
+    { src: game2, caption: "Focus Mode · Dolphin rises with attention" },
+    { src: game3, caption: "Reward Animation · Positive reinforcement" },
+  ];
   const modes = ["Attention", "Joy", "Inner Calm", "Study Focus", "Stress Reduction", "Deep Meditation"];
   return (
     <section className="relative overflow-hidden bg-navy py-20 text-white">
       <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-30" />
+      {/* glow blobs */}
+      <div aria-hidden className="pointer-events-none absolute -left-24 top-24 h-72 w-72 rounded-full bg-teal/20 blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -right-24 bottom-12 h-72 w-72 rounded-full bg-orange/15 blur-3xl" />
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           dark
@@ -397,16 +403,27 @@ function SoftwareExperience() {
         />
         <div className="mt-12 grid gap-8 lg:grid-cols-5">
           <div className="lg:col-span-3">
-            <div className="grid grid-cols-3 gap-3">
-              {screens.map((s, i) => (
-                <div key={i} className={`glass-card-dark overflow-hidden rounded-2xl ${i === 0 ? "col-span-3" : ""}`}>
-                  <img src={s} alt="Neurofeedback training game" className="h-full w-full object-cover" />
-                </div>
+            <MockupFrame
+              src={game1}
+              alt="Dolphin neurofeedback training game — main view"
+              caption="Live Session · Dolphin responds to your focus in real time"
+              tone="dark"
+              aspect="video"
+            />
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {thumbs.map((t) => (
+                <MockupFrame key={t.caption} src={t.src} alt={t.caption} caption={t.caption} tone="dark" aspect="video" />
               ))}
             </div>
           </div>
           <div className="lg:col-span-2">
-            <ul className="space-y-3 text-sm">
+            <p className="text-sm text-white/75">
+              Our flagship dolphin training game turns EEG signals into a friendly,
+              reward-based experience. When your attention rises, the dolphin glides
+              upward — making focus visible, measurable and genuinely fun for kids,
+              students and adults alike.
+            </p>
+            <ul className="mt-6 space-y-3 text-sm">
               {[
                 "Real-time brainwave tracking",
                 "Brainwave percentage display",
@@ -424,6 +441,20 @@ function SoftwareExperience() {
               {modes.map((m) => (
                 <span key={m} className="rounded-full bg-white/10 px-3 py-1 text-xs">{m}</span>
               ))}
+            </div>
+            <div className="mt-8 grid grid-cols-3 gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+              <div>
+                <p className="font-display text-2xl font-bold text-teal">200+</p>
+                <p className="text-[10px] uppercase tracking-wider text-white/60">Sessions</p>
+              </div>
+              <div>
+                <p className="font-display text-2xl font-bold text-orange">95%</p>
+                <p className="text-[10px] uppercase tracking-wider text-white/60">Engagement</p>
+              </div>
+              <div>
+                <p className="font-display text-2xl font-bold text-teal">Live</p>
+                <p className="text-[10px] uppercase tracking-wider text-white/60">EEG Sync</p>
+              </div>
             </div>
           </div>
         </div>
