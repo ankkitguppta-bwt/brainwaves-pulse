@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
 import { BannerSection } from "@/components/site/BannerSection";
+import { MockupFrame } from "@/components/site/MockupFrame";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
