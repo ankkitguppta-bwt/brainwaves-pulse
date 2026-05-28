@@ -34,6 +34,7 @@ export function SiteNavbar() {
   }, [open]);
 
   return (
+    <>
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <Link
@@ -90,31 +91,34 @@ export function SiteNavbar() {
         </button>
       </div>
 
-      {/* Mobile sheet */}
+    </header>
+      {/* Mobile sheet is outside the blurred sticky header so it can cover the full viewport */}
       {open && (
         <div
-          className="fixed inset-0 z-50 bg-navy/50 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-[100] bg-navy/55 backdrop-blur-sm lg:hidden"
           onClick={() => setOpen(false)}
           role="dialog"
           aria-modal="true"
         >
           <div
-            className="ml-auto flex h-full w-[88%] max-w-sm flex-col bg-white shadow-2xl"
+            className="ml-auto flex h-dvh w-full max-w-sm flex-col bg-white shadow-2xl sm:w-[88%]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4">
-              <img src={logoLight} alt="BrainWaves Tech" className="h-8 w-auto" />
+            <div className="flex min-h-16 shrink-0 items-center justify-between border-b border-border px-5 pt-[env(safe-area-inset-top)]">
+              <Link to="/" onClick={() => setOpen(false)} aria-label="BrainWaves Tech home">
+                <img src={logoLight} alt="BrainWaves Tech" className="h-8 w-auto" />
+              </Link>
               <button
                 type="button"
                 aria-label="Close menu"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-md text-navy hover:bg-secondary"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-navy transition hover:bg-secondary"
                 onClick={() => setOpen(false)}
               >
                 <X className="h-6 w-6" />
               </button>
             </div>
-            <nav className="flex-1 overflow-y-auto px-4 py-4">
-              <ul className="flex flex-col gap-1">
+            <nav className="flex-1 overflow-y-auto px-5 py-5">
+              <ul className="flex flex-col gap-2">
                 {links.map((l) => {
                   const active = pathname === l.to;
                   return (
@@ -122,10 +126,10 @@ export function SiteNavbar() {
                       <Link
                         to={l.to}
                         onClick={() => setOpen(false)}
-                        className={`block min-h-[44px] rounded-lg px-3 py-3 text-base font-medium transition ${
+                        className={`flex min-h-[48px] items-center rounded-xl border px-4 py-3 text-base font-semibold transition ${
                           active
-                            ? "bg-secondary text-navy"
-                            : "text-navy hover:bg-secondary"
+                            ? "border-teal/35 bg-secondary text-navy"
+                            : "border-border bg-white text-navy hover:border-teal/35 hover:bg-secondary"
                         }`}
                       >
                         {l.label}
@@ -135,11 +139,11 @@ export function SiteNavbar() {
                 })}
               </ul>
             </nav>
-            <div className="border-t border-border p-4">
+            <div className="border-t border-border p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
               <Link
                 to="/contact"
                 onClick={() => setOpen(false)}
-                className="flex min-h-[48px] w-full items-center justify-center rounded-full bg-navy px-4 py-3 text-sm font-semibold text-white"
+                className="flex min-h-[52px] w-full items-center justify-center rounded-full bg-navy px-4 py-3 text-base font-semibold text-white shadow-brand"
               >
                 Book Free Demo
               </Link>
@@ -147,6 +151,6 @@ export function SiteNavbar() {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
