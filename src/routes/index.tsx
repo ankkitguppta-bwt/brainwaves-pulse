@@ -504,6 +504,9 @@ function WhoBenefits() {
     { i: Stethoscope, t: "Rehabilitation Pros" }, { i: UserCog, t: "Occupational Therapists" },
     { i: Target, t: "Cognitive Trainers" }, { i: Trophy, t: "Athletes" },
     { i: Briefcase, t: "Entrepreneurs" }, { i: Baby, t: "Corporate Professionals" },
+    { i: Users, t: "Individuals" }, { i: Brain, t: "Researchers" },
+    { i: ShieldCheck, t: "Defence" }, { i: Building2, t: "Universities" },
+    { i: GraduationCap, t: "Coaching Centers" }, { i: Stethoscope, t: "Hospitals" },
   ];
   return (
     <section className="bg-gradient-soft py-20">
