@@ -146,37 +146,42 @@ function Hero() {
 
         {/* Visual */}
         <div className="relative lg:col-span-5">
-          <div className="glass-card-dark relative rounded-3xl p-5 shadow-brand">
-            <div className="flex items-center justify-between text-xs text-white/70">
-              <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-teal" /> Live EEG session</span>
-              <span>Session 04 · 22 min</span>
+          <div className="relative overflow-hidden rounded-3xl border border-white/15 shadow-brand">
+            <img
+              src={heroRealistic}
+              alt="Client wearing EEG neurofeedback headband during a live session"
+              className="h-[420px] w-full object-cover sm:h-[520px]"
+              width={1024}
+              height={1024}
+            />
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
+            {/* Floating live metrics card */}
+            <div className="glass-card-dark absolute bottom-4 left-4 right-4 rounded-2xl p-4 shadow-brand">
+              <div className="flex items-center justify-between text-[11px] text-white/70">
+                <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 animate-pulse rounded-full bg-teal" /> Live EEG session</span>
+                <span>Session 04 · 22 min</span>
+              </div>
+              <div className="mt-2 grid grid-cols-3 gap-2">
+                {[
+                  { l: "Attention", v: "84%", c: "text-teal" },
+                  { l: "Calm", v: "71%", c: "text-orange" },
+                  { l: "Focus", v: "78%", c: "text-teal" },
+                ].map((m) => (
+                  <div key={m.l} className="rounded-xl bg-white/5 p-2">
+                    <p className="text-[9px] uppercase tracking-wider text-white/60">{m.l}</p>
+                    <p className={`mt-0.5 text-lg font-semibold ${m.c}`}>{m.v}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-2 grid grid-cols-5 gap-1">
+                {["α", "β", "θ", "δ", "γ"].map((g, i) => (
+                  <div key={g} className="rounded-md bg-white/5 py-1 text-center">
+                    <p className="font-display text-sm text-teal">{g}</p>
+                    <p className="text-[9px] text-white/60">{[42, 31, 18, 22, 9][i]}%</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="mt-3 grid grid-cols-3 gap-2">
-              {[
-                { l: "Attention", v: "84%", c: "text-teal" },
-                { l: "Calm", v: "71%", c: "text-orange" },
-                { l: "Focus", v: "78%", c: "text-teal" },
-              ].map((m) => (
-                <div key={m.l} className="rounded-xl bg-white/5 p-3">
-                  <p className="text-[10px] uppercase tracking-wider text-white/60">{m.l}</p>
-                  <p className={`mt-1 text-2xl font-semibold ${m.c}`}>{m.v}</p>
-                </div>
-              ))}
-            </div>
-            <div className="relative mt-4 h-40 overflow-hidden rounded-xl bg-navy/60">
-              <BrainwaveBackdrop className="absolute inset-0 h-full w-full" />
-            </div>
-            <div className="mt-3 grid grid-cols-5 gap-1">
-              {["α", "β", "θ", "δ", "γ"].map((g, i) => (
-                <div key={g} className="rounded-lg bg-white/5 py-2 text-center text-xs">
-                  <p className="font-display text-base text-teal">{g}</p>
-                  <p className="mt-0.5 text-[10px] text-white/60">{[42, 31, 18, 22, 9][i]}%</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="animate-float absolute -bottom-6 -left-6 hidden h-28 w-28 overflow-hidden rounded-2xl border border-white/15 bg-navy shadow-brand md:block">
-            <img src={hardwareHero} alt="EEG headband device" className="h-full w-full object-cover" />
           </div>
         </div>
       </div>
