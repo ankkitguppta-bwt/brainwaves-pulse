@@ -18,7 +18,9 @@ import bannerTraining from "@/assets/banners/banner-training.png";
 import bannerHero from "@/assets/banners/banner-hero.png";
 
 import founder from "@/assets/docx/founder-ankit.jpg";
-import hardwareHero from "@/assets/docx/hardware-headband.jpg";
+import hardwareHero from "@/assets/docx/headband-realistic.jpg";
+import heroRealistic from "@/assets/banners/hero-realistic.jpg";
+import practitionerRealistic from "@/assets/banners/practitioner-realistic.jpg";
 import game1 from "@/assets/docx/game-dolphin-1.jpeg";
 import game2 from "@/assets/docx/game-dolphin-2.png";
 import game3 from "@/assets/docx/game-dolphin-3.png";
