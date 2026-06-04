@@ -18,12 +18,12 @@ import bannerTraining from "@/assets/banners/banner-training.png";
 import bannerHero from "@/assets/banners/banner-hero.png";
 
 import founder from "@/assets/docx/founder-ankit.jpg";
-import hardwareHero from "@/assets/docx/hardware-headband.jpg";
+import heroRealistic from "@/assets/banners/hero-realistic.jpg";
 import game1 from "@/assets/docx/game-dolphin-1.jpeg";
 import game2 from "@/assets/docx/game-dolphin-2.png";
 import game3 from "@/assets/docx/game-dolphin-3.png";
-import graph6 from "@/assets/docx/graph-6.jpeg";
-import graph8 from "@/assets/docx/graph-8.jpeg";
+import graph6 from "@/assets/docx/graph-realistic-1.jpg";
+import graph8 from "@/assets/docx/graph-realistic-2.jpg";
 import graph10 from "@/assets/docx/graph-10.jpeg";
 import graph12 from "@/assets/docx/graph-12.jpeg";
 import accred1 from "@/assets/docx/accred-1.png";
@@ -58,6 +58,7 @@ function HomePage() {
   return (
     <>
       <Hero />
+      <StatsStrip />
       <TrustStrip />
       <BannerSection
         src={bannerPlatform}
@@ -144,39 +145,66 @@ function Hero() {
 
         {/* Visual */}
         <div className="relative lg:col-span-5">
-          <div className="glass-card-dark relative rounded-3xl p-5 shadow-brand">
-            <div className="flex items-center justify-between text-xs text-white/70">
-              <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-teal" /> Live EEG session</span>
-              <span>Session 04 · 22 min</span>
+          <div className="relative overflow-hidden rounded-3xl border border-white/15 shadow-brand">
+            <img
+              src={heroRealistic}
+              alt="Client wearing EEG neurofeedback headband during a live session"
+              className="h-[420px] w-full object-cover sm:h-[520px]"
+              width={1024}
+              height={1024}
+            />
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
+            {/* Floating live metrics card */}
+            <div className="glass-card-dark absolute bottom-4 left-4 right-4 rounded-2xl p-4 shadow-brand">
+              <div className="flex items-center justify-between text-[11px] text-white/70">
+                <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 animate-pulse rounded-full bg-teal" /> Live EEG session</span>
+                <span>Session 04 · 22 min</span>
+              </div>
+              <div className="mt-2 grid grid-cols-3 gap-2">
+                {[
+                  { l: "Attention", v: "84%", c: "text-teal" },
+                  { l: "Calm", v: "71%", c: "text-orange" },
+                  { l: "Focus", v: "78%", c: "text-teal" },
+                ].map((m) => (
+                  <div key={m.l} className="rounded-xl bg-white/5 p-2">
+                    <p className="text-[9px] uppercase tracking-wider text-white/60">{m.l}</p>
+                    <p className={`mt-0.5 text-lg font-semibold ${m.c}`}>{m.v}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-2 grid grid-cols-5 gap-1">
+                {["α", "β", "θ", "δ", "γ"].map((g, i) => (
+                  <div key={g} className="rounded-md bg-white/5 py-1 text-center">
+                    <p className="font-display text-sm text-teal">{g}</p>
+                    <p className="text-[9px] text-white/60">{[42, 31, 18, 22, 9][i]}%</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="mt-3 grid grid-cols-3 gap-2">
-              {[
-                { l: "Attention", v: "84%", c: "text-teal" },
-                { l: "Calm", v: "71%", c: "text-orange" },
-                { l: "Focus", v: "78%", c: "text-teal" },
-              ].map((m) => (
-                <div key={m.l} className="rounded-xl bg-white/5 p-3">
-                  <p className="text-[10px] uppercase tracking-wider text-white/60">{m.l}</p>
-                  <p className={`mt-1 text-2xl font-semibold ${m.c}`}>{m.v}</p>
-                </div>
-              ))}
-            </div>
-            <div className="relative mt-4 h-40 overflow-hidden rounded-xl bg-navy/60">
-              <BrainwaveBackdrop className="absolute inset-0 h-full w-full" />
-            </div>
-            <div className="mt-3 grid grid-cols-5 gap-1">
-              {["α", "β", "θ", "δ", "γ"].map((g, i) => (
-                <div key={g} className="rounded-lg bg-white/5 py-2 text-center text-xs">
-                  <p className="font-display text-base text-teal">{g}</p>
-                  <p className="mt-0.5 text-[10px] text-white/60">{[42, 31, 18, 22, 9][i]}%</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="animate-float absolute -bottom-6 -left-6 hidden h-28 w-28 overflow-hidden rounded-2xl border border-white/15 bg-navy shadow-brand md:block">
-            <img src={hardwareHero} alt="EEG headband device" className="h-full w-full object-cover" />
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ───── Stats strip ───── */
+function StatsStrip() {
+  const stats = [
+    { v: "27+", l: "Certified Practitioners" },
+    { v: "14+", l: "Years of Neurofeedback Research" },
+    { v: "1.2 L+", l: "Brainwave Data Points" },
+    { v: "92%+", l: "Reporting Accuracy" },
+  ];
+  return (
+    <section className="bg-navy text-white">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-8 sm:grid-cols-4 lg:px-8">
+        {stats.map((s) => (
+          <div key={s.l} className="text-center">
+            <p className="font-display text-3xl font-bold text-teal sm:text-4xl">{s.v}</p>
+            <p className="mt-1 text-xs uppercase tracking-wider text-white/70">{s.l}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -474,6 +502,9 @@ function WhoBenefits() {
     { i: Stethoscope, t: "Rehabilitation Pros" }, { i: UserCog, t: "Occupational Therapists" },
     { i: Target, t: "Cognitive Trainers" }, { i: Trophy, t: "Athletes" },
     { i: Briefcase, t: "Entrepreneurs" }, { i: Baby, t: "Corporate Professionals" },
+    { i: Users, t: "Individuals" }, { i: Brain, t: "Researchers" },
+    { i: ShieldCheck, t: "Defence" }, { i: Building2, t: "Universities" },
+    { i: GraduationCap, t: "Coaching Centers" }, { i: Stethoscope, t: "Hospitals" },
   ];
   return (
     <section className="bg-gradient-soft py-20">

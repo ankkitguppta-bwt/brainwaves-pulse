@@ -9,7 +9,7 @@ import hardware2 from "@/assets/docx/hardware-2.jpeg";
 import hardware3 from "@/assets/docx/hardware-3.jpeg";
 import hardware4 from "@/assets/docx/hardware-4.jpeg";
 import hardware5 from "@/assets/docx/hardware-5.jpeg";
-import hardwareHead from "@/assets/docx/hardware-headband.jpg";
+import hardwareHead from "@/assets/docx/headband-realistic.jpg";
 import game1 from "@/assets/docx/game-dolphin-1.jpeg";
 import game2 from "@/assets/docx/game-dolphin-2.png";
 import game3 from "@/assets/docx/game-dolphin-3.png";

@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
+import { MockupFrame } from "@/components/site/MockupFrame";
 import { Brain, Activity, Cpu, Cloud, Waves, Target } from "lucide-react";
+import graphRealistic1 from "@/assets/docx/graph-realistic-1.jpg";
+import graphRealistic2 from "@/assets/docx/graph-realistic-2.jpg";
 
 export const Route = createFileRoute("/technology")({
   head: () => ({
@@ -30,7 +33,7 @@ function TechnologyPage() {
       <PageHero
         eyebrow="Technology"
         title="The neuro-tech stack powering BrainWaves Tech"
-        sub="A complete ecosystem of EEG hardware, real-time analytics, sound therapy and practitioner tooling."
+        sub="A complete ecosystem of EEG hardware, real-time analytics, sound therapy and practitioner tooling — backed by 14+ years of research and 1.2 lakh+ data points."
       />
       <section className="bg-white py-20">
         <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3 lg:px-8">
@@ -43,6 +46,22 @@ function TechnologyPage() {
               <p className="mt-2 text-sm text-muted-foreground">{f.d}</p>
             </div>
           ))}
+        </div>
+      </section>
+      <section className="bg-gradient-soft py-20">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-block rounded-full bg-navy/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-navy">Live Dashboard</span>
+            <h2 className="mt-3 font-display text-3xl font-bold text-navy md:text-4xl">See your brain at work — in real time</h2>
+            <p className="mt-3 text-muted-foreground">
+              Clean, practitioner-friendly dashboards translate raw EEG signals into multi-band
+              activity charts, focus &amp; calm indicators and session summaries you can act on.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            <MockupFrame src={graphRealistic1} alt="Brainwave activity dashboard" caption="Brainwave Activity · Multi-band live analysis" tone="dark" aspect="video" />
+            <MockupFrame src={graphRealistic2} alt="Brainwave breakdown dashboard" caption="Brainwave Breakdown · Focus &amp; Calm indicators" tone="light" aspect="video" />
+          </div>
         </div>
       </section>
     </>
