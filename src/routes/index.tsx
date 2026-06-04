@@ -60,6 +60,7 @@ function HomePage() {
   return (
     <>
       <Hero />
+      <StatsStrip />
       <TrustStrip />
       <BannerSection
         src={bannerPlatform}
