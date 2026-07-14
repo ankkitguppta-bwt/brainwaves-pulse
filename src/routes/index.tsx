@@ -94,16 +94,20 @@ function StatsStrip() {
     { end: 92, suffix: "%+", l: "Reporting Accuracy" },
   ];
   return (
-    <section className="bg-navy text-white">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-8 sm:grid-cols-4 lg:px-8">
-        {stats.map((s) => (
-          <div key={s.l} className="text-center">
-            <p className="font-display text-3xl font-bold text-teal sm:text-4xl">
-              <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
-            </p>
-            <p className="mt-1 text-xs uppercase tracking-wider text-white/70">{s.l}</p>
+    <section className="bg-white py-10">
+      <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
+        <div className="mx-auto w-full rounded-3xl bg-navy px-6 py-8 shadow-brand md:w-[60%]">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {stats.map((s) => (
+              <div key={s.l} className="text-center">
+                <p className="font-display text-3xl font-bold text-white sm:text-4xl">
+                  <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
+                </p>
+                <p className="mt-1 text-xs uppercase tracking-wider text-white/70">{s.l}</p>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );
