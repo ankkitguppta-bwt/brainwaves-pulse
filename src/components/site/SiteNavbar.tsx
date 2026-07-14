@@ -78,23 +78,20 @@ export function SiteNavbar() {
   }, [open]);
 
   const isHome = pathname === "/";
-  const transparent = isHome && !scrolled;
+  const transparent = false; // Always solid — logo asset has light bg
+  void isHome; void scrolled;
 
   return (
     <>
       <header
-        className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-          transparent
-            ? "border-b border-transparent bg-transparent"
-            : "border-b border-border/60 bg-white/90 backdrop-blur-md"
-        }`}
+        className="sticky top-0 z-40 w-full border-b border-border/60 bg-white/95 backdrop-blur-md transition-all duration-300"
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
           <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="BrainWaves Tech home">
             <img
               src={logoLight}
               alt="BrainWaves Tech"
-              className={`h-8 w-auto sm:h-9 lg:h-10 ${transparent ? "brightness-0 invert" : ""}`}
+              className="h-8 w-auto sm:h-9 lg:h-10"
             />
           </Link>
 
