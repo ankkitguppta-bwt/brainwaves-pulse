@@ -6,6 +6,7 @@ import {
   Baby, Building2, ArrowRight, CheckCircle2, Play, ShieldCheck,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
+import heroVideo from "@/assets/video/hero-loop.mp4.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
