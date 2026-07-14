@@ -49,7 +49,7 @@ function HomePage() {
 /* ───── Hero ───── */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-navy text-white">
+    <section className="relative -mt-16 overflow-hidden bg-navy text-white">
       <video
         src={heroVideo.url}
         autoPlay
@@ -61,7 +61,7 @@ function Hero() {
         className="pointer-events-none absolute inset-0 h-full w-full object-cover"
       />
       <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/50 to-navy/80" />
-      <div className="relative mx-auto max-w-4xl px-4 py-20 text-center md:py-28 lg:px-8">
+      <div className="relative mx-auto max-w-4xl px-4 pb-20 pt-36 text-center md:pb-28 md:pt-44 lg:px-8">
         <span className="inline-flex items-center gap-2 rounded-full border border-teal/40 bg-teal/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-teal">
           <Sparkles className="h-3.5 w-3.5" /> Neuro-tech made in India
         </span>
@@ -98,7 +98,7 @@ function StatsStrip() {
   return (
     <section className="bg-white py-10">
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
-        <div className="mx-auto w-full rounded-3xl bg-navy px-6 py-8 shadow-brand md:w-[60%]">
+        <div className="mx-auto w-full rounded-3xl bg-navy px-6 py-8 md:w-[80%]">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {stats.map((s) => (
               <div key={s.l} className="text-center">
