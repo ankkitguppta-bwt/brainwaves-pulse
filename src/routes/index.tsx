@@ -11,8 +11,6 @@ import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import founder from "@/assets/docx/founder-ankit.jpg";
-import heroRealistic from "@/assets/banners/hero-realistic.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
