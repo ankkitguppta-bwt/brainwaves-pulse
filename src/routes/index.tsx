@@ -116,31 +116,35 @@ function StatsStrip() {
 }
 
 /* ───── What is neurofeedback ───── */
-function WhatIsNeurofeedback() {
-  const waves = [
-    { name: "Alpha", desc: "Relaxed, calm awareness · meditation", range: "8–12 Hz", color: "from-teal/20 to-teal/0" },
-    { name: "Beta", desc: "Focus, attention, active thinking", range: "13–30 Hz", color: "from-orange/20 to-orange/0" },
-    { name: "Theta", desc: "Creativity, deep relaxation, learning", range: "4–8 Hz", color: "from-teal/20 to-teal/0" },
-    { name: "Delta", desc: "Deep sleep, restoration, healing", range: "0.5–4 Hz", color: "from-orange/20 to-orange/0" },
-    { name: "Gamma", desc: "Peak performance, cognitive binding", range: "30–100 Hz", color: "from-teal/20 to-teal/0" },
-  ];
+function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) {
   return (
     <section className="bg-gradient-soft py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           eyebrow="What is Neurofeedback?"
           title="Train your brain. Optimise your mind."
-          sub="Neurofeedback is a non-invasive brain-training technology that monitors and optimises brainwave activity in real time."
+          sub="Neurofeedback is a non-invasive brain-training technology that monitors and optimises brainwave activity in real time. Click any wave to explore."
         />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          {waves.map((w) => (
-            <div key={w.name} className="glass-card relative overflow-hidden rounded-2xl p-5">
-              <div className={`absolute inset-x-0 top-0 h-20 bg-gradient-to-b ${w.color}`} />
-              <Waves className="relative h-6 w-6 text-teal" />
+          {WAVES.map((w) => (
+            <button
+              key={w.name}
+              type="button"
+              onClick={() => onSelect(w)}
+              className="glass-card group relative overflow-hidden rounded-2xl p-5 text-left transition hover:-translate-y-0.5 hover:shadow-brand focus:outline-none focus:ring-2 focus:ring-teal"
+            >
+              <div
+                className="absolute inset-x-0 top-0 h-20"
+                style={{ background: `linear-gradient(to bottom, ${w.color}33, transparent)` }}
+              />
+              <Waves className="relative h-6 w-6" style={{ color: w.color }} />
               <h3 className="relative mt-3 font-display text-xl font-semibold text-navy">{w.name} Waves</h3>
-              <p className="relative mt-1 text-xs font-medium text-orange">{w.range}</p>
+              <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>{w.range}</p>
               <p className="relative mt-3 text-sm text-muted-foreground">{w.desc}</p>
-            </div>
+              <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/70 group-hover:text-teal">
+                View animation <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </button>
           ))}
         </div>
       </div>
