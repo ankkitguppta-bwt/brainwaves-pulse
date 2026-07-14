@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   Activity, Brain, Headphones, GraduationCap,
   Sparkles, Waves, Gauge, Heart, Target,
@@ -8,6 +9,7 @@ import {
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
 import heroVideo from "@/assets/video/hero-loop.mp4.asset.json";
 import { CountUp } from "@/components/site/CountUp";
+import { WaveModal, WAVES, type WaveInfo } from "@/components/site/WaveModal";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
