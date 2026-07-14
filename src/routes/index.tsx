@@ -11,8 +11,6 @@ import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import founder from "@/assets/docx/founder-ankit.jpg";
-import heroRealistic from "@/assets/banners/hero-realistic.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -46,69 +44,28 @@ function HomePage() {
 /* ───── Hero ───── */
 function Hero() {
   return (
-    <section className="relative -mt-16 overflow-hidden bg-gradient-hero pt-16 text-white">
+    <section className="relative overflow-hidden bg-gradient-hero text-white">
       <BrainwaveBackdrop className="absolute inset-x-0 top-1/2 h-[60%] w-full -translate-y-1/2 opacity-70" />
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 md:py-24 lg:grid-cols-12 lg:px-8">
-        <div className="lg:col-span-7">
-          <span className="inline-flex items-center gap-2 rounded-full border border-teal/40 bg-teal/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-teal">
-            <Sparkles className="h-3.5 w-3.5" /> Neuro-tech made in India
-          </span>
-          <h1 className="mt-5 font-display text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl">
-            India's Advanced{" "}
-            <span className="text-gradient-brand">Neurofeedback &amp; Brainwave Analysis</span>{" "}
-            Platform
-          </h1>
-          <p className="mt-5 max-w-2xl text-base text-white/80 sm:text-lg">
-            Assess Brain Activity • Understand Cognitive Patterns • Deliver Customized
-            Neurofeedback &amp; Sound Therapy Solutions
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/contact" className="inline-flex items-center gap-2 rounded-full bg-teal px-5 py-3 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.02]">
-              Book Demo <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link to="/contact" className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/10">
-              Request Assessment
-            </Link>
-          </div>
-
-          <div className="mt-10 inline-flex items-center gap-4 rounded-2xl border border-white/15 bg-white/5 p-3 pr-5 backdrop-blur">
-            <img src={founder} alt="Dr. Ankit Gupta" className="h-14 w-14 rounded-full object-cover ring-2 ring-teal/60" />
-            <div className="text-left">
-              <p className="text-sm font-semibold">Dr. Ankit Gupta</p>
-              <p className="text-xs text-white/70">Founder · Neurofeedback Practitioner · Sound Therapy Expert</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative lg:col-span-5">
-          <div className="relative overflow-hidden rounded-3xl border border-white/15 shadow-brand">
-            <img
-              src={heroRealistic}
-              alt="Client wearing EEG neurofeedback headband during a live session"
-              className="h-[420px] w-full object-cover sm:h-[520px]"
-              width={1024}
-              height={1024}
-            />
-            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
-            <div className="glass-card-dark absolute bottom-4 left-4 right-4 rounded-2xl p-4 shadow-brand">
-              <div className="flex items-center justify-between text-[11px] text-white/70">
-                <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 animate-pulse rounded-full bg-teal" /> Live EEG session</span>
-                <span>Session 04 · 22 min</span>
-              </div>
-              <div className="mt-2 grid grid-cols-3 gap-2">
-                {[
-                  { l: "Attention", v: "84%", c: "text-teal" },
-                  { l: "Calm", v: "71%", c: "text-orange" },
-                  { l: "Focus", v: "78%", c: "text-teal" },
-                ].map((m) => (
-                  <div key={m.l} className="rounded-xl bg-white/5 p-2">
-                    <p className="text-[9px] uppercase tracking-wider text-white/60">{m.l}</p>
-                    <p className={`mt-0.5 text-lg font-semibold ${m.c}`}>{m.v}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+      <div className="relative mx-auto max-w-4xl px-4 py-20 text-center md:py-28 lg:px-8">
+        <span className="inline-flex items-center gap-2 rounded-full border border-teal/40 bg-teal/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-teal">
+          <Sparkles className="h-3.5 w-3.5" /> Neuro-tech made in India
+        </span>
+        <h1 className="mt-5 font-display text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl">
+          India's Advanced{" "}
+          <span className="text-gradient-brand">Neurofeedback &amp; Brainwave Analysis</span>{" "}
+          Platform
+        </h1>
+        <p className="mx-auto mt-5 max-w-2xl text-base text-white/80 sm:text-lg">
+          Assess Brain Activity • Understand Cognitive Patterns • Deliver Customized
+          Neurofeedback &amp; Sound Therapy Solutions
+        </p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Link to="/contact" className="inline-flex items-center gap-2 rounded-full bg-teal px-5 py-3 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.02]">
+            Book Demo <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link to="/contact" className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/10">
+            Request Assessment
+          </Link>
         </div>
       </div>
     </section>
