@@ -45,8 +45,18 @@ function HomePage() {
 /* ───── Hero ───── */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-hero text-white">
-      <BrainwaveBackdrop className="absolute inset-x-0 top-1/2 h-[60%] w-full -translate-y-1/2 opacity-70" />
+    <section className="relative overflow-hidden bg-navy text-white">
+      <video
+        src={heroVideo.url}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        aria-hidden
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+      />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/50 to-navy/80" />
       <div className="relative mx-auto max-w-4xl px-4 py-20 text-center md:py-28 lg:px-8">
         <span className="inline-flex items-center gap-2 rounded-full border border-teal/40 bg-teal/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-teal">
           <Sparkles className="h-3.5 w-3.5" /> Neuro-tech made in India
