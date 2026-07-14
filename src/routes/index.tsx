@@ -6,6 +6,7 @@ import {
   Baby, Building2, ArrowRight, CheckCircle2, Play, ShieldCheck,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
+import { CountUp } from "@/components/site/CountUp";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
@@ -117,17 +118,19 @@ function Hero() {
 /* ───── Stats strip ───── */
 function StatsStrip() {
   const stats = [
-    { v: "27+", l: "Certified Practitioners" },
-    { v: "14+", l: "Years of Neurofeedback Research" },
-    { v: "1.2 L+", l: "Brainwave Data Points" },
-    { v: "92%+", l: "Reporting Accuracy" },
+    { end: 27, suffix: "+", l: "Certified Practitioners" },
+    { end: 14, suffix: "+", l: "Years of Neurofeedback Research" },
+    { end: 1.2, decimals: 1, suffix: " L+", l: "Brainwave Data Points" },
+    { end: 92, suffix: "%+", l: "Reporting Accuracy" },
   ];
   return (
     <section className="bg-navy text-white">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-8 sm:grid-cols-4 lg:px-8">
         {stats.map((s) => (
           <div key={s.l} className="text-center">
-            <p className="font-display text-3xl font-bold text-teal sm:text-4xl">{s.v}</p>
+            <p className="font-display text-3xl font-bold text-teal sm:text-4xl">
+              <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
+            </p>
             <p className="mt-1 text-xs uppercase tracking-wider text-white/70">{s.l}</p>
           </div>
         ))}
