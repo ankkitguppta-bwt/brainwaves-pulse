@@ -9,20 +9,31 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TrainingRouteImport } from './routes/training'
+import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as TechnologyRouteImport } from './routes/technology'
-import { Route as SoundTherapyRouteImport } from './routes/sound-therapy'
-import { Route as HardwareSoftwareRouteImport } from './routes/hardware-software'
+import { Route as StoriesRouteImport } from './routes/stories'
+import { Route as ResearchRouteImport } from './routes/research'
+import { Route as PractitionerRouteImport } from './routes/practitioner'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AssessmentRouteImport } from './routes/assessment'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SolutionsIndexRouteImport } from './routes/solutions.index'
+import { Route as ProductsIndexRouteImport } from './routes/products.index'
+import { Route as SolutionsRehabRouteImport } from './routes/solutions.rehab'
+import { Route as SolutionsPsychologistsRouteImport } from './routes/solutions.psychologists'
+import { Route as SolutionsHealthcareRouteImport } from './routes/solutions.healthcare'
+import { Route as SolutionsEducationalRouteImport } from './routes/solutions.educational'
+import { Route as SolutionsCorporatesRouteImport } from './routes/solutions.corporates'
+import { Route as ProductsSoundTherapyRouteImport } from './routes/products.sound-therapy'
+import { Route as ProductsSoftwareRouteImport } from './routes/products.software'
+import { Route as ProductsHeadbandRouteImport } from './routes/products.headband'
+import { Route as ProductsAccessoriesRouteImport } from './routes/products.accessories'
 
-const TrainingRoute = TrainingRouteImport.update({
-  id: '/training',
-  path: '/training',
+const TestimonialsRoute = TestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TechnologyRoute = TechnologyRouteImport.update({
@@ -30,14 +41,19 @@ const TechnologyRoute = TechnologyRouteImport.update({
   path: '/technology',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SoundTherapyRoute = SoundTherapyRouteImport.update({
-  id: '/sound-therapy',
-  path: '/sound-therapy',
+const StoriesRoute = StoriesRouteImport.update({
+  id: '/stories',
+  path: '/stories',
   getParentRoute: () => rootRouteImport,
 } as any)
-const HardwareSoftwareRoute = HardwareSoftwareRouteImport.update({
-  id: '/hardware-software',
-  path: '/hardware-software',
+const ResearchRoute = ResearchRouteImport.update({
+  id: '/research',
+  path: '/research',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PractitionerRoute = PractitionerRouteImport.update({
+  id: '/practitioner',
+  path: '/practitioner',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryRoute = GalleryRouteImport.update({
@@ -55,11 +71,6 @@ const BlogRoute = BlogRouteImport.update({
   path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AssessmentRoute = AssessmentRouteImport.update({
-  id: '/assessment',
-  path: '/assessment',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -70,103 +81,235 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
+  id: '/solutions/',
+  path: '/solutions/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsIndexRoute = ProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsRehabRoute = SolutionsRehabRouteImport.update({
+  id: '/solutions/rehab',
+  path: '/solutions/rehab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsPsychologistsRoute = SolutionsPsychologistsRouteImport.update({
+  id: '/solutions/psychologists',
+  path: '/solutions/psychologists',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsHealthcareRoute = SolutionsHealthcareRouteImport.update({
+  id: '/solutions/healthcare',
+  path: '/solutions/healthcare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsEducationalRoute = SolutionsEducationalRouteImport.update({
+  id: '/solutions/educational',
+  path: '/solutions/educational',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsCorporatesRoute = SolutionsCorporatesRouteImport.update({
+  id: '/solutions/corporates',
+  path: '/solutions/corporates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsSoundTherapyRoute = ProductsSoundTherapyRouteImport.update({
+  id: '/products/sound-therapy',
+  path: '/products/sound-therapy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsSoftwareRoute = ProductsSoftwareRouteImport.update({
+  id: '/products/software',
+  path: '/products/software',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsHeadbandRoute = ProductsHeadbandRouteImport.update({
+  id: '/products/headband',
+  path: '/products/headband',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsAccessoriesRoute = ProductsAccessoriesRouteImport.update({
+  id: '/products/accessories',
+  path: '/products/accessories',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/assessment': typeof AssessmentRoute
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
-  '/hardware-software': typeof HardwareSoftwareRoute
-  '/sound-therapy': typeof SoundTherapyRoute
+  '/practitioner': typeof PractitionerRoute
+  '/research': typeof ResearchRoute
+  '/stories': typeof StoriesRoute
   '/technology': typeof TechnologyRoute
-  '/training': typeof TrainingRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/products/accessories': typeof ProductsAccessoriesRoute
+  '/products/headband': typeof ProductsHeadbandRoute
+  '/products/software': typeof ProductsSoftwareRoute
+  '/products/sound-therapy': typeof ProductsSoundTherapyRoute
+  '/solutions/corporates': typeof SolutionsCorporatesRoute
+  '/solutions/educational': typeof SolutionsEducationalRoute
+  '/solutions/healthcare': typeof SolutionsHealthcareRoute
+  '/solutions/psychologists': typeof SolutionsPsychologistsRoute
+  '/solutions/rehab': typeof SolutionsRehabRoute
+  '/products/': typeof ProductsIndexRoute
+  '/solutions/': typeof SolutionsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/assessment': typeof AssessmentRoute
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
-  '/hardware-software': typeof HardwareSoftwareRoute
-  '/sound-therapy': typeof SoundTherapyRoute
+  '/practitioner': typeof PractitionerRoute
+  '/research': typeof ResearchRoute
+  '/stories': typeof StoriesRoute
   '/technology': typeof TechnologyRoute
-  '/training': typeof TrainingRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/products/accessories': typeof ProductsAccessoriesRoute
+  '/products/headband': typeof ProductsHeadbandRoute
+  '/products/software': typeof ProductsSoftwareRoute
+  '/products/sound-therapy': typeof ProductsSoundTherapyRoute
+  '/solutions/corporates': typeof SolutionsCorporatesRoute
+  '/solutions/educational': typeof SolutionsEducationalRoute
+  '/solutions/healthcare': typeof SolutionsHealthcareRoute
+  '/solutions/psychologists': typeof SolutionsPsychologistsRoute
+  '/solutions/rehab': typeof SolutionsRehabRoute
+  '/products': typeof ProductsIndexRoute
+  '/solutions': typeof SolutionsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/assessment': typeof AssessmentRoute
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
-  '/hardware-software': typeof HardwareSoftwareRoute
-  '/sound-therapy': typeof SoundTherapyRoute
+  '/practitioner': typeof PractitionerRoute
+  '/research': typeof ResearchRoute
+  '/stories': typeof StoriesRoute
   '/technology': typeof TechnologyRoute
-  '/training': typeof TrainingRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/products/accessories': typeof ProductsAccessoriesRoute
+  '/products/headband': typeof ProductsHeadbandRoute
+  '/products/software': typeof ProductsSoftwareRoute
+  '/products/sound-therapy': typeof ProductsSoundTherapyRoute
+  '/solutions/corporates': typeof SolutionsCorporatesRoute
+  '/solutions/educational': typeof SolutionsEducationalRoute
+  '/solutions/healthcare': typeof SolutionsHealthcareRoute
+  '/solutions/psychologists': typeof SolutionsPsychologistsRoute
+  '/solutions/rehab': typeof SolutionsRehabRoute
+  '/products/': typeof ProductsIndexRoute
+  '/solutions/': typeof SolutionsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
-    | '/assessment'
     | '/blog'
     | '/contact'
     | '/gallery'
-    | '/hardware-software'
-    | '/sound-therapy'
+    | '/practitioner'
+    | '/research'
+    | '/stories'
     | '/technology'
-    | '/training'
+    | '/testimonials'
+    | '/products/accessories'
+    | '/products/headband'
+    | '/products/software'
+    | '/products/sound-therapy'
+    | '/solutions/corporates'
+    | '/solutions/educational'
+    | '/solutions/healthcare'
+    | '/solutions/psychologists'
+    | '/solutions/rehab'
+    | '/products/'
+    | '/solutions/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/assessment'
     | '/blog'
     | '/contact'
     | '/gallery'
-    | '/hardware-software'
-    | '/sound-therapy'
+    | '/practitioner'
+    | '/research'
+    | '/stories'
     | '/technology'
-    | '/training'
+    | '/testimonials'
+    | '/products/accessories'
+    | '/products/headband'
+    | '/products/software'
+    | '/products/sound-therapy'
+    | '/solutions/corporates'
+    | '/solutions/educational'
+    | '/solutions/healthcare'
+    | '/solutions/psychologists'
+    | '/solutions/rehab'
+    | '/products'
+    | '/solutions'
   id:
     | '__root__'
     | '/'
     | '/about'
-    | '/assessment'
     | '/blog'
     | '/contact'
     | '/gallery'
-    | '/hardware-software'
-    | '/sound-therapy'
+    | '/practitioner'
+    | '/research'
+    | '/stories'
     | '/technology'
-    | '/training'
+    | '/testimonials'
+    | '/products/accessories'
+    | '/products/headband'
+    | '/products/software'
+    | '/products/sound-therapy'
+    | '/solutions/corporates'
+    | '/solutions/educational'
+    | '/solutions/healthcare'
+    | '/solutions/psychologists'
+    | '/solutions/rehab'
+    | '/products/'
+    | '/solutions/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  AssessmentRoute: typeof AssessmentRoute
   BlogRoute: typeof BlogRoute
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
-  HardwareSoftwareRoute: typeof HardwareSoftwareRoute
-  SoundTherapyRoute: typeof SoundTherapyRoute
+  PractitionerRoute: typeof PractitionerRoute
+  ResearchRoute: typeof ResearchRoute
+  StoriesRoute: typeof StoriesRoute
   TechnologyRoute: typeof TechnologyRoute
-  TrainingRoute: typeof TrainingRoute
+  TestimonialsRoute: typeof TestimonialsRoute
+  ProductsAccessoriesRoute: typeof ProductsAccessoriesRoute
+  ProductsHeadbandRoute: typeof ProductsHeadbandRoute
+  ProductsSoftwareRoute: typeof ProductsSoftwareRoute
+  ProductsSoundTherapyRoute: typeof ProductsSoundTherapyRoute
+  SolutionsCorporatesRoute: typeof SolutionsCorporatesRoute
+  SolutionsEducationalRoute: typeof SolutionsEducationalRoute
+  SolutionsHealthcareRoute: typeof SolutionsHealthcareRoute
+  SolutionsPsychologistsRoute: typeof SolutionsPsychologistsRoute
+  SolutionsRehabRoute: typeof SolutionsRehabRoute
+  ProductsIndexRoute: typeof ProductsIndexRoute
+  SolutionsIndexRoute: typeof SolutionsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/training': {
-      id: '/training'
-      path: '/training'
-      fullPath: '/training'
-      preLoaderRoute: typeof TrainingRouteImport
+    '/testimonials': {
+      id: '/testimonials'
+      path: '/testimonials'
+      fullPath: '/testimonials'
+      preLoaderRoute: typeof TestimonialsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/technology': {
@@ -176,18 +319,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TechnologyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sound-therapy': {
-      id: '/sound-therapy'
-      path: '/sound-therapy'
-      fullPath: '/sound-therapy'
-      preLoaderRoute: typeof SoundTherapyRouteImport
+    '/stories': {
+      id: '/stories'
+      path: '/stories'
+      fullPath: '/stories'
+      preLoaderRoute: typeof StoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/hardware-software': {
-      id: '/hardware-software'
-      path: '/hardware-software'
-      fullPath: '/hardware-software'
-      preLoaderRoute: typeof HardwareSoftwareRouteImport
+    '/research': {
+      id: '/research'
+      path: '/research'
+      fullPath: '/research'
+      preLoaderRoute: typeof ResearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practitioner': {
+      id: '/practitioner'
+      path: '/practitioner'
+      fullPath: '/practitioner'
+      preLoaderRoute: typeof PractitionerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -211,13 +361,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/assessment': {
-      id: '/assessment'
-      path: '/assessment'
-      fullPath: '/assessment'
-      preLoaderRoute: typeof AssessmentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -232,31 +375,109 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/solutions/': {
+      id: '/solutions/'
+      path: '/solutions'
+      fullPath: '/solutions/'
+      preLoaderRoute: typeof SolutionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/': {
+      id: '/products/'
+      path: '/products'
+      fullPath: '/products/'
+      preLoaderRoute: typeof ProductsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/rehab': {
+      id: '/solutions/rehab'
+      path: '/solutions/rehab'
+      fullPath: '/solutions/rehab'
+      preLoaderRoute: typeof SolutionsRehabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/psychologists': {
+      id: '/solutions/psychologists'
+      path: '/solutions/psychologists'
+      fullPath: '/solutions/psychologists'
+      preLoaderRoute: typeof SolutionsPsychologistsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/healthcare': {
+      id: '/solutions/healthcare'
+      path: '/solutions/healthcare'
+      fullPath: '/solutions/healthcare'
+      preLoaderRoute: typeof SolutionsHealthcareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/educational': {
+      id: '/solutions/educational'
+      path: '/solutions/educational'
+      fullPath: '/solutions/educational'
+      preLoaderRoute: typeof SolutionsEducationalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/corporates': {
+      id: '/solutions/corporates'
+      path: '/solutions/corporates'
+      fullPath: '/solutions/corporates'
+      preLoaderRoute: typeof SolutionsCorporatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/sound-therapy': {
+      id: '/products/sound-therapy'
+      path: '/products/sound-therapy'
+      fullPath: '/products/sound-therapy'
+      preLoaderRoute: typeof ProductsSoundTherapyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/software': {
+      id: '/products/software'
+      path: '/products/software'
+      fullPath: '/products/software'
+      preLoaderRoute: typeof ProductsSoftwareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/headband': {
+      id: '/products/headband'
+      path: '/products/headband'
+      fullPath: '/products/headband'
+      preLoaderRoute: typeof ProductsHeadbandRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/accessories': {
+      id: '/products/accessories'
+      path: '/products/accessories'
+      fullPath: '/products/accessories'
+      preLoaderRoute: typeof ProductsAccessoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  AssessmentRoute: AssessmentRoute,
   BlogRoute: BlogRoute,
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
-  HardwareSoftwareRoute: HardwareSoftwareRoute,
-  SoundTherapyRoute: SoundTherapyRoute,
+  PractitionerRoute: PractitionerRoute,
+  ResearchRoute: ResearchRoute,
+  StoriesRoute: StoriesRoute,
   TechnologyRoute: TechnologyRoute,
-  TrainingRoute: TrainingRoute,
+  TestimonialsRoute: TestimonialsRoute,
+  ProductsAccessoriesRoute: ProductsAccessoriesRoute,
+  ProductsHeadbandRoute: ProductsHeadbandRoute,
+  ProductsSoftwareRoute: ProductsSoftwareRoute,
+  ProductsSoundTherapyRoute: ProductsSoundTherapyRoute,
+  SolutionsCorporatesRoute: SolutionsCorporatesRoute,
+  SolutionsEducationalRoute: SolutionsEducationalRoute,
+  SolutionsHealthcareRoute: SolutionsHealthcareRoute,
+  SolutionsPsychologistsRoute: SolutionsPsychologistsRoute,
+  SolutionsRehabRoute: SolutionsRehabRoute,
+  ProductsIndexRoute: ProductsIndexRoute,
+  SolutionsIndexRoute: SolutionsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

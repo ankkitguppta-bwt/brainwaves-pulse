@@ -27,25 +27,25 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-teal">Explore</h4>
+          <h4 className="text-sm font-semibold uppercase tracking-wider text-teal">Products</h4>
           <ul className="mt-4 space-y-2 text-sm text-white/80">
-            <li><Link to="/about" className="hover:text-teal">About Us</Link></li>
+            <li><Link to="/products/headband" className="hover:text-teal">EEG Headband</Link></li>
+            <li><Link to="/products/software" className="hover:text-teal">Software Platform</Link></li>
+            <li><Link to="/products/sound-therapy" className="hover:text-teal">Sound Therapy</Link></li>
+            <li><Link to="/products/accessories" className="hover:text-teal">Accessories</Link></li>
             <li><Link to="/technology" className="hover:text-teal">Technology</Link></li>
-            <li><Link to="/assessment" className="hover:text-teal">Brainwave Assessment</Link></li>
-            <li><Link to="/sound-therapy" className="hover:text-teal">Sound Therapy</Link></li>
-            <li><Link to="/hardware-software" className="hover:text-teal">Hardware & Software</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-teal">Programs</h4>
+          <h4 className="text-sm font-semibold uppercase tracking-wider text-teal">Company</h4>
           <ul className="mt-4 space-y-2 text-sm text-white/80">
-            <li><Link to="/training" className="hover:text-teal">Training Program</Link></li>
-            <li><Link to="/gallery" className="hover:text-teal">Gallery & Media</Link></li>
-            <li><Link to="/blog" className="hover:text-teal">Blog</Link></li>
+            <li><Link to="/practitioner" className="hover:text-teal">Become a Practitioner</Link></li>
+            <li><Link to="/about" className="hover:text-teal">About Us</Link></li>
+            <li><Link to="/stories" className="hover:text-teal">Stories & Media</Link></li>
+            <li><Link to="/testimonials" className="hover:text-teal">Testimonials</Link></li>
             <li><Link to="/contact" className="hover:text-teal">Contact</Link></li>
-            <li><a href="#" className="hover:text-teal">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-teal">Terms & Conditions</a></li>
+            <li><Link to="/blog" className="hover:text-teal">Blog</Link></li>
           </ul>
         </div>
 
