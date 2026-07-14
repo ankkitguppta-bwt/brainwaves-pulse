@@ -30,16 +30,18 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const [activeWave, setActiveWave] = useState<WaveInfo | null>(null);
   return (
     <>
       <Hero />
       <StatsStrip />
-      <WhatIsNeurofeedback />
+      <WhatIsNeurofeedback onSelect={setActiveWave} />
       <HowItWorks />
       <WhoBenefits />
       <VideoTestimonials />
       <FAQ />
       <FinalCTA />
+      <WaveModal wave={activeWave} onChange={setActiveWave} onClose={() => setActiveWave(null)} />
     </>
   );
 }
