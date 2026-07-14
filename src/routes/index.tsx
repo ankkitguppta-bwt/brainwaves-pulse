@@ -98,7 +98,7 @@ function StatsStrip() {
   return (
     <section className="bg-white py-10">
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
-        <div className="mx-auto w-full rounded-3xl bg-navy px-6 py-8 shadow-brand md:w-[60%]">
+        <div className="mx-auto w-full rounded-3xl bg-navy px-6 py-8 md:w-[80%]">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {stats.map((s) => (
               <div key={s.l} className="text-center">
