@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   Activity, Brain, Headphones, GraduationCap,
   Sparkles, Waves, Gauge, Heart, Target,
@@ -8,6 +9,7 @@ import {
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
 import heroVideo from "@/assets/video/hero-loop.mp4.asset.json";
 import { CountUp } from "@/components/site/CountUp";
+import { WaveModal, WAVES, type WaveInfo } from "@/components/site/WaveModal";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
@@ -28,16 +30,18 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const [activeWave, setActiveWave] = useState<WaveInfo | null>(null);
   return (
     <>
       <Hero />
       <StatsStrip />
-      <WhatIsNeurofeedback />
+      <WhatIsNeurofeedback onSelect={setActiveWave} />
       <HowItWorks />
       <WhoBenefits />
       <VideoTestimonials />
       <FAQ />
       <FinalCTA />
+      <WaveModal wave={activeWave} onChange={setActiveWave} onClose={() => setActiveWave(null)} />
     </>
   );
 }
@@ -92,47 +96,55 @@ function StatsStrip() {
     { end: 92, suffix: "%+", l: "Reporting Accuracy" },
   ];
   return (
-    <section className="bg-navy text-white">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-8 sm:grid-cols-4 lg:px-8">
-        {stats.map((s) => (
-          <div key={s.l} className="text-center">
-            <p className="font-display text-3xl font-bold text-teal sm:text-4xl">
-              <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
-            </p>
-            <p className="mt-1 text-xs uppercase tracking-wider text-white/70">{s.l}</p>
+    <section className="bg-white py-10">
+      <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
+        <div className="mx-auto w-full rounded-3xl bg-navy px-6 py-8 shadow-brand md:w-[60%]">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {stats.map((s) => (
+              <div key={s.l} className="text-center">
+                <p className="font-display text-3xl font-bold text-white sm:text-4xl">
+                  <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
+                </p>
+                <p className="mt-1 text-xs uppercase tracking-wider text-white/70">{s.l}</p>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );
 }
 
 /* ───── What is neurofeedback ───── */
-function WhatIsNeurofeedback() {
-  const waves = [
-    { name: "Alpha", desc: "Relaxed, calm awareness · meditation", range: "8–12 Hz", color: "from-teal/20 to-teal/0" },
-    { name: "Beta", desc: "Focus, attention, active thinking", range: "13–30 Hz", color: "from-orange/20 to-orange/0" },
-    { name: "Theta", desc: "Creativity, deep relaxation, learning", range: "4–8 Hz", color: "from-teal/20 to-teal/0" },
-    { name: "Delta", desc: "Deep sleep, restoration, healing", range: "0.5–4 Hz", color: "from-orange/20 to-orange/0" },
-    { name: "Gamma", desc: "Peak performance, cognitive binding", range: "30–100 Hz", color: "from-teal/20 to-teal/0" },
-  ];
+function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) {
   return (
     <section className="bg-gradient-soft py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           eyebrow="What is Neurofeedback?"
           title="Train your brain. Optimise your mind."
-          sub="Neurofeedback is a non-invasive brain-training technology that monitors and optimises brainwave activity in real time."
+          sub="Neurofeedback is a non-invasive brain-training technology that monitors and optimises brainwave activity in real time. Click any wave to explore."
         />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          {waves.map((w) => (
-            <div key={w.name} className="glass-card relative overflow-hidden rounded-2xl p-5">
-              <div className={`absolute inset-x-0 top-0 h-20 bg-gradient-to-b ${w.color}`} />
-              <Waves className="relative h-6 w-6 text-teal" />
+          {WAVES.map((w) => (
+            <button
+              key={w.name}
+              type="button"
+              onClick={() => onSelect(w)}
+              className="glass-card group relative overflow-hidden rounded-2xl p-5 text-left transition hover:-translate-y-0.5 hover:shadow-brand focus:outline-none focus:ring-2 focus:ring-teal"
+            >
+              <div
+                className="absolute inset-x-0 top-0 h-20"
+                style={{ background: `linear-gradient(to bottom, ${w.color}33, transparent)` }}
+              />
+              <Waves className="relative h-6 w-6" style={{ color: w.color }} />
               <h3 className="relative mt-3 font-display text-xl font-semibold text-navy">{w.name} Waves</h3>
-              <p className="relative mt-1 text-xs font-medium text-orange">{w.range}</p>
+              <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>{w.range}</p>
               <p className="relative mt-3 text-sm text-muted-foreground">{w.desc}</p>
-            </div>
+              <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/70 group-hover:text-teal">
+                View animation <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </button>
           ))}
         </div>
       </div>
