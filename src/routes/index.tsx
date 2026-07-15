@@ -312,7 +312,22 @@ const FALLBACK_VIDEOS: VideoT[] = [
 
 function VideoTestimonials() {
   const [active, setActive] = useState<VideoT | null>(null);
-  const useCarousel = VIDEO_TESTIMONIALS.length > 3;
+  const q = useVideoQuery({
+    queryKey: ["testimonials", "video-featured"],
+    queryFn: async () => {
+      const { data, error } = await supabaseVT
+        .from("testimonials")
+        .select("id, author, title, video_url, thumbnail_url, is_featured, sort_order")
+        .eq("type", "video").order("sort_order");
+      if (error) throw error;
+      return (data ?? []).filter((v) => v.video_url);
+    },
+  });
+  const dbItems: VideoT[] = (q.data ?? []).map((v: any) => ({
+    id: v.id, title: v.title ?? v.author, author: v.author, src: v.video_url, thumbnail: v.thumbnail_url,
+  }));
+  const items = dbItems.length > 0 ? dbItems : FALLBACK_VIDEOS;
+  const useCarousel = items.length > 3;
 
   const Card = ({ v }: { v: VideoT }) => (
     <button
