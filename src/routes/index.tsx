@@ -56,6 +56,10 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const [activeWave, setActiveWave] = useState<WaveInfo | null>(null);
+  useEffect(() => {
+    AOS.init({ duration: 600, once: true, easing: "ease-out-cubic" });
+    AOS.refresh();
+  }, []);
   return (
     <>
       <Hero />
