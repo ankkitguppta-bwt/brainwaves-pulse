@@ -8,12 +8,14 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 import appCss from "../styles.css?url";
 import { SiteNavbar } from "@/components/site/SiteNavbar";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { WhatsAppFab } from "@/components/site/WhatsAppFab";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
+import BrainWavesLoader from "@/components/site/BrainWavesLoader";
 
 function NotFoundComponent() {
   return (
@@ -127,6 +129,50 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+function AppLoader() {
+  const [mounted, setMounted] = useState(false);
+  const [hiding, setHiding] = useState(false);
+  const [gone, setGone] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const start = Date.now();
+    const MIN = 500;
+    const MAX = 4000;
+
+    const finish = () => {
+      const elapsed = Date.now() - start;
+      const wait = Math.max(0, MIN - elapsed);
+      window.setTimeout(() => {
+        setHiding(true);
+        window.setTimeout(() => setGone(true), 450);
+      }, wait);
+    };
+
+    const ready = async () => {
+      if (document.readyState !== "complete") {
+        await new Promise<void>((r) =>
+          window.addEventListener("load", () => r(), { once: true }),
+        );
+      }
+      try {
+        await (document as Document & { fonts?: { ready: Promise<unknown> } })
+          .fonts?.ready;
+      } catch {
+        /* ignore */
+      }
+      finish();
+    };
+
+    ready();
+    const safety = window.setTimeout(finish, MAX);
+    return () => window.clearTimeout(safety);
+  }, []);
+
+  if (!mounted || gone) return null;
+  return <BrainWavesLoader hiding={hiding} />;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -134,6 +180,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ScrollToTop />
+      <AppLoader />
       {isBare ? (
         <Outlet />
       ) : (
