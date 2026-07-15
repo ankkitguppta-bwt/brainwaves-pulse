@@ -212,7 +212,7 @@ function WhoBenefits() {
     <section className="bg-gradient-soft py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading eyebrow="Who can benefit" title="Built for professionals, accessible to everyone" />
-        <div className="marquee-mask mt-12 space-y-4">
+        <div className="marquee-mask mt-12 space-y-4 shadow-none">
           {[audiences.slice(0, Math.ceil(audiences.length / 2)), audiences.slice(Math.ceil(audiences.length / 2))].map((row, idx) => (
             <div key={idx} className="marquee-track overflow-hidden">
               <div
@@ -220,7 +220,7 @@ function WhoBenefits() {
                 style={{ animation: `${idx % 2 === 0 ? "marquee-left" : "marquee-right"} 40s linear infinite` }}
               >
                 {[...row, ...row].map((a, i) => (
-                  <div key={`${a.t}-${i}`} className="glass-card flex w-40 shrink-0 flex-col items-center gap-2 rounded-xl p-4 text-center">
+                  <div key={`${a.t}-${i}`} className="glass-card flex w-40 shrink-0 flex-col items-center gap-2 rounded-xl p-4 text-center shadow-none">
                     <a.i className="h-6 w-6 text-teal" />
                     <p className="text-xs font-medium text-navy">{a.t}</p>
                   </div>
