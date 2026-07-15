@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { Pencil, Trash2 } from "lucide-react";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 
 type FieldType = "text" | "textarea" | "url" | "number" | "select" | "checkbox" | "date" | "image";
@@ -87,8 +88,12 @@ export function CrudManager<T extends { id: string }>({
                   <td key={c.key} className="px-4 py-2 align-top">{c.render ? c.render(row) : String(row[c.key] ?? "—")}</td>
                 ))}
                 <td className="px-4 py-2">
-                  <button onClick={() => setEditing({ ...row })} className="mr-2 text-navy hover:underline">Edit</button>
-                  <button onClick={() => remove(row.id)} className="text-red-600 hover:underline">Delete</button>
+                  <button onClick={() => setEditing({ ...row })} aria-label="Edit" title="Edit" className="mr-3 inline-flex items-center text-navy hover:opacity-70">
+                    <Pencil size={16} />
+                  </button>
+                  <button onClick={() => remove(row.id)} aria-label="Delete" title="Delete" className="inline-flex items-center text-red-600 hover:opacity-70">
+                    <Trash2 size={16} />
+                  </button>
                 </td>
               </tr>
             ))}

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { Pencil, Trash2 } from "lucide-react";
 import { listAllPosts, deletePost } from "@/lib/data/admin.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/blog/")({
@@ -40,12 +41,16 @@ function BlogListPage() {
                 </td>
                 <td className="px-4 py-2 text-muted-foreground">{new Date(p.updated_at).toLocaleDateString()}</td>
                 <td className="px-4 py-2">
-                  <Link to="/admin/blog/$id" params={{ id: p.id }} className="mr-3 text-navy hover:underline">Edit</Link>
+                  <Link to="/admin/blog/$id" params={{ id: p.id }} aria-label="Edit" title="Edit" className="mr-3 inline-flex items-center text-navy hover:opacity-70">
+                    <Pencil size={16} />
+                  </Link>
                   {p.status === "published" && (
-                    <Link to="/blog/$slug" params={{ slug: p.slug }} className="mr-3 text-slate-500 hover:underline">View</Link>
+                    <Link to="/blog/$slug" params={{ slug: p.slug }} className="mr-3 text-sm text-slate-500 hover:underline">View</Link>
                   )}
                   <button onClick={async () => { if (confirm("Delete post?")) { await del({ data: { id: p.id } }); qc.invalidateQueries({ queryKey: ["posts", "all"] }); } }}
-                    className="text-red-600 hover:underline">Delete</button>
+                    aria-label="Delete" title="Delete" className="inline-flex items-center text-red-600 hover:opacity-70">
+                    <Trash2 size={16} />
+                  </button>
                 </td>
               </tr>
             ))}
