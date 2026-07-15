@@ -300,7 +300,7 @@ function WhoBenefits() {
     { i: Sparkles, t: "Wellness Coaches" },
   ];
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading eyebrow="Who can benefit" title="Built for professionals, accessible to everyone" />
         <div className="marquee-mask mt-12 space-y-4 !shadow-none">
@@ -379,7 +379,7 @@ function VideoTestimonials() {
   );
 
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="flex items-end justify-between gap-4">
           <SectionHeading eyebrow="Video Testimonials" title="Hear it from our community" />
@@ -471,7 +471,7 @@ function FAQ() {
   }, []);
 
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-3xl px-4 lg:px-8">
         <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
         <Accordion type="single" collapsible className="mt-10">
@@ -498,7 +498,7 @@ function FAQ() {
 /* ───── Final CTA ───── */
 function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-navy py-20 text-white">
+    <section className="relative overflow-hidden bg-navy py-12 sm:py-16 lg:py-20 text-white">
       <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-40" />
       <div className="relative mx-auto max-w-4xl px-4 text-center lg:px-8">
         <h2 className="font-display text-3xl font-bold sm:text-5xl">
