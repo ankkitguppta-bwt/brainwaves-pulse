@@ -21,7 +21,8 @@ export const Route = createFileRoute("/_authenticated")({
   component: AdminShell,
 });
 
-const nav = [
+type NavItem = { to: string; label: string; icon: typeof LayoutDashboard; exact?: boolean };
+const nav: NavItem[] = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/enquiries", label: "Enquiries", icon: Inbox },
   { to: "/admin/blog", label: "Blog", icon: FileText },
@@ -29,7 +30,7 @@ const nav = [
   { to: "/admin/people", label: "People", icon: Users },
   { to: "/admin/case-studies", label: "Case Studies", icon: BookOpen },
   { to: "/admin/media", label: "Media", icon: Newspaper },
-] as const;
+];
 
 function AdminShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
