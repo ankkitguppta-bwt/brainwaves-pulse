@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_authenticated/admin/people")({
         { name: "sort_order", label: "Sort order", type: "number" },
         { name: "name", label: "Name", type: "text", required: true, colSpan: 2 },
         { name: "role", label: "Role / title", type: "text", colSpan: 2 },
-        { name: "image_url", label: "Photo URL", type: "url", placeholder: "https://…", colSpan: 2 },
+        { name: "image_url", label: "Photo", type: "image", aspect: "aspect-square", aspectLabel: "1:1 (600×600)", folder: "people", colSpan: 2 },
         { name: "description", label: "Description", type: "textarea" },
       ]}
       columns={[

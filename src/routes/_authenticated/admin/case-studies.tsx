@@ -15,7 +15,7 @@ export const Route = createFileRoute("/_authenticated/admin/case-studies")({
       fields={[
         { name: "title", label: "Title", type: "text", required: true },
         { name: "sort_order", label: "Sort order", type: "number" },
-        { name: "image_url", label: "Image URL", type: "url", colSpan: 2 },
+        { name: "image_url", label: "Image", type: "image", aspect: "aspect-video", aspectLabel: "16:9 (1600×900)", folder: "case-studies", colSpan: 2 },
         { name: "summary", label: "Summary", type: "textarea" },
         { name: "body_html", label: "Body (HTML allowed)", type: "textarea" },
         { name: "published", label: "Published", type: "checkbox", colSpan: 2 },

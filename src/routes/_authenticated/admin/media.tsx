@@ -22,7 +22,7 @@ export const Route = createFileRoute("/_authenticated/admin/media")({
         { name: "outlet", label: "Outlet / awarding body", type: "text" },
         { name: "entry_date", label: "Date", type: "date" },
         { name: "url", label: "Link URL", type: "url", colSpan: 2 },
-        { name: "image_url", label: "Image URL", type: "url", colSpan: 2 },
+        { name: "image_url", label: "Image / logo", type: "image", aspect: "aspect-video", aspectLabel: "16:9 (1200×675)", folder: "media", colSpan: 2 },
       ]}
       columns={[
         { key: "kind", label: "Kind" },

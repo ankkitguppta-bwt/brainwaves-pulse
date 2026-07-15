@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_authenticated/admin/")({
 
 function StatCard({ label, value, to }: { label: string; value: number | string; to: string }) {
   return (
-    <Link to={to} className="glass-card block rounded-2xl bg-white p-5 transition hover:shadow-lg">
+    <Link to={to} className="block rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-slate-300">
       <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
       <p className="mt-2 font-display text-3xl font-bold text-navy">{value}</p>
     </Link>

@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_authenticated/admin/testimonials")({
         { name: "title", label: "Title / role", type: "text" },
         { name: "quote", label: "Quote (text testimonials)", type: "textarea" },
         { name: "video_url", label: "Video URL", type: "url", placeholder: "MP4 or YouTube URL", colSpan: 2 },
-        { name: "thumbnail_url", label: "Thumbnail URL (optional)", type: "url", colSpan: 2 },
+        { name: "thumbnail_url", label: "Thumbnail (optional)", type: "image", aspect: "aspect-video", aspectLabel: "16:9 (1280×720)", folder: "testimonials", colSpan: 2 },
         { name: "is_featured", label: "Featured", type: "checkbox", placeholder: "Show on landing page", colSpan: 2 },
       ]}
       columns={[
