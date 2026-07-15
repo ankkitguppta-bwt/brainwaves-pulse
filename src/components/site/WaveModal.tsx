@@ -126,9 +126,6 @@ function WaveAnim({ wave }: { wave: WaveInfo }) {
           />
         </path>
       </svg>
-      <div className="absolute left-4 top-3 flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-white/80 backdrop-blur">
-        <Waves className="h-3.5 w-3.5" style={{ color: wave.color }} /> Live {wave.name} simulation
-      </div>
     </div>
   );
 }

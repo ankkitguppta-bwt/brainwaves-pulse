@@ -142,7 +142,7 @@ function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) 
               <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>{w.range}</p>
               <p className="relative mt-3 text-sm text-muted-foreground">{w.desc}</p>
               <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/70 group-hover:text-teal">
-                View animation <ArrowRight className="h-3.5 w-3.5" />
+                Know more <ArrowRight className="h-3.5 w-3.5" />
               </span>
             </button>
           ))}
