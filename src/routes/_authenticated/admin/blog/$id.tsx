@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getPost, upsertPost } from "@/lib/data/admin.functions";
-import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { DraftEditor } from "@/components/admin/DraftEditor";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 export const Route = createFileRoute("/_authenticated/admin/blog/$id")({
   head: () => ({ meta: [{ title: "Edit Post — Admin" }, { name: "robots", content: "noindex" }] }),
@@ -40,11 +41,18 @@ function PostEditor() {
   async function onSave(publish: boolean) {
     setBusy(true); setError(null);
     try {
-      const payload: any = { ...form, status: publish ? "published" : form.status };
+      // Slug is always derived from title on save; server ensures uniqueness.
+      const derivedSlug = slugify(form.title || "untitled") || "untitled";
+      const payload: any = {
+        ...form,
+        slug: isNew ? derivedSlug : (form.slug || derivedSlug),
+        status: publish ? "published" : form.status,
+      };
       if (isNew) delete payload.id;
       const saved = await save({ data: payload });
       await qc.invalidateQueries({ queryKey: ["posts", "all"] });
       if (isNew) navigate({ to: "/admin/blog/$id", params: { id: saved.id } });
+      else setForm(saved);
     } catch (err: any) {
       setError(err.message ?? "Save failed");
     } finally { setBusy(false); }
@@ -54,21 +62,29 @@ function PostEditor() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-bold text-navy">{isNew ? "New Post" : "Edit Post"}</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="font-display text-2xl font-bold text-navy">{isNew ? "New Post" : "Edit Post"}</h1>
+        {form.slug && !isNew && (
+          <p className="text-xs text-muted-foreground">URL: /blog/{form.slug}</p>
+        )}
+      </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-4">
           <div>
             <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Title</label>
-            <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value, slug: form.slug || slugify(e.target.value) })}
+            <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
               className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-lg font-semibold" />
+            <p className="mt-1 text-[11px] text-muted-foreground">
+              Slug auto-generated from title on save (kept unique automatically).
+            </p>
           </div>
           <div>
             <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Content</label>
             <div className="mt-1">
-              <RichTextEditor
+              <DraftEditor
                 value={form.content_html}
-                onChange={(html, json) => setForm({ ...form, content_html: html, content_json: json })}
+                onChange={(html) => setForm({ ...form, content_html: html })}
               />
             </div>
           </div>
@@ -92,17 +108,16 @@ function PostEditor() {
 
           <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
             <div>
-              <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Slug (URL)</label>
-              <input value={form.slug} onChange={(e) => setForm({ ...form, slug: slugify(e.target.value) })}
-                className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm" />
-            </div>
-            <div>
-              <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Cover image URL</label>
-              <input value={form.cover_image_url ?? ""} onChange={(e) => setForm({ ...form, cover_image_url: e.target.value })}
-                className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm" />
-              {form.cover_image_url && (
-                <img src={form.cover_image_url} alt="" className="mt-2 h-32 w-full rounded-lg object-cover" />
-              )}
+              <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Cover image</label>
+              <div className="mt-1">
+                <ImageUpload
+                  value={form.cover_image_url}
+                  onChange={(url) => setForm({ ...form, cover_image_url: url })}
+                  aspect="aspect-video"
+                  aspectLabel="16:9 (1600×900)"
+                  folder="blog-covers"
+                />
+              </div>
             </div>
             <div>
               <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Excerpt</label>
