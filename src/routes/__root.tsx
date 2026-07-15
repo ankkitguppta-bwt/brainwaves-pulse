@@ -131,7 +131,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ScrollToTop />
-      <div className="flex min-h-screen flex-col overflow-x-hidden pt-16">
+      <div className="flex min-h-screen flex-col overflow-x-hidden">
         <SiteNavbar />
         <main className="flex-1">
           <Outlet />
