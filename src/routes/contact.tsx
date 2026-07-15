@@ -19,6 +19,36 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("sending"); setErrorMsg(null);
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      name: String(fd.get("name") ?? ""),
+      email: String(fd.get("email") ?? ""),
+      phone: String(fd.get("phone") ?? ""),
+      interest: String(fd.get("interest") ?? ""),
+      message: String(fd.get("message") ?? ""),
+    };
+    try {
+      const res = await fetch("/api/public/enquiries", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error ?? "Send failed");
+      }
+      setStatus("sent");
+      (e.target as HTMLFormElement).reset();
+    } catch (err: any) {
+      setStatus("error"); setErrorMsg(err.message);
+    }
+  }
   return (
     <>
       <PageHero
