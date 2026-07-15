@@ -95,13 +95,13 @@ function AdminShell() {
         </nav>
 
         <div className="border-t border-slate-800 p-3">
-          <Link
-            to="/"
+          <a
+            href="/"
             className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-400 hover:bg-slate-800/60 hover:text-white"
           >
             <ExternalLink className="h-5 w-5" />
             View site
-          </Link>
+          </a>
           <button
             onClick={signOut}
             className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-400 hover:bg-slate-800/60 hover:text-white"
