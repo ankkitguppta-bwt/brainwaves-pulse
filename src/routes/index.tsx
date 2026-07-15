@@ -360,7 +360,7 @@ function FAQ() {
   }, []);
 
   return (
-    <section className="bg-gradient-soft py-20">
+    <section className="bg-white py-20">
       <div className="mx-auto max-w-3xl px-4 lg:px-8">
         <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
         <Accordion type="single" collapsible className="mt-10">
@@ -370,7 +370,7 @@ function FAQ() {
               value={`item-${i}`}
               data-aos="fade-down"
               data-aos-delay={i * 100}
-              className="mb-3 rounded-2xl border-0 bg-white/70 px-5 backdrop-blur-[14px] !shadow-none"
+              className="mb-3 rounded-2xl bg-white px-5 !shadow-none"
             >
               <AccordionTrigger className="text-left text-base font-semibold text-navy hover:no-underline">
                 {q}
