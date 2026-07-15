@@ -39,6 +39,7 @@ const nav: NavItem[] = [
     ],
   },
   { label: "Become a Practitioner", to: "/practitioner" },
+  { label: "Blog", to: "/blog" },
   {
     label: "About Us",
     children: [
