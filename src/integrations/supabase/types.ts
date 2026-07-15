@@ -14,16 +14,283 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      blog_posts: {
+        Row: {
+          author_id: string | null
+          content_html: string
+          content_json: Json | null
+          cover_image_url: string | null
+          created_at: string
+          excerpt: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          published_at: string | null
+          slug: string
+          status: Database["public"]["Enums"]["post_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          content_html?: string
+          content_json?: Json | null
+          cover_image_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          slug: string
+          status?: Database["public"]["Enums"]["post_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          content_html?: string
+          content_json?: Json | null
+          cover_image_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          slug?: string
+          status?: Database["public"]["Enums"]["post_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      case_studies: {
+        Row: {
+          body_html: string | null
+          created_at: string
+          id: string
+          image_url: string | null
+          published: boolean
+          sort_order: number
+          summary: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body_html?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          sort_order?: number
+          summary?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body_html?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          sort_order?: number
+          summary?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      contact_enquiries: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          interest: string | null
+          is_read: boolean
+          message: string | null
+          name: string
+          phone: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          interest?: string | null
+          is_read?: boolean
+          message?: string | null
+          name: string
+          phone?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          interest?: string | null
+          is_read?: boolean
+          message?: string | null
+          name?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      media_recognition: {
+        Row: {
+          created_at: string
+          entry_date: string | null
+          id: string
+          image_url: string | null
+          kind: Database["public"]["Enums"]["media_kind"]
+          outlet: string | null
+          sort_order: number
+          title: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          entry_date?: string | null
+          id?: string
+          image_url?: string | null
+          kind: Database["public"]["Enums"]["media_kind"]
+          outlet?: string | null
+          sort_order?: number
+          title: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          entry_date?: string | null
+          id?: string
+          image_url?: string | null
+          kind?: Database["public"]["Enums"]["media_kind"]
+          outlet?: string | null
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
+      people: {
+        Row: {
+          category: Database["public"]["Enums"]["person_category"]
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          role: string | null
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["person_category"]
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          role?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["person_category"]
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          role?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          author: string
+          created_at: string
+          id: string
+          is_featured: boolean
+          quote: string | null
+          sort_order: number
+          thumbnail_url: string | null
+          title: string | null
+          type: Database["public"]["Enums"]["testimonial_type"]
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          author: string
+          created_at?: string
+          id?: string
+          is_featured?: boolean
+          quote?: string | null
+          sort_order?: number
+          thumbnail_url?: string | null
+          title?: string | null
+          type: Database["public"]["Enums"]["testimonial_type"]
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          author?: string
+          created_at?: string
+          id?: string
+          is_featured?: boolean
+          quote?: string | null
+          sort_order?: number
+          thumbnail_url?: string | null
+          title?: string | null
+          type?: Database["public"]["Enums"]["testimonial_type"]
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
+      media_kind: "media" | "recognition"
+      person_category: "leadership" | "team" | "advisor"
+      post_status: "draft" | "published"
+      testimonial_type: "text" | "video"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +417,12 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+      media_kind: ["media", "recognition"],
+      person_category: ["leadership", "team", "advisor"],
+      post_status: ["draft", "published"],
+      testimonial_type: ["text", "video"],
+    },
   },
 } as const
