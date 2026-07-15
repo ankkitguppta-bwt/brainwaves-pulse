@@ -220,7 +220,7 @@ function WhoBenefits() {
                 style={{ animation: `${idx % 2 === 0 ? "marquee-left" : "marquee-right"} 40s linear infinite` }}
               >
                 {[...row, ...row].map((a, i) => (
-                  <div key={`${a.t}-${i}`} className="glass-card flex w-40 shrink-0 flex-col items-center gap-2 rounded-xl p-4 text-center">
+                  <div key={`${a.t}-${i}`} className="glass-card flex w-40 shrink-0 flex-col items-center gap-2 rounded-xl p-4 text-center shadow-none">
                     <a.i className="h-6 w-6 text-teal" />
                     <p className="text-xs font-medium text-navy">{a.t}</p>
                   </div>
