@@ -18,10 +18,13 @@ export const Route = createFileRoute("/_authenticated")({
       authCache = null;
       throw redirect({ to: "/auth" });
     }
-    const { data: hasAdmin } = await supabase.rpc("has_role", {
-      _user_id: data.user.id,
-      _role: "admin",
-    });
+    const { data: adminRow } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", data.user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+    const hasAdmin = !!adminRow;
     if (!hasAdmin) {
       authCache = null;
       throw redirect({ to: "/" });
