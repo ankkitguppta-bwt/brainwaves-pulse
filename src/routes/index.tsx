@@ -301,11 +301,13 @@ function WhoBenefits() {
 }
 
 /* ───── Video testimonials ───── */
-type VideoT = { id: number; title: string; author: string; src: string };
-const VIDEO_TESTIMONIALS: VideoT[] = [
-  { id: 1, title: "Focus training results", author: "Dr. A. Sharma", src: heroVideo.url },
-  { id: 2, title: "Classroom neurofeedback", author: "Priya, Educator", src: heroVideo.url },
-  { id: 3, title: "Clinic transformation", author: "Dr. R. Menon", src: heroVideo.url },
+type VideoT = { id: string; title: string; author: string; src: string; thumbnail?: string | null };
+import { useQuery as useVideoQuery } from "@tanstack/react-query";
+import { supabase as supabaseVT } from "@/integrations/supabase/client";
+const FALLBACK_VIDEOS: VideoT[] = [
+  { id: "f1", title: "Focus training results", author: "Dr. A. Sharma", src: heroVideo.url },
+  { id: "f2", title: "Classroom neurofeedback", author: "Priya, Educator", src: heroVideo.url },
+  { id: "f3", title: "Clinic transformation", author: "Dr. R. Menon", src: heroVideo.url },
 ];
 
 function VideoTestimonials() {
