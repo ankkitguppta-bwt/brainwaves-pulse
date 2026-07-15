@@ -141,15 +141,15 @@ export function WaveModal({
 }) {
   return (
     <Dialog open={!!wave} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="max-w-5xl overflow-hidden border-0 bg-white p-0">
+      <DialogContent className="max-h-[90vh] w-[calc(100%-1rem)] max-w-5xl overflow-y-auto overflow-x-hidden border-0 bg-white p-0 sm:w-full">
         {wave && (
           <div className="grid gap-0 md:grid-cols-[1fr_220px]">
-            <div className="p-6">
+            <div className="p-4 pt-10 sm:p-6 sm:pt-10">
               <DialogTitle className="sr-only">{wave.name} Waves</DialogTitle>
               <WaveAnim wave={wave} />
               <div className="mt-6">
                 <div className="flex flex-wrap items-baseline gap-3">
-                  <h3 className="font-display text-3xl font-bold text-navy">{wave.name} Waves</h3>
+                  <h3 className="font-display text-2xl font-bold text-navy sm:text-3xl">{wave.name} Waves</h3>
                   <span
                     className="rounded-full px-2.5 py-0.5 text-xs font-semibold"
                     style={{ background: `${wave.color}22`, color: wave.color }}
@@ -161,11 +161,11 @@ export function WaveModal({
                 <p className="mt-4 text-[15px] leading-relaxed text-foreground/80">{wave.detail}</p>
               </div>
             </div>
-            <aside className="border-t border-border bg-secondary/40 p-4 md:border-l md:border-t-0">
+            <aside className="relative border-t border-border bg-secondary/40 p-4 md:border-l md:border-t-0">
               <p className="mb-3 px-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                 Other waves
               </p>
-              <div className="flex gap-3 overflow-x-auto md:flex-col md:gap-2 md:overflow-visible">
+              <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1 pr-8 md:mx-0 md:flex-col md:gap-2 md:overflow-visible md:px-0 md:pr-0">
                 {WAVES.map((w) => {
                   const active = w.name === wave.name;
                   return (
@@ -173,7 +173,7 @@ export function WaveModal({
                       key={w.name}
                       type="button"
                       onClick={() => onChange(w)}
-                      className={`group flex min-w-[140px] items-center gap-3 rounded-xl border p-3 text-left transition md:min-w-0 ${
+                      className={`group flex min-w-[140px] shrink-0 items-center gap-3 rounded-xl border p-3 text-left transition md:min-w-0 md:shrink ${
                         active
                           ? "border-teal bg-white shadow-sm"
                           : "border-border bg-white/70 hover:border-teal/50 hover:bg-white"
@@ -193,6 +193,7 @@ export function WaveModal({
                   );
                 })}
               </div>
+              <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-secondary/80 to-transparent md:hidden" />
             </aside>
           </div>
         )}
