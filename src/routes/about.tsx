@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import founder from "@/assets/docx/founder-ankit.jpg";
-import teamFrancesco from "@/assets/docx/team-francesco.jpg";
 import teamParas from "@/assets/docx/team-paras.jpeg";
-import teamPaula from "@/assets/docx/team-paula.jpg";
 import teamSushant from "@/assets/docx/team-sushant.jpg";
 import teamRoopali from "@/assets/docx/team-roopali.jpg";
 import teamRima from "@/assets/docx/team-rima.jpg";
