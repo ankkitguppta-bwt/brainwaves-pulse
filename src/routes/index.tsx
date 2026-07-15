@@ -265,7 +265,7 @@ function WhoBenefits() {
     { i: Sparkles, t: "Wellness Coaches" },
   ];
   return (
-    <section className="py-20">
+    <section className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading eyebrow="Who can benefit" title="Built for professionals, accessible to everyone" />
         <div className="marquee-mask mt-12 space-y-4 shadow-none">
