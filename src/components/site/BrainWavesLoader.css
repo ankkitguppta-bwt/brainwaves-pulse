@@ -1,0 +1,119 @@
+.brainwaves-loader {
+  --loader-background: #050708;
+  --loader-duration: 1.8s;
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.brainwaves-loader--fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  min-height: 100dvh;
+  background: var(--loader-background);
+  transition: opacity 400ms ease;
+}
+
+.brainwaves-loader--hiding {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brainwaves-loader__logo {
+  position: relative;
+  width: min(var(--loader-width), 82vw);
+  aspect-ratio: 1039 / 290;
+  overflow: hidden;
+  animation: logo-breathe var(--loader-duration) ease-in-out infinite;
+  will-change: transform;
+}
+
+.brainwaves-loader__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.brainwaves-loader__image--base {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  filter: grayscale(0.2);
+}
+
+.brainwaves-loader__reveal {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  animation: logo-reveal var(--loader-duration) ease-in-out infinite;
+  will-change: clip-path;
+}
+
+.brainwaves-loader__shine {
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -24%;
+  width: 18%;
+  opacity: 0.55;
+  transform: skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.72),
+    transparent
+  );
+  filter: blur(5px);
+  animation: logo-shine var(--loader-duration) ease-in-out infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.brainwaves-loader__text {
+  color: rgba(255, 255, 255, 0.62);
+  font: 500 0.75rem/1.2 system-ui, sans-serif;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  animation: text-pulse var(--loader-duration) ease-in-out infinite;
+}
+
+@keyframes logo-reveal {
+  0% { clip-path: inset(0 100% 0 0); }
+  45%, 68% { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 100%); }
+}
+
+@keyframes logo-shine {
+  0%, 8% { transform: translateX(0) skewX(-18deg); opacity: 0; }
+  25% { opacity: 0.55; }
+  62% { transform: translateX(760%) skewX(-18deg); opacity: 0.3; }
+  100% { transform: translateX(760%) skewX(-18deg); opacity: 0; }
+}
+
+@keyframes logo-breathe {
+  0%, 100% { transform: scale(0.985); }
+  50% { transform: scale(1); }
+}
+
+@keyframes text-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brainwaves-loader__logo,
+  .brainwaves-loader__reveal,
+  .brainwaves-loader__shine,
+  .brainwaves-loader__text {
+    animation: none;
+  }
+  .brainwaves-loader__reveal { clip-path: none; }
+  .brainwaves-loader__shine { display: none; }
+}
