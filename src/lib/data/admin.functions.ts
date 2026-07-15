@@ -123,15 +123,27 @@ export const upsertPost = createServerFn({ method: "POST" })
   .middleware([requireAdmin])
   .inputValidator((d: z.infer<typeof postSchema>) => postSchema.parse(d))
   .handler(async ({ data, context }) => {
+    const supabase = (context as any).supabase;
+    // Ensure slug uniqueness — append -2, -3, … on collision
+    let slug = data.slug;
+    let n = 2;
+    while (true) {
+      const { data: existing } = await supabase
+        .from("blog_posts").select("id").eq("slug", slug).maybeSingle();
+      if (!existing || (data.id && existing.id === data.id)) break;
+      slug = `${data.slug}-${n++}`;
+      if (n > 200) break;
+    }
     const payload: any = {
       ...data,
+      slug,
       cover_image_url: data.cover_image_url || null,
       author_id: (context as any).userId,
     };
     if (data.status === "published") payload.published_at = new Date().toISOString();
     const { data: row, error } = data.id
-      ? await (context as any).supabase.from("blog_posts").update(payload).eq("id", data.id).select().single()
-      : await (context as any).supabase.from("blog_posts").insert(payload).select().single();
+      ? await supabase.from("blog_posts").update(payload).eq("id", data.id).select().single()
+      : await supabase.from("blog_posts").insert(payload).select().single();
     if (error) throw new Error(error.message);
     return row;
   });
