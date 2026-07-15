@@ -222,28 +222,45 @@ function HowItWorks() {
       desc: "Game-based feedback sessions to train target brain states.",
     },
   ];
+  const Step = ({ s, i }: { s: (typeof steps)[number]; i: number }) => (
+    <div className="relative text-center">
+      <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-navy text-white shadow-brand">
+        <s.icon className="h-7 w-7" />
+        <span className="absolute -right-2 -top-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange text-xs font-bold text-navy">
+          {i + 1}
+        </span>
+      </div>
+      <h3 className="mt-4 font-display text-base font-semibold text-navy">{s.title}</h3>
+      <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
+    </div>
+  );
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading eyebrow="How it works" title="A five-step neuro-wellness journey" />
-        <div className="relative mt-14">
-          <div className="absolute left-0 right-0 top-8 hidden h-px bg-gradient-to-r from-transparent via-teal/40 to-transparent lg:block" />
+        {/* Mobile / tablet carousel */}
+        <div className="mt-10 lg:hidden">
+          <Carousel opts={{ align: "start" }}>
+            <CarouselContent className="-ml-4">
+              {steps.map((s, i) => (
+                <CarouselItem key={s.title} className="pl-4 basis-[80%] sm:basis-1/2 md:basis-[40%]">
+                  <Step s={s} i={i} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+        {/* Desktop */}
+        <div className="relative mt-14 hidden lg:block">
+          <div className="absolute left-0 right-0 top-8 h-px bg-gradient-to-r from-transparent via-teal/40 to-transparent" />
           <ol className="grid gap-8 lg:grid-cols-5">
             {steps.map((s, i) => (
-            <li
+              <li
                 key={s.title}
                 data-aos="fade-right"
                 data-aos-delay={i * 250}
-                className="relative text-center"
               >
-                <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-navy text-white shadow-brand">
-                  <s.icon className="h-7 w-7" />
-                  <span className="absolute -right-2 -top-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange text-xs font-bold text-navy">
-                    {i + 1}
-                  </span>
-                </div>
-                <h3 className="mt-4 font-display text-base font-semibold text-navy">{s.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
+                <Step s={s} i={i} />
               </li>
             ))}
           </ol>
@@ -252,6 +269,7 @@ function HowItWorks() {
     </section>
   );
 }
+
 
 /* ───── Who benefits ───── */
 function WhoBenefits() {
