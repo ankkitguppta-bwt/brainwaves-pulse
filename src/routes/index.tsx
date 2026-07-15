@@ -28,6 +28,8 @@ import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
 import heroVideo from "@/assets/video/hero-loop.mp4.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { WaveModal, WAVES, type WaveInfo } from "@/components/site/WaveModal";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import AOS from "aos";
 import "aos/dist/aos.css";
