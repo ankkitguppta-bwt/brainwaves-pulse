@@ -27,9 +27,7 @@ export const Route = createFileRoute("/about")({
 function AboutPage() {
   const lead = [
     { img: founder, n: "Dr. Ankit Gupta", r: "Founder & Director · Psychologist, Neurofeedback Practitioner, Brainwave Analyst, Sound Therapy Expert" },
-    { img: teamFrancesco, n: "Francesco Garripoli", r: "CTO · International Neurofeedback & Consciousness Research Contributor" },
     { img: teamParas, n: "Dr. Paras Kaul", r: "Researcher, Neurofeedback · California" },
-    { img: teamPaula, n: "Ms. Paula", r: "Ex VP, IBM · Wellness & Research Integration" },
   ];
   const team = [
     { img: teamSushant, n: "Dr. Sushant Myrosker", r: "Team" },
