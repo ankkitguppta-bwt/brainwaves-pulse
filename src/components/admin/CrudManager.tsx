@@ -101,11 +101,11 @@ export function CrudManager<T extends { id: string }>({
 
       {editing && (
         <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4" onClick={() => setEditing(null)}>
-          <div className="mt-10 w-full max-w-2xl rounded-2xl bg-white p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+          <div className="mt-10 w-full max-w-2xl rounded-2xl bg-white p-6" onClick={(e) => e.stopPropagation()}>
             <h2 className="font-display text-xl font-bold text-navy">{editing.id ? "Edit" : "New"}</h2>
             <form onSubmit={save} className="mt-4 grid gap-4 sm:grid-cols-2">
               {fields.map((f) => (
-                <div key={f.name} className={f.colSpan === 2 || f.type === "textarea" ? "sm:col-span-2" : ""}>
+                <div key={f.name} className={f.colSpan === 2 || f.type === "textarea" || f.type === "image" ? "sm:col-span-2" : ""}>
                   <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{f.label}</label>
                   {f.type === "textarea" ? (
                     <textarea rows={4} value={editing[f.name] ?? ""} onChange={(e) => setEditing({ ...editing, [f.name]: e.target.value })}
@@ -120,6 +120,16 @@ export function CrudManager<T extends { id: string }>({
                       <input type="checkbox" checked={!!editing[f.name]} onChange={(e) => setEditing({ ...editing, [f.name]: e.target.checked })} />
                       {f.placeholder ?? "Enabled"}
                     </label>
+                  ) : f.type === "image" ? (
+                    <div className="mt-1">
+                      <ImageUpload
+                        value={editing[f.name] ?? ""}
+                        onChange={(url) => setEditing({ ...editing, [f.name]: url })}
+                        aspect={f.aspect ?? "aspect-video"}
+                        aspectLabel={f.aspectLabel}
+                        folder={f.folder ?? "uploads"}
+                      />
+                    </div>
                   ) : (
                     <input
                       type={f.type === "url" ? "url" : f.type === "number" ? "number" : f.type === "date" ? "date" : "text"}
