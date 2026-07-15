@@ -145,7 +145,7 @@ function StatsStrip() {
 /* ───── What is neurofeedback ───── */
 function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) {
   return (
-    <section className="bg-gradient-soft py-20">
+    <section className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           eyebrow="What is Neurofeedback?"
@@ -160,10 +160,6 @@ function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) 
               onClick={() => onSelect(w)}
               className="glass-card group relative overflow-hidden rounded-2xl p-5 text-left !shadow-none transition hover:-translate-y-0.5 hover:!shadow-none focus:outline-none focus:ring-2 focus:ring-teal"
             >
-              <div
-                className="absolute inset-x-0 top-0 h-20"
-                style={{ background: `linear-gradient(to bottom, ${w.color}33, transparent)` }}
-              />
               <Waves className="relative h-6 w-6" style={{ color: w.color }} />
               <h3 className="relative mt-3 font-display text-xl font-semibold text-navy">{w.name} Waves</h3>
               <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>
