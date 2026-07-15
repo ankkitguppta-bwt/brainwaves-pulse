@@ -129,17 +129,23 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isBare = pathname.startsWith("/admin") || pathname.startsWith("/auth");
   return (
     <QueryClientProvider client={queryClient}>
       <ScrollToTop />
-      <div className="flex min-h-screen flex-col overflow-x-hidden pt-16">
-        <SiteNavbar />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        <SiteFooter />
-        <WhatsAppFab />
-      </div>
+      {isBare ? (
+        <Outlet />
+      ) : (
+        <div className="flex min-h-screen flex-col overflow-x-hidden pt-16">
+          <SiteNavbar />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <SiteFooter />
+          <WhatsAppFab />
+        </div>
+      )}
     </QueryClientProvider>
   );
 }
