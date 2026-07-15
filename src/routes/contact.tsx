@@ -25,56 +25,69 @@ function ContactPage() {
         title="Let's talk"
         sub="Book a demo, request an assessment or apply for the practitioner programme — we'd love to hear from you."
       />
-      <section className="bg-white py-16">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-2 lg:px-8">
-          <form
-            action={`mailto:hello@brainwavestech.com`}
-            method="post"
-            encType="text/plain"
-            className="glass-card rounded-2xl p-6"
-          >
-            <h2 className="font-display text-xl font-bold text-navy">Send a message</h2>
-            <div className="mt-5 grid gap-4">
-              <Field label="Name" name="name" />
-              <Field label="Email" name="email" type="email" />
-              <Field label="Phone / WhatsApp" name="phone" />
-              <div>
-                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Interest</label>
-                <select name="interest" className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-sm">
-                  {["Book Free Demo", "Request Brainwave Assessment", "Practitioner Training", "Hardware & Software", "Other"].map((o) => (
-                    <option key={o}>{o}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
-                <textarea name="message" rows={4} className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-sm" />
-              </div>
-              <button className="rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white">Send Message</button>
-            </div>
-          </form>
-
-          <div className="space-y-4">
-            <InfoRow icon={Phone} title="Phone / WhatsApp" lines={["+91 98930 64372", "+91 92440 24033"]} />
-            <InfoRow icon={Mail} title="Email" lines={["hello@brainwavestech.com"]} />
-            <InfoRow icon={MapPin} title="Website" lines={["www.brainwavestech.com"]} />
+      <section className="bg-white py-12 lg:py-16">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          {/* Compact contact info row */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <InfoCard icon={Phone} title="Phone / WhatsApp" lines={["+91 98930 64372", "+91 92440 24033"]} />
+            <InfoCard icon={Mail} title="Email" lines={["hello@brainwavestech.com"]} />
+            <InfoCard icon={MapPin} title="Website" lines={["www.brainwavestech.com"]} />
             <a
               href="https://wa.me/919893064372"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white"
+              className="glass-card flex items-center gap-3 rounded-2xl p-4 transition hover:shadow-lg"
             >
-              <img src={whatsappIcon.url} alt="" className="h-5 w-5" />
-              Chat on WhatsApp
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#25D366]/15">
+                <img src={whatsappIcon.url} alt="" className="h-5 w-5" />
+              </div>
+              <div className="min-w-0">
+                <p className="font-semibold text-navy">WhatsApp</p>
+                <p className="truncate text-sm text-muted-foreground">Chat with us</p>
+              </div>
             </a>
+          </div>
 
-            <div className="glass-card overflow-hidden rounded-2xl p-2">
-              <h2 className="px-4 pt-3 font-display text-xl font-bold text-navy">Book a meeting</h2>
-              <p className="px-4 pb-3 text-sm text-muted-foreground">Pick a time that works — schedule directly via Cal.com.</p>
+          {/* Form + Booking side by side */}
+          <div className="mt-6 grid gap-6 lg:grid-cols-12 lg:gap-8">
+            <form
+              action={`mailto:hello@brainwavestech.com`}
+              method="post"
+              encType="text/plain"
+              className="glass-card rounded-2xl p-6 lg:col-span-7"
+            >
+              <h2 className="font-display text-xl font-bold text-navy">Send a message</h2>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                <Field label="Name" name="name" />
+                <Field label="Email" name="email" type="email" />
+                <Field label="Phone / WhatsApp" name="phone" className="sm:col-span-2" />
+                <div className="sm:col-span-2">
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Interest</label>
+                  <select name="interest" className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-sm">
+                    {["Book Free Demo", "Request Brainwave Assessment", "Practitioner Training", "Hardware & Software", "Other"].map((o) => (
+                      <option key={o}>{o}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
+                  <textarea name="message" rows={4} className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-sm" />
+                </div>
+                <button className="sm:col-span-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy-soft">
+                  Send Message
+                </button>
+              </div>
+            </form>
+
+            <div className="glass-card overflow-hidden rounded-2xl p-4 lg:col-span-5">
+              <div className="px-2">
+                <h2 className="font-display text-xl font-bold text-navy">Book a meeting</h2>
+                <p className="text-sm text-muted-foreground">Pick a time that works — schedule directly via Cal.com.</p>
+              </div>
               <iframe
                 src="https://cal.com/brainwaves-tech"
                 title="Schedule a meeting with BrainWaves Tech"
-                className="h-[700px] w-full rounded-xl border-0"
+                className="mt-3 h-[520px] w-full rounded-xl border-0"
                 loading="lazy"
               />
             </div>
@@ -85,25 +98,25 @@ function ContactPage() {
   );
 }
 
-function Field({ label, name, type = "text" }: { label: string; name: string; type?: string }) {
+function Field({ label, name, type = "text", className = "" }: { label: string; name: string; type?: string; className?: string }) {
   return (
-    <div>
+    <div className={className}>
       <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</label>
       <input name={name} type={type} className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-sm" />
     </div>
   );
 }
 
-function InfoRow({ icon: Icon, title, lines }: { icon: React.ComponentType<{ className?: string }>; title: string; lines: string[] }) {
+function InfoCard({ icon: Icon, title, lines }: { icon: React.ComponentType<{ className?: string }>; title: string; lines: string[] }) {
   return (
-    <div className="glass-card flex items-start gap-4 rounded-2xl p-5">
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal/15 text-teal">
+    <div className="glass-card flex items-center gap-3 rounded-2xl p-4">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal/15 text-teal">
         <Icon className="h-5 w-5" />
       </div>
-      <div>
+      <div className="min-w-0">
         <p className="font-semibold text-navy">{title}</p>
         {lines.map((l) => (
-          <p key={l} className="text-sm text-muted-foreground">{l}</p>
+          <p key={l} className="truncate text-sm text-muted-foreground">{l}</p>
         ))}
       </div>
     </div>
