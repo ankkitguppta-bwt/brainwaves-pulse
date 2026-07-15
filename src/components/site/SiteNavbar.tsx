@@ -171,7 +171,7 @@ export function SiteNavbar() {
               to="/contact"
               className="inline-flex items-center rounded-full bg-teal px-4 py-2 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.03]"
             >
-              Book Demo
+              Book Demo Now
             </Link>
           </div>
 
@@ -272,7 +272,7 @@ export function SiteNavbar() {
                 onClick={() => setOpen(false)}
                 className="flex min-h-[52px] w-full items-center justify-center rounded-full bg-navy px-4 py-3 text-base font-semibold text-white shadow-brand"
               >
-                Book Demo
+                Book Demo Now
               </Link>
             </div>
           </div>
