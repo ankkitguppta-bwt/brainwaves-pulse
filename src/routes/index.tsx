@@ -106,10 +106,11 @@ function Hero() {
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 rounded-full bg-teal px-5 py-3 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.02]"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.02]"
           >
             Book Demo Now <ArrowRight className="h-4 w-4" />
           </Link>
+
         </div>
       </div>
     </section>
