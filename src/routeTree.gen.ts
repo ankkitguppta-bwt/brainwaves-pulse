@@ -35,6 +35,7 @@ import { Route as ProductsAccessoriesRouteImport } from './routes/products.acces
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as ApiPublicEnquiriesRouteImport } from './routes/api/public/enquiries'
+import { Route as ApiPublicBootstrapAdminRouteImport } from './routes/api/public/bootstrap-admin'
 import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin/testimonials'
 import { Route as AuthenticatedAdminPeopleRouteImport } from './routes/_authenticated/admin/people'
 import { Route as AuthenticatedAdminMediaRouteImport } from './routes/_authenticated/admin/media'
@@ -172,6 +173,11 @@ const ApiPublicEnquiriesRoute = ApiPublicEnquiriesRouteImport.update({
   path: '/api/public/enquiries',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicBootstrapAdminRoute = ApiPublicBootstrapAdminRouteImport.update({
+  id: '/api/public/bootstrap-admin',
+  path: '/api/public/bootstrap-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminTestimonialsRoute =
   AuthenticatedAdminTestimonialsRouteImport.update({
     id: '/admin/testimonials',
@@ -243,6 +249,7 @@ export interface FileRoutesByFullPath {
   '/admin/media': typeof AuthenticatedAdminMediaRoute
   '/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
+  '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/blog/$id': typeof AuthenticatedAdminBlogIdRoute
@@ -277,6 +284,7 @@ export interface FileRoutesByTo {
   '/admin/media': typeof AuthenticatedAdminMediaRoute
   '/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
+  '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/blog/$id': typeof AuthenticatedAdminBlogIdRoute
@@ -313,6 +321,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
   '/_authenticated/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
+  '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/blog/$id': typeof AuthenticatedAdminBlogIdRoute
@@ -349,6 +358,7 @@ export interface FileRouteTypes {
     | '/admin/media'
     | '/admin/people'
     | '/admin/testimonials'
+    | '/api/public/bootstrap-admin'
     | '/api/public/enquiries'
     | '/admin/'
     | '/admin/blog/$id'
@@ -383,6 +393,7 @@ export interface FileRouteTypes {
     | '/admin/media'
     | '/admin/people'
     | '/admin/testimonials'
+    | '/api/public/bootstrap-admin'
     | '/api/public/enquiries'
     | '/admin'
     | '/admin/blog/$id'
@@ -418,6 +429,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/media'
     | '/_authenticated/admin/people'
     | '/_authenticated/admin/testimonials'
+    | '/api/public/bootstrap-admin'
     | '/api/public/enquiries'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/blog/$id'
@@ -448,6 +460,7 @@ export interface RootRouteChildren {
   SolutionsRehabRoute: typeof SolutionsRehabRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   SolutionsIndexRoute: typeof SolutionsIndexRoute
+  ApiPublicBootstrapAdminRoute: typeof ApiPublicBootstrapAdminRoute
   ApiPublicEnquiriesRoute: typeof ApiPublicEnquiriesRoute
 }
 
@@ -635,6 +648,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicEnquiriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/bootstrap-admin': {
+      id: '/api/public/bootstrap-admin'
+      path: '/api/public/bootstrap-admin'
+      fullPath: '/api/public/bootstrap-admin'
+      preLoaderRoute: typeof ApiPublicBootstrapAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin/testimonials': {
       id: '/_authenticated/admin/testimonials'
       path: '/admin/testimonials'
@@ -746,6 +766,7 @@ const rootRouteChildren: RootRouteChildren = {
   SolutionsRehabRoute: SolutionsRehabRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   SolutionsIndexRoute: SolutionsIndexRoute,
+  ApiPublicBootstrapAdminRoute: ApiPublicBootstrapAdminRoute,
   ApiPublicEnquiriesRoute: ApiPublicEnquiriesRoute,
 }
 export const routeTree = rootRouteImport
