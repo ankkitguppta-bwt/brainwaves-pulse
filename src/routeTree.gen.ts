@@ -34,6 +34,7 @@ import { Route as ProductsHeadbandRouteImport } from './routes/products.headband
 import { Route as ProductsAccessoriesRouteImport } from './routes/products.accessories'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as ApiPublicEnquiriesRouteImport } from './routes/api/public/enquiries'
+import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin/testimonials'
 import { Route as AuthenticatedAdminPeopleRouteImport } from './routes/_authenticated/admin/people'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -160,6 +161,12 @@ const ApiPublicEnquiriesRoute = ApiPublicEnquiriesRouteImport.update({
   path: '/api/public/enquiries',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminTestimonialsRoute =
+  AuthenticatedAdminTestimonialsRouteImport.update({
+    id: '/admin/testimonials',
+    path: '/admin/testimonials',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminPeopleRoute =
   AuthenticatedAdminPeopleRouteImport.update({
     id: '/admin/people',
@@ -191,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
   '/admin/people': typeof AuthenticatedAdminPeopleRoute
+  '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -218,6 +226,7 @@ export interface FileRoutesByTo {
   '/products': typeof ProductsIndexRoute
   '/solutions': typeof SolutionsIndexRoute
   '/admin/people': typeof AuthenticatedAdminPeopleRoute
+  '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
@@ -247,6 +256,7 @@ export interface FileRoutesById {
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
   '/_authenticated/admin/people': typeof AuthenticatedAdminPeopleRoute
+  '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -276,6 +286,7 @@ export interface FileRouteTypes {
     | '/products/'
     | '/solutions/'
     | '/admin/people'
+    | '/admin/testimonials'
     | '/api/public/enquiries'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -303,6 +314,7 @@ export interface FileRouteTypes {
     | '/products'
     | '/solutions'
     | '/admin/people'
+    | '/admin/testimonials'
     | '/api/public/enquiries'
     | '/admin'
   id:
@@ -331,6 +343,7 @@ export interface FileRouteTypes {
     | '/products/'
     | '/solutions/'
     | '/_authenticated/admin/people'
+    | '/_authenticated/admin/testimonials'
     | '/api/public/enquiries'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
@@ -539,6 +552,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicEnquiriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/testimonials': {
+      id: '/_authenticated/admin/testimonials'
+      path: '/admin/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AuthenticatedAdminTestimonialsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/people': {
       id: '/_authenticated/admin/people'
       path: '/admin/people'
@@ -551,11 +571,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminPeopleRoute: typeof AuthenticatedAdminPeopleRoute
+  AuthenticatedAdminTestimonialsRoute: typeof AuthenticatedAdminTestimonialsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminPeopleRoute: AuthenticatedAdminPeopleRoute,
+  AuthenticatedAdminTestimonialsRoute: AuthenticatedAdminTestimonialsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
