@@ -81,7 +81,7 @@ function WaveAnim({ wave }: { wave: WaveInfo }) {
   };
 
   return (
-    <div className="relative aspect-[16/6] w-full overflow-hidden rounded-2xl bg-navy">
+    <div className="relative aspect-[16/6] w-full min-w-0 max-w-full overflow-hidden rounded-2xl bg-navy">
       <svg viewBox="0 0 800 220" className="absolute inset-0 h-full w-full" preserveAspectRatio="none">
         <defs>
           <linearGradient id={`g-${wave.name}`} x1="0" x2="1" y1="0" y2="0">
@@ -141,14 +141,14 @@ export function WaveModal({
 }) {
   return (
     <Dialog open={!!wave} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="max-h-[90vh] w-[calc(100%-1rem)] max-w-5xl overflow-y-auto overflow-x-hidden border-0 bg-white p-0 sm:w-full">
+      <DialogContent className="block max-h-[90vh] w-[calc(100vw-2rem)] max-w-[calc(100vw-2rem)] overflow-y-auto overflow-x-hidden border-0 bg-white p-0 md:w-full md:max-w-5xl">
         {wave && (
-          <div className="grid gap-0 md:grid-cols-[1fr_220px]">
-            <div className="p-4 pt-10 sm:p-6 sm:pt-10">
+          <div className="grid w-full min-w-0 max-w-full grid-cols-[minmax(0,1fr)] gap-0 overflow-hidden md:grid-cols-[minmax(0,1fr)_220px] md:overflow-visible">
+            <div className="min-w-0 max-w-full overflow-hidden p-4 pt-10 sm:p-6 sm:pt-10 md:overflow-visible">
               <DialogTitle className="sr-only">{wave.name} Waves</DialogTitle>
               <WaveAnim wave={wave} />
-              <div className="mt-6">
-                <div className="flex flex-wrap items-baseline gap-3">
+              <div className="mt-6 min-w-0 max-w-full">
+                <div className="flex min-w-0 flex-wrap items-baseline gap-3">
                   <h3 className="font-display text-2xl font-bold text-navy sm:text-3xl">{wave.name} Waves</h3>
                   <span
                     className="rounded-full px-2.5 py-0.5 text-xs font-semibold"
@@ -157,15 +157,15 @@ export function WaveModal({
                     {wave.range}
                   </span>
                 </div>
-                <p className="mt-2 text-sm font-medium text-muted-foreground">{wave.desc}</p>
-                <p className="mt-4 text-[15px] leading-relaxed text-foreground/80">{wave.detail}</p>
+                <p className="mt-2 max-w-full break-words text-sm font-medium text-muted-foreground">{wave.desc}</p>
+                <p className="mt-4 max-w-full break-words text-[15px] leading-relaxed text-foreground/80">{wave.detail}</p>
               </div>
             </div>
-            <aside className="relative border-t border-border bg-secondary/40 p-4 md:border-l md:border-t-0">
+            <aside className="relative min-w-0 max-w-full overflow-hidden border-t border-border bg-secondary/40 p-4 md:overflow-visible md:border-l md:border-t-0">
               <p className="mb-3 px-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                 Other waves
               </p>
-              <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1 pr-8 md:mx-0 md:flex-col md:gap-2 md:overflow-visible md:px-0 md:pr-0">
+              <div className="flex max-w-full gap-3 overflow-x-auto pb-1 pr-10 [scroll-padding-right:2.5rem] md:flex-col md:gap-2 md:overflow-visible md:pr-0">
                 {WAVES.map((w) => {
                   const active = w.name === wave.name;
                   return (
