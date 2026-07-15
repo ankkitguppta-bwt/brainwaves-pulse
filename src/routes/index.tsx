@@ -29,6 +29,8 @@ import heroVideo from "@/assets/video/hero-loop.mp4.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { WaveModal, WAVES, type WaveInfo } from "@/components/site/WaveModal";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export const Route = createFileRoute("/")({
   head: () => ({
