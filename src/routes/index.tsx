@@ -131,7 +131,7 @@ function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) 
               key={w.name}
               type="button"
               onClick={() => onSelect(w)}
-              className="glass-card group relative overflow-hidden rounded-2xl p-5 text-left transition hover:-translate-y-0.5 hover:shadow-brand focus:outline-none focus:ring-2 focus:ring-teal"
+              className="glass-card group relative overflow-hidden rounded-2xl p-5 text-left !shadow-none transition hover:-translate-y-0.5 hover:!shadow-none focus:outline-none focus:ring-2 focus:ring-teal"
             >
               <div
                 className="absolute inset-x-0 top-0 h-20"
