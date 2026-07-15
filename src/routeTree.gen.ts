@@ -34,6 +34,7 @@ import { Route as ProductsHeadbandRouteImport } from './routes/products.headband
 import { Route as ProductsAccessoriesRouteImport } from './routes/products.accessories'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as ApiPublicEnquiriesRouteImport } from './routes/api/public/enquiries'
+import { Route as AuthenticatedAdminPeopleRouteImport } from './routes/_authenticated/admin/people'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
@@ -159,6 +160,12 @@ const ApiPublicEnquiriesRoute = ApiPublicEnquiriesRouteImport.update({
   path: '/api/public/enquiries',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminPeopleRoute =
+  AuthenticatedAdminPeopleRouteImport.update({
+    id: '/admin/people',
+    path: '/admin/people',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -183,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/solutions/rehab': typeof SolutionsRehabRoute
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
+  '/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -209,6 +217,7 @@ export interface FileRoutesByTo {
   '/solutions/rehab': typeof SolutionsRehabRoute
   '/products': typeof ProductsIndexRoute
   '/solutions': typeof SolutionsIndexRoute
+  '/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
@@ -237,6 +246,7 @@ export interface FileRoutesById {
   '/solutions/rehab': typeof SolutionsRehabRoute
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
+  '/_authenticated/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -265,6 +275,7 @@ export interface FileRouteTypes {
     | '/solutions/rehab'
     | '/products/'
     | '/solutions/'
+    | '/admin/people'
     | '/api/public/enquiries'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -291,6 +302,7 @@ export interface FileRouteTypes {
     | '/solutions/rehab'
     | '/products'
     | '/solutions'
+    | '/admin/people'
     | '/api/public/enquiries'
     | '/admin'
   id:
@@ -318,6 +330,7 @@ export interface FileRouteTypes {
     | '/solutions/rehab'
     | '/products/'
     | '/solutions/'
+    | '/_authenticated/admin/people'
     | '/api/public/enquiries'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
@@ -526,14 +539,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicEnquiriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/people': {
+      id: '/_authenticated/admin/people'
+      path: '/admin/people'
+      fullPath: '/admin/people'
+      preLoaderRoute: typeof AuthenticatedAdminPeopleRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminPeopleRoute: typeof AuthenticatedAdminPeopleRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminPeopleRoute: AuthenticatedAdminPeopleRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 

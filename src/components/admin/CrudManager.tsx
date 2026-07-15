@@ -15,9 +15,9 @@ export type FieldDef = {
 
 type Props<T> = {
   queryKey: unknown[];
-  listFn: () => Promise<T[]>;
-  upsertFn: (data: any) => Promise<any>;
-  deleteFn: (data: { id: string }) => Promise<any>;
+  listFn: any;
+  upsertFn: any;
+  deleteFn: any;
   fields: FieldDef[];
   columns: { key: string; label: string; render?: (row: T) => React.ReactNode }[];
   newDefaults: Record<string, any>;
