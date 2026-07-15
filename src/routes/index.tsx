@@ -212,7 +212,7 @@ function WhoBenefits() {
     <section className="bg-gradient-soft py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading eyebrow="Who can benefit" title="Built for professionals, accessible to everyone" />
-        <div className="marquee-mask mt-12 space-y-4">
+        <div className="marquee-mask mt-12 space-y-4 shadow-none">
           {[audiences.slice(0, Math.ceil(audiences.length / 2)), audiences.slice(Math.ceil(audiences.length / 2))].map((row, idx) => (
             <div key={idx} className="marquee-track overflow-hidden">
               <div
