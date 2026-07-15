@@ -39,8 +39,9 @@ function EnquiriesPage() {
                   Mark {e.is_read ? "unread" : "read"}
                 </button>
                 <button onClick={async () => { if (confirm("Delete?")) { await del({ data: { id: e.id } }); qc.invalidateQueries({ queryKey: ["enquiries"] }); } }}
-                  className="rounded-full border border-red-200 px-3 py-1 text-xs text-red-600 hover:bg-red-50">
-                  Delete
+                  aria-label="Delete" title="Delete"
+                  className="inline-flex items-center rounded-full border border-red-200 px-3 py-1 text-xs text-red-600 hover:bg-red-50">
+                  <Trash2 size={14} className="mr-1" /> Delete
                 </button>
               </div>
             </div>
