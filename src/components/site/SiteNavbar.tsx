@@ -140,7 +140,7 @@ export function SiteNavbar() {
                   </button>
                   {open && (
                     <div className="absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-2">
-                      <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-brand">
+                      <div className="overflow-hidden rounded-2xl border border-border bg-white">
                         <ul className="py-2">
                           {item.children.map((c) => (
                             <li key={c.label}>
