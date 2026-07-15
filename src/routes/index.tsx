@@ -364,7 +364,7 @@ function VideoTestimonials() {
         {useCarousel ? (
           <Carousel opts={{ align: "start" }} className="mt-10">
             <CarouselContent className="-ml-4">
-              {VIDEO_TESTIMONIALS.map((v) => (
+              {items.map((v: VideoT) => (
                 <CarouselItem key={v.id} className="pl-4 sm:basis-1/2 lg:basis-1/3">
                   <Card v={v} />
                 </CarouselItem>
@@ -375,7 +375,7 @@ function VideoTestimonials() {
           </Carousel>
         ) : (
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {VIDEO_TESTIMONIALS.map((v) => (
+            {items.map((v: VideoT) => (
               <Card key={v.id} v={v} />
             ))}
           </div>
