@@ -37,6 +37,7 @@ import { Route as ApiPublicEnquiriesRouteImport } from './routes/api/public/enqu
 import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin/testimonials'
 import { Route as AuthenticatedAdminPeopleRouteImport } from './routes/_authenticated/admin/people'
 import { Route as AuthenticatedAdminMediaRouteImport } from './routes/_authenticated/admin/media'
+import { Route as AuthenticatedAdminEnquiriesRouteImport } from './routes/_authenticated/admin/enquiries'
 import { Route as AuthenticatedAdminCaseStudiesRouteImport } from './routes/_authenticated/admin/case-studies'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -180,6 +181,12 @@ const AuthenticatedAdminMediaRoute = AuthenticatedAdminMediaRouteImport.update({
   path: '/admin/media',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminEnquiriesRoute =
+  AuthenticatedAdminEnquiriesRouteImport.update({
+    id: '/admin/enquiries',
+    path: '/admin/enquiries',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminCaseStudiesRoute =
   AuthenticatedAdminCaseStudiesRouteImport.update({
     id: '/admin/case-studies',
@@ -211,6 +218,7 @@ export interface FileRoutesByFullPath {
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
   '/admin/case-studies': typeof AuthenticatedAdminCaseStudiesRoute
+  '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
   '/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
@@ -241,6 +249,7 @@ export interface FileRoutesByTo {
   '/products': typeof ProductsIndexRoute
   '/solutions': typeof SolutionsIndexRoute
   '/admin/case-studies': typeof AuthenticatedAdminCaseStudiesRoute
+  '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
   '/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
@@ -273,6 +282,7 @@ export interface FileRoutesById {
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
   '/_authenticated/admin/case-studies': typeof AuthenticatedAdminCaseStudiesRoute
+  '/_authenticated/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
   '/_authenticated/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
@@ -305,6 +315,7 @@ export interface FileRouteTypes {
     | '/products/'
     | '/solutions/'
     | '/admin/case-studies'
+    | '/admin/enquiries'
     | '/admin/media'
     | '/admin/people'
     | '/admin/testimonials'
@@ -335,6 +346,7 @@ export interface FileRouteTypes {
     | '/products'
     | '/solutions'
     | '/admin/case-studies'
+    | '/admin/enquiries'
     | '/admin/media'
     | '/admin/people'
     | '/admin/testimonials'
@@ -366,6 +378,7 @@ export interface FileRouteTypes {
     | '/products/'
     | '/solutions/'
     | '/_authenticated/admin/case-studies'
+    | '/_authenticated/admin/enquiries'
     | '/_authenticated/admin/media'
     | '/_authenticated/admin/people'
     | '/_authenticated/admin/testimonials'
@@ -598,6 +611,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminMediaRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/enquiries': {
+      id: '/_authenticated/admin/enquiries'
+      path: '/admin/enquiries'
+      fullPath: '/admin/enquiries'
+      preLoaderRoute: typeof AuthenticatedAdminEnquiriesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/case-studies': {
       id: '/_authenticated/admin/case-studies'
       path: '/admin/case-studies'
@@ -610,6 +630,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminCaseStudiesRoute: typeof AuthenticatedAdminCaseStudiesRoute
+  AuthenticatedAdminEnquiriesRoute: typeof AuthenticatedAdminEnquiriesRoute
   AuthenticatedAdminMediaRoute: typeof AuthenticatedAdminMediaRoute
   AuthenticatedAdminPeopleRoute: typeof AuthenticatedAdminPeopleRoute
   AuthenticatedAdminTestimonialsRoute: typeof AuthenticatedAdminTestimonialsRoute
@@ -618,6 +639,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminCaseStudiesRoute: AuthenticatedAdminCaseStudiesRoute,
+  AuthenticatedAdminEnquiriesRoute: AuthenticatedAdminEnquiriesRoute,
   AuthenticatedAdminMediaRoute: AuthenticatedAdminMediaRoute,
   AuthenticatedAdminPeopleRoute: AuthenticatedAdminPeopleRoute,
   AuthenticatedAdminTestimonialsRoute: AuthenticatedAdminTestimonialsRoute,
