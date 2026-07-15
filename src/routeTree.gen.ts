@@ -36,6 +36,7 @@ import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authentic
 import { Route as ApiPublicEnquiriesRouteImport } from './routes/api/public/enquiries'
 import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin/testimonials'
 import { Route as AuthenticatedAdminPeopleRouteImport } from './routes/_authenticated/admin/people'
+import { Route as AuthenticatedAdminCaseStudiesRouteImport } from './routes/_authenticated/admin/case-studies'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
@@ -173,6 +174,12 @@ const AuthenticatedAdminPeopleRoute =
     path: '/admin/people',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminCaseStudiesRoute =
+  AuthenticatedAdminCaseStudiesRouteImport.update({
+    id: '/admin/case-studies',
+    path: '/admin/case-studies',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -197,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/solutions/rehab': typeof SolutionsRehabRoute
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
+  '/admin/case-studies': typeof AuthenticatedAdminCaseStudiesRoute
   '/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
@@ -225,6 +233,7 @@ export interface FileRoutesByTo {
   '/solutions/rehab': typeof SolutionsRehabRoute
   '/products': typeof ProductsIndexRoute
   '/solutions': typeof SolutionsIndexRoute
+  '/admin/case-studies': typeof AuthenticatedAdminCaseStudiesRoute
   '/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
@@ -255,6 +264,7 @@ export interface FileRoutesById {
   '/solutions/rehab': typeof SolutionsRehabRoute
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
+  '/_authenticated/admin/case-studies': typeof AuthenticatedAdminCaseStudiesRoute
   '/_authenticated/admin/people': typeof AuthenticatedAdminPeopleRoute
   '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
@@ -285,6 +295,7 @@ export interface FileRouteTypes {
     | '/solutions/rehab'
     | '/products/'
     | '/solutions/'
+    | '/admin/case-studies'
     | '/admin/people'
     | '/admin/testimonials'
     | '/api/public/enquiries'
@@ -313,6 +324,7 @@ export interface FileRouteTypes {
     | '/solutions/rehab'
     | '/products'
     | '/solutions'
+    | '/admin/case-studies'
     | '/admin/people'
     | '/admin/testimonials'
     | '/api/public/enquiries'
@@ -342,6 +354,7 @@ export interface FileRouteTypes {
     | '/solutions/rehab'
     | '/products/'
     | '/solutions/'
+    | '/_authenticated/admin/case-studies'
     | '/_authenticated/admin/people'
     | '/_authenticated/admin/testimonials'
     | '/api/public/enquiries'
@@ -566,16 +579,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminPeopleRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/case-studies': {
+      id: '/_authenticated/admin/case-studies'
+      path: '/admin/case-studies'
+      fullPath: '/admin/case-studies'
+      preLoaderRoute: typeof AuthenticatedAdminCaseStudiesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminCaseStudiesRoute: typeof AuthenticatedAdminCaseStudiesRoute
   AuthenticatedAdminPeopleRoute: typeof AuthenticatedAdminPeopleRoute
   AuthenticatedAdminTestimonialsRoute: typeof AuthenticatedAdminTestimonialsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminCaseStudiesRoute: AuthenticatedAdminCaseStudiesRoute,
   AuthenticatedAdminPeopleRoute: AuthenticatedAdminPeopleRoute,
   AuthenticatedAdminTestimonialsRoute: AuthenticatedAdminTestimonialsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
