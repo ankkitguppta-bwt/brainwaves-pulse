@@ -110,7 +110,7 @@ export function DraftEditor(props: Props) {
         Loading editor…
       </div>
     }>
-      {() => <InnerEditor {...props} />}
+      <InnerEditor {...props} />
     </ClientOnly>
   );
 }
