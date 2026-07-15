@@ -7,10 +7,12 @@ import { createMiddleware } from "@tanstack/react-start";
 export const requireAdmin = createMiddleware({ type: "function" })
   .middleware([requireSupabaseAuth])
   .server(async ({ next, context }) => {
-    const { data, error } = await (context as any).supabase.rpc("has_role", {
-      _user_id: (context as any).userId,
-      _role: "admin",
-    });
+    const { data, error } = await (context as any).supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", (context as any).userId)
+      .eq("role", "admin")
+      .maybeSingle();
     if (error || !data) throw new Response("Forbidden", { status: 403 });
     return next();
   });
