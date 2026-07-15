@@ -172,7 +172,11 @@ function HowItWorks() {
           <div className="absolute left-0 right-0 top-8 hidden h-px bg-gradient-to-r from-transparent via-teal/40 to-transparent lg:block" />
           <ol className="grid gap-8 lg:grid-cols-5">
             {steps.map((s, i) => (
-              <li key={s.title} className="relative text-center">
+              <li
+                key={s.title}
+                className="animate-step-in relative text-center"
+                style={{ animationDelay: `${i * 0.3}s` }}
+              >
                 <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-navy text-teal shadow-brand">
                   <s.icon className="h-7 w-7" />
                   <span className="absolute -right-2 -top-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange text-xs font-bold text-navy">{i + 1}</span>
@@ -182,6 +186,7 @@ function HowItWorks() {
               </li>
             ))}
           </ol>
+
         </div>
       </div>
     </section>
