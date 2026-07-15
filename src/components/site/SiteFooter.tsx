@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import logoDark from "@/assets/brand/logo-dark.png";
+import logoDarkAsset from "@/assets/brand/logo-dark.png.asset.json";
 import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
+
+const logoDark = logoDarkAsset.url;
 
 export function SiteFooter() {
   return (
