@@ -298,8 +298,37 @@ function WhoBenefits() {
   );
 }
 
-/* ───── Video testimonials placeholder ───── */
+/* ───── Video testimonials ───── */
+type VideoT = { id: number; title: string; author: string; src: string };
+const VIDEO_TESTIMONIALS: VideoT[] = [
+  { id: 1, title: "Focus training results", author: "Dr. A. Sharma", src: heroVideo.url },
+  { id: 2, title: "Classroom neurofeedback", author: "Priya, Educator", src: heroVideo.url },
+  { id: 3, title: "Clinic transformation", author: "Dr. R. Menon", src: heroVideo.url },
+];
+
 function VideoTestimonials() {
+  const [active, setActive] = useState<VideoT | null>(null);
+  const useCarousel = VIDEO_TESTIMONIALS.length > 3;
+
+  const Card = ({ v }: { v: VideoT }) => (
+    <button
+      type="button"
+      onClick={() => setActive(v)}
+      className="group relative block aspect-video w-full overflow-hidden rounded-2xl bg-gradient-hero text-left"
+    >
+      <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-50" />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-navy shadow-lg transition group-hover:scale-110">
+          <Play className="ml-0.5 h-6 w-6" />
+        </span>
+      </div>
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+        <p className="text-sm font-semibold text-white">{v.title}</p>
+        <p className="text-xs text-white/80">{v.author}</p>
+      </div>
+    </button>
+  );
+
   return (
     <section className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -312,23 +341,51 @@ function VideoTestimonials() {
             See all <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-hero">
-              <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-50" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-navy shadow-lg">
-                  <Play className="ml-0.5 h-6 w-6" />
-                </span>
-              </div>
-              <p className="absolute bottom-3 left-3 text-xs text-white">Video testimonial {i} — placeholder</p>
-            </div>
-          ))}
-        </div>
+
+        {useCarousel ? (
+          <Carousel opts={{ align: "start" }} className="mt-10">
+            <CarouselContent className="-ml-4">
+              {VIDEO_TESTIMONIALS.map((v) => (
+                <CarouselItem key={v.id} className="pl-4 sm:basis-1/2 lg:basis-1/3">
+                  <Card v={v} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        ) : (
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {VIDEO_TESTIMONIALS.map((v) => (
+              <Card key={v.id} v={v} />
+            ))}
+          </div>
+        )}
       </div>
+
+      <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
+        <DialogContent className="max-w-3xl overflow-hidden p-0">
+          <DialogHeader className="px-6 pt-5">
+            <DialogTitle>{active?.title}</DialogTitle>
+            <DialogDescription>{active?.author}</DialogDescription>
+          </DialogHeader>
+          <div className="aspect-video w-full bg-black">
+            {active && (
+              <video
+                key={active.id}
+                src={active.src}
+                controls
+                autoPlay
+                className="h-full w-full"
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
+
 
 /* ───── FAQ ───── */
 function FAQ() {
