@@ -82,9 +82,7 @@ function ContactPage() {
           {/* Form + Booking side by side */}
           <div className="mt-6 grid gap-6 lg:grid-cols-12 lg:gap-8">
             <form
-              action={`mailto:hello@brainwavestech.com`}
-              method="post"
-              encType="text/plain"
+              onSubmit={onSubmit}
               className="glass-card rounded-2xl p-6 lg:col-span-7"
             >
               <h2 className="font-display text-xl font-bold text-navy">Send a message</h2>
@@ -104,8 +102,18 @@ function ContactPage() {
                   <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
                   <textarea name="message" rows={4} className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-sm" />
                 </div>
-                <button className="sm:col-span-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy-soft">
-                  Send Message
+                {status === "sent" && (
+                  <p className="sm:col-span-2 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+                    Thanks — we'll get back to you shortly.
+                  </p>
+                )}
+                {status === "error" && (
+                  <p className="sm:col-span-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{errorMsg}</p>
+                )}
+                <button
+                  disabled={status === "sending"}
+                  className="sm:col-span-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy-soft disabled:opacity-60">
+                  {status === "sending" ? "Sending…" : "Send Message"}
                 </button>
               </div>
             </form>
