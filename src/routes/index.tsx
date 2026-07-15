@@ -350,13 +350,28 @@ function FAQ() {
     ],
     ["Does the hardware come with warranty?", "Yes — 6 months hardware warranty is included with the package."],
   ];
+
+  useEffect(() => {
+    AOS.init({
+      duration: 600,
+      once: true,
+      easing: "ease-out-cubic",
+    });
+  }, []);
+
   return (
     <section className="bg-gradient-soft py-20">
       <div className="mx-auto max-w-3xl px-4 lg:px-8">
         <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
         <Accordion type="single" collapsible className="mt-10">
           {faqs.map(([q, a], i) => (
-            <AccordionItem key={i} value={`item-${i}`} className="glass-card mb-3 rounded-2xl border-0 px-5">
+            <AccordionItem
+              key={i}
+              value={`item-${i}`}
+              data-aos="fade-down"
+              data-aos-delay={i * 100}
+              className="mb-3 rounded-2xl border-0 bg-white/70 px-5 backdrop-blur-[14px] !shadow-none"
+            >
               <AccordionTrigger className="text-left text-base font-semibold text-navy hover:no-underline">
                 {q}
               </AccordionTrigger>
