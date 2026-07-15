@@ -219,7 +219,7 @@ function HowItWorks() {
             <li
                 key={s.title}
                 data-aos="fade-right"
-                data-aos-delay={i * 120}
+                data-aos-delay={i * 250}
                 className="relative text-center"
               >
                 <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-navy text-white shadow-brand">
