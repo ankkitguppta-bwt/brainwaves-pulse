@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
-type FieldType = "text" | "textarea" | "url" | "number" | "select" | "checkbox" | "date";
+type FieldType = "text" | "textarea" | "url" | "number" | "select" | "checkbox" | "date" | "image";
 export type FieldDef = {
   name: string;
   label: string;
@@ -11,6 +12,9 @@ export type FieldDef = {
   required?: boolean;
   placeholder?: string;
   colSpan?: 1 | 2;
+  aspect?: string;
+  aspectLabel?: string;
+  folder?: string;
 };
 
 type Props<T> = {
