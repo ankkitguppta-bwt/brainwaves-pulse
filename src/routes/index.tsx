@@ -173,17 +173,16 @@ function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) 
           title="Train your brain. Optimise your mind."
           sub="Neurofeedback is a non-invasive brain-training technology that monitors and optimises brainwave activity in real time. Click any wave to explore."
         />
-        {/* Mobile / tablet carousel */}
-        <div className="mt-10 lg:hidden">
-          <Carousel opts={{ align: "start" }}>
-            <CarouselContent className="-ml-4">
-              {WAVES.map((w) => (
-                <CarouselItem key={w.name} className="pl-4 basis-[85%] sm:basis-1/2 md:basis-[40%]">
-                  <Card w={w} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+        {/* Mobile / tablet 2-col grid */}
+        <div className="mt-10 grid grid-cols-2 gap-4 lg:hidden">
+          {WAVES.map((w, i) => (
+            <div
+              key={w.name}
+              className={i === WAVES.length - 1 && WAVES.length % 2 === 1 ? "col-span-2 sm:col-span-1 sm:col-start-1 sm:mx-auto sm:w-1/2" : ""}
+            >
+              <Card w={w} />
+            </div>
+          ))}
         </div>
         {/* Desktop grid */}
         <div className="mt-12 hidden gap-5 lg:grid lg:grid-cols-5">
