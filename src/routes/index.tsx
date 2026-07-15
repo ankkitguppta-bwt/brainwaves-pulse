@@ -237,17 +237,16 @@ function HowItWorks() {
     <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading eyebrow="How it works" title="A five-step neuro-wellness journey" />
-        {/* Mobile / tablet carousel */}
-        <div className="mt-10 lg:hidden">
-          <Carousel opts={{ align: "start" }}>
-            <CarouselContent className="-ml-4">
-              {steps.map((s, i) => (
-                <CarouselItem key={s.title} className="pl-4 basis-[80%] sm:basis-1/2 md:basis-[40%]">
-                  <Step s={s} i={i} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+        {/* Mobile / tablet 2-col grid */}
+        <div className="mt-10 grid grid-cols-2 gap-6 lg:hidden">
+          {steps.map((s, i) => (
+            <div
+              key={s.title}
+              className={i === steps.length - 1 && steps.length % 2 === 1 ? "col-span-2" : ""}
+            >
+              <Step s={s} i={i} />
+            </div>
+          ))}
         </div>
         {/* Desktop */}
         <div className="relative mt-14 hidden lg:block">
