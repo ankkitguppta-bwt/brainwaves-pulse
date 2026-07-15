@@ -26,9 +26,9 @@ export function PlaceholderPage({
 }: Props) {
   return (
     <>
-      <section className="relative overflow-hidden bg-gradient-hero text-white">
+      <section className="relative -mt-16 overflow-hidden bg-gradient-hero pt-16 text-white">
         <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-40" />
-        <div className="relative mx-auto max-w-7xl px-4 py-20 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-12 lg:px-8 lg:pb-20 lg:pt-16">
           <span className="inline-flex items-center gap-2 rounded-full border border-teal/40 bg-teal/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-teal">
             <Construction className="h-3.5 w-3.5" /> {eyebrow}
           </span>
