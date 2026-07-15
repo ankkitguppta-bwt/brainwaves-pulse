@@ -147,38 +147,55 @@ function StatsStrip() {
 
 /* ───── What is neurofeedback ───── */
 function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) {
+  const Card = ({ w }: { w: WaveInfo }) => (
+    <button
+      key={w.name}
+      type="button"
+      onClick={() => onSelect(w)}
+      className="glass-card group relative flex h-full w-full flex-col overflow-hidden rounded-2xl p-5 text-left !shadow-none transition hover:-translate-y-0.5 hover:!shadow-none focus:outline-none focus:ring-2 focus:ring-teal"
+    >
+      <Waves className="relative h-6 w-6 text-white" />
+      <h3 className="relative mt-3 font-display text-xl font-semibold text-navy">{w.name} Waves</h3>
+      <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>
+        {w.range}
+      </p>
+      <p className="relative mt-3 text-sm text-muted-foreground">{w.desc}</p>
+      <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/70 group-hover:text-teal">
+        Know more <ArrowRight className="h-3.5 w-3.5" />
+      </span>
+    </button>
+  );
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           eyebrow="What is Neurofeedback?"
           title="Train your brain. Optimise your mind."
           sub="Neurofeedback is a non-invasive brain-training technology that monitors and optimises brainwave activity in real time. Click any wave to explore."
         />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        {/* Mobile / tablet carousel */}
+        <div className="mt-10 lg:hidden">
+          <Carousel opts={{ align: "start" }}>
+            <CarouselContent className="-ml-4">
+              {WAVES.map((w) => (
+                <CarouselItem key={w.name} className="pl-4 basis-[85%] sm:basis-1/2 md:basis-[40%]">
+                  <Card w={w} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+        {/* Desktop grid */}
+        <div className="mt-12 hidden gap-5 lg:grid lg:grid-cols-5">
           {WAVES.map((w) => (
-            <button
-              key={w.name}
-              type="button"
-              onClick={() => onSelect(w)}
-              className="glass-card group relative overflow-hidden rounded-2xl p-5 text-left !shadow-none transition hover:-translate-y-0.5 hover:!shadow-none focus:outline-none focus:ring-2 focus:ring-teal"
-            >
-              <Waves className="relative h-6 w-6 text-white" />
-              <h3 className="relative mt-3 font-display text-xl font-semibold text-navy">{w.name} Waves</h3>
-              <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>
-                {w.range}
-              </p>
-              <p className="relative mt-3 text-sm text-muted-foreground">{w.desc}</p>
-              <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/70 group-hover:text-teal">
-                Know more <ArrowRight className="h-3.5 w-3.5" />
-              </span>
-            </button>
+            <Card key={w.name} w={w} />
           ))}
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ───── How it works ───── */
 function HowItWorks() {
