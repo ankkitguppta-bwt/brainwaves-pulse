@@ -32,6 +32,7 @@ import { Route as ProductsSoundTherapyRouteImport } from './routes/products.soun
 import { Route as ProductsSoftwareRouteImport } from './routes/products.software'
 import { Route as ProductsHeadbandRouteImport } from './routes/products.headband'
 import { Route as ProductsAccessoriesRouteImport } from './routes/products.accessories'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as ApiPublicEnquiriesRouteImport } from './routes/api/public/enquiries'
 import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin/testimonials'
@@ -156,6 +157,11 @@ const ProductsAccessoriesRoute = ProductsAccessoriesRouteImport.update({
   path: '/products/accessories',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -212,7 +218,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/practitioner': typeof PractitionerRoute
@@ -220,6 +226,7 @@ export interface FileRoutesByFullPath {
   '/stories': typeof StoriesRoute
   '/technology': typeof TechnologyRoute
   '/testimonials': typeof TestimonialsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/products/accessories': typeof ProductsAccessoriesRoute
   '/products/headband': typeof ProductsHeadbandRoute
   '/products/software': typeof ProductsSoftwareRoute
@@ -245,7 +252,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/practitioner': typeof PractitionerRoute
@@ -253,6 +260,7 @@ export interface FileRoutesByTo {
   '/stories': typeof StoriesRoute
   '/technology': typeof TechnologyRoute
   '/testimonials': typeof TestimonialsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/products/accessories': typeof ProductsAccessoriesRoute
   '/products/headband': typeof ProductsHeadbandRoute
   '/products/software': typeof ProductsSoftwareRoute
@@ -280,7 +288,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/practitioner': typeof PractitionerRoute
@@ -288,6 +296,7 @@ export interface FileRoutesById {
   '/stories': typeof StoriesRoute
   '/technology': typeof TechnologyRoute
   '/testimonials': typeof TestimonialsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/products/accessories': typeof ProductsAccessoriesRoute
   '/products/headband': typeof ProductsHeadbandRoute
   '/products/software': typeof ProductsSoftwareRoute
@@ -323,6 +332,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/technology'
     | '/testimonials'
+    | '/blog/$slug'
     | '/products/accessories'
     | '/products/headband'
     | '/products/software'
@@ -356,6 +366,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/technology'
     | '/testimonials'
+    | '/blog/$slug'
     | '/products/accessories'
     | '/products/headband'
     | '/products/software'
@@ -390,6 +401,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/technology'
     | '/testimonials'
+    | '/blog/$slug'
     | '/products/accessories'
     | '/products/headband'
     | '/products/software'
@@ -417,7 +429,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
   PractitionerRoute: typeof PractitionerRoute
@@ -602,6 +614,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsAccessoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/admin'
@@ -693,12 +712,22 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
   PractitionerRoute: PractitionerRoute,
