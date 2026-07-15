@@ -106,10 +106,11 @@ function Hero() {
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 rounded-full bg-teal px-5 py-3 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.02]"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.02]"
           >
             Book Demo Now <ArrowRight className="h-4 w-4" />
           </Link>
+
         </div>
       </div>
     </section>
@@ -146,38 +147,55 @@ function StatsStrip() {
 
 /* ───── What is neurofeedback ───── */
 function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) {
+  const Card = ({ w }: { w: WaveInfo }) => (
+    <button
+      key={w.name}
+      type="button"
+      onClick={() => onSelect(w)}
+      className="glass-card group relative flex h-full w-full flex-col overflow-hidden rounded-2xl p-5 text-left !shadow-none transition hover:-translate-y-0.5 hover:!shadow-none focus:outline-none focus:ring-2 focus:ring-teal"
+    >
+      <Waves className="relative h-6 w-6 text-white" />
+      <h3 className="relative mt-3 font-display text-xl font-semibold text-navy">{w.name} Waves</h3>
+      <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>
+        {w.range}
+      </p>
+      <p className="relative mt-3 text-sm text-muted-foreground">{w.desc}</p>
+      <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/70 group-hover:text-teal">
+        Know more <ArrowRight className="h-3.5 w-3.5" />
+      </span>
+    </button>
+  );
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           eyebrow="What is Neurofeedback?"
           title="Train your brain. Optimise your mind."
           sub="Neurofeedback is a non-invasive brain-training technology that monitors and optimises brainwave activity in real time. Click any wave to explore."
         />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        {/* Mobile / tablet carousel */}
+        <div className="mt-10 lg:hidden">
+          <Carousel opts={{ align: "start" }}>
+            <CarouselContent className="-ml-4">
+              {WAVES.map((w) => (
+                <CarouselItem key={w.name} className="pl-4 basis-[85%] sm:basis-1/2 md:basis-[40%]">
+                  <Card w={w} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+        {/* Desktop grid */}
+        <div className="mt-12 hidden gap-5 lg:grid lg:grid-cols-5">
           {WAVES.map((w) => (
-            <button
-              key={w.name}
-              type="button"
-              onClick={() => onSelect(w)}
-              className="glass-card group relative overflow-hidden rounded-2xl p-5 text-left !shadow-none transition hover:-translate-y-0.5 hover:!shadow-none focus:outline-none focus:ring-2 focus:ring-teal"
-            >
-              <Waves className="relative h-6 w-6 text-white" />
-              <h3 className="relative mt-3 font-display text-xl font-semibold text-navy">{w.name} Waves</h3>
-              <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>
-                {w.range}
-              </p>
-              <p className="relative mt-3 text-sm text-muted-foreground">{w.desc}</p>
-              <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/70 group-hover:text-teal">
-                Know more <ArrowRight className="h-3.5 w-3.5" />
-              </span>
-            </button>
+            <Card key={w.name} w={w} />
           ))}
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ───── How it works ───── */
 function HowItWorks() {
@@ -204,28 +222,45 @@ function HowItWorks() {
       desc: "Game-based feedback sessions to train target brain states.",
     },
   ];
+  const Step = ({ s, i }: { s: (typeof steps)[number]; i: number }) => (
+    <div className="relative text-center">
+      <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-navy text-white shadow-brand">
+        <s.icon className="h-7 w-7" />
+        <span className="absolute -right-2 -top-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange text-xs font-bold text-navy">
+          {i + 1}
+        </span>
+      </div>
+      <h3 className="mt-4 font-display text-base font-semibold text-navy">{s.title}</h3>
+      <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
+    </div>
+  );
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading eyebrow="How it works" title="A five-step neuro-wellness journey" />
-        <div className="relative mt-14">
-          <div className="absolute left-0 right-0 top-8 hidden h-px bg-gradient-to-r from-transparent via-teal/40 to-transparent lg:block" />
+        {/* Mobile / tablet carousel */}
+        <div className="mt-10 lg:hidden">
+          <Carousel opts={{ align: "start" }}>
+            <CarouselContent className="-ml-4">
+              {steps.map((s, i) => (
+                <CarouselItem key={s.title} className="pl-4 basis-[80%] sm:basis-1/2 md:basis-[40%]">
+                  <Step s={s} i={i} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+        {/* Desktop */}
+        <div className="relative mt-14 hidden lg:block">
+          <div className="absolute left-0 right-0 top-8 h-px bg-gradient-to-r from-transparent via-teal/40 to-transparent" />
           <ol className="grid gap-8 lg:grid-cols-5">
             {steps.map((s, i) => (
-            <li
+              <li
                 key={s.title}
                 data-aos="fade-right"
                 data-aos-delay={i * 250}
-                className="relative text-center"
               >
-                <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-navy text-white shadow-brand">
-                  <s.icon className="h-7 w-7" />
-                  <span className="absolute -right-2 -top-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange text-xs font-bold text-navy">
-                    {i + 1}
-                  </span>
-                </div>
-                <h3 className="mt-4 font-display text-base font-semibold text-navy">{s.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
+                <Step s={s} i={i} />
               </li>
             ))}
           </ol>
@@ -234,6 +269,7 @@ function HowItWorks() {
     </section>
   );
 }
+
 
 /* ───── Who benefits ───── */
 function WhoBenefits() {
@@ -264,7 +300,7 @@ function WhoBenefits() {
     { i: Sparkles, t: "Wellness Coaches" },
   ];
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading eyebrow="Who can benefit" title="Built for professionals, accessible to everyone" />
         <div className="marquee-mask mt-12 space-y-4 !shadow-none">
@@ -343,7 +379,7 @@ function VideoTestimonials() {
   );
 
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="flex items-end justify-between gap-4">
           <SectionHeading eyebrow="Video Testimonials" title="Hear it from our community" />
@@ -435,7 +471,7 @@ function FAQ() {
   }, []);
 
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-3xl px-4 lg:px-8">
         <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
         <Accordion type="single" collapsible className="mt-10">
@@ -462,7 +498,7 @@ function FAQ() {
 /* ───── Final CTA ───── */
 function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-navy py-20 text-white">
+    <section className="relative overflow-hidden bg-navy py-12 sm:py-16 lg:py-20 text-white">
       <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-40" />
       <div className="relative mx-auto max-w-4xl px-4 text-center lg:px-8">
         <h2 className="font-display text-3xl font-bold sm:text-5xl">
@@ -475,13 +511,13 @@ function FinalCTA() {
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand"
           >
             Book Demo Now <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/practitioner"
-            className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-3 text-sm font-semibold backdrop-blur"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-3 text-sm font-semibold backdrop-blur"
           >
             Become a Practitioner
           </Link>
