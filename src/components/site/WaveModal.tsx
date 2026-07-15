@@ -141,7 +141,7 @@ export function WaveModal({
 }) {
   return (
     <Dialog open={!!wave} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="left-4 right-4 block max-h-[90vh] w-auto max-w-none translate-x-0 overflow-y-auto overflow-x-clip border-0 bg-white p-0 md:left-[50%] md:right-auto md:w-full md:max-w-5xl md:translate-x-[-50%]">
+      <DialogContent className="!left-4 !right-4 !block !max-h-[90vh] !w-auto !min-w-0 !max-w-[calc(100vw-2rem)] !translate-x-0 box-border overflow-y-auto !overflow-x-hidden border-0 bg-white p-0 md:!left-[50%] md:!right-auto md:!w-full md:!max-w-5xl md:!translate-x-[-50%]">
         {wave && (
           <div className="grid w-full min-w-0 max-w-full grid-cols-[minmax(0,1fr)] gap-0 overflow-hidden md:grid-cols-[minmax(0,1fr)_220px] md:overflow-visible">
             <div className="w-full min-w-0 max-w-full overflow-hidden p-4 pt-10 sm:p-6 sm:pt-10 md:overflow-visible">
