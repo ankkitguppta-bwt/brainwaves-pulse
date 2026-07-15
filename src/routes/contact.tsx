@@ -85,9 +85,9 @@ function ContactPage() {
                 <p className="text-sm text-muted-foreground">Pick a time that works — schedule directly via Cal.com.</p>
               </div>
               <iframe
-                src="https://cal.com/brainwaves-tech"
+                src="https://cal.com/brainwaves-tech?theme=light"
                 title="Schedule a meeting with BrainWaves Tech"
-                className="mt-3 h-[520px] w-full rounded-xl border-0"
+                className="mt-3 h-[520px] w-full rounded-xl border-0 bg-white"
                 loading="lazy"
               />
             </div>
