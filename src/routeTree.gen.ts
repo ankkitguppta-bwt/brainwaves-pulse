@@ -30,6 +30,7 @@ import { Route as ProductsSoundTherapyRouteImport } from './routes/products.soun
 import { Route as ProductsSoftwareRouteImport } from './routes/products.software'
 import { Route as ProductsHeadbandRouteImport } from './routes/products.headband'
 import { Route as ProductsAccessoriesRouteImport } from './routes/products.accessories'
+import { Route as ApiPublicEnquiriesRouteImport } from './routes/api/public/enquiries'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
@@ -136,6 +137,11 @@ const ProductsAccessoriesRoute = ProductsAccessoriesRouteImport.update({
   path: '/products/accessories',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicEnquiriesRoute = ApiPublicEnquiriesRouteImport.update({
+  id: '/api/public/enquiries',
+  path: '/api/public/enquiries',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -159,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/solutions/rehab': typeof SolutionsRehabRoute
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
+  '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -182,6 +189,7 @@ export interface FileRoutesByTo {
   '/solutions/rehab': typeof SolutionsRehabRoute
   '/products': typeof ProductsIndexRoute
   '/solutions': typeof SolutionsIndexRoute
+  '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -206,6 +214,7 @@ export interface FileRoutesById {
   '/solutions/rehab': typeof SolutionsRehabRoute
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
+  '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -231,6 +240,7 @@ export interface FileRouteTypes {
     | '/solutions/rehab'
     | '/products/'
     | '/solutions/'
+    | '/api/public/enquiries'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -254,6 +264,7 @@ export interface FileRouteTypes {
     | '/solutions/rehab'
     | '/products'
     | '/solutions'
+    | '/api/public/enquiries'
   id:
     | '__root__'
     | '/'
@@ -277,6 +288,7 @@ export interface FileRouteTypes {
     | '/solutions/rehab'
     | '/products/'
     | '/solutions/'
+    | '/api/public/enquiries'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -301,6 +313,7 @@ export interface RootRouteChildren {
   SolutionsRehabRoute: typeof SolutionsRehabRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   SolutionsIndexRoute: typeof SolutionsIndexRoute
+  ApiPublicEnquiriesRoute: typeof ApiPublicEnquiriesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -452,6 +465,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsAccessoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/enquiries': {
+      id: '/api/public/enquiries'
+      path: '/api/public/enquiries'
+      fullPath: '/api/public/enquiries'
+      preLoaderRoute: typeof ApiPublicEnquiriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -477,6 +497,7 @@ const rootRouteChildren: RootRouteChildren = {
   SolutionsRehabRoute: SolutionsRehabRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   SolutionsIndexRoute: SolutionsIndexRoute,
+  ApiPublicEnquiriesRoute: ApiPublicEnquiriesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
