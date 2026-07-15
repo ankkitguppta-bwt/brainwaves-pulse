@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { Phone, Mail, MapPin } from "lucide-react";
 import whatsappIcon from "@/assets/whatsapp.svg.asset.json";
@@ -18,6 +19,36 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("sending"); setErrorMsg(null);
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      name: String(fd.get("name") ?? ""),
+      email: String(fd.get("email") ?? ""),
+      phone: String(fd.get("phone") ?? ""),
+      interest: String(fd.get("interest") ?? ""),
+      message: String(fd.get("message") ?? ""),
+    };
+    try {
+      const res = await fetch("/api/public/enquiries", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error ?? "Send failed");
+      }
+      setStatus("sent");
+      (e.target as HTMLFormElement).reset();
+    } catch (err: any) {
+      setStatus("error"); setErrorMsg(err.message);
+    }
+  }
   return (
     <>
       <PageHero
@@ -51,9 +82,7 @@ function ContactPage() {
           {/* Form + Booking side by side */}
           <div className="mt-6 grid gap-6 lg:grid-cols-12 lg:gap-8">
             <form
-              action={`mailto:hello@brainwavestech.com`}
-              method="post"
-              encType="text/plain"
+              onSubmit={onSubmit}
               className="glass-card rounded-2xl p-6 lg:col-span-7"
             >
               <h2 className="font-display text-xl font-bold text-navy">Send a message</h2>
@@ -73,8 +102,18 @@ function ContactPage() {
                   <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
                   <textarea name="message" rows={4} className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-sm" />
                 </div>
-                <button className="sm:col-span-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy-soft">
-                  Send Message
+                {status === "sent" && (
+                  <p className="sm:col-span-2 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+                    Thanks — we'll get back to you shortly.
+                  </p>
+                )}
+                {status === "error" && (
+                  <p className="sm:col-span-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{errorMsg}</p>
+                )}
+                <button
+                  disabled={status === "sending"}
+                  className="sm:col-span-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy-soft disabled:opacity-60">
+                  {status === "sending" ? "Sending…" : "Send Message"}
                 </button>
               </div>
             </form>

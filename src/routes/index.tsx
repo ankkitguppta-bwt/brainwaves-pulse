@@ -301,16 +301,33 @@ function WhoBenefits() {
 }
 
 /* ───── Video testimonials ───── */
-type VideoT = { id: number; title: string; author: string; src: string };
-const VIDEO_TESTIMONIALS: VideoT[] = [
-  { id: 1, title: "Focus training results", author: "Dr. A. Sharma", src: heroVideo.url },
-  { id: 2, title: "Classroom neurofeedback", author: "Priya, Educator", src: heroVideo.url },
-  { id: 3, title: "Clinic transformation", author: "Dr. R. Menon", src: heroVideo.url },
+type VideoT = { id: string; title: string; author: string; src: string; thumbnail?: string | null };
+import { useQuery as useVideoQuery } from "@tanstack/react-query";
+import { supabase as supabaseVT } from "@/integrations/supabase/client";
+const FALLBACK_VIDEOS: VideoT[] = [
+  { id: "f1", title: "Focus training results", author: "Dr. A. Sharma", src: heroVideo.url },
+  { id: "f2", title: "Classroom neurofeedback", author: "Priya, Educator", src: heroVideo.url },
+  { id: "f3", title: "Clinic transformation", author: "Dr. R. Menon", src: heroVideo.url },
 ];
 
 function VideoTestimonials() {
   const [active, setActive] = useState<VideoT | null>(null);
-  const useCarousel = VIDEO_TESTIMONIALS.length > 3;
+  const q = useVideoQuery({
+    queryKey: ["testimonials", "video-featured"],
+    queryFn: async () => {
+      const { data, error } = await supabaseVT
+        .from("testimonials")
+        .select("id, author, title, video_url, thumbnail_url, is_featured, sort_order")
+        .eq("type", "video").order("sort_order");
+      if (error) throw error;
+      return (data ?? []).filter((v) => v.video_url);
+    },
+  });
+  const dbItems: VideoT[] = (q.data ?? []).map((v: any) => ({
+    id: v.id, title: v.title ?? v.author, author: v.author, src: v.video_url, thumbnail: v.thumbnail_url,
+  }));
+  const items = dbItems.length > 0 ? dbItems : FALLBACK_VIDEOS;
+  const useCarousel = items.length > 3;
 
   const Card = ({ v }: { v: VideoT }) => (
     <button
@@ -347,7 +364,7 @@ function VideoTestimonials() {
         {useCarousel ? (
           <Carousel opts={{ align: "start" }} className="mt-10">
             <CarouselContent className="-ml-4">
-              {VIDEO_TESTIMONIALS.map((v) => (
+              {items.map((v: VideoT) => (
                 <CarouselItem key={v.id} className="pl-4 sm:basis-1/2 lg:basis-1/3">
                   <Card v={v} />
                 </CarouselItem>
@@ -358,7 +375,7 @@ function VideoTestimonials() {
           </Carousel>
         ) : (
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {VIDEO_TESTIMONIALS.map((v) => (
+            {items.map((v: VideoT) => (
               <Card key={v.id} v={v} />
             ))}
           </div>

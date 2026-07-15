@@ -1,144 +1,92 @@
-## Goal
+# Admin Panel + Blog — Implementation Plan
 
-Rework the site around the "homepage answers 4 questions" principle (What / Who / Why-trust / Next step). Move deep content into dedicated pages, restructure the navbar, and layer in the animations, videos, and integrations from both files.
+## Overview
 
-**Asset policy:** placeholder copy + placeholder images/videos for every new page and section. You'll drop in real videos/media before the phase that needs them.
+Build a password-protected `/admin` panel to manage all site content (currently hardcoded), add a public blog with rich-text posts, and persist contact form enquiries. Existing content will be migrated into the database as seed data so nothing visually changes on day one.
 
----
+## Stack additions
 
-## Phase 1 — Navbar + Global Shell
+- **Lovable Cloud** — database, auth (email/password), file storage (images for people & blog covers).
+- **Role-based access** — `user_roles` table + `has_role()` security-definer function. Admin route + all write operations gated to `admin` role.
+- **Rich text editor** — TipTap (React) for blog authoring; sanitized HTML rendered on public blog pages.
 
-New nav (replaces current 9-link menu):
-`Home · Products · Solutions · Technology · Become a Practitioner · About Us · Book Demo`
+## Database schema
 
-- Sticky navbar, **transparent over hero → solid on scroll** (~80px), glass blur.
-- Dropdowns:
-  - **Products:** EEG Headband, Software Platform, Sound Therapy, Accessories
-  - **Solutions:** Psychologists, Educational Institutions, Corporates, Rehab Centres, Healthcare
-  - **Technology:** EEG Hardware, Brainwave Analysis, AI Software, Neurofeedback, Sound Therapy
-  - **About:** Mission, Research, Team, Media, Testimonials, Contact
-- Mobile drawer version of the same tree (accordion sub-menus).
-- **Global logo-inspired loader** (animated brainwave through the BWT mark) shown on first paint + route transitions.
+Tables (all with RLS + explicit GRANTs):
 
----
+1. `people` — leaders / team / advisors. Columns: `id, category (enum: leadership|team|advisor), name, role, description, image_url, sort_order, created_at`.
+2. `testimonials` — Columns: `id, type (enum: text|video), author, title, quote (text), video_url, thumbnail_url, sort_order, is_featured, created_at`.
+3. `blog_posts` — Columns: `id, slug (unique), title, excerpt, cover_image_url, content_html, content_json, meta_title, meta_description, status (draft|published), published_at, created_at, updated_at, author_id`.
+4. `case_studies` — Columns: `id, title, summary, body_html, image_url, sort_order, published, created_at`.
+5. `media_recognition` — Columns: `id, kind (media|recognition), title, outlet, url, image_url, date, sort_order`.
+6. `contact_enquiries` — Columns: `id, name, email, phone, interest, message, created_at, is_read`.
+7. `user_roles` + `app_role` enum (`admin`) + `has_role()` function per standard pattern.
 
-## Phase 2 — Create every destination route (placeholder layouts)
+**RLS policies:**
+- `people`, `testimonials`, `blog_posts (status='published')`, `case_studies (published=true)`, `media_recognition` → public `SELECT` for `anon`.
+- All write operations (`INSERT/UPDATE/DELETE`) → only `authenticated` users with `admin` role.
+- `contact_enquiries` → public `INSERT` (anyone can submit), `SELECT/UPDATE` admin-only.
+- `user_roles` → `SELECT` for authenticated (via `has_role`), no client writes.
 
-Stub every new page so nav links resolve and layout is visible. Each gets its own `head()` (title, description, og). Placeholder copy + placeholder imagery — real content lands in Phase 8.
+**Storage bucket:** `content-media` (public) for people photos, blog covers, case-study images.
 
-New route files:
-- `/products` + `/products/headband`, `/products/software`, `/products/sound-therapy`, `/products/accessories`
-- `/solutions` + `/solutions/psychologists`, `/educational`, `/corporates`, `/rehab`, `/healthcare`
-- `/practitioner` (merged Training + Certification + Ecosystem)
-- `/stories` (media/recognition as case studies)
-- `/testimonials` (text wall)
-- `/research`
-- Keep existing `/about`, `/contact`, `/technology`, `/gallery`
+**Seed data:** migration inserts current hardcoded people, testimonials, and (empty) placeholder rows so the site renders unchanged.
 
-Delete or redirect the old `/assessment`, `/sound-therapy`, `/hardware-software`, `/training` routes into the new structure.
+## Routes
 
----
+**Public (new/updated):**
+- `/blog` — list published posts (grid with cover, title, excerpt, date). Replaces current placeholder.
+- `/blog/$slug` — post detail with SEO `head()` from `meta_title`/`meta_description`/`cover_image_url` and rendered sanitized HTML.
+- `/testimonials` — real page (text + video, video cards open modal, carousel if >3). Replaces placeholder.
+- `/auth` — email/password sign in (no public signup UI; admin accounts created manually or via first-user bootstrap).
 
-## Phase 3 — Homepage structural slim-down
+**Public (data-driven, no visual change):**
+- `/about` — loads leaders/team/advisors from DB.
+- `/` — landing video testimonials load from DB.
+- `/contact` — form POSTs to a public server route that inserts into `contact_enquiries` (and optionally emails admin — see below).
 
-Homepage becomes: Hero · Stats · What is Neurofeedback (intro card row) · How it Works · Who Can Benefit · Video Testimonials · FAQ · Final CTA · Footer.
+**Admin (all under `_authenticated/admin/`, gated by admin role check):**
+- `/admin` — dashboard: counts + latest enquiries.
+- `/admin/testimonials` — CRUD text + video testimonials.
+- `/admin/people` — CRUD leaders/team/advisors (photo upload, category, sort).
+- `/admin/blog` — list + create/edit posts using TipTap editor, slug generation, SEO fields, draft/publish toggle.
+- `/admin/case-studies` — CRUD case studies.
+- `/admin/media` — CRUD media coverage + recognition.
+- `/admin/enquiries` — list contact form submissions, mark read.
 
-Move existing homepage sections into their new homes:
+Cal.com meetings intentionally deferred (per your answer).
 
-| Section today | New home |
-|---|---|
-| Advanced Brainwave Analysis | Products → Software |
-| Smart EEG Headband banner | Products → Headband |
-| Software Experience / dolphin game | Products → Software |
-| Customized Sound Therapy | Products → Sound Therapy |
-| Complete Practitioner Solution | /practitioner |
-| Become a Certified Practitioner banner | /practitioner |
-| Training & Certification (remove "Talk to Program Advisor") | /practitioner |
-| Trust, Media & Recognition | /stories (case-study layout) |
-| Meet the Team | /about |
-| Text testimonials | /testimonials |
+## Auth & access
 
-Also: remove the image directly below the stats strip; fix old duplicate "Hardware & Software" label.
+- Lovable Cloud email/password auth enabled.
+- `_authenticated/admin/route.tsx` layout: verifies session AND `has_role(uid, 'admin')`; non-admins redirected to `/`.
+- I'll ask you for the admin email during build; first run inserts an `admin` role row for that user after they sign up (via SQL migration referencing that email).
 
----
+## Contact form email notification
 
-## Phase 4 — Homepage Hero + Stats
+Optional: uses Lovable's email capability (Resend integration) to email `hello@brainwavestech.com` when a new enquiry arrives. If you don't have Resend set up, I'll ship the DB-save part first and add email as a follow-up when you provide a Resend API key.
 
-- Hero **background video** (I'll wire the `<video>` element + poster fallback; you drop in the file when ready). If no video by build time, fallback = **image carousel** of 3–4 stills.
-- Two CTAs: **Book Demo**, **Request Assessment**.
-- Stats moved below hero with **count-up on scroll**: 27+ Practitioners · 14+ Years Research · 1.2 L+ Data Points · 92%+ Accuracy. Remove tick-list chips.
+## Technical notes
 
-**Pause point:** send the hero video (or confirm carousel-only) before I start this phase.
+- All DB reads use TanStack Query + loaders; writes via `createServerFn` with `requireSupabaseAuth` + admin role check.
+- Public contact submit uses a `/api/public/enquiries` server route (rate-limited by simple length/format validation via Zod).
+- Rich text: TipTap → stored as both JSON (for edit) and sanitized HTML (for render, via `sanitize-html`).
+- Image uploads: direct-to-storage from admin forms, store returned public URL.
+- SEO for blog: each `/blog/$slug` sets title, description, og:title, og:description, og:image (cover), canonical.
 
----
+## Out of scope (call out for later)
 
-## Phase 5 — "What is Neurofeedback" interactive wave cards
+- Cal.com meetings sync.
+- Public user signup / comments.
+- Multi-author blog roles beyond `admin`.
+- Analytics dashboard beyond simple counts.
 
-Five cards (Alpha / Beta / Theta / Delta / Gamma). Hover or tap expands into a detailed modal with:
-- **Animated SVG waveform** at the correct frequency
-- Frequency · Benefits · Used-for content (placeholder copy per wave; you edit)
+## Order of implementation
 
----
-
-## Phase 6 — "How it Works" animated timeline
-
-Replace 5 static cards with a **connected timeline** that draws its line, pulses each node, and animates the arrow forward as the user scrolls.
-
----
-
-## Phase 7 — "Who Can Benefit" moving cards
-
-Convert flat grid into two **auto-scrolling marquee rows** (opposite directions, pause on hover) of category cards: Psychologists, Hospitals, Schools, Athletes, Corporates, Researchers, Defence, Universities, Coaching Centers, Individuals, NGOs, Wellness Coaches…
-
----
-
-## Phase 8 — Testimonials + FAQ on homepage
-
-- Homepage keeps **only video testimonials** in an auto-sliding carousel with a "See all" link to `/testimonials`.
-- FAQ = accordion with **smooth expand + fade-in on scroll**.
-
-**Pause point:** send testimonial video files (or approve placeholder MP4s) before this phase.
-
----
-
-## Phase 9 — Fill out destination pages
-
-Replace Phase 2 placeholders with real layouts + placeholder copy per your notes:
-- **Products** sub-pages — multi-angle device visuals (placeholder renders), animated product tour, spec blocks
-- **Solutions** industry pages — problem → outcome → CTA template per audience
-- **Technology** topic pages — flesh out EEG Hardware / Brainwave Analysis / AI Software / Neurofeedback / Sound Therapy
-- **/practitioner** — merged Training + Certification + Ecosystem (6 pillars)
-- **/stories** — media/recognition as case studies with proper alignment + explanation
-- **/about** — team redesign (I'll propose 2–3 layout options in-page)
-- **/testimonials** — full text wall + video grid
-
-All copy = clearly-marked placeholder you can edit.
-
----
-
-## Phase 10 — Integrations
-
-- **Calendly** embed on Book Demo / Book a Call. (Needs your Calendly URL.)
-- **Generative AI chatbot** via Lovable AI Gateway — floating widget, grounded on site content. Optional per your notes; ships last.
-
-**Pause point:** Calendly link + go/no-go on chatbot.
-
----
-
-## Phase 11 — SEO + Copywriting polish
-
-Per-page meta titles/descriptions, OG tags, H1 hierarchy, alt text, footer copy rewrite, JSON-LD (Organization + Product).
-
----
-
-## Out of scope (unless you ask)
-
-- Backend / auth / payments
-- Real team photos, real testimonial media (you supply)
-- Final production copy (I ship marked placeholders)
-
----
-
-## How I'll proceed
-
-I'll ship **Phases 1 + 2 + 3 together** — pure structural plumbing, no animation risk — then pause before each media/animation/integration phase (4, 5, 6, 7, 8, 10) so you can drop in videos and confirm behavior.
+1. Enable Lovable Cloud + auth.
+2. Create schema, RLS, storage bucket, seed data (single migration).
+3. Migrate `/about`, landing testimonials, `/testimonials`, `/contact` to read/write DB (no visual regression).
+4. Build `/auth` + `_authenticated/admin` layout with role guard.
+5. Build admin CRUD screens (people → testimonials → case studies → media → enquiries).
+6. Build blog: public `/blog` + `/blog/$slug`, then `/admin/blog` with TipTap.
+7. Wire optional email notification if Resend key provided.
