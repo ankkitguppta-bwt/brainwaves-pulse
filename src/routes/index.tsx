@@ -160,7 +160,7 @@ function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) 
               onClick={() => onSelect(w)}
               className="glass-card group relative overflow-hidden rounded-2xl p-5 text-left !shadow-none transition hover:-translate-y-0.5 hover:!shadow-none focus:outline-none focus:ring-2 focus:ring-teal"
             >
-              <Waves className="relative h-6 w-6" style={{ color: w.color }} />
+              <Waves className="relative h-6 w-6 text-white" />
               <h3 className="relative mt-3 font-display text-xl font-semibold text-navy">{w.name} Waves</h3>
               <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>
                 {w.range}
