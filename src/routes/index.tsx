@@ -511,13 +511,13 @@ function FinalCTA() {
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand"
           >
             Book Demo Now <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/practitioner"
-            className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-3 text-sm font-semibold backdrop-blur"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-3 text-sm font-semibold backdrop-blur"
           >
             Become a Practitioner
           </Link>
