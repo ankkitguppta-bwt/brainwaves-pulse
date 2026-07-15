@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Phone, Mail, MapPin } from "lucide-react";
+import whatsappIcon from "@/assets/whatsapp.svg.asset.json";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -61,10 +62,22 @@ function ContactPage() {
               href="https://wa.me/919893064372"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex w-full items-center justify-center rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white"
             >
+              <img src={whatsappIcon.url} alt="" className="h-5 w-5" />
               Chat on WhatsApp
             </a>
+
+            <div className="glass-card overflow-hidden rounded-2xl p-2">
+              <h2 className="px-4 pt-3 font-display text-xl font-bold text-navy">Book a meeting</h2>
+              <p className="px-4 pb-3 text-sm text-muted-foreground">Pick a time that works — schedule directly via Cal.com.</p>
+              <iframe
+                src="https://cal.com/brainwaves-tech"
+                title="Schedule a meeting with BrainWaves Tech"
+                className="h-[700px] w-full rounded-xl border-0"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>

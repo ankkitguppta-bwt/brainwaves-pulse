@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react";
+import whatsappIcon from "@/assets/whatsapp.svg.asset.json";
 
 export function WhatsAppFab() {
   return (
@@ -7,10 +7,10 @@ export function WhatsAppFab() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
-      className="fixed bottom-5 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl ring-4 ring-[#25D366]/20 transition hover:scale-110"
+      className="fixed bottom-5 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-2xl ring-4 ring-[#25D366]/20 transition hover:scale-110"
     >
       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#25D366] opacity-30" />
-      <MessageCircle className="h-7 w-7" fill="currentColor" aria-hidden />
+      <img src={whatsappIcon.url} alt="" className="relative h-10 w-10" />
     </a>
   );
 }
