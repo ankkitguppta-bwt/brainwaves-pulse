@@ -142,12 +142,13 @@ function StatsStrip() {
     <section className="relative bg-gradient-to-b from-navy via-navy to-white pb-12 pt-0">
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
         <div
+          data-aos="fade-up"
           className="mx-auto w-full rounded-3xl border border-white/20 px-6 py-8 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 md:w-[85%]"
           style={{ background: "color-mix(in oklab, var(--navy) 55%, transparent)" }}
         >
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.l} className="text-center">
+            {stats.map((s, i) => (
+              <div key={s.l} className="text-center" data-aos="fade-up" data-aos-delay={100 + i * 100}>
                 <p className="font-display text-3xl font-bold text-white sm:text-4xl">
                   <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
                 </p>
