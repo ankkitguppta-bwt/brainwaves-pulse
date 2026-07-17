@@ -195,6 +195,8 @@ function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) 
           {WAVES.map((w, i) => (
             <div
               key={w.name}
+              data-aos="fade-up"
+              data-aos-delay={i * 90}
               className={i === WAVES.length - 1 && WAVES.length % 2 === 1 ? "col-span-2 sm:col-span-1 sm:col-start-1 sm:mx-auto sm:w-1/2" : ""}
             >
               <Card w={w} />
@@ -203,8 +205,10 @@ function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) 
         </div>
         {/* Desktop grid */}
         <div className="mt-12 hidden gap-5 lg:grid lg:grid-cols-5">
-          {WAVES.map((w) => (
-            <Card key={w.name} w={w} />
+          {WAVES.map((w, i) => (
+            <div key={w.name} data-aos="fade-up" data-aos-delay={i * 120}>
+              <Card w={w} />
+            </div>
           ))}
         </div>
       </div>
