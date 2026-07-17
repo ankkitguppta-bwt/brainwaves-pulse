@@ -19,16 +19,6 @@ const nav: NavItem[] = [
     ],
   },
   {
-    label: "Solutions",
-    children: [
-      { label: "Psychologists", to: "/solutions/psychologists" },
-      { label: "Educational Institutions", to: "/solutions/educational" },
-      { label: "Corporates", to: "/solutions/corporates" },
-      { label: "Rehab Centres", to: "/solutions/rehab" },
-      { label: "Healthcare", to: "/solutions/healthcare" },
-    ],
-  },
-  {
     label: "Technology",
     children: [
       { label: "EEG Hardware", to: "/technology" },
