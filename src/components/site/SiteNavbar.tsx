@@ -45,20 +45,11 @@ const nav: NavItem[] = [
 
 export function SiteNavbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [openDrop, setOpenDrop] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => setOpen(false), [pathname]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -67,10 +58,6 @@ export function SiteNavbar() {
       document.body.style.overflow = "";
     };
   }, [open]);
-
-  const isHome = pathname === "/";
-  const transparent = false; // Always solid — logo asset has light bg
-  void isHome; void scrolled;
 
   return (
     <>
@@ -96,12 +83,8 @@ export function SiteNavbar() {
                     to={item.to}
                     className={`whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition xl:text-sm ${
                       active
-                        ? transparent
-                          ? "bg-white/15 text-white"
-                          : "bg-secondary text-navy"
-                        : transparent
-                        ? "text-white/85 hover:bg-white/10"
-                        : "text-foreground/70 hover:bg-secondary hover:text-navy"
+                        ? "bg-white/15 text-white"
+                        : "text-white/85 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     {item.label}
@@ -118,11 +101,7 @@ export function SiteNavbar() {
                 >
                   <button
                     type="button"
-                    className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition xl:text-sm ${
-                      transparent
-                        ? "text-white/85 hover:bg-white/10"
-                        : "text-foreground/70 hover:bg-secondary hover:text-navy"
-                    }`}
+                    className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition xl:text-sm text-white/85 hover:bg-white/10 hover:text-white`}
                     onClick={() => setOpenDrop(open ? null : item.label)}
                     aria-expanded={open}
                   >
@@ -169,9 +148,7 @@ export function SiteNavbar() {
             type="button"
             aria-label="Open menu"
             aria-expanded={open}
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-md transition lg:hidden ${
-              transparent ? "text-white hover:bg-white/10" : "text-navy hover:bg-secondary"
-            }`}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-white transition hover:bg-white/10 lg:hidden"
             onClick={() => setOpen(true)}
           >
             <Menu className="h-6 w-6" />
