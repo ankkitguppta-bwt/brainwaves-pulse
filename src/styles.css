@@ -164,6 +164,18 @@
     animation: step-fade-in 0.6s ease forwards;
   }
 
+  /* Premium one-by-one card reveal (used by How it works) */
+  [data-aos="step-reveal"] {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    transition-property: opacity, transform;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-aos="step-reveal"].aos-animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
   @keyframes marquee-left {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
