@@ -278,8 +278,8 @@ function HowItWorks() {
             {steps.map((s, i) => (
               <li
                 key={s.title}
-                data-aos="fade-up"
-                data-aos-delay={i * 120}
+                data-aos="step-reveal"
+                data-aos-delay={i * 160}
               >
                 <Step s={s} i={i} />
               </li>
