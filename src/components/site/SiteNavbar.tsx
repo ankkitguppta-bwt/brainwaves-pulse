@@ -45,20 +45,11 @@ const nav: NavItem[] = [
 
 export function SiteNavbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [openDrop, setOpenDrop] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => setOpen(false), [pathname]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -67,10 +58,6 @@ export function SiteNavbar() {
       document.body.style.overflow = "";
     };
   }, [open]);
-
-  const isHome = pathname === "/";
-  const transparent = false; // Always solid — logo asset has light bg
-  void isHome; void scrolled;
 
   return (
     <>
