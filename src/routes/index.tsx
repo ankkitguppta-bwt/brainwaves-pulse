@@ -502,8 +502,8 @@ function FAQ() {
             <AccordionItem
               key={i}
               value={`item-${i}`}
-              data-aos="fade-down"
-              data-aos-delay={i * 100}
+              data-aos="fade-up"
+              data-aos-delay={i * 70}
               className="mb-3 rounded-2xl bg-white px-5 !shadow-none"
             >
               <AccordionTrigger className="text-left text-base font-semibold text-navy hover:no-underline">
