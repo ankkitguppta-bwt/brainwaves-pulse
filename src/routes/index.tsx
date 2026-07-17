@@ -110,9 +110,16 @@ function Hero() {
           >
             Book Demo Now <ArrowRight className="h-4 w-4" />
           </Link>
-
+          <Link
+            to="/practitioner"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20"
+          >
+            Become a Practitioner <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
+      {/* Fade to stats section */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent via-navy/80 to-navy" />
     </section>
   );
 }
