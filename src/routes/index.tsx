@@ -133,9 +133,12 @@ function StatsStrip() {
     { end: 92, suffix: "%+", l: "Reporting Accuracy" },
   ];
   return (
-    <section className="bg-white py-10">
+    <section className="relative bg-gradient-to-b from-navy via-navy to-white pb-12 pt-0">
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
-        <div className="mx-auto w-full rounded-3xl bg-navy px-6 py-8 md:w-[80%]">
+        <div
+          className="mx-auto w-full rounded-3xl border border-white/20 px-6 py-8 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 md:w-[85%]"
+          style={{ background: "color-mix(in oklab, var(--navy) 55%, transparent)" }}
+        >
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {stats.map((s) => (
               <div key={s.l} className="text-center">
