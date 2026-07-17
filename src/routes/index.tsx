@@ -554,14 +554,14 @@ function SectionHeading({
   dark?: boolean;
 }) {
   return (
-    <div className="mx-auto max-w-3xl text-center">
-      <p className={`text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "text-teal" : "text-teal"}`}>
+    <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
+      <p className={`text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "text-teal" : "text-teal"}`} data-aos="fade-up">
         {eyebrow}
       </p>
-      <h2 className={`mt-3 font-display text-3xl font-bold sm:text-4xl ${dark ? "text-white" : "text-navy"}`}>
+      <h2 className={`mt-3 font-display text-3xl font-bold sm:text-4xl ${dark ? "text-white" : "text-navy"}`} data-aos="fade-up" data-aos-delay="80">
         {title}
       </h2>
-      {sub && <p className={`mx-auto mt-4 max-w-2xl ${dark ? "text-white/75" : "text-muted-foreground"}`}>{sub}</p>}
+      {sub && <p className={`mx-auto mt-4 max-w-2xl ${dark ? "text-white/75" : "text-muted-foreground"}`} data-aos="fade-up" data-aos-delay="160">{sub}</p>}
     </div>
   );
 }
