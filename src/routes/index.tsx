@@ -263,6 +263,8 @@ function HowItWorks() {
           {steps.map((s, i) => (
             <div
               key={s.title}
+              data-aos="fade-up"
+              data-aos-delay={i * 90}
               className={i === steps.length - 1 && steps.length % 2 === 1 ? "col-span-2" : ""}
             >
               <Step s={s} i={i} />
@@ -276,8 +278,8 @@ function HowItWorks() {
             {steps.map((s, i) => (
               <li
                 key={s.title}
-                data-aos="fade-right"
-                data-aos-delay={i * 250}
+                data-aos="fade-up"
+                data-aos-delay={i * 120}
               >
                 <Step s={s} i={i} />
               </li>
