@@ -413,10 +413,10 @@ function VideoTestimonials() {
         </div>
 
         {useCarousel ? (
-          <Carousel opts={{ align: "start" }} className="mt-10">
+          <Carousel opts={{ align: "start" }} className="mt-10" data-aos="fade-up">
             <CarouselContent className="-ml-4">
-              {items.map((v: VideoT) => (
-                <CarouselItem key={v.id} className="pl-4 sm:basis-1/2 lg:basis-1/3">
+              {items.map((v: VideoT, i: number) => (
+                <CarouselItem key={v.id} className="pl-4 sm:basis-1/2 lg:basis-1/3" data-aos="fade-up" data-aos-delay={i * 100}>
                   <Card v={v} />
                 </CarouselItem>
               ))}
@@ -426,8 +426,10 @@ function VideoTestimonials() {
           </Carousel>
         ) : (
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((v: VideoT) => (
-              <Card key={v.id} v={v} />
+            {items.map((v: VideoT, i: number) => (
+              <div key={v.id} data-aos="fade-up" data-aos-delay={i * 100}>
+                <Card v={v} />
+              </div>
             ))}
           </div>
         )}
