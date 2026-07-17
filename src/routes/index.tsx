@@ -110,9 +110,16 @@ function Hero() {
           >
             Book Demo Now <ArrowRight className="h-4 w-4" />
           </Link>
-
+          <Link
+            to="/practitioner"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20"
+          >
+            Become a Practitioner <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
+      {/* Fade to stats section */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent via-navy/80 to-navy" />
     </section>
   );
 }
@@ -126,9 +133,12 @@ function StatsStrip() {
     { end: 92, suffix: "%+", l: "Reporting Accuracy" },
   ];
   return (
-    <section className="bg-white py-10">
+    <section className="relative bg-gradient-to-b from-navy via-navy to-white pb-12 pt-0">
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
-        <div className="mx-auto w-full rounded-3xl bg-navy px-6 py-8 md:w-[80%]">
+        <div
+          className="mx-auto w-full rounded-3xl border border-white/20 px-6 py-8 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 md:w-[85%]"
+          style={{ background: "color-mix(in oklab, var(--navy) 55%, transparent)" }}
+        >
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {stats.map((s) => (
               <div key={s.l} className="text-center">

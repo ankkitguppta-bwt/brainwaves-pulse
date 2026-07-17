@@ -19,16 +19,6 @@ const nav: NavItem[] = [
     ],
   },
   {
-    label: "Solutions",
-    children: [
-      { label: "Psychologists", to: "/solutions/psychologists" },
-      { label: "Educational Institutions", to: "/solutions/educational" },
-      { label: "Corporates", to: "/solutions/corporates" },
-      { label: "Rehab Centres", to: "/solutions/rehab" },
-      { label: "Healthcare", to: "/solutions/healthcare" },
-    ],
-  },
-  {
     label: "Technology",
     children: [
       { label: "EEG Hardware", to: "/technology" },
@@ -85,7 +75,7 @@ export function SiteNavbar() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-40 w-full rounded-b-2xl border-b border-border/60 bg-white/95 shadow-sm backdrop-blur-md transition-all duration-300"
+        className="fixed left-1/2 top-3 z-40 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl border border-white/30 bg-white/25 shadow-lg backdrop-blur-2xl backdrop-saturate-150 transition-all duration-300 sm:top-4 sm:w-[calc(100%-2rem)]"
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
           <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="BrainWaves Tech home">
