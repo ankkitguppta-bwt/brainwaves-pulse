@@ -524,14 +524,14 @@ function FinalCTA() {
     <section className="relative overflow-hidden bg-navy py-12 sm:py-16 lg:py-20 text-white">
       <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-40" />
       <div className="relative mx-auto max-w-4xl px-4 text-center lg:px-8">
-        <h2 className="font-display text-3xl font-bold sm:text-5xl">
+        <h2 className="font-display text-3xl font-bold sm:text-5xl" data-aos="fade-up">
           Start Your <span className="text-gradient-brand">Neurofeedback Journey</span> Today
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-white/75">
+        <p className="mx-auto mt-4 max-w-2xl text-white/75" data-aos="fade-up" data-aos-delay="120">
           Whether you want to train your brain, add neurofeedback to your practice, or explore partnership — we'd love
           to talk.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="220">
           <Link
             to="/contact"
             className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand"
