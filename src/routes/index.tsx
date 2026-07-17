@@ -59,7 +59,13 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [activeWave, setActiveWave] = useState<WaveInfo | null>(null);
   useEffect(() => {
-    AOS.init({ duration: 600, once: true, easing: "ease-out-cubic" });
+    AOS.init({
+      duration: 900,
+      once: true,
+      offset: 80,
+      easing: "ease-out-cubic",
+      anchorPlacement: "top-bottom",
+    });
     AOS.refresh();
   }, []);
   return (
@@ -136,12 +142,13 @@ function StatsStrip() {
     <section className="relative bg-gradient-to-b from-navy via-navy to-white pb-12 pt-0">
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
         <div
+          data-aos="fade-up"
           className="mx-auto w-full rounded-3xl border border-white/20 px-6 py-8 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 md:w-[85%]"
           style={{ background: "color-mix(in oklab, var(--navy) 55%, transparent)" }}
         >
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.l} className="text-center">
+            {stats.map((s, i) => (
+              <div key={s.l} className="text-center" data-aos="fade-up" data-aos-delay={100 + i * 100}>
                 <p className="font-display text-3xl font-bold text-white sm:text-4xl">
                   <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
                 </p>
@@ -188,6 +195,8 @@ function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) 
           {WAVES.map((w, i) => (
             <div
               key={w.name}
+              data-aos="fade-up"
+              data-aos-delay={i * 90}
               className={i === WAVES.length - 1 && WAVES.length % 2 === 1 ? "col-span-2 sm:col-span-1 sm:col-start-1 sm:mx-auto sm:w-1/2" : ""}
             >
               <Card w={w} />
@@ -196,8 +205,10 @@ function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) 
         </div>
         {/* Desktop grid */}
         <div className="mt-12 hidden gap-5 lg:grid lg:grid-cols-5">
-          {WAVES.map((w) => (
-            <Card key={w.name} w={w} />
+          {WAVES.map((w, i) => (
+            <div key={w.name} data-aos="fade-up" data-aos-delay={i * 120}>
+              <Card w={w} />
+            </div>
           ))}
         </div>
       </div>
@@ -252,6 +263,8 @@ function HowItWorks() {
           {steps.map((s, i) => (
             <div
               key={s.title}
+              data-aos="fade-up"
+              data-aos-delay={i * 90}
               className={i === steps.length - 1 && steps.length % 2 === 1 ? "col-span-2" : ""}
             >
               <Step s={s} i={i} />
@@ -265,8 +278,8 @@ function HowItWorks() {
             {steps.map((s, i) => (
               <li
                 key={s.title}
-                data-aos="fade-right"
-                data-aos-delay={i * 250}
+                data-aos="fade-up"
+                data-aos-delay={i * 120}
               >
                 <Step s={s} i={i} />
               </li>
@@ -311,7 +324,7 @@ function WhoBenefits() {
     <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading eyebrow="Who can benefit" title="Built for professionals, accessible to everyone" />
-        <div className="marquee-mask mt-12 space-y-4 !shadow-none">
+        <div className="marquee-mask mt-12 space-y-4 !shadow-none" data-aos="fade-up" data-aos-delay="150">
           {[audiences.slice(0, Math.ceil(audiences.length / 2)), audiences.slice(Math.ceil(audiences.length / 2))].map(
             (row, idx) => (
               <div key={idx} className="marquee-track overflow-hidden">
@@ -400,10 +413,10 @@ function VideoTestimonials() {
         </div>
 
         {useCarousel ? (
-          <Carousel opts={{ align: "start" }} className="mt-10">
+          <Carousel opts={{ align: "start" }} className="mt-10" data-aos="fade-up">
             <CarouselContent className="-ml-4">
-              {items.map((v: VideoT) => (
-                <CarouselItem key={v.id} className="pl-4 sm:basis-1/2 lg:basis-1/3">
+              {items.map((v: VideoT, i: number) => (
+                <CarouselItem key={v.id} className="pl-4 sm:basis-1/2 lg:basis-1/3" data-aos="fade-up" data-aos-delay={i * 100}>
                   <Card v={v} />
                 </CarouselItem>
               ))}
@@ -413,8 +426,10 @@ function VideoTestimonials() {
           </Carousel>
         ) : (
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((v: VideoT) => (
-              <Card key={v.id} v={v} />
+            {items.map((v: VideoT, i: number) => (
+              <div key={v.id} data-aos="fade-up" data-aos-delay={i * 100}>
+                <Card v={v} />
+              </div>
             ))}
           </div>
         )}
@@ -487,8 +502,8 @@ function FAQ() {
             <AccordionItem
               key={i}
               value={`item-${i}`}
-              data-aos="fade-down"
-              data-aos-delay={i * 100}
+              data-aos="fade-up"
+              data-aos-delay={i * 70}
               className="mb-3 rounded-2xl bg-white px-5 !shadow-none"
             >
               <AccordionTrigger className="text-left text-base font-semibold text-navy hover:no-underline">
@@ -509,14 +524,14 @@ function FinalCTA() {
     <section className="relative overflow-hidden bg-navy py-12 sm:py-16 lg:py-20 text-white">
       <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-40" />
       <div className="relative mx-auto max-w-4xl px-4 text-center lg:px-8">
-        <h2 className="font-display text-3xl font-bold sm:text-5xl">
+        <h2 className="font-display text-3xl font-bold sm:text-5xl" data-aos="fade-up">
           Start Your <span className="text-gradient-brand">Neurofeedback Journey</span> Today
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-white/75">
+        <p className="mx-auto mt-4 max-w-2xl text-white/75" data-aos="fade-up" data-aos-delay="120">
           Whether you want to train your brain, add neurofeedback to your practice, or explore partnership — we'd love
           to talk.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="220">
           <Link
             to="/contact"
             className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand"
@@ -548,14 +563,14 @@ function SectionHeading({
   dark?: boolean;
 }) {
   return (
-    <div className="mx-auto max-w-3xl text-center">
-      <p className={`text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "text-teal" : "text-teal"}`}>
+    <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
+      <p className={`text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "text-teal" : "text-teal"}`} data-aos="fade-up">
         {eyebrow}
       </p>
-      <h2 className={`mt-3 font-display text-3xl font-bold sm:text-4xl ${dark ? "text-white" : "text-navy"}`}>
+      <h2 className={`mt-3 font-display text-3xl font-bold sm:text-4xl ${dark ? "text-white" : "text-navy"}`} data-aos="fade-up" data-aos-delay="80">
         {title}
       </h2>
-      {sub && <p className={`mx-auto mt-4 max-w-2xl ${dark ? "text-white/75" : "text-muted-foreground"}`}>{sub}</p>}
+      {sub && <p className={`mx-auto mt-4 max-w-2xl ${dark ? "text-white/75" : "text-muted-foreground"}`} data-aos="fade-up" data-aos-delay="160">{sub}</p>}
     </div>
   );
 }
