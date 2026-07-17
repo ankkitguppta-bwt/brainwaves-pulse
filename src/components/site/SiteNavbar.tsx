@@ -96,12 +96,8 @@ export function SiteNavbar() {
                     to={item.to}
                     className={`whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition xl:text-sm ${
                       active
-                        ? transparent
-                          ? "bg-white/15 text-white"
-                          : "bg-secondary text-navy"
-                        : transparent
-                        ? "text-white/85 hover:bg-white/10"
-                        : "text-foreground/70 hover:bg-secondary hover:text-navy"
+                        ? "bg-white/15 text-white"
+                        : "text-white/85 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     {item.label}
