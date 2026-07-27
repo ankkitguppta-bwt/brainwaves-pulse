@@ -152,7 +152,13 @@ function StatsStrip() {
     { end: 92, suffix: "%+", l: "Reporting Accuracy" },
   ];
   return (
-    <section className="relative bg-gradient-to-b from-navy via-navy to-white pb-12 pt-0">
+    <section
+      className="relative pb-12 pt-0"
+      style={{
+        background:
+          "linear-gradient(180deg, var(--navy) 0%, color-mix(in oklab, var(--navy) 85%, var(--teal)) 28%, color-mix(in oklab, var(--navy) 60%, #c9a84c 22%) 52%, color-mix(in oklab, white 75%, #f0d78c 25%) 82%, white 100%)",
+      }}
+    >
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
         <div
           data-aos="fade-up"
