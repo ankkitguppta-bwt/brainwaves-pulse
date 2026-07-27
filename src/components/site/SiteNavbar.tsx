@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
-import logoLight from "@/assets/brand/logo-light.png";
-import logoDarkAsset from "@/assets/brand/logo-dark.png.asset.json";
+import brainMark from "@/assets/brand/brain-mark.png.asset.json";
 
 type NavItem =
   | { label: string; to: string }
@@ -44,13 +43,46 @@ const nav: NavItem[] = [
   },
 ];
 
+function Wordmark({ solid }: { solid: boolean }) {
+  return (
+    <span className="flex items-center gap-2">
+      <img src={brainMark.url} alt="" aria-hidden="true" className="h-8 w-auto sm:h-9 lg:h-10" />
+      <span className="flex flex-col leading-none">
+        <span
+          className={`text-lg font-bold tracking-tight transition-colors duration-300 sm:text-xl ${
+            solid ? "text-navy" : "text-white"
+          }`}
+        >
+          BrainWaves
+        </span>
+        <span
+          className={`text-[9px] font-semibold tracking-[0.42em] transition-colors duration-300 sm:text-[10px] ${
+            solid ? "text-navy/70" : "text-white/70"
+          }`}
+        >
+          TECH
+        </span>
+      </span>
+    </span>
+  );
+}
+
 export function SiteNavbar() {
   const [open, setOpen] = useState(false);
   const [openDrop, setOpenDrop] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [hovered, setHovered] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [pathname]);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -60,24 +92,21 @@ export function SiteNavbar() {
     };
   }, [open]);
 
+  const solid = scrolled || hovered;
+
   return (
     <>
-      <header className="group fixed left-1/2 top-3 z-40 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl border border-white/30 bg-white/25 shadow-lg backdrop-blur-2xl backdrop-saturate-150 transition-all duration-300 hover:border-border hover:bg-white sm:top-4 sm:w-[calc(100%-2rem)]">
+      <header
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={`fixed left-1/2 top-3 z-40 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl border shadow-lg backdrop-blur-2xl backdrop-saturate-150 transition-all duration-300 sm:top-4 sm:w-[calc(100%-2rem)] ${
+          solid ? "border-border bg-white" : "border-white/30 bg-white/25"
+        }`}
+      >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-          <Link to="/" className="relative flex h-8 shrink-0 items-center sm:h-9 lg:h-10" aria-label="BrainWaves Tech home">
-            <img
-              src={logoDarkAsset.url}
-              alt="BrainWaves Tech"
-              className="h-8 w-auto transition-opacity duration-300 group-hover:opacity-0 sm:h-9 lg:h-10"
-            />
-            <img
-              src={logoLight}
-              alt=""
-              aria-hidden="true"
-              className="absolute left-0 top-1/2 h-8 w-auto -translate-y-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:h-9 lg:h-10"
-            />
+          <Link to="/" className="flex h-10 shrink-0 items-center" aria-label="BrainWaves Tech home">
+            <Wordmark solid={solid} />
           </Link>
-
 
           <nav className="hidden flex-1 items-center justify-center gap-0.5 lg:flex">
             {nav.map((item) => {
@@ -87,16 +116,15 @@ export function SiteNavbar() {
                   <Link
                     key={item.label}
                     to={item.to}
-                    className={`whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium text-white transition group-hover:text-navy xl:text-sm ${
-                      active ? "bg-white/15 group-hover:bg-secondary" : "hover:bg-white/10 group-hover:hover:bg-secondary"
-                    }`}
-
+                    className={`whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition xl:text-sm ${
+                      solid ? "text-navy" : "text-white"
+                    } ${active ? (solid ? "bg-secondary" : "bg-white/15") : solid ? "hover:bg-secondary" : "hover:bg-white/10"}`}
                   >
                     {item.label}
                   </Link>
                 );
               }
-              const open = openDrop === item.label;
+              const isOpen = openDrop === item.label;
               return (
                 <div
                   key={item.label}
@@ -106,14 +134,18 @@ export function SiteNavbar() {
                 >
                   <button
                     type="button"
-                    className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium text-white/85 transition hover:bg-white/10 hover:text-white group-hover:text-navy/75 group-hover:hover:bg-secondary group-hover:hover:text-navy xl:text-sm`}
-                    onClick={() => setOpenDrop(open ? null : item.label)}
-                    aria-expanded={open}
+                    className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition xl:text-sm ${
+                      solid
+                        ? "text-navy/75 hover:bg-secondary hover:text-navy"
+                        : "text-white/85 hover:bg-white/10 hover:text-white"
+                    }`}
+                    onClick={() => setOpenDrop(isOpen ? null : item.label)}
+                    aria-expanded={isOpen}
                   >
                     {item.label}
-                    <ChevronDown className={`h-3.5 w-3.5 transition ${open ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`h-3.5 w-3.5 transition ${isOpen ? "rotate-180" : ""}`} />
                   </button>
-                  {open && (
+                  {isOpen && (
                     <div className="absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-2">
                       <div className="overflow-hidden rounded-2xl border border-border bg-white">
                         <ul className="py-2">
@@ -151,7 +183,9 @@ export function SiteNavbar() {
             type="button"
             aria-label="Open menu"
             aria-expanded={open}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-white transition hover:bg-white/10 group-hover:text-navy lg:hidden"
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-md transition lg:hidden ${
+              solid ? "text-navy hover:bg-secondary" : "text-white hover:bg-white/10"
+            }`}
             onClick={() => setOpen(true)}
           >
             <Menu className="h-6 w-6" />
@@ -172,7 +206,7 @@ export function SiteNavbar() {
           >
             <div className="flex min-h-16 shrink-0 items-center justify-between border-b border-border px-5 pt-[env(safe-area-inset-top)]">
               <Link to="/" onClick={() => setOpen(false)} aria-label="BrainWaves Tech home">
-                <img src={logoLight} alt="BrainWaves Tech" className="h-8 w-auto" />
+                <Wordmark solid />
               </Link>
               <button
                 type="button"
