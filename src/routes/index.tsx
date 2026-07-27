@@ -161,7 +161,7 @@ function StatsStrip() {
             data-aos="fade-up"
             className="mx-auto max-w-4xl text-center font-display text-2xl font-extrabold uppercase leading-tight tracking-[-0.01em] sm:text-3xl lg:text-[2.5rem]"
           >
-            <span className="font-accent normal-case text-gradient-red">Stop</span>{" "}
+            <span className="text-gradient-red">Stop</span>{" "}
             <span className="text-gradient-stop">Guessing about mental wellness and cognitive performance.</span>
           </h2>
           <p
@@ -171,7 +171,7 @@ function StatsStrip() {
           >
             <span className="text-teal">Brain Waves Tech</span> uses an innovative USA patented technology, which
             quantifies state of mind in minutes with an accuracy of more than{" "}
-            <span className="font-accent text-[#3ddc84]">92%</span>
+            <span className="font-semibold text-[#3ddc84]">92%</span>
           </p>
 
           <div className="mt-8 grid grid-cols-2 gap-4 border-t border-white/15 pt-8 sm:grid-cols-4">
