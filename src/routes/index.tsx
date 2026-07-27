@@ -154,10 +154,27 @@ function StatsStrip() {
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
         <div
           data-aos="fade-up"
-          className="mx-auto w-full rounded-3xl border border-white/20 px-6 py-8 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 md:w-[85%]"
+          className="mx-auto w-full rounded-3xl border border-white/20 px-6 py-10 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 sm:px-10 md:w-[90%]"
           style={{ background: "color-mix(in oklab, var(--navy) 55%, transparent)" }}
         >
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <h2
+            data-aos="fade-up"
+            className="mx-auto max-w-4xl text-center font-display text-2xl font-extrabold uppercase leading-tight tracking-[-0.01em] sm:text-3xl lg:text-[2.5rem]"
+          >
+            <span className="font-accent normal-case text-gradient-red">Stop</span>{" "}
+            <span className="text-gradient-stop">Guessing about mental wellness and cognitive performance.</span>
+          </h2>
+          <p
+            data-aos="fade-up"
+            data-aos-delay="120"
+            className="mx-auto mt-5 max-w-3xl text-center font-display text-sm font-semibold leading-relaxed text-white/80 sm:text-base"
+          >
+            <span className="text-teal">Brain Waves Tech</span> uses an innovative USA patented technology, which
+            quantifies state of mind in minutes with an accuracy of more than{" "}
+            <span className="font-accent text-[#3ddc84]">92%</span>
+          </p>
+
+          <div className="mt-8 grid grid-cols-2 gap-4 border-t border-white/15 pt-8 sm:grid-cols-4">
             {stats.map((s, i) => (
               <div key={s.l} className="text-center" data-aos="fade-up" data-aos-delay={100 + i * 100}>
                 <p className="font-display text-3xl font-bold text-white sm:text-4xl">
