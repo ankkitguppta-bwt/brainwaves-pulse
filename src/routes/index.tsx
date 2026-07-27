@@ -72,7 +72,9 @@ function HomePage() {
     <>
       <Hero />
       <StatsStrip />
+      <EcosystemSection />
       <WhatIsNeurofeedback onSelect={setActiveWave} />
+
       <HowItWorks />
       <WhoBenefits />
       <VideoTestimonials />
