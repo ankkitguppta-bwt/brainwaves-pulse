@@ -105,6 +105,9 @@ function Hero() {
         <p data-aos="fade-up" data-aos-delay="200" className="mx-auto mt-5 max-w-2xl text-base text-white sm:text-lg">
           India’s advanced neurofeedback platform mapping real-time cognitive data in 2 minutes.
         </p>
+        <p data-aos="fade-up" data-aos-delay="250" className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-white/80 sm:text-base">
+          Move past qualitative guesswork. Our 14 precise cognitive parameters instantly help to figure out your brain waves data into a quantified performance blueprint. An evidence-based platform to assess, track, and improve focus, performance, and well-being—for individuals and organizations alike.
+        </p>
         <div data-aos="fade-up" data-aos-delay="300" className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             to="/contact"
