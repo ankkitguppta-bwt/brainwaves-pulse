@@ -291,43 +291,23 @@ function EcosystemSection() {
 /* ───── What is neurofeedback ───── */
 function WhatIsNeurofeedback() {
   return (
-    <section className="relative overflow-hidden bg-[#05070d] py-14 text-white sm:py-18 lg:py-24">
+    <section className="relative overflow-hidden bg-cyan-bg py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <span
-            data-aos="fade-up"
-            className="inline-block rounded-full bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-teal"
-          >
-            What is Neurofeedback?
-          </span>
-          <h2
-            data-aos="fade-up"
-            data-aos-delay="80"
-            className="mt-4 font-display text-3xl font-extrabold leading-[1.1] tracking-[-0.02em] md:text-4xl"
-          >
-            Quantify Cognitive Capital. Eliminate Structural Burnout.
-          </h2>
-          <p
-            data-aos="fade-up"
-            data-aos-delay="160"
-            className="mt-4 text-sm leading-relaxed text-white/60 sm:text-base"
-          >
-            Neurofeedback is a non-invasive, data-driven technology that safely maps and analyses brainwave
-            frequencies in real time. By capturing the conscious/subconscious neurological factors that govern
-            focus, stress tolerance, and emotional stability, it provides professionals with an empirical tool to
-            predict individual performances and eliminate their attrition.
-          </p>
-          <p
-            data-aos="fade-up"
-            data-aos-delay="220"
-            className="mt-5 text-[11px] font-medium uppercase tracking-[0.18em] text-white/35"
-          >
-            Hover or tap a band to expand its live wave
-          </p>
+        <SectionHeading
+          eyebrow="What is Neurofeedback?"
+          title="Quantify Cognitive Capital. Eliminate Structural Burnout."
+          sub="Neurofeedback is a non-invasive, data-driven technology that safely maps and analyses brainwave frequencies in real time. By capturing the conscious/subconscious neurological factors that govern focus, stress tolerance, and emotional stability, it provides professionals with an empirical tool to predict individual performances and eliminate their attrition."
+        />
+        <p
+          data-aos="fade-up"
+          data-aos-delay="200"
+          className="mt-3 text-center text-[11px] font-medium uppercase tracking-[0.18em] text-navy/40"
+        >
+          Click a wave to expand its live animation
+        </p>
+        <div className="mt-10">
+          <BrainwaveBands />
         </div>
-      </div>
-      <div className="mt-10 sm:mt-14">
-        <BrainwaveBands />
       </div>
     </section>
   );
