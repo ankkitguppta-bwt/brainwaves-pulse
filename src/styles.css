@@ -125,6 +125,28 @@
     background-clip: text;
     color: transparent;
   }
+  .font-accent {
+    font-family: var(--font-accent);
+    font-style: italic;
+  }
+  .text-gradient-hero {
+    background: linear-gradient(90deg, #f6d365 0%, #7fc8f8 42%, #4aa8ff 70%, #2f7ff0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-stop {
+    background: linear-gradient(90deg, #f6e27a 0%, #8fd6c8 35%, #6fc3f0 65%, #4aa8ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-red {
+    background: linear-gradient(90deg, #ff3b3b, #ff2d7a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
   .glass-card {
     background: color-mix(in oklab, white 70%, transparent);
     backdrop-filter: blur(14px);
