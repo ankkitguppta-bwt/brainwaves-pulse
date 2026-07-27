@@ -102,23 +102,23 @@ function Hero() {
         <h1
           data-aos="fade-up"
           data-aos-delay="100"
-          className="font-display text-4xl font-bold uppercase leading-[1.05] tracking-[0.02em] text-gradient-brand sm:text-5xl lg:text-6xl"
+          className="font-display text-4xl font-extrabold leading-[1.05] tracking-[-0.02em] text-gradient-hero sm:text-5xl lg:text-6xl"
         >
-          CONNECT, QUANTIFY, EXPLORE
+          Connect. Quantify. Explore.
         </h1>
         <p
           data-aos="fade-up"
           data-aos-delay="200"
-          className="mx-auto mt-5 max-w-2xl font-sans text-base font-medium text-white sm:text-lg"
+          className="mx-auto mt-5 max-w-2xl font-display text-base font-bold text-white sm:text-lg"
         >
-          India’s advanced neurofeedback platform mapping real-time cognitive data in 2 minutes.
+          India’s advanced neurofeedback platform mapping <span className="font-accent font-semibold text-orange">real-time</span> cognitive data in 2 minutes.
         </p>
         <p
           data-aos="fade-up"
           data-aos-delay="250"
-          className="mx-auto mt-4 max-w-3xl font-sans text-sm font-normal leading-relaxed text-white/80 sm:text-base"
+          className="mx-auto mt-4 max-w-3xl font-display text-sm font-medium leading-relaxed text-white/75 sm:text-base"
         >
-          Move past qualitative guesswork. Our 14 precise cognitive parameters instantly help to figure out your brain waves data into a quantified performance blueprint. An evidence-based platform to assess, track, and improve focus, performance, and well-being—for individuals and organizations alike.
+          Move past qualitative <span className="font-accent font-semibold text-white">guesswork</span>. Our 14 precise cognitive parameters instantly help to figure out your brain waves data into a quantified performance blueprint. An evidence-based platform to assess, <span className="font-accent font-semibold text-white">track</span>, and improve focus, performance, and well-being—for individuals and organizations alike.
         </p>
         <div data-aos="fade-up" data-aos-delay="300" className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
@@ -154,10 +154,27 @@ function StatsStrip() {
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
         <div
           data-aos="fade-up"
-          className="mx-auto w-full rounded-3xl border border-white/20 px-6 py-8 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 md:w-[85%]"
+          className="mx-auto w-full rounded-3xl border border-white/20 px-6 py-10 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 sm:px-10 md:w-[90%]"
           style={{ background: "color-mix(in oklab, var(--navy) 55%, transparent)" }}
         >
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <h2
+            data-aos="fade-up"
+            className="mx-auto max-w-4xl text-center font-display text-2xl font-extrabold uppercase leading-tight tracking-[-0.01em] sm:text-3xl lg:text-[2.5rem]"
+          >
+            <span className="font-accent normal-case text-gradient-red">Stop</span>{" "}
+            <span className="text-gradient-stop">Guessing about mental wellness and cognitive performance.</span>
+          </h2>
+          <p
+            data-aos="fade-up"
+            data-aos-delay="120"
+            className="mx-auto mt-5 max-w-3xl text-center font-display text-sm font-semibold leading-relaxed text-white/80 sm:text-base"
+          >
+            <span className="text-teal">Brain Waves Tech</span> uses an innovative USA patented technology, which
+            quantifies state of mind in minutes with an accuracy of more than{" "}
+            <span className="font-accent text-[#3ddc84]">92%</span>
+          </p>
+
+          <div className="mt-8 grid grid-cols-2 gap-4 border-t border-white/15 pt-8 sm:grid-cols-4">
             {stats.map((s, i) => (
               <div key={s.l} className="text-center" data-aos="fade-up" data-aos-delay={100 + i * 100}>
                 <p className="font-display text-3xl font-bold text-white sm:text-4xl">
