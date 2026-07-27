@@ -61,16 +61,10 @@ export function SiteNavbar() {
 
   return (
     <>
-      <header
-        className="fixed left-1/2 top-3 z-40 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl border border-white/30 bg-white/25 shadow-lg backdrop-blur-2xl backdrop-saturate-150 transition-all duration-300 sm:top-4 sm:w-[calc(100%-2rem)]"
-      >
+      <header className="fixed left-1/2 top-3 z-40 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl border border-white/30 bg-white/25 shadow-lg backdrop-blur-2xl backdrop-saturate-150 transition-all duration-300 sm:top-4 sm:w-[calc(100%-2rem)]">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
           <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="BrainWaves Tech home">
-            <img
-              src={logoLight}
-              alt="BrainWaves Tech"
-              className="h-8 w-auto sm:h-9 lg:h-10"
-            />
+            <img src={logoLight} alt="BrainWaves Tech" className="h-8 w-auto sm:h-9 lg:h-10" />
           </Link>
 
           <nav className="hidden flex-1 items-center justify-center gap-0.5 lg:flex">
@@ -81,10 +75,8 @@ export function SiteNavbar() {
                   <Link
                     key={item.label}
                     to={item.to}
-                    className={`whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition xl:text-sm ${
-                      active
-                        ? "bg-white/15 text-black"
-                        : "text-black/70 hover:bg-white/10 hover:text-black"
+                    className={`whitespace-nowrap rounded-full text-black px-3 py-2 text-[13px] font-medium transition xl:text-sm ${
+                      active ? "bg-white/15 " : "hover:bg-white/10"
                     }`}
                   >
                     {item.label}
@@ -120,9 +112,7 @@ export function SiteNavbar() {
                                 onClick={() => setOpenDrop(null)}
                               >
                                 <p className="text-sm font-semibold text-black">{c.label}</p>
-                                {c.desc && (
-                                  <p className="mt-0.5 text-xs text-muted-foreground">{c.desc}</p>
-                                )}
+                                {c.desc && <p className="mt-0.5 text-xs text-muted-foreground">{c.desc}</p>}
                               </Link>
                             </li>
                           ))}
