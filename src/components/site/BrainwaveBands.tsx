@@ -505,7 +505,10 @@ export function BrainwaveBands() {
                 if (e.pointerType === "mouse") setActive((a) => (a === b.id ? null : a));
               }}
               onFocus={() => setActive(b.id)}
-              onClick={() => setActive((a) => (a === b.id ? null : b.id))}
+              onPointerUp={(e) => {
+                if (e.pointerType !== "mouse") setActive((a) => (a === b.id ? null : b.id));
+              }}
+
 
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
