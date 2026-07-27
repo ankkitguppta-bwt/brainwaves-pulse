@@ -608,26 +608,25 @@ function VideoTestimonials() {
 function FAQ() {
   const faqs: [string, string][] = [
     [
-      "What is Neurofeedback?",
-      "Neurofeedback is a non-invasive, evidence-informed brain-training technology that monitors live brainwave activity and provides real-time feedback to help train target states.",
+      "What is Neurofeedback, and is it safe for our clients or employees?",
+      "Neurofeedback is a non-invasive, drug-free brainwaves recording technique that measures live electrochemical activity. It is entirely safe; our dry-electrode headset acts purely as a receiver to read the brain's natural electrical signals. It does not emit or send any electrical currents into the body.",
     ],
     [
-      "Is Neurofeedback safe?",
-      "Yes. It is non-invasive and does not involve any electrical stimulation — it only reads brainwave signals through external sensors.",
+      "How long is the professional training, and do we receive certification?",
+      "Yes, upon completion of the program, your practitioners or counselors will receive an official certification as a Brain Waves Analyst. We provide an interactive 7-day online training protocol, backed by 3 months of strategic hand-holding.",
     ],
     [
-      "Who can use this technology?",
-      "Psychologists, counselors, therapists, educators, wellness professionals, students, athletes and corporate professionals.",
+      "Who can utilize this technology within our target ecosystems?",
+      "The platform is engineered with a lowest-common-denominator approach, making it easy for psychologists, university counselors, corporate HR heads, alternative therapists, and to run independently. It scales seamlessly across participants ranging from age 3 to 95.",
     ],
     [
-      "How long is the practitioner training?",
-      "Our flagship practitioner programme is 7 days of intensive training with 3 months of handholding support.",
+      "Is the system a one-time investment or a subscription-based model?",
+      "The procurement of your BWT-2508 Headset hardware and your comprehensive practitioner training are one-time investments. The advanced cloud-based software operates on a seamless annual subscription model.",
     ],
     [
-      "Will I receive certification?",
-      "Yes — successful candidates receive a Certified Neurofeedback Practitioner certificate.",
+      "Does the bio-sensing hardware come with a standard enterprise warranty?",
+      "Yes, all hardware deliverables feature a dedicated 6 months manufacturing warranty (as per our return and refund policy) to safeguard your organization's deployment and ensure uninterrupted operational continuity.",
     ],
-    ["Does the hardware come with warranty?", "Yes — 6 months hardware warranty is included with the package."],
   ];
 
   useEffect(() => {
@@ -647,8 +646,10 @@ function FAQ() {
             <AccordionItem
               key={i}
               value={`item-${i}`}
-              data-aos="fade-up"
-              data-aos-delay={i * 70}
+              data-aos="fade-in"
+              data-aos-delay={i * 180}
+              data-aos-duration="1200"
+              data-aos-easing="ease-out"
               className="mb-3 rounded-2xl bg-white px-5 !shadow-none"
             >
               <AccordionTrigger className="text-left text-base font-semibold text-navy hover:no-underline">
@@ -662,6 +663,7 @@ function FAQ() {
     </section>
   );
 }
+
 
 /* ───── Final CTA ───── */
 function FinalCTA() {
