@@ -6,7 +6,6 @@ import {
   Headphones,
   GraduationCap,
   Sparkles,
-  Waves,
   Gauge,
   Heart,
   Target,
@@ -27,7 +26,7 @@ import {
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
 import heroVideo from "@/assets/video/hero-loop.mp4.asset.json";
 import { CountUp } from "@/components/site/CountUp";
-import { WaveModal, WAVES, type WaveInfo } from "@/components/site/WaveModal";
+import { BrainwaveBands } from "@/components/site/BrainwaveBands";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -57,7 +56,6 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const [activeWave, setActiveWave] = useState<WaveInfo | null>(null);
   useEffect(() => {
     AOS.init({
       duration: 900,
@@ -74,12 +72,11 @@ function HomePage() {
       <StatsStrip />
       <EcosystemSection />
       <HowItWorks />
-      <WhatIsNeurofeedback onSelect={setActiveWave} />
+      <WhatIsNeurofeedback />
       <WhoBenefits />
       <VideoTestimonials />
       <FAQ />
       <FinalCTA />
-      <WaveModal wave={activeWave} onChange={setActiveWave} onClose={() => setActiveWave(null)} />
     </>
   );
 }
@@ -292,58 +289,50 @@ function EcosystemSection() {
 
 
 /* ───── What is neurofeedback ───── */
-function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) {
-  const Card = ({ w }: { w: WaveInfo }) => (
-    <button
-      key={w.name}
-      type="button"
-      onClick={() => onSelect(w)}
-      className="glass-card group relative flex h-full w-full flex-col overflow-hidden rounded-2xl p-5 text-left !shadow-none transition hover:-translate-y-0.5 hover:!shadow-none focus:outline-none focus:ring-2 focus:ring-teal"
-    >
-      <Waves className="relative h-6 w-6 text-white" />
-      <h3 className="relative mt-3 font-display text-xl font-semibold text-navy">{w.name} Waves</h3>
-      <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>
-        {w.range}
-      </p>
-      <p className="relative mt-3 text-sm text-muted-foreground">{w.desc}</p>
-      <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/70 group-hover:text-teal">
-        Know more <ArrowRight className="h-3.5 w-3.5" />
-      </span>
-    </button>
-  );
+function WhatIsNeurofeedback() {
   return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-[#05070d] py-14 text-white sm:py-18 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <SectionHeading
-          eyebrow="What is Neurofeedback?"
-          title="Train your brain. Optimise your mind."
-          sub="Neurofeedback is a non-invasive brain-training technology that monitors and optimises brainwave activity in real time. Click any wave to explore."
-        />
-        {/* Mobile / tablet 2-col grid */}
-        <div className="mt-10 grid grid-cols-2 gap-4 lg:hidden">
-          {WAVES.map((w, i) => (
-            <div
-              key={w.name}
-              data-aos="fade-up"
-              data-aos-delay={i * 90}
-              className={i === WAVES.length - 1 && WAVES.length % 2 === 1 ? "col-span-2 sm:col-span-1 sm:col-start-1 sm:mx-auto sm:w-1/2" : ""}
-            >
-              <Card w={w} />
-            </div>
-          ))}
+        <div className="mx-auto max-w-3xl text-center">
+          <span
+            data-aos="fade-up"
+            className="inline-block rounded-full bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-teal"
+          >
+            What is Neurofeedback?
+          </span>
+          <h2
+            data-aos="fade-up"
+            data-aos-delay="80"
+            className="mt-4 font-display text-3xl font-extrabold leading-[1.1] tracking-[-0.02em] md:text-4xl"
+          >
+            Quantify Cognitive Capital. Eliminate Structural Burnout.
+          </h2>
+          <p
+            data-aos="fade-up"
+            data-aos-delay="160"
+            className="mt-4 text-sm leading-relaxed text-white/60 sm:text-base"
+          >
+            Neurofeedback is a non-invasive, data-driven technology that safely maps and analyses brainwave
+            frequencies in real time. By capturing the conscious/subconscious neurological factors that govern
+            focus, stress tolerance, and emotional stability, it provides professionals with an empirical tool to
+            predict individual performances and eliminate their attrition.
+          </p>
+          <p
+            data-aos="fade-up"
+            data-aos-delay="220"
+            className="mt-5 text-[11px] font-medium uppercase tracking-[0.18em] text-white/35"
+          >
+            Hover or tap a band to expand its live wave
+          </p>
         </div>
-        {/* Desktop grid */}
-        <div className="mt-12 hidden gap-5 lg:grid lg:grid-cols-5">
-          {WAVES.map((w, i) => (
-            <div key={w.name} data-aos="fade-up" data-aos-delay={i * 120}>
-              <Card w={w} />
-            </div>
-          ))}
-        </div>
+      </div>
+      <div className="mt-10 sm:mt-14">
+        <BrainwaveBands />
       </div>
     </section>
   );
 }
+
 
 
 /* ───── How it works ───── */
