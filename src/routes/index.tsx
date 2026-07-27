@@ -192,6 +192,99 @@ function StatsStrip() {
   );
 }
 
+/* ───── One Patented Ecosystem ───── */
+function EcosystemSection() {
+  const pillars = [
+    {
+      key: "CONNECT",
+      dot: "#f97316",
+      points: [
+        "Medical-grade dry EEG sensing that pairs in seconds.",
+        "Hardware and software bridged on one patented pipeline.",
+        "Continuous live sessions with near-zero signal delay.",
+      ],
+    },
+    {
+      key: "QUANTIFY",
+      dot: "#14b8a6",
+      points: [
+        "Raw brain activity turned into 14 precise cognitive metrics.",
+        "No manual scoring, no biased self-reporting checklists.",
+        "Real-time telemetry validated against clinical baselines.",
+      ],
+    },
+    {
+      key: "EXPLORE",
+      dot: "#a855f7",
+      points: [
+        "Cloud AI surfaces hidden patterns across every session.",
+        "Track focus, stress and performance trends over time.",
+        "Scale from a single client to an entire organisation.",
+      ],
+    },
+  ];
+
+  return (
+    <section className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2
+            data-aos="fade-up"
+            className="font-display text-2xl font-extrabold leading-tight tracking-[-0.01em] text-navy sm:text-3xl lg:text-[2.5rem]"
+          >
+            One Patented Ecosystem. <span className="text-gradient-brand">Zero Subjective Guesswork.</span>
+          </h2>
+          <p
+            data-aos="fade-up"
+            data-aos-delay="120"
+            className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base"
+          >
+            Move away from outdated checklists and biased self-reporting. Our integrated system bridges
+            high-fidelity neuro-sensing hardware directly with cloud-based AI analytics, providing business
+            leaders and clinicians with concrete cognitive telemetry.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {pillars.map((p, i) => (
+            <div
+              key={p.key}
+              data-aos="fade-up"
+              data-aos-delay={100 + i * 140}
+              className={i === 1 ? "lg:-mt-6" : i === 2 ? "lg:mt-4" : ""}
+            >
+              <div
+                className="animate-float h-full rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] sm:p-7"
+                style={{ animationDelay: `${i * 0.9}s` }}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full" style={{ background: p.dot }} />
+                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-navy">{p.key}</span>
+                </div>
+                <ul className="mt-5 space-y-4">
+                  {p.points.map((pt) => (
+                    <li key={pt} className="flex gap-3 text-sm leading-relaxed text-slate-600">
+                      <span
+                        className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border"
+                        style={{ borderColor: p.dot }}
+                      >
+                        <span className="h-1.5 w-1.5 rounded-full" style={{ background: p.dot }} />
+                      </span>
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+
 /* ───── What is neurofeedback ───── */
 function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) {
   const Card = ({ w }: { w: WaveInfo }) => (
