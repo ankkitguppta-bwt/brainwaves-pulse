@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
 import logoLight from "@/assets/brand/logo-light.png";
+import logoDarkAsset from "@/assets/brand/logo-dark.png.asset.json";
 
 type NavItem =
   | { label: string; to: string }
