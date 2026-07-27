@@ -99,13 +99,25 @@ function Hero() {
       />
       <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/50 to-navy/80" />
       <div className="relative mx-auto w-full max-w-4xl px-4 pb-16 pt-28 text-center sm:px-6 md:pb-20 md:pt-32 lg:px-8">
-        <h1 data-aos="fade-up" data-aos-delay="100" className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-gradient-brand sm:text-5xl lg:text-6xl">
+        <h1
+          data-aos="fade-up"
+          data-aos-delay="100"
+          className="font-display text-4xl font-bold uppercase leading-[1.05] tracking-[0.02em] text-gradient-brand sm:text-5xl lg:text-6xl"
+        >
           CONNECT, QUANTIFY, EXPLORE
         </h1>
-        <p data-aos="fade-up" data-aos-delay="200" className="mx-auto mt-5 max-w-2xl text-base text-white sm:text-lg">
+        <p
+          data-aos="fade-up"
+          data-aos-delay="200"
+          className="mx-auto mt-5 max-w-2xl font-sans text-base font-medium text-white sm:text-lg"
+        >
           India’s advanced neurofeedback platform mapping real-time cognitive data in 2 minutes.
         </p>
-        <p data-aos="fade-up" data-aos-delay="250" className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-white/80 sm:text-base">
+        <p
+          data-aos="fade-up"
+          data-aos-delay="250"
+          className="mx-auto mt-4 max-w-3xl font-sans text-sm font-normal leading-relaxed text-white/80 sm:text-base"
+        >
           Move past qualitative guesswork. Our 14 precise cognitive parameters instantly help to figure out your brain waves data into a quantified performance blueprint. An evidence-based platform to assess, track, and improve focus, performance, and well-being—for individuals and organizations alike.
         </p>
         <div data-aos="fade-up" data-aos-delay="300" className="mt-8 flex flex-wrap justify-center gap-3">
