@@ -497,15 +497,19 @@ function VideoTestimonials() {
     id: v.id, title: v.title ?? v.author, author: v.author, src: v.video_url, thumbnail: v.thumbnail_url,
   }));
   const items = dbItems.length > 0 ? dbItems : FALLBACK_VIDEOS;
-  const useCarousel = items.length > 3;
+  const [paused, setPaused] = useState(false);
 
   const Card = ({ v }: { v: VideoT }) => (
     <button
       type="button"
       onClick={() => setActive(v)}
-      className="group relative block aspect-video w-full overflow-hidden rounded-2xl bg-gradient-hero text-left"
+      className="group relative block aspect-[4/5] w-full shrink-0 overflow-hidden rounded-2xl bg-gradient-hero text-left"
     >
-      <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-50" />
+      {v.thumbnail ? (
+        <img src={v.thumbnail} alt={v.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+      ) : (
+        <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-50" />
+      )}
       <div className="absolute inset-0 flex items-center justify-center">
         <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-navy shadow-lg transition group-hover:scale-110">
           <Play className="ml-0.5 h-6 w-6" />
@@ -517,6 +521,26 @@ function VideoTestimonials() {
       </div>
     </button>
   );
+
+  // split into columns for a vertical auto-scrolling carousel
+  const columnCount = items.length >= 3 ? 3 : items.length;
+  const columns: VideoT[][] = Array.from({ length: columnCount }, () => []);
+  items.forEach((v, i) => columns[i % columnCount].push(v));
+
+  const Column = ({ list, index }: { list: VideoT[]; index: number }) => {
+    // duplicate so the loop is seamless
+    const loop = [...list, ...list];
+    return (
+      <div
+        className={`flex flex-col gap-5 will-change-transform marquee-vertical ${paused ? "marquee-vertical-paused" : ""}`}
+        style={{ ["--marquee-duration" as any]: `${18 + list.length * 7 + index * 4}s` }}
+      >
+        {loop.map((v, i) => (
+          <Card key={`${v.id}-${i}`} v={v} />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <section className="bg-white py-12 sm:py-16 lg:py-20">
@@ -531,28 +555,30 @@ function VideoTestimonials() {
           </Link>
         </div>
 
-        {useCarousel ? (
-          <Carousel opts={{ align: "start" }} className="mt-10" data-aos="fade-up">
-            <CarouselContent className="-ml-4">
-              {items.map((v: VideoT, i: number) => (
-                <CarouselItem key={v.id} className="pl-4 sm:basis-1/2 lg:basis-1/3" data-aos="fade-up" data-aos-delay={i * 100}>
-                  <Card v={v} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        ) : (
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((v: VideoT, i: number) => (
-              <div key={v.id} data-aos="fade-up" data-aos-delay={i * 100}>
-                <Card v={v} />
+        <div
+          data-aos="fade-up"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onTouchStart={() => setPaused((p) => !p)}
+          className="marquee-mask-y mt-10 h-[520px] overflow-hidden sm:h-[560px]"
+        >
+          {/* mobile: single track with every video */}
+          <div className="sm:hidden">
+            <Column list={items} index={0} />
+          </div>
+          {/* sm+: multi-column tracks */}
+          <div className="hidden h-full gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+            {columns.map((list, i) => (
+              <div key={i} className={i === 2 ? "hidden lg:block" : ""}>
+                <Column list={list} index={i} />
               </div>
             ))}
           </div>
-        )}
+        </div>
+
+        <p className="mt-4 text-center text-xs text-navy/50">Hover to pause · click a video to play</p>
       </div>
+
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
         <DialogContent className="max-w-3xl overflow-hidden p-0">
