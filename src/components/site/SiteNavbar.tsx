@@ -62,11 +62,22 @@ export function SiteNavbar() {
 
   return (
     <>
-      <header className="fixed left-1/2 top-3 z-40 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl border border-white/30 bg-white/25 shadow-lg backdrop-blur-2xl backdrop-saturate-150 transition-all duration-300 sm:top-4 sm:w-[calc(100%-2rem)]">
+      <header className="group fixed left-1/2 top-3 z-40 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl border border-white/30 bg-white/25 shadow-lg backdrop-blur-2xl backdrop-saturate-150 transition-all duration-300 hover:border-border hover:bg-white sm:top-4 sm:w-[calc(100%-2rem)]">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-          <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="BrainWaves Tech home">
-            <img src={logoLight} alt="BrainWaves Tech" className="h-8 w-auto sm:h-9 lg:h-10" />
+          <Link to="/" className="relative flex h-8 shrink-0 items-center sm:h-9 lg:h-10" aria-label="BrainWaves Tech home">
+            <img
+              src={logoDarkAsset.url}
+              alt="BrainWaves Tech"
+              className="h-8 w-auto transition-opacity duration-300 group-hover:opacity-0 sm:h-9 lg:h-10"
+            />
+            <img
+              src={logoLight}
+              alt=""
+              aria-hidden="true"
+              className="absolute left-0 top-1/2 h-8 w-auto -translate-y-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:h-9 lg:h-10"
+            />
           </Link>
+
 
           <nav className="hidden flex-1 items-center justify-center gap-0.5 lg:flex">
             {nav.map((item) => {
