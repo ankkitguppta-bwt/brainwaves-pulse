@@ -206,7 +206,7 @@ export function SiteNavbar() {
                     <li key={item.label}>
                       <button
                         type="button"
-                        className="flex min-h-[48px] w-full items-center justify-between rounded-xl border border-border bg-white px-4 py-3 text-base font-semibold text-navy transition hover:bg-secondary"
+                        className="flex min-h-[48px] w-full items-center justify-between rounded-xl border border-border bg-white px-4 py-3 text-base font-semibold text-black transition hover:bg-secondary"
                         onClick={() => setMobileExpanded(expanded ? null : item.label)}
                         aria-expanded={expanded}
                       >
@@ -220,7 +220,7 @@ export function SiteNavbar() {
                               <Link
                                 to={c.to}
                                 onClick={() => setOpen(false)}
-                                className="block rounded-lg px-3 py-2 text-sm font-medium text-navy/80 hover:bg-secondary hover:text-navy"
+                                className="block rounded-lg px-3 py-2 text-sm font-medium text-black/80 hover:bg-secondary hover:text-black"
                               >
                                 {c.label}
                               </Link>
