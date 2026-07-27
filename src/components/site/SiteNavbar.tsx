@@ -119,7 +119,7 @@ export function SiteNavbar() {
                                 className="block px-4 py-2.5 transition hover:bg-secondary"
                                 onClick={() => setOpenDrop(null)}
                               >
-                                <p className="text-sm font-semibold text-navy">{c.label}</p>
+                                <p className="text-sm font-semibold text-black">{c.label}</p>
                                 {c.desc && (
                                   <p className="mt-0.5 text-xs text-muted-foreground">{c.desc}</p>
                                 )}
