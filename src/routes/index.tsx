@@ -497,15 +497,19 @@ function VideoTestimonials() {
     id: v.id, title: v.title ?? v.author, author: v.author, src: v.video_url, thumbnail: v.thumbnail_url,
   }));
   const items = dbItems.length > 0 ? dbItems : FALLBACK_VIDEOS;
-  const useCarousel = items.length > 3;
+  const [paused, setPaused] = useState(false);
 
   const Card = ({ v }: { v: VideoT }) => (
     <button
       type="button"
       onClick={() => setActive(v)}
-      className="group relative block aspect-video w-full overflow-hidden rounded-2xl bg-gradient-hero text-left"
+      className="group relative block aspect-[4/5] w-full shrink-0 overflow-hidden rounded-2xl bg-gradient-hero text-left"
     >
-      <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-50" />
+      {v.thumbnail ? (
+        <img src={v.thumbnail} alt={v.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+      ) : (
+        <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-50" />
+      )}
       <div className="absolute inset-0 flex items-center justify-center">
         <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-navy shadow-lg transition group-hover:scale-110">
           <Play className="ml-0.5 h-6 w-6" />
@@ -518,40 +522,26 @@ function VideoTestimonials() {
     </button>
   );
 
-  return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20">
-      <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="flex items-end justify-between gap-4">
-          <SectionHeading eyebrow="Video Testimonials" title="Hear it from our community" />
-          <Link
-            to="/testimonials"
-            className="hidden shrink-0 text-sm font-semibold text-navy hover:text-teal sm:inline-flex sm:items-center sm:gap-1"
-          >
-            See all <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
+  // split into columns for a vertical auto-scrolling carousel
+  const columnCount = items.length >= 3 ? 3 : items.length;
+  const columns: VideoT[][] = Array.from({ length: columnCount }, () => []);
+  items.forEach((v, i) => columns[i % columnCount].push(v));
 
-        {useCarousel ? (
-          <Carousel opts={{ align: "start" }} className="mt-10" data-aos="fade-up">
-            <CarouselContent className="-ml-4">
-              {items.map((v: VideoT, i: number) => (
-                <CarouselItem key={v.id} className="pl-4 sm:basis-1/2 lg:basis-1/3" data-aos="fade-up" data-aos-delay={i * 100}>
-                  <Card v={v} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        ) : (
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((v: VideoT, i: number) => (
-              <div key={v.id} data-aos="fade-up" data-aos-delay={i * 100}>
-                <Card v={v} />
-              </div>
-            ))}
-          </div>
-        )}
+  const Column = ({ list, index }: { list: VideoT[]; index: number }) => {
+    // duplicate so the loop is seamless
+    const loop = [...list, ...list];
+    return (
+      <div
+        className={`flex flex-col gap-5 will-change-transform marquee-vertical ${paused ? "marquee-vertical-paused" : ""}`}
+        style={{ ["--marquee-duration" as any]: `${18 + list.length * 7 + index * 4}s` }}
+      >
+        {loop.map((v, i) => (
+          <Card key={`${v.id}-${i}`} v={v} />
+        ))}
+      </div>
+    );
+  };
+
       </div>
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
