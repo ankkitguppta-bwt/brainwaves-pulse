@@ -102,23 +102,23 @@ function Hero() {
         <h1
           data-aos="fade-up"
           data-aos-delay="100"
-          className="font-display text-4xl font-bold uppercase leading-[1.05] tracking-[0.02em] text-gradient-brand sm:text-5xl lg:text-6xl"
+          className="font-display text-4xl font-extrabold leading-[1.05] tracking-[-0.02em] text-gradient-hero sm:text-5xl lg:text-6xl"
         >
-          CONNECT, QUANTIFY, EXPLORE
+          Connect. Quantify. Explore.
         </h1>
         <p
           data-aos="fade-up"
           data-aos-delay="200"
-          className="mx-auto mt-5 max-w-2xl font-sans text-base font-medium text-white sm:text-lg"
+          className="mx-auto mt-5 max-w-2xl font-display text-base font-bold text-white sm:text-lg"
         >
-          India’s advanced neurofeedback platform mapping real-time cognitive data in 2 minutes.
+          India’s advanced neurofeedback platform mapping <span className="font-accent font-semibold text-orange">real-time</span> cognitive data in 2 minutes.
         </p>
         <p
           data-aos="fade-up"
           data-aos-delay="250"
-          className="mx-auto mt-4 max-w-3xl font-sans text-sm font-normal leading-relaxed text-white/80 sm:text-base"
+          className="mx-auto mt-4 max-w-3xl font-display text-sm font-medium leading-relaxed text-white/75 sm:text-base"
         >
-          Move past qualitative guesswork. Our 14 precise cognitive parameters instantly help to figure out your brain waves data into a quantified performance blueprint. An evidence-based platform to assess, track, and improve focus, performance, and well-being—for individuals and organizations alike.
+          Move past qualitative <span className="font-accent font-semibold text-white">guesswork</span>. Our 14 precise cognitive parameters instantly help to figure out your brain waves data into a quantified performance blueprint. An evidence-based platform to assess, <span className="font-accent font-semibold text-white">track</span>, and improve focus, performance, and well-being—for individuals and organizations alike.
         </p>
         <div data-aos="fade-up" data-aos-delay="300" className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
