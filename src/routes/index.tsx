@@ -559,14 +559,23 @@ function VideoTestimonials() {
           data-aos="fade-up"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          className="marquee-mask-y mt-10 grid h-[520px] grid-cols-1 gap-5 overflow-hidden sm:h-[560px] sm:grid-cols-2 lg:grid-cols-3"
+          onTouchStart={() => setPaused((p) => !p)}
+          className="marquee-mask-y mt-10 h-[520px] overflow-hidden sm:h-[560px]"
         >
-          {columns.map((list, i) => (
-            <div key={i} className={i === 2 ? "hidden lg:block" : i === 1 ? "hidden sm:block" : ""}>
-              <Column list={list} index={i} />
-            </div>
-          ))}
+          {/* mobile: single track with every video */}
+          <div className="sm:hidden">
+            <Column list={items} index={0} />
+          </div>
+          {/* sm+: multi-column tracks */}
+          <div className="hidden h-full gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+            {columns.map((list, i) => (
+              <div key={i} className={i === 2 ? "hidden lg:block" : ""}>
+                <Column list={i === 1 && columnCount === 3 ? [...list, ...columns[2]] : list} index={i} />
+              </div>
+            ))}
+          </div>
         </div>
+
         <p className="mt-4 text-center text-xs text-navy/50">Hover to pause · click a video to play</p>
       </div>
 
