@@ -192,8 +192,8 @@ export function SiteNavbar() {
                           onClick={() => setOpen(false)}
                           className={`flex min-h-[48px] items-center rounded-xl border px-4 py-3 text-base font-semibold transition ${
                             active
-                              ? "border-teal/35 bg-secondary text-navy"
-                              : "border-border bg-white text-navy hover:border-teal/35 hover:bg-secondary"
+                              ? "border-teal/35 bg-secondary text-black"
+                              : "border-border bg-white text-black hover:border-teal/35 hover:bg-secondary"
                           }`}
                         >
                           {item.label}
