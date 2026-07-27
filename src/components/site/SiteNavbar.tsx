@@ -106,7 +106,7 @@ export function SiteNavbar() {
                 >
                   <button
                     type="button"
-                    className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition xl:text-sm text-black/70 hover:bg-white/10 hover:text-black`}
+                    className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium text-white/85 transition hover:bg-white/10 hover:text-white group-hover:text-navy/75 group-hover:hover:bg-secondary group-hover:hover:text-navy xl:text-sm`}
                     onClick={() => setOpenDrop(open ? null : item.label)}
                     aria-expanded={open}
                   >
