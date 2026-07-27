@@ -99,15 +99,11 @@ function Hero() {
       />
       <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/50 to-navy/80" />
       <div className="relative mx-auto w-full max-w-4xl px-4 pb-16 pt-28 text-center sm:px-6 md:pb-20 md:pt-32 lg:px-8">
-        <span data-aos="fade-up" className="inline-flex items-center gap-2 rounded-full border border-teal/40 bg-teal/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-teal">
-          <Sparkles className="h-3.5 w-3.5" /> Neuro-tech made in India
-        </span>
-        <h1 data-aos="fade-up" data-aos-delay="100" className="mt-5 font-display text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl">
-          India's Advanced <span className="text-gradient-brand">Neurofeedback &amp; Brainwave Analysis</span> Platform
+        <h1 data-aos="fade-up" data-aos-delay="100" className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-gradient-brand sm:text-5xl lg:text-6xl">
+          CONNECT, QUANTIFY, EXPLORE
         </h1>
-        <p data-aos="fade-up" data-aos-delay="200" className="mx-auto mt-5 max-w-2xl text-base text-white/80 sm:text-lg">
-          Assess Brain Activity • Understand Cognitive Patterns • Deliver Customized Neurofeedback &amp; Sound Therapy
-          Solutions
+        <p data-aos="fade-up" data-aos-delay="200" className="mx-auto mt-5 max-w-2xl text-base text-white sm:text-lg">
+          India’s advanced neurofeedback platform mapping real-time cognitive data in 2 minutes.
         </p>
         <div data-aos="fade-up" data-aos-delay="300" className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
