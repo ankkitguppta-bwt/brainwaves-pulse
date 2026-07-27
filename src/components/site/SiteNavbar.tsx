@@ -87,9 +87,10 @@ export function SiteNavbar() {
                   <Link
                     key={item.label}
                     to={item.to}
-                    className={`whitespace-nowrap rounded-full text-black px-3 py-2 text-[13px] font-medium transition xl:text-sm ${
-                      active ? "bg-white/15 " : "hover:bg-white/10"
+                    className={`whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium text-white transition group-hover:text-navy xl:text-sm ${
+                      active ? "bg-white/15 group-hover:bg-secondary" : "hover:bg-white/10 group-hover:hover:bg-secondary"
                     }`}
+
                   >
                     {item.label}
                   </Link>
