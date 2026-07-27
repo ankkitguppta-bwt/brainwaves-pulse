@@ -542,7 +542,34 @@ function VideoTestimonials() {
     );
   };
 
+  return (
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <div className="flex items-end justify-between gap-4">
+          <SectionHeading eyebrow="Video Testimonials" title="Hear it from our community" />
+          <Link
+            to="/testimonials"
+            className="hidden shrink-0 text-sm font-semibold text-navy hover:text-teal sm:inline-flex sm:items-center sm:gap-1"
+          >
+            See all <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div
+          data-aos="fade-up"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          className="marquee-mask-y mt-10 grid h-[520px] grid-cols-1 gap-5 overflow-hidden sm:h-[560px] sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {columns.map((list, i) => (
+            <div key={i} className={i === 2 ? "hidden lg:block" : i === 1 ? "hidden sm:block" : ""}>
+              <Column list={list} index={i} />
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-center text-xs text-navy/50">Hover to pause · click a video to play</p>
       </div>
+
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
         <DialogContent className="max-w-3xl overflow-hidden p-0">
