@@ -293,29 +293,52 @@ function EcosystemSection() {
 
 /* ───── What is neurofeedback ───── */
 function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) {
-  const Card = ({ w }: { w: WaveInfo }) => (
-    <button
-      key={w.name}
-      type="button"
-      onClick={() => onSelect(w)}
-      className="glass-card group relative flex h-full w-full flex-col overflow-hidden rounded-2xl p-5 text-left !shadow-none transition hover:-translate-y-0.5 hover:!shadow-none focus:outline-none focus:ring-2 focus:ring-teal"
-    >
-      <Waves className="relative h-6 w-6 text-white" />
-      <h3 className="relative mt-3 font-display text-xl font-semibold text-navy">{w.name} Waves</h3>
-      <p className="relative mt-1 text-xs font-medium" style={{ color: w.color }}>
-        {w.range}
-      </p>
-      <p className="relative mt-3 text-sm text-muted-foreground">{w.desc}</p>
-      <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/70 group-hover:text-teal">
-        Know more <ArrowRight className="h-3.5 w-3.5" />
-      </span>
-    </button>
-  );
+  const [active, setActive] = useState<string | null>(null);
+
+  const Card = ({ w, spotlight }: { w: WaveInfo; spotlight?: boolean }) => {
+    const isActive = spotlight && active === w.name;
+    return (
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => spotlight && setActive(isActive ? null : w.name)}
+        onKeyDown={(e) => {
+          if (spotlight && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            setActive(isActive ? null : w.name);
+          }
+        }}
+        className={`wave-card glass-card group relative flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-2xl p-5 text-left !shadow-none transition-[background-color,border-color,padding,transform] duration-500 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-teal ${
+          isActive ? "is-active" : ""
+        }`}
+        style={{ ["--wave-color" as string]: w.color }}
+      >
+        <Waves className="wave-card__icon relative h-6 w-6 shrink-0" style={{ color: w.color }} />
+        <h3 className="wave-card__title relative mt-3 font-display text-xl font-semibold text-navy transition-all duration-500">
+          {w.name} Waves
+        </h3>
+        <p className="wave-card__meta relative mt-1 text-xs font-medium" style={{ color: w.color }}>
+          {w.range}
+        </p>
+        <p className="wave-card__desc relative mt-3 flex-1 text-sm text-muted-foreground">{w.desc}</p>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(w);
+          }}
+          className="wave-card__cta relative mt-4 inline-flex w-fit items-center gap-1 text-xs font-semibold text-navy/70 transition-colors hover:text-teal group-hover:text-teal"
+        >
+          Know more <ArrowRight className="wave-card__arrow h-3.5 w-3.5 transition-transform duration-500" />
+        </button>
+      </div>
+    );
+  };
+
   return (
     <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
-          eyebrow="What is Neurofeedback?"
           title="Train your brain. Optimise your mind."
           sub="Neurofeedback is a non-invasive brain-training technology that monitors and optimises brainwave activity in real time. Click any wave to explore."
         />
@@ -332,18 +355,20 @@ function WhatIsNeurofeedback({ onSelect }: { onSelect: (w: WaveInfo) => void }) 
             </div>
           ))}
         </div>
-        {/* Desktop grid */}
-        <div className="mt-12 hidden gap-5 lg:grid lg:grid-cols-5">
-          {WAVES.map((w, i) => (
-            <div key={w.name} data-aos="fade-up" data-aos-delay={i * 120}>
-              <Card w={w} />
-            </div>
+        {/* Desktop spotlight grid */}
+        <div
+          className={`waves-spotlight mt-12 hidden lg:grid ${active ? "has-active" : ""}`}
+          data-aos="fade-up"
+        >
+          {WAVES.map((w) => (
+            <Card key={w.name} w={w} spotlight />
           ))}
         </div>
       </div>
     </section>
   );
 }
+
 
 
 /* ───── How it works ───── */
