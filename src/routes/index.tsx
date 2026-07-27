@@ -73,9 +73,8 @@ function HomePage() {
       <Hero />
       <StatsStrip />
       <EcosystemSection />
-      <WhatIsNeurofeedback onSelect={setActiveWave} />
-
       <HowItWorks />
+      <WhatIsNeurofeedback onSelect={setActiveWave} />
       <WhoBenefits />
       <VideoTestimonials />
       <FAQ />
@@ -353,23 +352,22 @@ function HowItWorks() {
     {
       icon: Activity,
       title: "Brainwave Assessment",
-      desc: "Quick non-invasive EEG capture to record live brain activity.",
+      desc: "Pure, real-time data capture. Zero subjective bias — a quick, non-invasive 2-minute capture using our patented technology.",
     },
-    { icon: Gauge, title: "Detailed Analysis", desc: "Multi-band analysis across attention, calm, focus and more." },
     {
-      icon: Brain,
+      icon: Gauge,
+      title: "Detailed Analysis",
+      desc: "Turning hidden neural patterns into clear, quantified parameters — the proprietary system filters and charts your cognitive matrix across 14 distinct parameters.",
+    },
+    {
+      icon: Users,
       title: "Professional Interpretation",
-      desc: "Certified practitioners translate signals into insight.",
-    },
-    {
-      icon: Headphones,
-      title: "Customized Sound Therapy",
-      desc: "Personalised neuro-acoustic frequencies prescribed for you.",
+      desc: "Translating algorithmic complexity into actionable institutional insights — certified network practitioners and enterprise dashboards translate automated metrics into a comprehensive cognitive health blueprint.",
     },
     {
       icon: Target,
-      title: "Neurofeedback Training",
-      desc: "Game-based feedback sessions to train target brain states.",
+      title: "Personalised Solutions",
+      desc: "Custom care for your mind. After analyzing your brain data, your practitioner designs a tailored plan to balance your brain activity. With regular follow-ups and progress tracking, you can actually see your mental performance improve over time.",
     },
   ];
   const Step = ({ s, i }: { s: (typeof steps)[number]; i: number }) => (
@@ -387,7 +385,10 @@ function HowItWorks() {
   return (
     <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <SectionHeading eyebrow="How it works" title="A five-step neuro-wellness journey" />
+        <SectionHeading
+          title="A Four-Stage Neuro-Wellness Journey"
+          sub="From non-invasive sensor link to targeted cognitive alignment — a data-backed clinical protocol built for B2B environments and delivered by certified wellness practitioners."
+        />
         {/* Mobile / tablet 2-col grid */}
         <div className="mt-10 grid grid-cols-2 gap-6 lg:hidden">
           {steps.map((s, i) => (
@@ -395,7 +396,6 @@ function HowItWorks() {
               key={s.title}
               data-aos="step-reveal"
               data-aos-delay={i * 120}
-              className={i === steps.length - 1 && steps.length % 2 === 1 ? "col-span-2" : ""}
             >
               <Step s={s} i={i} />
             </div>
@@ -404,7 +404,7 @@ function HowItWorks() {
         {/* Desktop */}
         <div className="relative mt-14 hidden lg:block">
           <div className="absolute left-0 right-0 top-8 h-px bg-gradient-to-r from-transparent via-teal/40 to-transparent" />
-          <ol className="grid gap-8 lg:grid-cols-5">
+          <ol className="grid gap-8 lg:grid-cols-4">
             {steps.map((s, i) => (
               <li
                 key={s.title}
@@ -687,17 +687,19 @@ function SectionHeading({
   sub,
   dark,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   sub?: string;
   dark?: boolean;
 }) {
   return (
     <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
-      <p className={`text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "text-teal" : "text-teal"}`} data-aos="fade-up">
-        {eyebrow}
-      </p>
-      <h2 className={`mt-3 font-display text-3xl font-bold sm:text-4xl ${dark ? "text-white" : "text-navy"}`} data-aos="fade-up" data-aos-delay="80">
+      {eyebrow && (
+        <p className={`text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "text-teal" : "text-teal"}`} data-aos="fade-up">
+          {eyebrow}
+        </p>
+      )}
+      <h2 className={`font-display text-3xl font-bold sm:text-4xl ${dark ? "text-white" : "text-navy"} ${eyebrow ? "mt-3" : ""}`} data-aos="fade-up" data-aos-delay="80">
         {title}
       </h2>
       {sub && <p className={`mx-auto mt-4 max-w-2xl ${dark ? "text-white/75" : "text-muted-foreground"}`} data-aos="fade-up" data-aos-delay="160">{sub}</p>}
