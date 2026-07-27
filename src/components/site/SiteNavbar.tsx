@@ -12,20 +12,17 @@ const nav: NavItem[] = [
   {
     label: "Products",
     children: [
-      { label: "EEG Headband", to: "/products/headband", desc: "Smart wearable brain sensor" },
-      { label: "Software Platform", to: "/products/software", desc: "Live neurofeedback dashboard" },
-      { label: "Sound Therapy", to: "/products/sound-therapy", desc: "Personalised neuro-acoustics" },
-      { label: "Accessories", to: "/products/accessories", desc: "Sensors, cables and add-ons" },
+      { label: "BWT-2508 Headset", to: "/products/headband", desc: "High-density EEG headset" },
+      { label: "BWT-1408 Software", to: "/products/software", desc: "Live neurofeedback dashboard" },
+      { label: "NFP Certification", to: "/practitioner", desc: "Certified practitioner programme" },
+      { label: "Customised Solutions", to: "/contact", desc: "Tailored neurofeedback systems" },
     ],
   },
   {
     label: "Technology",
     children: [
-      { label: "EEG Hardware", to: "/technology" },
-      { label: "Brainwave Analysis", to: "/technology" },
-      { label: "AI Software", to: "/technology" },
-      { label: "Neurofeedback", to: "/technology" },
-      { label: "Sound Therapy", to: "/technology" },
+      { label: "BWT-2508", to: "/technology" },
+      { label: "BWT-1408", to: "/technology" },
     ],
   },
   { label: "Become a Practitioner", to: "/practitioner" },
@@ -33,12 +30,12 @@ const nav: NavItem[] = [
   {
     label: "About Us",
     children: [
-      { label: "Mission", to: "/about" },
-      { label: "Research", to: "/research" },
-      { label: "Team", to: "/about" },
+      { label: "Our Mission", to: "/about" },
+      { label: "Scientific Research", to: "/research" },
+      { label: "Meet the Team", to: "/about" },
       { label: "Media", to: "/stories" },
       { label: "Testimonials", to: "/testimonials" },
-      { label: "Contact", to: "/contact" },
+      { label: "Contact Us", to: "/contact" },
     ],
   },
 ];
