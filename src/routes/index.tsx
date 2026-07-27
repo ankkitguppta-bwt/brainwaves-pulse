@@ -199,27 +199,28 @@ function EcosystemSection() {
       key: "CONNECT",
       dot: "#f97316",
       points: [
-        "Medical-grade dry EEG sensing that pairs in seconds.",
-        "Hardware and software bridged on one patented pipeline.",
-        "Continuous live sessions with near-zero signal delay.",
+        "Deploy Non-Invasive Dry Electrode Hardware.",
+        "Establish Live, Zero-Delay Wireless Telemetry.",
+        "Automated Sensor Grounding Verification.",
       ],
     },
     {
       key: "QUANTIFY",
       dot: "#14b8a6",
       points: [
-        "Raw brain activity turned into 14 precise cognitive metrics.",
-        "No manual scoring, no biased self-reporting checklists.",
-        "Real-time telemetry validated against clinical baselines.",
+        "Real-Time 0.5Hz Signal Translation.",
+        "Eliminate Subjective Survey Bias.",
+        "Chart 5 major brainwaves quantitatively.",
+        "Chart 9 qualitative parameters in a quantitative way.",
       ],
     },
     {
       key: "EXPLORE",
       dot: "#a855f7",
       points: [
-        "Cloud AI surfaces hidden patterns across every session.",
-        "Track focus, stress and performance trends over time.",
-        "Scale from a single client to an entire organisation.",
+        "Isolate Hidden Operational Attrition Triggers.",
+        "Deep-Dive Into Historical Neuro-Trends.",
+        "Scale Targeted Performance Plan Solutions.",
       ],
     },
   ];
