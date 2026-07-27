@@ -442,7 +442,7 @@ function WhoBenefits() {
   return (
     <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <SectionHeading eyebrow="Who can benefit" title="Built for professionals, accessible to everyone" />
+        <SectionHeading title="Built for professionals. Scaled for visionary organizations. Accessible to everyone." />
         <div className="marquee-mask mt-12 space-y-4 !shadow-none" data-aos="fade-up" data-aos-delay="150">
           {[audiences.slice(0, Math.ceil(audiences.length / 2)), audiences.slice(Math.ceil(audiences.length / 2))].map(
             (row, idx) => (
