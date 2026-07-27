@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Activity, ChevronDown } from "lucide-react";
 import { BANDS, type BandContent, type BandId } from "@/components/site/brainwave-content";
 
 /* ── shared curve maths: ribbon + coils sample the same function ── */
@@ -174,7 +175,7 @@ const TAN_HALF = Math.tan((34 * Math.PI) / 180 / 2);
 export function BrainwaveBands() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  const rowRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const stageRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [active, setActive] = useState<BandId | null>(null);
   const activeRef = useRef<BandId | null>(null);
   const visibleRef = useRef(true);
@@ -191,15 +192,14 @@ export function BrainwaveBands() {
     const io = new IntersectionObserver(
       ([e]) => {
         visibleRef.current = e.isIntersecting;
-        if (!e.isIntersecting) setActive(null);
       },
-      { rootMargin: "-10% 0px -10% 0px" },
+      { rootMargin: "-5% 0px -5% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
-  /* live WebGL renderer — one canvas, five scissored viewports */
+  /* live WebGL renderer — one canvas, scissored to the open card's stage */
   useEffect(() => {
     let disposed = false;
     let cleanup: (() => void) | undefined;
@@ -229,10 +229,7 @@ export function BrainwaveBands() {
         scene: import("three").Scene;
         camera: import("three").PerspectiveCamera;
         uniforms: Record<string, { value: number }>[];
-        baseAmp: number[];
-        baseOpacity: number[];
         t: number;
-        focus: number;
       };
       const panels: Panel[] = [];
 
@@ -400,10 +397,7 @@ export function BrainwaveBands() {
           scene,
           camera,
           uniforms,
-          baseAmp: uniforms.map((u: any) => (u.uAmp ? u.uAmp.value : 0)),
-          baseOpacity: uniforms.map((u: any) => (u.uOpacity ? u.uOpacity.value : 0)),
           t: Math.random() * 30,
-          focus: 0,
         });
       });
 
@@ -427,20 +421,15 @@ export function BrainwaveBands() {
         const ch = window.innerHeight;
 
         panels.forEach((p) => {
-          const el = rowRefs.current[p.id];
+          if (activeRef.current !== p.id) return;
+          const el = stageRefs.current[p.id];
           if (!el) return;
           const r = el.getBoundingClientRect();
           if (r.bottom < 0 || r.top > ch || r.width === 0 || r.height === 0) return;
 
           if (!reduce) p.t += dt;
-
-          /* ease the focus state → amplitude + glow lift on hover */
-          const target = activeRef.current === p.id ? 1 : 0;
-          p.focus += (target - p.focus) * Math.min(1, dt * 6);
-          p.uniforms.forEach((u: any, i) => {
+          p.uniforms.forEach((u: any) => {
             u.uTime.value = p.t;
-            if (u.uAmp) u.uAmp.value = p.baseAmp[i] * (1 + p.focus * 0.35);
-            if (u.uOpacity) u.uOpacity.value = p.baseOpacity[i] * (1 + p.focus * 0.45);
           });
 
           const aspect = r.width / r.height;
@@ -485,108 +474,72 @@ export function BrainwaveBands() {
         <canvas
           ref={canvasRef}
           aria-hidden
-          className="pointer-events-none fixed inset-0 z-0 h-full w-full"
+          className="pointer-events-none fixed inset-0 z-20 h-full w-full"
         />
       )}
 
-      <div className="relative z-10 divide-y divide-white/10 border-y border-white/10">
-        {BANDS.map((b) => {
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {BANDS.map((b, i) => {
           const open = active === b.id;
           return (
             <div
               key={b.id}
-              role="button"
-              tabIndex={0}
-              aria-expanded={open}
-              onPointerEnter={(e) => {
-                if (e.pointerType === "mouse") setActive(b.id);
-              }}
-              onPointerLeave={(e) => {
-                if (e.pointerType === "mouse") setActive((a) => (a === b.id ? null : a));
-              }}
-              onFocus={() => setActive(b.id)}
-              onPointerUp={(e) => {
-                if (e.pointerType !== "mouse") setActive((a) => (a === b.id ? null : b.id));
-              }}
-
-
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  setActive((a) => (a === b.id ? null : b.id));
-                }
-              }}
-              className="group relative cursor-pointer outline-none transition-colors duration-500 focus-visible:bg-white/[0.04] hover:bg-white/[0.03]"
+              data-aos="fade-up"
+              data-aos-delay={i * 90}
+              className={`glass-card relative rounded-2xl border border-navy/10 bg-white p-5 text-left transition-all duration-500 !shadow-none ${
+                open ? "sm:col-span-2 lg:col-span-3 border-teal/40" : "hover:border-teal/40"
+              }`}
             >
-              {/* live 3D wave viewport */}
-              <div
-                ref={(el) => {
-                  rowRefs.current[b.id] = el;
-                }}
-                className="w-full transition-[height] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                style={{ height: open ? 240 : 150 }}
-              />
-
-              {/* minimal state label */}
-              <div className="pointer-events-none absolute left-0 top-0 w-full px-5 pt-6 sm:px-8 sm:pt-7 lg:px-12">
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span
-                    className="font-display text-base font-semibold uppercase tracking-[0.18em] sm:text-lg"
-                    style={{ color: b.colB }}
-                  >
-                    {b.name}
+              <button
+                type="button"
+                aria-expanded={open}
+                onClick={() => setActive((a) => (a === b.id ? null : b.id))}
+                className="flex w-full items-start gap-3 text-left outline-none"
+              >
+                <span className="mt-0.5 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-navy text-white">
+                  <Activity className="h-5 w-5" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="flex flex-wrap items-baseline gap-x-3">
+                    <span className="font-display text-base font-semibold text-navy">{b.name}</span>
+                    <span className="text-xs font-semibold uppercase tracking-[0.12em] text-teal">
+                      {b.frequency}
+                    </span>
                   </span>
-                  <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/40">
-                    {b.frequency}
-                  </span>
-                </div>
-                <p
-                  className={`mt-2 max-w-xl text-sm leading-relaxed transition-all duration-500 sm:text-[15px] ${
-                    open ? "text-white/70" : "text-white/45"
+                  <span className="mt-1.5 block text-sm leading-relaxed text-muted-foreground">{b.hook}</span>
+                </span>
+                <ChevronDown
+                  className={`mt-1 h-5 w-5 shrink-0 text-navy/40 transition-transform duration-500 ${
+                    open ? "rotate-180" : ""
                   }`}
-                >
-                  {b.hook}
-                </p>
-              </div>
+                />
+              </button>
 
-              {/* expanded detail */}
+              {/* expanded detail + live wave */}
               <div
                 className="grid transition-[grid-template-rows,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0 }}
               >
                 <div className="overflow-hidden">
-                  <div className="grid gap-6 px-5 pb-9 pt-1 sm:px-8 md:grid-cols-[1.4fr_1fr] lg:px-12">
-                    <p
-                      className="text-sm leading-relaxed text-white/70 transition-all duration-500 sm:text-[15px]"
-                      style={{
-                        transitionDelay: open ? "120ms" : "0ms",
-                        transform: open ? "translateY(0)" : "translateY(10px)",
-                      }}
-                    >
-                      {b.body}
-                    </p>
-                    <dl
-                      className="space-y-4 transition-all duration-500"
-                      style={{
-                        transitionDelay: open ? "220ms" : "0ms",
-                        transform: open ? "translateY(0)" : "translateY(10px)",
-                      }}
-                    >
-                      <div>
-                        <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40">
-                          Frequency
-                        </dt>
-                        <dd className="mt-1 font-display text-lg font-semibold" style={{ color: b.colB }}>
-                          {b.frequency}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40">
+                  <div className="mt-5 grid gap-5 md:grid-cols-[1.1fr_1fr]">
+                    {/* live 3D wave stage */}
+                    <div className="relative overflow-hidden rounded-xl bg-navy">
+                      <div
+                        ref={(el) => {
+                          stageRefs.current[b.id] = el;
+                        }}
+                        className="h-40 w-full sm:h-52"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{b.body}</p>
+                      <dl className="mt-4">
+                        <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-navy/50">
                           What it measures
                         </dt>
-                        <dd className="mt-1 text-sm leading-relaxed text-white/70">{b.measures}</dd>
-                      </div>
-                    </dl>
+                        <dd className="mt-1 text-sm leading-relaxed text-navy/80">{b.measures}</dd>
+                      </dl>
+                    </div>
                   </div>
                 </div>
               </div>
