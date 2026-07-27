@@ -478,7 +478,7 @@ export function BrainwaveBands() {
         />
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {BANDS.map((b, i) => {
           const open = active === b.id;
           return (
@@ -487,7 +487,7 @@ export function BrainwaveBands() {
               data-aos="fade-up"
               data-aos-delay={i * 90}
               className={`glass-card relative rounded-2xl border border-navy/10 bg-white p-5 text-left transition-all duration-500 !shadow-none ${
-                open ? "sm:col-span-2 lg:col-span-3 border-teal/40" : "hover:border-teal/40"
+                open ? "border-teal/40 ring-1 ring-teal/25" : "hover:border-teal/40"
               }`}
             >
               <button
@@ -521,7 +521,7 @@ export function BrainwaveBands() {
                 style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0 }}
               >
                 <div className="overflow-hidden">
-                  <div className="mt-5 grid gap-5 md:grid-cols-[1.1fr_1fr]">
+                  <div className="mt-5 space-y-4">
                     {/* live 3D wave stage */}
                     <div className="relative overflow-hidden rounded-xl bg-navy">
                       <div
