@@ -570,7 +570,7 @@ function VideoTestimonials() {
           <div className="hidden h-full gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
             {columns.map((list, i) => (
               <div key={i} className={i === 2 ? "hidden lg:block" : ""}>
-                <Column list={i === 1 && columnCount === 3 ? [...list, ...columns[2]] : list} index={i} />
+                <Column list={list} index={i} />
               </div>
             ))}
           </div>
