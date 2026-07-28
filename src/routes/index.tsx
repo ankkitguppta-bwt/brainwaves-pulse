@@ -170,22 +170,24 @@ function StatsStrip() {
           className="mx-auto w-full rounded-3xl border border-white/20 px-6 py-10 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 sm:px-10 md:w-[90%]"
           style={{ background: "color-mix(in oklab, var(--navy) 55%, transparent)" }}
         >
-          <h2
-            data-aos="fade-up"
-            className="mx-auto max-w-4xl text-center font-display text-2xl font-extrabold uppercase leading-tight tracking-[-0.01em] sm:text-3xl lg:text-[2.5rem]"
-          >
-            <span className="text-gradient-red">Stop</span>{" "}
-            <span className="text-gradient-stop">Guessing about mental wellness and cognitive performance.</span>
-          </h2>
-          <p
-            data-aos="fade-up"
-            data-aos-delay="120"
-            className="mx-auto mt-5 max-w-3xl text-center font-display text-sm font-semibold leading-relaxed text-white/80 sm:text-base"
-          >
-            <span className="text-teal">Brain Waves Tech</span> uses an innovative USA patented technology, which
-            quantifies state of mind in minutes with an accuracy of more than{" "}
-            <span className="font-semibold text-[#3ddc84]">92%</span>
-          </p>
+          <div>
+            <h2
+              data-aos="fade-up"
+              className="mx-auto flex max-w-4xl flex-wrap items-baseline justify-center gap-x-3 text-center font-display text-2xl font-extrabold uppercase leading-tight tracking-[-0.01em] sm:text-3xl lg:text-[2.5rem]"
+            >
+              <span className="text-gradient-red text-[1.5em] font-black leading-none">Stop</span>
+              <span className="text-gradient-stop">Guessing about mental wellness and cognitive performance.</span>
+            </h2>
+            <p
+              data-aos="fade-up"
+              data-aos-delay="120"
+              className="mx-auto mt-6 max-w-3xl text-center font-display text-base font-bold leading-relaxed text-white sm:text-lg"
+            >
+              <span className="text-teal">Brain Waves Tech</span> uses an innovative USA patented technology, which
+              quantifies state of mind in minutes with an accuracy of more than{" "}
+              <span className="align-baseline text-2xl font-black text-[#3ddc84] sm:text-3xl">92%</span>
+            </p>
+          </div>
 
           <div className="mt-8 grid grid-cols-2 gap-4 border-t border-white/15 pt-8 sm:grid-cols-4">
             {stats.map((s, i) => (
@@ -198,6 +200,7 @@ function StatsStrip() {
             ))}
           </div>
         </div>
+
       </div>
     </section>
   );
