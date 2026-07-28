@@ -181,6 +181,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <ScrollToTop />
       <AppLoader />
+      <Toaster position="top-right" richColors closeButton />
       {isBare ? (
         <Outlet />
       ) : (
