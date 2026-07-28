@@ -3,6 +3,19 @@ import { flushSync } from "react-dom";
 import { Activity, ChevronRight, X } from "lucide-react";
 
 import { BANDS, type BandContent, type BandId } from "@/components/site/brainwave-content";
+import alphaReport from "@/assets/reports/alpha-report.png.asset.json";
+import betaReport from "@/assets/reports/beta-report.png.asset.json";
+import gammaReport from "@/assets/reports/gamma-report.png.asset.json";
+import deltaReport from "@/assets/reports/delta-report.png.asset.json";
+import thetaReport from "@/assets/reports/theta-report.png.asset.json";
+
+const REPORTS: Record<BandId, string> = {
+  alpha: alphaReport.url,
+  beta: betaReport.url,
+  gamma: gammaReport.url,
+  delta: deltaReport.url,
+  theta: thetaReport.url,
+};
 
 /* ── shared curve maths: ribbon + coils sample the same function ── */
 const CURVE_GLSL = `
@@ -560,6 +573,19 @@ export function BrainwaveBands() {
               className="h-44 w-full sm:h-56 lg:h-64"
             />
           </div>
+
+          {/* sample report */}
+          <figure className="mt-5 overflow-hidden rounded-xl border border-navy/10 bg-white">
+            <img
+              src={REPORTS[current.id]}
+              alt={`${current.name} sample signal report chart`}
+              loading="lazy"
+              className="w-full object-contain"
+            />
+            <figcaption className="border-t border-navy/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-navy/50">
+              Sample report · {current.name} signal value %
+            </figcaption>
+          </figure>
 
           <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{current.body}</p>
           <dl className="mt-4">
