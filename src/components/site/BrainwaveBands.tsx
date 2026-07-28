@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { Activity, ChevronRight, X } from "lucide-react";
+
 import { BANDS, type BandContent, type BandId } from "@/components/site/brainwave-content";
 
 /* ── shared curve maths: ribbon + coils sample the same function ── */
@@ -471,6 +473,20 @@ export function BrainwaveBands() {
   const current = BANDS.find((b) => b.id === active) ?? BANDS[0];
   const rest = BANDS.filter((b) => b.id !== current.id);
 
+  const switchTo = (id: BandId | null) => {
+    const doc = document as Document & {
+      startViewTransition?: (cb: () => void) => { finished: Promise<void> };
+    };
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    if (!doc.startViewTransition || reduce) {
+      setActive(id);
+      return;
+    }
+    doc.startViewTransition(() => {
+      flushSync(() => setActive(id));
+    });
+  };
+
   if (!active) {
     return (
       <div ref={sectionRef} className="relative isolate">
@@ -481,7 +497,8 @@ export function BrainwaveBands() {
               type="button"
               data-aos="fade-up"
               data-aos-delay={i * 80}
-              onClick={() => setActive(b.id)}
+              style={{ viewTransitionName: `band-${b.id}` }}
+              onClick={() => switchTo(b.id)}
               className="group flex h-full flex-col rounded-2xl border border-navy/10 bg-white p-5 text-left transition-colors duration-300 hover:border-teal/50"
             >
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy text-white">
@@ -503,6 +520,7 @@ export function BrainwaveBands() {
     );
   }
 
+
   return (
     <div ref={sectionRef} className="relative isolate">
       {webgl && (
@@ -516,9 +534,10 @@ export function BrainwaveBands() {
       <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
         {/* expanded panel */}
         <div
-          data-aos="fade-up"
+          style={{ viewTransitionName: `band-${current.id}` }}
           className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-navy/10 bg-white p-5 sm:p-6"
         >
+
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <h3 className="font-display text-xl font-semibold text-navy sm:text-2xl">{current.name}</h3>
             <span className="text-xs font-semibold uppercase tracking-[0.14em] text-teal">
@@ -527,7 +546,8 @@ export function BrainwaveBands() {
           </div>
           <button
             type="button"
-            onClick={() => setActive(null)}
+            onClick={() => switchTo(null)}
+
             className="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-navy/10 text-navy/50 transition-colors hover:border-teal/50 hover:text-teal"
             aria-label="Close"
           >
@@ -557,13 +577,13 @@ export function BrainwaveBands() {
 
         {/* collapsed stack */}
         <div className="flex w-full shrink-0 flex-col gap-3 lg:w-72">
-          {rest.map((b, i) => (
+          {rest.map((b) => (
             <button
               key={b.id}
               type="button"
-              data-aos="fade-up"
-              data-aos-delay={i * 80}
-              onClick={() => setActive(b.id)}
+              style={{ viewTransitionName: `band-${b.id}` }}
+              onClick={() => switchTo(b.id)}
+
               className="group flex flex-1 items-start gap-3 rounded-2xl border border-navy/10 bg-white p-4 text-left transition-colors duration-300 hover:border-teal/50"
             >
               <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-navy text-white">
