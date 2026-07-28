@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Activity, ChevronDown } from "lucide-react";
+import { Activity, ChevronRight } from "lucide-react";
 import { BANDS, type BandContent, type BandId } from "@/components/site/brainwave-content";
 
 /* ── shared curve maths: ribbon + coils sample the same function ── */
@@ -176,8 +176,8 @@ export function BrainwaveBands() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const stageRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [active, setActive] = useState<BandId | null>(null);
-  const activeRef = useRef<BandId | null>(null);
+  const [active, setActive] = useState<BandId>(BANDS[0].id);
+  const activeRef = useRef<BandId | null>(BANDS[0].id);
   const visibleRef = useRef(true);
   const [webgl, setWebgl] = useState(true);
 
@@ -468,6 +468,9 @@ export function BrainwaveBands() {
     };
   }, []);
 
+  const current = BANDS.find((b) => b.id === active) ?? BANDS[0];
+  const rest = BANDS.filter((b) => b.id !== current.id);
+
   return (
     <div ref={sectionRef} className="relative isolate">
       {webgl && (
@@ -478,75 +481,71 @@ export function BrainwaveBands() {
         />
       )}
 
-      <div className="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {BANDS.map((b, i) => {
-          const open = active === b.id;
-          return (
-            <div
-              key={b.id}
-              data-aos="fade-up"
-              data-aos-delay={i * 90}
-              className={`glass-card relative rounded-2xl border border-navy/10 bg-white p-5 text-left transition-all duration-500 !shadow-none ${
-                open ? "border-teal/40 ring-1 ring-teal/25" : "hover:border-teal/40"
-              }`}
-            >
-              <button
-                type="button"
-                aria-expanded={open}
-                onClick={() => setActive((a) => (a === b.id ? null : b.id))}
-                className="flex w-full items-start gap-3 text-left outline-none"
-              >
-                <span className="mt-0.5 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-navy text-white">
-                  <Activity className="h-5 w-5" />
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="flex flex-wrap items-baseline gap-x-3">
-                    <span className="font-display text-base font-semibold text-navy">{b.name}</span>
-                    <span className="text-xs font-semibold uppercase tracking-[0.12em] text-teal">
-                      {b.frequency}
-                    </span>
-                  </span>
-                  <span className="mt-1.5 block text-sm leading-relaxed text-muted-foreground">{b.hook}</span>
-                </span>
-                <ChevronDown
-                  className={`mt-1 h-5 w-5 shrink-0 text-navy/40 transition-transform duration-500 ${
-                    open ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
+        {/* expanded panel */}
+        <div
+          data-aos="fade-up"
+          className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-navy/10 bg-white p-5 sm:p-6"
+        >
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h3 className="font-display text-xl font-semibold text-navy sm:text-2xl">{current.name}</h3>
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-teal">
+              {current.frequency}
+            </span>
+          </div>
+          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{current.hook}</p>
 
-              {/* expanded detail + live wave */}
-              <div
-                className="grid transition-[grid-template-rows,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0 }}
-              >
-                <div className="overflow-hidden">
-                  <div className="mt-5 space-y-4">
-                    {/* live 3D wave stage */}
-                    <div className="relative overflow-hidden rounded-xl bg-navy">
-                      <div
-                        ref={(el) => {
-                          stageRefs.current[b.id] = el;
-                        }}
-                        className="h-40 w-full sm:h-52"
-                      />
-                    </div>
-                    <div>
-                      <p className="text-sm leading-relaxed text-muted-foreground">{b.body}</p>
-                      <dl className="mt-4">
-                        <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-navy/50">
-                          What it measures
-                        </dt>
-                        <dd className="mt-1 text-sm leading-relaxed text-navy/80">{b.measures}</dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+          {/* live 3D wave stage */}
+          <div className="relative mt-5 overflow-hidden rounded-xl bg-navy">
+            <div
+              key={current.id}
+              ref={(el) => {
+                stageRefs.current[current.id] = el;
+              }}
+              className="h-44 w-full sm:h-56 lg:h-64"
+            />
+          </div>
+
+          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{current.body}</p>
+          <dl className="mt-4">
+            <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-navy/50">
+              What it measures
+            </dt>
+            <dd className="mt-1 text-sm leading-relaxed text-navy/80">{current.measures}</dd>
+          </dl>
+        </div>
+
+        {/* collapsed stack */}
+        <div className="flex w-full shrink-0 flex-col gap-3 lg:w-72">
+          {rest.map((b, i) => (
+            <button
+              key={b.id}
+              type="button"
+              data-aos="fade-up"
+              data-aos-delay={i * 80}
+              onClick={() => setActive(b.id)}
+              className="group flex flex-1 items-start gap-3 rounded-2xl border border-navy/10 bg-white p-4 text-left transition-colors duration-300 hover:border-teal/50"
+            >
+              <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-navy text-white">
+                <Activity className="h-4 w-4" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="flex flex-wrap items-baseline gap-x-2">
+                  <span className="font-display text-sm font-semibold text-navy">{b.name}</span>
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-teal">
+                    {b.frequency}
+                  </span>
+                </span>
+                <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-muted-foreground">
+                  {b.hook}
+                </span>
+              </span>
+              <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-navy/30 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
+
