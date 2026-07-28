@@ -78,7 +78,9 @@ function DashboardPage() {
                 </tr>
               </thead>
               <tbody>
+                {enq.isLoading && <TableSkeleton columns={3} rows={4} />}
                 {(enq.data ?? []).slice(0, 6).map((e: any) => (
+
                   <tr key={e.id} className="border-t border-slate-100">
                     <td className="px-4 py-2 text-muted-foreground">{new Date(e.created_at).toLocaleDateString()}</td>
                     <td className="px-4 py-2 font-medium">{e.name}</td>
