@@ -119,7 +119,8 @@ function Hero() {
           className="mx-auto mt-4 max-w-3xl font-display text-sm font-medium leading-relaxed text-white sm:text-base"
         >
           Move past qualitative <span className="font-accent font-semibold text-white">guesswork</span>. Our 14 precise
-          cognitive parameters instantly help to figure out your brain waves data into a quantified performance
+          cognitive parameters instantly help to figure out your{" "}
+          <span className="font-accent font-semibold text-orange">brain waves data</span> into a quantified performance
           blueprint. An evidence-based platform to assess,{" "}
           <span className="font-accent font-semibold text-white">track</span>, and improve focus, performance, and
           well-being—for individuals and organizations alike.
@@ -594,9 +595,7 @@ function VideoTestimonials() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <p className="mt-4 text-center text-xs text-navy/50">Hover to pause · click a video to play</p>
-      </div>
+      <div className="mx-auto max-w-7xl px-4 lg:px-8"></div>
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
         <DialogContent className="max-w-3xl overflow-hidden p-0">
