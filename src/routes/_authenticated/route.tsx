@@ -60,7 +60,7 @@ function AdminShell() {
     exact ? pathname === to : pathname === to || pathname.startsWith(to + "/");
 
   return (
-    <div className="flex min-h-screen bg-slate-100">
+    <div className="flex min-h-screen bg-white">
       <aside
         className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col bg-slate-950 text-slate-200 transition-transform lg:static lg:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
