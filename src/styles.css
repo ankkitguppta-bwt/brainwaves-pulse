@@ -211,6 +211,13 @@
     -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
             mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   }
+  .marquee-horizontal {
+    animation: marquee-left var(--marquee-duration, 40s) linear infinite;
+  }
+  .marquee-paused { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-horizontal { animation: none; }
+  }
 
   @keyframes marquee-up {
     0% { transform: translateY(0); }
