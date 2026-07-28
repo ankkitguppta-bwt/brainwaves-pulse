@@ -58,7 +58,7 @@ function PostPage() {
   });
   const html = q.data ?? "";
   return (
-    <article className="bg-white">
+    <article className="bg-background">
       {post.cover_image_url && (
         <div className="bg-slate-100">
           <img src={post.cover_image_url} alt={post.title} className="mx-auto max-h-[420px] w-full max-w-6xl object-cover" />

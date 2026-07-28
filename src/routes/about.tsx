@@ -63,7 +63,7 @@ function AboutPage() {
         title="Built by scientists, practitioners and technologists"
         sub="We're on a mission to make neurofeedback and brainwave analysis accessible across India through robust technology, training and support."
       />
-      <section className="bg-white py-20">
+      <section className="bg-background py-20">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <h2 className="font-display text-2xl font-bold text-navy">Leadership</h2>
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

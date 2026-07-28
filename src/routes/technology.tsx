@@ -35,7 +35,7 @@ function TechnologyPage() {
         title="The neuro-tech stack powering BrainWaves Tech"
         sub="A complete ecosystem of EEG hardware, real-time analytics, sound therapy and practitioner tooling — backed by 14+ years of research and 1.2 lakh+ data points."
       />
-      <section className="bg-white py-20">
+      <section className="bg-background py-20">
         <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3 lg:px-8">
           {features.map((f) => (
             <div key={f.t} className="glass-card rounded-2xl p-6">

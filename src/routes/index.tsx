@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Activity,
   Brain,
@@ -22,10 +22,9 @@ import {
   CheckCircle2,
   Play,
   ShieldCheck,
-  Mail,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
-import heroVideo from "@/assets/video/hero-loop.mp4.asset.json";
+import heroVideo from "@/assets/video/final_landing_page_loop.mp4.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { BrainwaveBands } from "@/components/site/BrainwaveBands";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -77,7 +76,7 @@ function HomePage() {
       <WhoBenefits />
       <VideoTestimonials />
       <FAQ />
-      <Newsletter />
+
       <FinalCTA />
     </>
   );
@@ -116,7 +115,7 @@ function Hero() {
         <p
           data-aos="fade-up"
           data-aos-delay="250"
-          className="mx-auto mt-4 max-w-3xl font-display text-sm font-medium leading-relaxed text-white/75 sm:text-base"
+          className="mx-auto mt-4 max-w-3xl font-display text-sm font-medium leading-relaxed text-white sm:text-base"
         >
           Move past qualitative <span className="font-accent font-semibold text-white">guesswork</span>. Our 14 precise cognitive parameters instantly help to figure out your brain waves data into a quantified performance blueprint. An evidence-based platform to assess, <span className="font-accent font-semibold text-white">track</span>, and improve focus, performance, and well-being—for individuals and organizations alike.
         </p>
@@ -230,7 +229,7 @@ function EcosystemSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
+    <section className="relative overflow-hidden bg-background py-16 sm:py-20 lg:py-24">
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2
@@ -293,7 +292,7 @@ function EcosystemSection() {
 /* ───── What is neurofeedback ───── */
 function WhatIsNeurofeedback() {
   return (
-    <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           eyebrow="What is Neurofeedback?"
@@ -353,8 +352,31 @@ function HowItWorks() {
       <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
     </div>
   );
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [revealed, setRevealed] = useState(false);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setRevealed(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const revealStyle = (i: number) =>
+    revealed
+      ? ({ animationDelay: `${i * 180}ms` } as React.CSSProperties)
+      : ({ opacity: 0 } as React.CSSProperties);
+
   return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20">
+    <section ref={sectionRef} className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           title="A Four-Stage Neuro-Wellness Journey"
@@ -363,11 +385,7 @@ function HowItWorks() {
         {/* Mobile / tablet 2-col grid */}
         <div className="mt-10 grid grid-cols-2 gap-6 lg:hidden">
           {steps.map((s, i) => (
-            <div
-              key={s.title}
-              data-aos="step-reveal"
-              data-aos-delay={i * 120}
-            >
+            <div key={s.title} className={revealed ? "animate-step-in" : ""} style={revealStyle(i)}>
               <Step s={s} i={i} />
             </div>
           ))}
@@ -377,11 +395,7 @@ function HowItWorks() {
           <div className="absolute left-0 right-0 top-8 h-px bg-gradient-to-r from-transparent via-teal/40 to-transparent" />
           <ol className="grid gap-8 lg:grid-cols-4">
             {steps.map((s, i) => (
-              <li
-                key={s.title}
-                data-aos="step-reveal"
-                data-aos-delay={i * 160}
-              >
+              <li key={s.title} className={revealed ? "animate-step-in" : ""} style={revealStyle(i)}>
                 <Step s={s} i={i} />
               </li>
             ))}
@@ -422,7 +436,7 @@ function WhoBenefits() {
     { i: Sparkles, t: "Wellness Coaches" },
   ];
   return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20">
+    <section className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading title="Built for professionals. Scaled for visionary organizations. Accessible to everyone." />
         <div className="marquee-mask mt-12 space-y-4 !shadow-none" data-aos="fade-up" data-aos-delay="150">
@@ -485,7 +499,7 @@ function VideoTestimonials() {
     <button
       type="button"
       onClick={() => setActive(v)}
-      className="group relative block aspect-[4/5] w-full shrink-0 overflow-hidden rounded-2xl bg-gradient-hero text-left"
+      className="group relative block aspect-[4/5] w-[220px] shrink-0 overflow-hidden rounded-2xl bg-gradient-hero text-left sm:w-[260px] lg:w-[300px]"
     >
       {v.thumbnail ? (
         <img src={v.thumbnail} alt={v.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
@@ -504,28 +518,11 @@ function VideoTestimonials() {
     </button>
   );
 
-  // split into columns for a vertical auto-scrolling carousel
-  const columnCount = items.length >= 3 ? 3 : items.length;
-  const columns: VideoT[][] = Array.from({ length: columnCount }, () => []);
-  items.forEach((v, i) => columns[i % columnCount].push(v));
-
-  const Column = ({ list, index }: { list: VideoT[]; index: number }) => {
-    // duplicate so the loop is seamless
-    const loop = [...list, ...list];
-    return (
-      <div
-        className={`flex flex-col gap-5 will-change-transform marquee-vertical ${paused ? "marquee-vertical-paused" : ""}`}
-        style={{ ["--marquee-duration" as any]: `${18 + list.length * 7 + index * 4}s` }}
-      >
-        {loop.map((v, i) => (
-          <Card key={`${v.id}-${i}`} v={v} />
-        ))}
-      </div>
-    );
-  };
+  // duplicate the list so the horizontal loop is seamless
+  const loop = [...items, ...items];
 
   return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20">
+    <section className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="flex items-end justify-between gap-4">
           <SectionHeading eyebrow="Video Testimonials" title="Hear it from our community" />
@@ -536,27 +533,27 @@ function VideoTestimonials() {
             See all <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
+      </div>
 
+      <div
+        data-aos="fade-up"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused((p) => !p)}
+        className="marquee-mask mt-10 overflow-hidden"
+      >
         <div
-          data-aos="fade-up"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onTouchStart={() => setPaused((p) => !p)}
-          className="marquee-mask-y mt-10 h-[520px] overflow-hidden sm:h-[560px]"
+          className={`flex w-max gap-5 pl-4 will-change-transform marquee-horizontal ${paused ? "marquee-paused" : ""} lg:pl-8`}
+          style={{ ["--marquee-duration" as any]: `${Math.max(24, items.length * 9)}s` }}
         >
-          {/* mobile: single track with every video */}
-          <div className="sm:hidden">
-            <Column list={items} index={0} />
-          </div>
-          {/* sm+: multi-column tracks */}
-          <div className="hidden h-full gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
-            {columns.map((list, i) => (
-              <div key={i} className={i === 2 ? "hidden lg:block" : ""}>
-                <Column list={list} index={i} />
-              </div>
-            ))}
-          </div>
+          {loop.map((v, i) => (
+            <Card key={`${v.id}-${i}`} v={v} />
+          ))}
         </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 lg:px-8">
+
 
         <p className="mt-4 text-center text-xs text-navy/50">Hover to pause · click a video to play</p>
       </div>
@@ -620,7 +617,7 @@ function FAQ() {
   }, []);
 
   return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20">
+    <section className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-3xl px-4 lg:px-8">
         <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
         <Accordion type="single" collapsible className="mt-10">
@@ -646,92 +643,6 @@ function FAQ() {
   );
 }
 
-
-/* ───── Newsletter ───── */
-function Newsletter() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("sending");
-    setErrorMsg(null);
-    try {
-      const res = await fetch("/api/public/enquiries", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          name: "Newsletter Subscriber",
-          email,
-          phone: "",
-          interest: "Newsletter Subscription",
-          message: "Subscribed via newsletter section",
-        }),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.error ?? "Subscribe failed");
-      }
-      setStatus("success");
-      setEmail("");
-    } catch (err: any) {
-      setStatus("error");
-      setErrorMsg(err.message);
-    }
-  }
-
-  return (
-    <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20">
-      <div className="mx-auto max-w-4xl px-4 lg:px-8">
-        <div
-          data-aos="fade-up"
-          className="relative rounded-3xl border border-white/10 bg-navy p-8 text-center shadow-2xl sm:p-12"
-        >
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
-            <Mail className="h-7 w-7 text-teal" />
-          </div>
-          <h2 className="mt-6 font-display text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
-            Stay Ahead of the Curve
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
-            Get the latest neurofeedback insights, product updates, and practitioner resources delivered straight to your inbox.
-          </p>
-
-          <form onSubmit={onSubmit} className="mx-auto mt-8 flex max-w-lg flex-col gap-3 sm:flex-row">
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="w-full flex-1 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm text-white placeholder:text-white/50 backdrop-blur transition focus:border-teal focus:bg-white/15 focus:outline-none"
-            />
-            <button
-              type="submit"
-              disabled={status === "sending"}
-              className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.02] disabled:opacity-60"
-            >
-              {status === "sending" ? "Subscribing…" : "Subscribe"} <ArrowRight className="h-4 w-4" />
-            </button>
-          </form>
-
-          {status === "success" && (
-            <p className="mt-4 text-sm font-medium text-emerald-300">
-              You&apos;re subscribed — welcome to the BrainWaves community.
-            </p>
-          )}
-          {status === "error" && (
-            <p className="mt-4 text-sm font-medium text-red-300">{errorMsg}</p>
-          )}
-          <p className="mt-4 text-xs text-white/50">
-            No spam. Unsubscribe anytime.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ───── Final CTA ───── */
 function FinalCTA() {

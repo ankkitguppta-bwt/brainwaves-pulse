@@ -38,7 +38,7 @@ function TestimonialsPage() {
     <>
       <PageHero eyebrow="Testimonials" title="Voices from our community" sub="Real stories from practitioners, students, parents and professionals." />
 
-      <section className="bg-white py-16">
+      <section className="bg-background py-16">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <h2 className="font-display text-2xl font-bold text-navy">Video stories</h2>
           {videos.length === 0 && <p className="mt-4 text-muted-foreground">No video testimonials yet.</p>}

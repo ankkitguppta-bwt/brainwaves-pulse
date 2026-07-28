@@ -1,50 +1,25 @@
-## Live 3D Brainwave Section (replaces current "What is Neurofeedback?" cards)
+## 1. Hero section
+- Register the uploaded `final_landing_page_loop.mp4` as a Lovable asset and point the hero `<video>` at it (replacing `hero-loop.mp4`).
+- Change the sub-sub heading from `text-white/75` to full `text-white` (keep the accent spans as-is).
 
-### What it becomes
+## 2. Global background
+- Set the base `--background` token in `src/styles.css` to `#f0f0f0` (oklch equivalent) and replace the hardcoded `bg-white` section classes on the home page and shared sections with `bg-background` so the whole site reads as light grey. Cards/panels keep white surfaces for contrast.
 
-A dark, full-width section on the home page where each of the five bands is a **row** rendered as real, live 3D geometry (not video). Hovering a row expands it into a detailed panel with the wave animating larger, plus frequency / definition / "what it measures". Moving away (or scrolling past) collapses it back to the minimal hook state automatically.
+## 3. "A Four-Stage Neuro-Wellness Journey" one-by-one reveal
+- Re-verify the AOS `step-reveal` wiring (custom animation names need explicit `data-aos-duration`/`aos-animate` handling). Replace it with a reliable in-view stagger: an IntersectionObserver on the section that adds `animate-step-in` with per-card `animationDelay` (160ms increments), so cards appear one after another on both the mobile grid and desktop row. The existing fade/entry styling stays.
 
-```text
-What is neurofeedback?
-Quantify Cognitive Capital. Eliminate Structural Burnout.
-[intro paragraph]
+## 4. Footer redesign (per reference image)
+Rebuild `src/components/site/SiteFooter.tsx` on the dark navy background as:
+- Top band: "Stop Guessing, Start Measuring" + subscribe line, email input + teal "Subscribe Now" button (moves the newsletter into the footer; the separate newsletter section on the home page is removed to avoid duplication).
+- Divider, then 3 columns:
+  - Brand: "BrainWaves Tech" wordmark, the descriptive paragraph, circular social icons.
+  - LEGAL & COMPLIANCE: Disclaimer, Terms & Conditions, Privacy Policy, Refund & Return Policy, Shipping Policy.
+  - CORPORATE CONTACT: Office address (A-268, New Minal Residency, Near Gate No. 4, In Front of D-Mart, Ayodhya Bypass Road, Bhopal, M.P. - 462023), Inquiries: contact@brainwavestech.com, Contact: +91 98930 64372.
+- Keep the existing copyright strip.
 
-┌──────────────────────────────────────────────┐
-│ ALPHA   8–12 Hz    ~~~live 3D ribbon~~~      │  ← minimal: name + hook line
-│ "The ultimate state of effortless…"          │
-├──────────────────────────────────────────────┤
-│ BETA …                                       │
-└──────────────────────────────────────────────┘
+## 5. Video testimonials → horizontal carousel
+- Replace the vertical multi-column marquee with a single horizontal auto-scrolling track (left-moving marquee, duplicated list for seamless loop), pausing on hover/touch, with the existing edge fade mask applied horizontally. Cards keep the current 4:5 poster style and open the same popup modal on click.
 
-on hover →  row grows (190px → ~420px), wave amplitude/glow rises,
-            body text + Frequency + What it Measures fade/slide in
-```
-
-### How the live demo + hover works (technical)
-
-- Install `three`. Port the uploaded `BrainwaveBands.jsx` to `src/components/site/BrainwaveBands.tsx` (typed, same shaders/curve maths unchanged).
-- **One WebGL canvas, fixed behind the section**, drawing each band into its own row via `renderer.setScissor` + `setViewport` computed from each row div's `getBoundingClientRect()`. That is the uploaded file's existing approach — it keeps five animated ribbons at one draw loop instead of five canvases.
-- **Live**: a single `requestAnimationFrame` loop advances `uTime`; each band has its own `freq / speed / amp / twist` uniforms so delta rolls slowly and gamma ripples fast.
-- **Hover**: `onPointerEnter`/`onPointerLeave` on the row sets `activeBand` state. The row's height animates via CSS grid-rows/max-height transition; the renderer reads the new rect each frame, so the ribbon naturally scales into the taller viewport. In parallel, uniforms `uAmp`, `uOpacity` and coil/bubble opacity lerp toward "focused" values (~1.35× amplitude, brighter) with easing in the RAF loop — no jump.
-- **Content animation**: expanded body uses staggered fade/translate (existing `data-aos`-free CSS transitions with per-child delays), so wave → definition → frequency → measures appear in sequence.
-- **Auto-collapse on scroll**: an `IntersectionObserver`/scroll listener clears `activeBand` once the section leaves the comfortable viewport band, and the row returns to minimal state. Touch devices: tap toggles expansion (only one open at a time); on <768px rows are shorter and the expanded content stacks below the wave.
-- **Perf/safety**: pause the RAF when the section is off-screen or the tab is hidden; respect `prefers-reduced-motion` (static frame, no loop); if WebGL is unavailable, fall back to the existing SVG waveform so the section never renders blank.
-
-### Copy (exact, per your spec)
-
-Heading `What is Neurofeedback?` → title `Quantify Cognitive Capital. Eliminate Structural Burnout.` → the intro paragraph.
-
-Per band, minimal hook + expanded body/Frequency/What it Measures for Alpha, Beta, Gamma, Delta, Theta exactly as written in your message. Band order in the section: Alpha, Beta, Gamma, Delta, Theta (the order you listed).
-
-### Files
-
-1. `src/components/site/BrainwaveBands.tsx` — new, ported 3D renderer + row layout + hover/expand logic.
-2. `src/components/site/brainwave-content.ts` — new, the five bands' copy (hook, definition, frequency, measures) and visual params in one place.
-3. `src/routes/index.tsx` — replace the `WhatIsNeurofeedback` card grid with the new section; keep its position (after the Four-Stage journey).
-4. `src/styles.css` — a few transition/stagger utilities for the expand animation.
-5. `package.json` — add `three` + `@types/three`.
-
-### Notes
-
-- The existing `WaveModal` "Know more" dialog is no longer reachable from the home page after this change. I'll leave the component in place (still used by the wave list elsewhere) unless you want it removed.
-- No backend, routing, or data changes.
+### Technical notes
+- Files: `src/routes/index.tsx`, `src/components/site/SiteFooter.tsx`, `src/styles.css`, new `src/assets/video/*.asset.json`.
+- Legal pages don't exist yet; footer legal links will point to placeholder anchors unless you want those routes created.

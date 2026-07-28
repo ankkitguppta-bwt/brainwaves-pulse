@@ -47,7 +47,7 @@ export function PlaceholderPage({
         </div>
       </section>
       {sections.length > 0 && (
-        <section className="bg-white py-20">
+        <section className="bg-background py-20">
           <div className="mx-auto grid max-w-7xl gap-6 px-4 md:grid-cols-2 lg:grid-cols-3 lg:px-8">
             {sections.map((s) => (
               <div key={s.title} className="glass-card rounded-2xl p-6">

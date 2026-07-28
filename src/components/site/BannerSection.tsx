@@ -14,7 +14,7 @@ type Props = {
  */
 export function BannerSection({ src, alt, cta, rounded = true }: Props) {
   return (
-    <section className="bg-white py-8 md:py-12">
+    <section className="bg-background py-8 md:py-12">
       <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-8">
         <div
           className={`relative overflow-hidden ${
