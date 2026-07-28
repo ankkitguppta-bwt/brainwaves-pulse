@@ -195,6 +195,7 @@ export function BrainwaveBands() {
   const activeRef = useRef<BandId | null>(null);
   const visibleRef = useRef(true);
   const [webgl, setWebgl] = useState(true);
+  const [showReport, setShowReport] = useState(false);
 
   useEffect(() => {
     activeRef.current = active;
