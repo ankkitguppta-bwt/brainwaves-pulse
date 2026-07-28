@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Pencil, Trash2 } from "lucide-react";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { TableSkeleton } from "@/components/admin/AdminSkeleton";
+
 
 type FieldType = "text" | "textarea" | "url" | "number" | "select" | "checkbox" | "date" | "image";
 export type FieldDef = {
