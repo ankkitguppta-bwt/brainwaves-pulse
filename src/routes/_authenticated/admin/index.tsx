@@ -109,7 +109,9 @@ function DashboardPage() {
                 </tr>
               </thead>
               <tbody>
+                {posts.isLoading && <TableSkeleton columns={3} rows={4} />}
                 {(posts.data ?? []).slice(0, 6).map((p: any) => (
+
                   <tr key={p.id} className="border-t border-slate-100">
                     <td className="px-4 py-2 font-medium">
                       <Link to="/admin/blog/$id" params={{ id: p.id }} className="hover:underline">{p.title}</Link>
