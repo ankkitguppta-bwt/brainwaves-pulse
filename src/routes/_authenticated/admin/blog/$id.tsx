@@ -58,7 +58,7 @@ function PostEditor() {
     } finally { setBusy(false); }
   }
 
-  if (!isNew && q.isLoading) return <p>Loading…</p>;
+  if (!isNew && q.isLoading) return <EditorSkeleton />;
 
   return (
     <div>
