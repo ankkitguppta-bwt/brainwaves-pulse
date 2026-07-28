@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
-import brainMark from "@/assets/brand/brain-mark.png.asset.json";
+import brandLogo from "@/assets/brand/brainwaves-logo.png.asset.json";
 
 type NavItem =
   | { label: string; to: string }

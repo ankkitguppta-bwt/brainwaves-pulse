@@ -1,5 +1,5 @@
 import "./BrainWavesLoader.css";
-import logoAsset from "@/assets/brand/logo-dark.png.asset.json";
+import logoAsset from "@/assets/brand/brainwaves-logo.png.asset.json";
 
 interface BrainWavesLoaderProps {
   size?: number;
