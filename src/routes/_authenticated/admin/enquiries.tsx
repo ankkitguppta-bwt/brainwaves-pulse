@@ -20,7 +20,7 @@ function EnquiriesPage() {
     <div>
       <h1 className="font-display text-2xl font-bold text-navy">Contact Enquiries</h1>
       <div className="mt-6 space-y-3">
-        {q.isLoading && <p>Loading…</p>}
+        {q.isLoading && <CardListSkeleton />}
         {q.data?.length === 0 && <p className="text-muted-foreground">No enquiries yet.</p>}
         {q.data?.map((e: any) => (
           <div key={e.id} className={`rounded-2xl border p-5 ${e.is_read ? "border-slate-200 bg-white" : "border-teal/30 bg-teal/5"}`}>
