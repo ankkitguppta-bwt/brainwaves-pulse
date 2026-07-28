@@ -576,18 +576,36 @@ export function BrainwaveBands() {
             />
           </div>
 
-          {/* sample report */}
-          <figure className="mt-5 overflow-hidden rounded-xl border border-navy/10 bg-white">
-            <img
-              src={REPORTS[current.id]}
-              alt={`${current.name} sample signal report chart`}
-              loading="lazy"
-              className="w-full object-contain"
-            />
-            <figcaption className="border-t border-navy/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-navy/50">
-              Sample report · {current.name} signal value %
-            </figcaption>
-          </figure>
+          {/* sample report toggle */}
+          <button
+            type="button"
+            onClick={() => setShowReport((s) => !s)}
+            className="mt-5 inline-flex items-center gap-2 rounded-full bg-navy px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-navy/90"
+          >
+            {showReport ? (
+              <>
+                <EyeOff className="h-3.5 w-3.5" /> Hide report
+              </>
+            ) : (
+              <>
+                <Eye className="h-3.5 w-3.5" /> See report
+              </>
+            )}
+          </button>
+
+          {showReport && (
+            <figure className="mt-4 overflow-hidden rounded-xl border border-navy/10 bg-white">
+              <img
+                src={REPORTS[current.id]}
+                alt={`${current.name} sample signal report chart`}
+                loading="lazy"
+                className="w-full object-contain"
+              />
+              <figcaption className="border-t border-navy/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-navy/50">
+                Sample report · {current.name} signal value %
+              </figcaption>
+            </figure>
+          )}
 
           <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{current.body}</p>
           <dl className="mt-4">
