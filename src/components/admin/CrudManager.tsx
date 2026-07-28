@@ -44,6 +44,7 @@ export function CrudManager<T extends { id: string }>({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { confirm: askConfirm, dialog } = useConfirm();
+  const [actionError, setActionError] = useState<{ message: string; retry: () => void } | null>(null);
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
@@ -58,9 +59,30 @@ export function CrudManager<T extends { id: string }>({
       await upsert({ data: payload });
       await qc.invalidateQueries({ queryKey });
       setEditing(null);
+      toast.success("Changes saved");
     } catch (err: any) {
-      setError(err.message ?? "Save failed");
+      const message = err?.message ?? "Save failed";
+      setError(message);
+      toast.error("Save failed", { description: message });
     } finally { setBusy(false); }
+  }
+
+  async function doRemove(id: string) {
+    setActionError(null);
+    const toastId = toast.loading("Deleting…");
+    try {
+      await del({ data: { id } });
+      await qc.invalidateQueries({ queryKey });
+      toast.success("Item deleted", { id: toastId });
+    } catch (err: any) {
+      const message = err?.message ?? "Delete failed. Please try again.";
+      setActionError({ message, retry: () => void doRemove(id) });
+      toast.error("Delete failed", {
+        id: toastId,
+        description: message,
+        action: { label: "Retry", onClick: () => void doRemove(id) },
+      });
+    }
   }
 
   async function remove(id: string) {
@@ -70,9 +92,9 @@ export function CrudManager<T extends { id: string }>({
       confirmLabel: "Delete",
     });
     if (!ok) return;
-    await del({ data: { id } });
-    await qc.invalidateQueries({ queryKey });
+    await doRemove(id);
   }
+
 
   return (
     <div>
