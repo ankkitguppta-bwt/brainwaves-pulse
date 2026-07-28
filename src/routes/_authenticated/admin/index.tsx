@@ -41,6 +41,8 @@ function DashboardPage() {
   const unread = enq.data?.filter((e: any) => !e.is_read).length ?? 0;
   const published = posts.data?.filter((p: any) => p.status === "published").length ?? 0;
   const drafts = (posts.data?.length ?? 0) - published;
+  const statsLoading = [enq, posts, people, tests, cs, media].some((q) => q.isLoading);
+
 
   return (
     <div>
