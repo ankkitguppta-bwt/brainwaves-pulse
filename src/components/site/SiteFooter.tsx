@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import brandLogo from "@/assets/brand/brainwaves-logo.png.asset.json";
+
 
 const legalLinks = [
   "Disclaimer",
