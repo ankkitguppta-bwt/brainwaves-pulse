@@ -22,6 +22,7 @@ import {
   CheckCircle2,
   Play,
   ShieldCheck,
+  Mail,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
 import heroVideo from "@/assets/video/hero-loop.mp4.asset.json";
