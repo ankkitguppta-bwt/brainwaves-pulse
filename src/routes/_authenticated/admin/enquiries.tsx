@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Trash2 } from "lucide-react";
 import { listEnquiries, markEnquiryRead, deleteEnquiry } from "@/lib/data/admin.functions";
+import { CardListSkeleton } from "@/components/admin/AdminSkeleton";
+
 
 export const Route = createFileRoute("/_authenticated/admin/enquiries")({
   head: () => ({ meta: [{ title: "Enquiries — Admin" }, { name: "robots", content: "noindex" }] }),
