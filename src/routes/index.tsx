@@ -151,10 +151,10 @@ function Hero() {
 /* ───── Stats strip ───── */
 function StatsStrip() {
   const stats = [
-    { end: 27, suffix: "+", l: "Certified Practitioners" },
-    { end: 14, suffix: "+", l: "Years of Neurofeedback Research" },
     { end: 1.2, decimals: 1, suffix: " L+", l: "Brainwave Data Points" },
+    { end: 14, suffix: "+", l: "Years of Neurofeedback Research" },
     { end: 12000, suffix: "+", l: "Benefitted customers" },
+    { end: 27, suffix: "+", l: "Certified Practitioners" },
   ];
   return (
     <section
