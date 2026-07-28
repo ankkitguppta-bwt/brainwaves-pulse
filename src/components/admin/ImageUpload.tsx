@@ -54,7 +54,7 @@ export function ImageUpload({
         <p className="mb-1 text-[11px] text-muted-foreground">Recommended {aspectLabel}</p>
       )}
       <div
-        className={`${aspect} relative w-full overflow-hidden rounded-lg border-2 border-dashed border-slate-300 bg-slate-50`}
+        className={`${aspect} relative w-full max-w-[180px] overflow-hidden rounded-lg border-2 border-dashed border-slate-300 bg-slate-50`}
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
           e.preventDefault();
