@@ -485,7 +485,7 @@ function VideoTestimonials() {
     <button
       type="button"
       onClick={() => setActive(v)}
-      className="group relative block aspect-[4/5] w-full shrink-0 overflow-hidden rounded-2xl bg-gradient-hero text-left"
+      className="group relative block aspect-[4/5] w-[220px] shrink-0 overflow-hidden rounded-2xl bg-gradient-hero text-left sm:w-[260px] lg:w-[300px]"
     >
       {v.thumbnail ? (
         <img src={v.thumbnail} alt={v.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
@@ -504,25 +504,8 @@ function VideoTestimonials() {
     </button>
   );
 
-  // split into columns for a vertical auto-scrolling carousel
-  const columnCount = items.length >= 3 ? 3 : items.length;
-  const columns: VideoT[][] = Array.from({ length: columnCount }, () => []);
-  items.forEach((v, i) => columns[i % columnCount].push(v));
-
-  const Column = ({ list, index }: { list: VideoT[]; index: number }) => {
-    // duplicate so the loop is seamless
-    const loop = [...list, ...list];
-    return (
-      <div
-        className={`flex flex-col gap-5 will-change-transform marquee-vertical ${paused ? "marquee-vertical-paused" : ""}`}
-        style={{ ["--marquee-duration" as any]: `${18 + list.length * 7 + index * 4}s` }}
-      >
-        {loop.map((v, i) => (
-          <Card key={`${v.id}-${i}`} v={v} />
-        ))}
-      </div>
-    );
-  };
+  // duplicate the list so the horizontal loop is seamless
+  const loop = [...items, ...items];
 
   return (
     <section className="bg-background py-12 sm:py-16 lg:py-20">
@@ -536,27 +519,27 @@ function VideoTestimonials() {
             See all <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
+      </div>
 
+      <div
+        data-aos="fade-up"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused((p) => !p)}
+        className="marquee-mask mt-10 overflow-hidden"
+      >
         <div
-          data-aos="fade-up"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onTouchStart={() => setPaused((p) => !p)}
-          className="marquee-mask-y mt-10 h-[520px] overflow-hidden sm:h-[560px]"
+          className={`flex w-max gap-5 pl-4 will-change-transform marquee-horizontal ${paused ? "marquee-paused" : ""} lg:pl-8`}
+          style={{ ["--marquee-duration" as any]: `${Math.max(24, items.length * 9)}s` }}
         >
-          {/* mobile: single track with every video */}
-          <div className="sm:hidden">
-            <Column list={items} index={0} />
-          </div>
-          {/* sm+: multi-column tracks */}
-          <div className="hidden h-full gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
-            {columns.map((list, i) => (
-              <div key={i} className={i === 2 ? "hidden lg:block" : ""}>
-                <Column list={list} index={i} />
-              </div>
-            ))}
-          </div>
+          {loop.map((v, i) => (
+            <Card key={`${v.id}-${i}`} v={v} />
+          ))}
         </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 lg:px-8">
+
 
         <p className="mt-4 text-center text-xs text-navy/50">Hover to pause · click a video to play</p>
       </div>
