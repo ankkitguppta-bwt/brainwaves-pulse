@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Pencil, Trash2 } from "lucide-react";
 import { listAllPosts, deletePost } from "@/lib/data/admin.functions";
 import { TableSkeleton } from "@/components/admin/AdminSkeleton";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 
 
 export const Route = createFileRoute("/_authenticated/admin/blog/")({
@@ -16,6 +17,7 @@ function BlogListPage() {
   const list = useServerFn(listAllPosts);
   const del = useServerFn(deletePost);
   const q = useQuery({ queryKey: ["posts", "all"], queryFn: () => list() });
+  const { confirm, dialog } = useConfirm();
 
   return (
     <div>
@@ -51,7 +53,7 @@ function BlogListPage() {
                   {p.status === "published" && (
                     <Link to="/blog/$slug" params={{ slug: p.slug }} className="mr-3 text-sm text-slate-500 hover:underline">View</Link>
                   )}
-                  <button onClick={async () => { if (confirm("Delete post?")) { await del({ data: { id: p.id } }); qc.invalidateQueries({ queryKey: ["posts", "all"] }); } }}
+                  <button onClick={async () => { if (await confirm({ title: "Delete this post?", description: "The blog post will be permanently deleted and removed from your site.", confirmLabel: "Delete" })) { await del({ data: { id: p.id } }); qc.invalidateQueries({ queryKey: ["posts", "all"] }); } }}
                     aria-label="Delete" title="Delete" className="inline-flex items-center text-red-600 hover:opacity-70">
                     <Trash2 size={16} />
                   </button>
@@ -64,6 +66,7 @@ function BlogListPage() {
           </tbody>
         </table>
       </div>
+      {dialog}
     </div>
   );
 }
