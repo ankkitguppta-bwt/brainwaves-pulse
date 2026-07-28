@@ -12,4 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    // draft-js / fbjs reference the Node `global` object in the browser bundle.
+    define: { global: "globalThis" },
+  },
 });
