@@ -372,7 +372,7 @@ function HowItWorks() {
 
   const revealStyle = (i: number) =>
     revealed
-      ? ({ animationDelay: `${i * 180}ms` } as React.CSSProperties)
+      ? ({ animationDelay: `${i * 300}ms` } as React.CSSProperties)
       : ({ opacity: 0 } as React.CSSProperties);
 
   return (
