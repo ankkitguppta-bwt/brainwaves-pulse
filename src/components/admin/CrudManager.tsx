@@ -43,6 +43,7 @@ export function CrudManager<T extends { id: string }>({
   const [editing, setEditing] = useState<any | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { confirm: askConfirm, dialog } = useConfirm();
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
@@ -63,7 +64,12 @@ export function CrudManager<T extends { id: string }>({
   }
 
   async function remove(id: string) {
-    if (!confirm("Delete this item?")) return;
+    const ok = await askConfirm({
+      title: "Delete this item?",
+      description: "This item will be permanently removed from your site. This cannot be undone.",
+      confirmLabel: "Delete",
+    });
+    if (!ok) return;
     await del({ data: { id } });
     await qc.invalidateQueries({ queryKey });
   }
