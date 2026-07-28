@@ -32,7 +32,9 @@ function BlogListPage() {
             <tr><th className="px-4 py-2">Title</th><th className="px-4 py-2">Slug</th><th className="px-4 py-2">Status</th><th className="px-4 py-2">Updated</th><th className="px-4 py-2">Actions</th></tr>
           </thead>
           <tbody>
+            {q.isLoading && <TableSkeleton columns={5} />}
             {q.data?.map((p: any) => (
+
               <tr key={p.id} className="border-t border-slate-100">
                 <td className="px-4 py-2 font-medium">{p.title}</td>
                 <td className="px-4 py-2 text-muted-foreground">{p.slug}</td>
