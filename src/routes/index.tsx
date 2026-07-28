@@ -77,6 +77,7 @@ function HomePage() {
       <WhoBenefits />
       <VideoTestimonials />
       <FAQ />
+      <Newsletter />
       <FinalCTA />
     </>
   );
