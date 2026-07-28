@@ -168,6 +168,7 @@ export function CrudManager<T extends { id: string }>({
           </div>
         </div>
       )}
+      {dialog}
     </div>
   );
 }
