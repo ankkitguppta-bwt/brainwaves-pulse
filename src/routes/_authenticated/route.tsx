@@ -5,6 +5,7 @@ import {
   BookOpen, Newspaper, LogOut, ExternalLink, Menu, X,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 import logoAsset from "@/assets/brand/logo-dark.png.asset.json";
 
 let authCache: { userId: string; isAdmin: boolean } | null = null;
@@ -49,12 +50,21 @@ const nav: NavItem[] = [
 function AdminShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { confirm, dialog } = useConfirm();
 
   async function signOut() {
+    const ok = await confirm({
+      title: "Sign out?",
+      description: "You will be signed out of the admin panel and returned to the website.",
+      confirmLabel: "Sign out",
+      destructive: false,
+    });
+    if (!ok) return;
     authCache = null;
     await supabase.auth.signOut();
     window.location.href = "/";
   }
+
 
   const active = (to: string, exact?: boolean) =>
     exact ? pathname === to : pathname === to || pathname.startsWith(to + "/");
@@ -131,6 +141,7 @@ function AdminShell() {
           <Outlet />
         </main>
       </div>
+      {dialog}
     </div>
   );
 }

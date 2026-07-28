@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Pencil, Trash2 } from "lucide-react";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { TableSkeleton } from "@/components/admin/AdminSkeleton";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 
 
 type FieldType = "text" | "textarea" | "url" | "number" | "select" | "checkbox" | "date" | "image";
