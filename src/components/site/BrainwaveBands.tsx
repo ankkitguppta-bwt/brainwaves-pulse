@@ -574,6 +574,19 @@ export function BrainwaveBands() {
             />
           </div>
 
+          {/* sample report */}
+          <figure className="mt-5 overflow-hidden rounded-xl border border-navy/10 bg-white">
+            <img
+              src={REPORTS[current.id]}
+              alt={`${current.name} sample signal report chart`}
+              loading="lazy"
+              className="w-full object-contain"
+            />
+            <figcaption className="border-t border-navy/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-navy/50">
+              Sample report · {current.name} signal value %
+            </figcaption>
+          </figure>
+
           <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{current.body}</p>
           <dl className="mt-4">
             <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-navy/50">
