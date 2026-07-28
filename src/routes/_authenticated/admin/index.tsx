@@ -46,13 +46,20 @@ function DashboardPage() {
     <div>
       <h1 className="font-display text-2xl font-bold text-navy">Overview</h1>
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Enquiries" value={enqTotal} sub={`${unread} unread`} to="/admin/enquiries" />
-        <StatCard label="Blog posts" value={posts.data?.length ?? 0} sub={`${published} live · ${drafts} drafts`} to="/admin/blog" />
-        <StatCard label="Testimonials" value={tests.data?.length ?? 0} to="/admin/testimonials" />
-        <StatCard label="People" value={people.data?.length ?? 0} to="/admin/people" />
-        <StatCard label="Case studies" value={cs.data?.length ?? 0} to="/admin/case-studies" />
-        <StatCard label="Media / recognition" value={media.data?.length ?? 0} to="/admin/media" />
+        {statsLoading ? (
+          <StatCardsSkeleton />
+        ) : (
+          <>
+            <StatCard label="Enquiries" value={enqTotal} sub={`${unread} unread`} to="/admin/enquiries" />
+            <StatCard label="Blog posts" value={posts.data?.length ?? 0} sub={`${published} live · ${drafts} drafts`} to="/admin/blog" />
+            <StatCard label="Testimonials" value={tests.data?.length ?? 0} to="/admin/testimonials" />
+            <StatCard label="People" value={people.data?.length ?? 0} to="/admin/people" />
+            <StatCard label="Case studies" value={cs.data?.length ?? 0} to="/admin/case-studies" />
+            <StatCard label="Media / recognition" value={media.data?.length ?? 0} to="/admin/media" />
+          </>
+        )}
       </div>
+
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
         <section>
