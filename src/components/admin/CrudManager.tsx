@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Pencil, Trash2 } from "lucide-react";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { TableSkeleton } from "@/components/admin/AdminSkeleton";
+
 
 type FieldType = "text" | "textarea" | "url" | "number" | "select" | "checkbox" | "date" | "image";
 export type FieldDef = {
@@ -81,7 +83,7 @@ export function CrudManager<T extends { id: string }>({
             <tr>{columns.map((c) => <th key={c.key} className="px-4 py-2">{c.label}</th>)}<th className="px-4 py-2 w-32">Actions</th></tr>
           </thead>
           <tbody>
-            {q.isLoading && <tr><td colSpan={columns.length + 1} className="px-4 py-6 text-center">Loading…</td></tr>}
+            {q.isLoading && <TableSkeleton columns={columns.length + 1} />}
             {q.data?.map((row: any) => (
               <tr key={row.id} className="border-t border-slate-100">
                 {columns.map((c) => (

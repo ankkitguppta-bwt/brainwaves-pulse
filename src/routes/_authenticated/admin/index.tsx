@@ -5,6 +5,8 @@ import {
   listEnquiries, listAllPosts, listAllPeople, listAllTestimonials,
   listAllCaseStudies, listAllMedia,
 } from "@/lib/data/admin.functions";
+import { StatCardsSkeleton, TableSkeleton } from "@/components/admin/AdminSkeleton";
+
 
 export const Route = createFileRoute("/_authenticated/admin/")({
   head: () => ({ meta: [{ title: "Admin Dashboard" }, { name: "robots", content: "noindex" }] }),
@@ -39,18 +41,27 @@ function DashboardPage() {
   const unread = enq.data?.filter((e: any) => !e.is_read).length ?? 0;
   const published = posts.data?.filter((p: any) => p.status === "published").length ?? 0;
   const drafts = (posts.data?.length ?? 0) - published;
+  const statsLoading = [enq, posts, people, tests, cs, media].some((q) => q.isLoading);
+
 
   return (
     <div>
       <h1 className="font-display text-2xl font-bold text-navy">Overview</h1>
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Enquiries" value={enqTotal} sub={`${unread} unread`} to="/admin/enquiries" />
-        <StatCard label="Blog posts" value={posts.data?.length ?? 0} sub={`${published} live · ${drafts} drafts`} to="/admin/blog" />
-        <StatCard label="Testimonials" value={tests.data?.length ?? 0} to="/admin/testimonials" />
-        <StatCard label="People" value={people.data?.length ?? 0} to="/admin/people" />
-        <StatCard label="Case studies" value={cs.data?.length ?? 0} to="/admin/case-studies" />
-        <StatCard label="Media / recognition" value={media.data?.length ?? 0} to="/admin/media" />
+        {statsLoading ? (
+          <StatCardsSkeleton />
+        ) : (
+          <>
+            <StatCard label="Enquiries" value={enqTotal} sub={`${unread} unread`} to="/admin/enquiries" />
+            <StatCard label="Blog posts" value={posts.data?.length ?? 0} sub={`${published} live · ${drafts} drafts`} to="/admin/blog" />
+            <StatCard label="Testimonials" value={tests.data?.length ?? 0} to="/admin/testimonials" />
+            <StatCard label="People" value={people.data?.length ?? 0} to="/admin/people" />
+            <StatCard label="Case studies" value={cs.data?.length ?? 0} to="/admin/case-studies" />
+            <StatCard label="Media / recognition" value={media.data?.length ?? 0} to="/admin/media" />
+          </>
+        )}
       </div>
+
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
         <section>
@@ -67,7 +78,9 @@ function DashboardPage() {
                 </tr>
               </thead>
               <tbody>
+                {enq.isLoading && <TableSkeleton columns={3} rows={4} />}
                 {(enq.data ?? []).slice(0, 6).map((e: any) => (
+
                   <tr key={e.id} className="border-t border-slate-100">
                     <td className="px-4 py-2 text-muted-foreground">{new Date(e.created_at).toLocaleDateString()}</td>
                     <td className="px-4 py-2 font-medium">{e.name}</td>
@@ -96,7 +109,9 @@ function DashboardPage() {
                 </tr>
               </thead>
               <tbody>
+                {posts.isLoading && <TableSkeleton columns={3} rows={4} />}
                 {(posts.data ?? []).slice(0, 6).map((p: any) => (
+
                   <tr key={p.id} className="border-t border-slate-100">
                     <td className="px-4 py-2 font-medium">
                       <Link to="/admin/blog/$id" params={{ id: p.id }} className="hover:underline">{p.title}</Link>

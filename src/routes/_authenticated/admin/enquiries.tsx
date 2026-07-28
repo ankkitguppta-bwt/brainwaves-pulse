@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Trash2 } from "lucide-react";
 import { listEnquiries, markEnquiryRead, deleteEnquiry } from "@/lib/data/admin.functions";
+import { CardListSkeleton } from "@/components/admin/AdminSkeleton";
+
 
 export const Route = createFileRoute("/_authenticated/admin/enquiries")({
   head: () => ({ meta: [{ title: "Enquiries — Admin" }, { name: "robots", content: "noindex" }] }),
@@ -20,7 +22,7 @@ function EnquiriesPage() {
     <div>
       <h1 className="font-display text-2xl font-bold text-navy">Contact Enquiries</h1>
       <div className="mt-6 space-y-3">
-        {q.isLoading && <p>Loading…</p>}
+        {q.isLoading && <CardListSkeleton />}
         {q.data?.length === 0 && <p className="text-muted-foreground">No enquiries yet.</p>}
         {q.data?.map((e: any) => (
           <div key={e.id} className={`rounded-2xl border p-5 ${e.is_read ? "border-slate-200 bg-white" : "border-teal/30 bg-teal/5"}`}>

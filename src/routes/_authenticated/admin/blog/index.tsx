@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Pencil, Trash2 } from "lucide-react";
 import { listAllPosts, deletePost } from "@/lib/data/admin.functions";
+import { TableSkeleton } from "@/components/admin/AdminSkeleton";
+
 
 export const Route = createFileRoute("/_authenticated/admin/blog/")({
   head: () => ({ meta: [{ title: "Blog — Admin" }, { name: "robots", content: "noindex" }] }),
@@ -30,7 +32,9 @@ function BlogListPage() {
             <tr><th className="px-4 py-2">Title</th><th className="px-4 py-2">Slug</th><th className="px-4 py-2">Status</th><th className="px-4 py-2">Updated</th><th className="px-4 py-2">Actions</th></tr>
           </thead>
           <tbody>
+            {q.isLoading && <TableSkeleton columns={5} />}
             {q.data?.map((p: any) => (
+
               <tr key={p.id} className="border-t border-slate-100">
                 <td className="px-4 py-2 font-medium">{p.title}</td>
                 <td className="px-4 py-2 text-muted-foreground">{p.slug}</td>
