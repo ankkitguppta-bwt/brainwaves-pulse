@@ -86,11 +86,11 @@ function EnquiriesPage() {
                 </p>
               </div>
               <div className="flex gap-2">
-                <button onClick={async () => { await mark({ data: { id: e.id, is_read: !e.is_read } }); qc.invalidateQueries({ queryKey: ["enquiries"] }); }}
+                <button onClick={() => void doMark(e.id, !e.is_read)}
                   className="rounded-full border border-input px-3 py-1 text-xs hover:bg-secondary">
                   Mark {e.is_read ? "unread" : "read"}
                 </button>
-                <button onClick={async () => { if (await confirm({ title: "Delete this enquiry?", description: "This enquiry will be permanently deleted. This cannot be undone.", confirmLabel: "Delete" })) { await del({ data: { id: e.id } }); qc.invalidateQueries({ queryKey: ["enquiries"] }); } }}
+                <button onClick={() => void confirmDelete(e.id)}
                   aria-label="Delete" title="Delete"
                   className="inline-flex items-center rounded-full border border-red-200 px-2.5 py-1 text-red-600 hover:bg-red-50">
                   <Trash2 size={14} />
