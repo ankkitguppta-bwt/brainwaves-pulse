@@ -600,7 +600,9 @@ export function BrainwaveBands() {
           ))}
         </div>
       </div>
+      )}
     </div>
+
   );
 }
 
