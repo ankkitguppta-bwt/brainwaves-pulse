@@ -647,6 +647,92 @@ function FAQ() {
 }
 
 
+/* ───── Newsletter ───── */
+function Newsletter() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("sending");
+    setErrorMsg(null);
+    try {
+      const res = await fetch("/api/public/enquiries", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name: "Newsletter Subscriber",
+          email,
+          phone: "",
+          interest: "Newsletter Subscription",
+          message: "Subscribed via newsletter section",
+        }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error ?? "Subscribe failed");
+      }
+      setStatus("success");
+      setEmail("");
+    } catch (err: any) {
+      setStatus("error");
+      setErrorMsg(err.message);
+    }
+  }
+
+  return (
+    <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-4xl px-4 lg:px-8">
+        <div
+          data-aos="fade-up"
+          className="relative rounded-3xl border border-slate-100 bg-gradient-to-br from-navy to-navy-soft p-8 text-center shadow-2xl sm:p-12"
+        >
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
+            <Mail className="h-7 w-7 text-teal" />
+          </div>
+          <h2 className="mt-6 font-display text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+            Stay Ahead of the Curve
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
+            Get the latest neurofeedback insights, product updates, and practitioner resources delivered straight to your inbox.
+          </p>
+
+          <form onSubmit={onSubmit} className="mx-auto mt-8 flex max-w-lg flex-col gap-3 sm:flex-row">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="w-full flex-1 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm text-white placeholder:text-white/50 backdrop-blur transition focus:border-teal focus:bg-white/15 focus:outline-none"
+            />
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.02] disabled:opacity-60"
+            >
+              {status === "sending" ? "Subscribing…" : "Subscribe"} <ArrowRight className="h-4 w-4" />
+            </button>
+          </form>
+
+          {status === "success" && (
+            <p className="mt-4 text-sm font-medium text-emerald-300">
+              You&apos;re subscribed — welcome to the BrainWaves community.
+            </p>
+          )}
+          {status === "error" && (
+            <p className="mt-4 text-sm font-medium text-red-300">{errorMsg}</p>
+          )}
+          <p className="mt-4 text-xs text-white/50">
+            No spam. Unsubscribe anytime.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ───── Final CTA ───── */
 function FinalCTA() {
   return (
