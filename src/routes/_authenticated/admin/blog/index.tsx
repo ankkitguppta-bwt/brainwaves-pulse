@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import { listAllPosts, deletePost } from "@/lib/data/admin.functions";
 import { TableSkeleton } from "@/components/admin/AdminSkeleton";
 import { useConfirm } from "@/components/admin/ConfirmDialog";
@@ -18,6 +20,31 @@ function BlogListPage() {
   const del = useServerFn(deletePost);
   const q = useQuery({ queryKey: ["posts", "all"], queryFn: () => list() });
   const { confirm, dialog } = useConfirm();
+  const [actionError, setActionError] = useState<{ message: string; retry: () => void } | null>(null);
+
+  async function doDelete(id: string) {
+    setActionError(null);
+    const toastId = toast.loading("Deleting post…");
+    try {
+      await del({ data: { id } });
+      await qc.invalidateQueries({ queryKey: ["posts", "all"] });
+      toast.success("Post deleted", { id: toastId });
+    } catch (err: any) {
+      const message = err?.message ?? "Delete failed. Please try again.";
+      setActionError({ message, retry: () => void doDelete(id) });
+      toast.error("Delete failed", { id: toastId, description: message, action: { label: "Retry", onClick: () => void doDelete(id) } });
+    }
+  }
+
+  async function confirmDelete(id: string) {
+    const ok = await confirm({
+      title: "Delete this post?",
+      description: "The blog post will be permanently deleted and removed from your site.",
+      confirmLabel: "Delete",
+    });
+    if (ok) await doDelete(id);
+  }
+
 
   return (
     <div>
