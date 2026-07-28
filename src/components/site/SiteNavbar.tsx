@@ -40,29 +40,16 @@ const nav: NavItem[] = [
   },
 ];
 
-function Wordmark({ solid }: { solid: boolean }) {
+function Wordmark(_props: { solid?: boolean }) {
   return (
-    <span className="flex items-center gap-2">
-      <img src={brainMark.url} alt="" aria-hidden="true" className="h-8 w-auto sm:h-9 lg:h-10" />
-      <span className="flex w-full flex-col leading-none">
-        <span
-          className={`text-lg font-bold tracking-tight transition-colors duration-300 sm:text-xl ${
-            solid ? "text-navy" : "text-white"
-          }`}
-        >
-          BrainWaves
-        </span>
-        <span
-          className={`text-center text-[9px] font-semibold tracking-[0.42em] transition-colors duration-300 sm:text-[10px] ${
-            solid ? "text-navy/70" : "text-white/70"
-          }`}
-        >
-          TECH
-        </span>
-      </span>
-    </span>
+    <img
+      src={brandLogo.url}
+      alt="BrainWaves Tech"
+      className="h-9 w-auto sm:h-10 lg:h-11"
+    />
   );
 }
+
 
 export function SiteNavbar() {
   const [open, setOpen] = useState(false);
