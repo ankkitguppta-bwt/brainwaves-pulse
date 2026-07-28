@@ -353,8 +353,31 @@ function HowItWorks() {
       <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
     </div>
   );
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [revealed, setRevealed] = useState(false);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setRevealed(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const revealStyle = (i: number) =>
+    revealed
+      ? ({ animationDelay: `${i * 180}ms` } as React.CSSProperties)
+      : ({ opacity: 0 } as React.CSSProperties);
+
   return (
-    <section className="bg-background py-12 sm:py-16 lg:py-20">
+    <section ref={sectionRef} className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           title="A Four-Stage Neuro-Wellness Journey"
@@ -363,11 +386,7 @@ function HowItWorks() {
         {/* Mobile / tablet 2-col grid */}
         <div className="mt-10 grid grid-cols-2 gap-6 lg:hidden">
           {steps.map((s, i) => (
-            <div
-              key={s.title}
-              data-aos="step-reveal"
-              data-aos-delay={i * 120}
-            >
+            <div key={s.title} className={revealed ? "animate-step-in" : ""} style={revealStyle(i)}>
               <Step s={s} i={i} />
             </div>
           ))}
@@ -377,11 +396,7 @@ function HowItWorks() {
           <div className="absolute left-0 right-0 top-8 h-px bg-gradient-to-r from-transparent via-teal/40 to-transparent" />
           <ol className="grid gap-8 lg:grid-cols-4">
             {steps.map((s, i) => (
-              <li
-                key={s.title}
-                data-aos="step-reveal"
-                data-aos-delay={i * 160}
-              >
+              <li key={s.title} className={revealed ? "animate-step-in" : ""} style={revealStyle(i)}>
                 <Step s={s} i={i} />
               </li>
             ))}
