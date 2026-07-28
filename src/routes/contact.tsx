@@ -56,7 +56,7 @@ function ContactPage() {
         title="Let's talk"
         sub="Book a demo, request an assessment or apply for the practitioner programme — we'd love to hear from you."
       />
-      <section className="bg-white py-12 lg:py-16">
+      <section className="bg-background py-12 lg:py-16">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           {/* Compact contact info row */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

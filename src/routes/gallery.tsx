@@ -24,7 +24,7 @@ function GalleryPage() {
   return (
     <>
       <PageHero eyebrow="Gallery" title="Workshops, media & moments" />
-      <section className="bg-white py-16">
+      <section className="bg-background py-16">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
             {all.map((src, i) => (

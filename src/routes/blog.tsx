@@ -38,7 +38,7 @@ function BlogPage() {
         title="Insights from the neuro-tech frontier"
         sub="Articles, research notes and practitioner stories."
       />
-      <section className="bg-white py-16">
+      <section className="bg-background py-16">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
           {q.isLoading && <p className="text-center text-muted-foreground">Loading posts…</p>}
           {q.data && q.data.length === 0 && (

@@ -230,7 +230,7 @@ function EcosystemSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
+    <section className="relative overflow-hidden bg-background py-16 sm:py-20 lg:py-24">
       <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2
@@ -293,7 +293,7 @@ function EcosystemSection() {
 /* ───── What is neurofeedback ───── */
 function WhatIsNeurofeedback() {
   return (
-    <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           eyebrow="What is Neurofeedback?"
@@ -354,7 +354,7 @@ function HowItWorks() {
     </div>
   );
   return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20">
+    <section className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           title="A Four-Stage Neuro-Wellness Journey"
@@ -422,7 +422,7 @@ function WhoBenefits() {
     { i: Sparkles, t: "Wellness Coaches" },
   ];
   return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20">
+    <section className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading title="Built for professionals. Scaled for visionary organizations. Accessible to everyone." />
         <div className="marquee-mask mt-12 space-y-4 !shadow-none" data-aos="fade-up" data-aos-delay="150">
@@ -525,7 +525,7 @@ function VideoTestimonials() {
   };
 
   return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20">
+    <section className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="flex items-end justify-between gap-4">
           <SectionHeading eyebrow="Video Testimonials" title="Hear it from our community" />
@@ -620,7 +620,7 @@ function FAQ() {
   }, []);
 
   return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20">
+    <section className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-3xl px-4 lg:px-8">
         <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
         <Accordion type="single" collapsible className="mt-10">
@@ -682,7 +682,7 @@ function Newsletter() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-4xl px-4 lg:px-8">
         <div
           data-aos="fade-up"
