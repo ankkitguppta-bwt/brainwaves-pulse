@@ -686,7 +686,7 @@ function Newsletter() {
       <div className="mx-auto max-w-4xl px-4 lg:px-8">
         <div
           data-aos="fade-up"
-          className="relative rounded-3xl border border-slate-100 bg-gradient-to-br from-navy to-navy-soft p-8 text-center shadow-2xl sm:p-12"
+          className="relative rounded-3xl border border-white/10 bg-navy p-8 text-center shadow-2xl sm:p-12"
         >
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
             <Mail className="h-7 w-7 text-teal" />
