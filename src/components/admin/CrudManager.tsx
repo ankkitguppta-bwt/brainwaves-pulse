@@ -5,6 +5,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { TableSkeleton } from "@/components/admin/AdminSkeleton";
 import { useConfirm } from "@/components/admin/ConfirmDialog";
+import { toast } from "sonner";
 
 
 type FieldType = "text" | "textarea" | "url" | "number" | "select" | "checkbox" | "date" | "image";
@@ -44,6 +45,7 @@ export function CrudManager<T extends { id: string }>({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { confirm: askConfirm, dialog } = useConfirm();
+  const [actionError, setActionError] = useState<{ message: string; retry: () => void } | null>(null);
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
@@ -58,9 +60,30 @@ export function CrudManager<T extends { id: string }>({
       await upsert({ data: payload });
       await qc.invalidateQueries({ queryKey });
       setEditing(null);
+      toast.success("Changes saved");
     } catch (err: any) {
-      setError(err.message ?? "Save failed");
+      const message = err?.message ?? "Save failed";
+      setError(message);
+      toast.error("Save failed", { description: message });
     } finally { setBusy(false); }
+  }
+
+  async function doRemove(id: string) {
+    setActionError(null);
+    const toastId = toast.loading("Deleting…");
+    try {
+      await del({ data: { id } });
+      await qc.invalidateQueries({ queryKey });
+      toast.success("Item deleted", { id: toastId });
+    } catch (err: any) {
+      const message = err?.message ?? "Delete failed. Please try again.";
+      setActionError({ message, retry: () => void doRemove(id) });
+      toast.error("Delete failed", {
+        id: toastId,
+        description: message,
+        action: { label: "Retry", onClick: () => void doRemove(id) },
+      });
+    }
   }
 
   async function remove(id: string) {
@@ -70,9 +93,9 @@ export function CrudManager<T extends { id: string }>({
       confirmLabel: "Delete",
     });
     if (!ok) return;
-    await del({ data: { id } });
-    await qc.invalidateQueries({ queryKey });
+    await doRemove(id);
   }
+
 
   return (
     <div>
@@ -83,6 +106,17 @@ export function CrudManager<T extends { id: string }>({
           + New
         </button>
       </div>
+
+      {actionError && (
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <span>{actionError.message}</span>
+          <div className="flex gap-2">
+            <button onClick={actionError.retry} className="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700">Retry</button>
+            <button onClick={() => setActionError(null)} className="rounded-full border border-red-300 px-3 py-1 text-xs font-semibold hover:bg-red-100">Dismiss</button>
+          </div>
+        </div>
+      )}
+
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
         <table className="w-full text-sm">

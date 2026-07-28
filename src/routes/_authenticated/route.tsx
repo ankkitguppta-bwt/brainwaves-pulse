@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useConfirm } from "@/components/admin/ConfirmDialog";
+import { toast } from "sonner";
 import logoAsset from "@/assets/brand/logo-dark.png.asset.json";
 
 let authCache: { userId: string; isAdmin: boolean } | null = null;
@@ -51,6 +52,31 @@ function AdminShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [mobileOpen, setMobileOpen] = useState(false);
   const { confirm, dialog } = useConfirm();
+  const [signOutError, setSignOutError] = useState<string | null>(null);
+  const [signingOut, setSigningOut] = useState(false);
+
+  async function doSignOut() {
+    setSigningOut(true);
+    setSignOutError(null);
+    const toastId = toast.loading("Signing out…");
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      authCache = null;
+      toast.success("Signed out", { id: toastId, description: "Redirecting to the website…" });
+      window.location.href = "/";
+    } catch (err: any) {
+      const message = err?.message ?? "Could not sign out. Please try again.";
+      setSignOutError(message);
+      toast.error("Sign out failed", {
+        id: toastId,
+        description: message,
+        action: { label: "Retry", onClick: () => void doSignOut() },
+      });
+    } finally {
+      setSigningOut(false);
+    }
+  }
 
   async function signOut() {
     const ok = await confirm({
@@ -60,10 +86,9 @@ function AdminShell() {
       destructive: false,
     });
     if (!ok) return;
-    authCache = null;
-    await supabase.auth.signOut();
-    window.location.href = "/";
+    await doSignOut();
   }
+
 
 
   const active = (to: string, exact?: boolean) =>
@@ -117,11 +142,23 @@ function AdminShell() {
           </a>
           <button
             onClick={signOut}
-            className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-400 hover:bg-slate-800/60 hover:text-white"
+            disabled={signingOut}
+            className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-400 hover:bg-slate-800/60 hover:text-white disabled:opacity-60"
           >
             <LogOut className="h-5 w-5" />
-            Sign out
+            {signingOut ? "Signing out…" : "Sign out"}
           </button>
+          {signOutError && (
+            <div className="mt-2 rounded-lg border border-red-500/40 bg-red-500/10 p-2.5 text-xs text-red-300">
+              <p>{signOutError}</p>
+              <button
+                onClick={() => void doSignOut()}
+                className="mt-1.5 rounded-md border border-red-400/50 px-2 py-1 font-semibold text-red-200 hover:bg-red-500/20"
+              >
+                Retry sign out
+              </button>
+            </div>
+          )}
         </div>
       </aside>
 

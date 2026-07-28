@@ -16,6 +16,7 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { WhatsAppFab } from "@/components/site/WhatsAppFab";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 import BrainWavesLoader from "@/components/site/BrainWavesLoader";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -181,6 +182,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <ScrollToTop />
       <AppLoader />
+      <Toaster position="top-right" richColors closeButton />
       {isBare ? (
         <Outlet />
       ) : (
