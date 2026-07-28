@@ -7,7 +7,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useConfirm } from "@/components/admin/ConfirmDialog";
 import { toast } from "sonner";
-import logoAsset from "@/assets/brand/logo-dark.png.asset.json";
+import logoAsset from "@/assets/brand/brainwaves-logo.png.asset.json";
 
 let authCache: { userId: string; isAdmin: boolean } | null = null;
 
