@@ -488,6 +488,7 @@ export function BrainwaveBands() {
   const rest = BANDS.filter((b) => b.id !== current.id);
 
   const switchTo = (id: BandId | null) => {
+    setShowReport(false);
     const doc = document as Document & {
       startViewTransition?: (cb: () => void) => { finished: Promise<void> };
     };
