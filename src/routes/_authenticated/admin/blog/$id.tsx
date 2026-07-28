@@ -5,6 +5,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getPost, upsertPost } from "@/lib/data/admin.functions";
 import { DraftEditor } from "@/components/admin/DraftEditor";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { EditorSkeleton } from "@/components/admin/AdminSkeleton";
+
 
 export const Route = createFileRoute("/_authenticated/admin/blog/$id")({
   head: () => ({ meta: [{ title: "Edit Post — Admin" }, { name: "robots", content: "noindex" }] }),
