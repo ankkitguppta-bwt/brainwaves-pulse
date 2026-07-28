@@ -546,7 +546,8 @@ export function BrainwaveBands() {
           </div>
           <button
             type="button"
-            onClick={() => setActive(null)}
+            onClick={() => switchTo(null)}
+
             className="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-navy/10 text-navy/50 transition-colors hover:border-teal/50 hover:text-teal"
             aria-label="Close"
           >
