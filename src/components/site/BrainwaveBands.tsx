@@ -487,9 +487,17 @@ export function BrainwaveBands() {
     });
   };
 
-  if (!active) {
-    return (
-      <div ref={sectionRef} className="relative isolate">
+  return (
+    <div ref={sectionRef} className="relative isolate">
+      {webgl && (
+        <canvas
+          ref={canvasRef}
+          aria-hidden
+          className="pointer-events-none fixed inset-0 z-20 h-full w-full"
+        />
+      )}
+
+      {!active ? (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {BANDS.map((b, i) => (
             <button
@@ -516,22 +524,9 @@ export function BrainwaveBands() {
             </button>
           ))}
         </div>
-      </div>
-    );
-  }
-
-
-  return (
-    <div ref={sectionRef} className="relative isolate">
-      {webgl && (
-        <canvas
-          ref={canvasRef}
-          aria-hidden
-          className="pointer-events-none fixed inset-0 z-20 h-full w-full"
-        />
-      )}
-
+      ) : (
       <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
+
         {/* expanded panel */}
         <div
           style={{ viewTransitionName: `band-${current.id}` }}
