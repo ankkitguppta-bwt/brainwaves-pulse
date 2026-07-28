@@ -499,27 +499,71 @@ function VideoTestimonials() {
     <button
       type="button"
       onClick={() => setActive(v)}
-      className="group relative block aspect-[4/5] w-[220px] shrink-0 overflow-hidden rounded-2xl bg-gradient-hero text-left sm:w-[260px] lg:w-[300px]"
+      className="group relative block aspect-[4/5] w-[260px] shrink-0 overflow-hidden rounded-2xl text-left sm:w-[300px] lg:w-[340px]"
     >
+      {/* dark teal gradient base */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, #0a4a4a 0%, #083535 25%, var(--navy) 60%, #051b2b 100%)",
+        }}
+      />
+      {/* animated wave lines */}
+      <svg
+        aria-hidden
+        className="absolute inset-0 h-full w-full opacity-40"
+        preserveAspectRatio="none"
+        viewBox="0 0 400 500"
+      >
+        <defs>
+          <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(18,184,176,0)" />
+            <stop offset="50%" stopColor="rgba(18,184,176,0.5)" />
+            <stop offset="100%" stopColor="rgba(18,184,176,0)" />
+          </linearGradient>
+        </defs>
+        {[0, 1, 2, 3].map((i) => (
+          <path
+            key={i}
+            d="M-50,120 Q50,80 150,120 T350,120 T550,120 M-50,180 Q50,140 150,180 T350,180 T550,180 M-50,240 Q50,200 150,240 T350,240 T550,240 M-50,300 Q50,260 150,300 T350,300 T550,300"
+            fill="none"
+            stroke="url(#waveGrad)"
+            strokeWidth={1.2}
+            style={{
+              transform: `translateY(${i * 40}px)`,
+              animation: `wave-drift ${18 + i * 3}s linear infinite`,
+              animationDelay: `${i * 1.2}s`,
+            }}
+          />
+        ))}
+      </svg>
+      {/* subtle vignette */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
       {v.thumbnail ? (
-        <img src={v.thumbnail} alt={v.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-      ) : (
-        <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-50" />
-      )}
+        <img
+          src={v.thumbnail}
+          alt={v.title}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover opacity-30 transition duration-500 group-hover:opacity-40"
+        />
+      ) : null}
+
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-navy shadow-lg transition group-hover:scale-110">
-          <Play className="ml-0.5 h-6 w-6" />
+        <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-navy shadow-xl transition duration-300 group-hover:scale-110 group-hover:shadow-2xl">
+          <Play className="ml-0.5 h-7 w-7" />
         </span>
       </div>
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-        <p className="text-sm font-semibold text-white">{v.title}</p>
-        <p className="text-xs text-white/80">{v.author}</p>
+      <div className="absolute inset-x-0 bottom-0 p-5">
+        <p className="text-base font-semibold text-white">{v.title}</p>
+        <p className="text-sm text-white/80">{v.author}</p>
       </div>
     </button>
   );
 
   // duplicate the list so the horizontal loop is seamless
-  const loop = [...items, ...items];
+  const loop = [...items, ...items, ...items];
 
   return (
     <section className="bg-background py-12 sm:py-16 lg:py-20">
@@ -544,7 +588,7 @@ function VideoTestimonials() {
       >
         <div
           className={`flex w-max gap-5 pl-4 will-change-transform marquee-horizontal ${paused ? "marquee-paused" : ""} lg:pl-8`}
-          style={{ ["--marquee-duration" as any]: `${Math.max(24, items.length * 9)}s` }}
+          style={{ ["--marquee-duration" as any]: `${Math.max(30, items.length * 10)}s` }}
         >
           {loop.map((v, i) => (
             <Card key={`${v.id}-${i}`} v={v} />
@@ -553,11 +597,8 @@ function VideoTestimonials() {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-
-
         <p className="mt-4 text-center text-xs text-navy/50">Hover to pause · click a video to play</p>
       </div>
-
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
         <DialogContent className="max-w-3xl overflow-hidden p-0">
@@ -567,13 +608,7 @@ function VideoTestimonials() {
           </DialogHeader>
           <div className="aspect-video w-full bg-black">
             {active && (
-              <video
-                key={active.id}
-                src={active.src}
-                controls
-                autoPlay
-                className="h-full w-full"
-              />
+              <video key={active.id} src={active.src} controls autoPlay className="h-full w-full" />
             )}
           </div>
         </DialogContent>
