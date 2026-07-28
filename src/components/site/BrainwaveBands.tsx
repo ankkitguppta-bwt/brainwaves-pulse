@@ -577,13 +577,13 @@ export function BrainwaveBands() {
 
         {/* collapsed stack */}
         <div className="flex w-full shrink-0 flex-col gap-3 lg:w-72">
-          {rest.map((b, i) => (
+          {rest.map((b) => (
             <button
               key={b.id}
               type="button"
-              data-aos="fade-up"
-              data-aos-delay={i * 80}
-              onClick={() => setActive(b.id)}
+              style={{ viewTransitionName: `band-${b.id}` }}
+              onClick={() => switchTo(b.id)}
+
               className="group flex flex-1 items-start gap-3 rounded-2xl border border-navy/10 bg-white p-4 text-left transition-colors duration-300 hover:border-teal/50"
             >
               <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-navy text-white">
