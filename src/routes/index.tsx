@@ -110,14 +110,19 @@ function Hero() {
           data-aos-delay="200"
           className="mx-auto mt-5 max-w-2xl font-display text-base font-bold text-white sm:text-lg"
         >
-          India’s advanced neurofeedback platform mapping <span className="font-accent font-semibold text-orange">real-time</span> cognitive data in 2 minutes.
+          India’s advanced neurofeedback platform mapping{" "}
+          <span className="font-accent font-semibold text-orange">real-time</span> cognitive data in 2 minutes.
         </p>
         <p
           data-aos="fade-up"
           data-aos-delay="250"
           className="mx-auto mt-4 max-w-3xl font-display text-sm font-medium leading-relaxed text-white sm:text-base"
         >
-          Move past qualitative <span className="font-accent font-semibold text-white">guesswork</span>. Our 14 precise cognitive parameters instantly help to figure out your brain waves data into a quantified performance blueprint. An evidence-based platform to assess, <span className="font-accent font-semibold text-white">track</span>, and improve focus, performance, and well-being—for individuals and organizations alike.
+          Move past qualitative <span className="font-accent font-semibold text-white">guesswork</span>. Our 14 precise
+          cognitive parameters instantly help to figure out your brain waves data into a quantified performance
+          blueprint. An evidence-based platform to assess,{" "}
+          <span className="font-accent font-semibold text-white">track</span>, and improve focus, performance, and
+          well-being—for individuals and organizations alike.
         </p>
         <div data-aos="fade-up" data-aos-delay="300" className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
@@ -135,7 +140,10 @@ function Hero() {
         </div>
       </div>
       {/* Fade to stats section */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent via-navy/80 to-navy" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent via-navy/80 to-navy"
+      />
     </section>
   );
 }
@@ -146,7 +154,7 @@ function StatsStrip() {
     { end: 27, suffix: "+", l: "Certified Practitioners" },
     { end: 14, suffix: "+", l: "Years of Neurofeedback Research" },
     { end: 1.2, decimals: 1, suffix: " L+", l: "Brainwave Data Points" },
-    { end: 92, suffix: "%+", l: "Reporting Accuracy" },
+    { end: 12000, suffix: "+", l: "Benefitted customers" },
   ];
   return (
     <section
@@ -243,9 +251,9 @@ function EcosystemSection() {
             data-aos-delay="120"
             className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base"
           >
-            Move away from outdated checklists and biased self-reporting. Our integrated system bridges
-            high-fidelity neuro-sensing hardware directly with cloud-based AI analytics, providing business
-            leaders and clinicians with concrete cognitive telemetry.
+            Move away from outdated checklists and biased self-reporting. Our integrated system bridges high-fidelity
+            neuro-sensing hardware directly with cloud-based AI analytics, providing business leaders and clinicians
+            with concrete cognitive telemetry.
           </p>
         </div>
 
@@ -287,8 +295,6 @@ function EcosystemSection() {
   );
 }
 
-
-
 /* ───── What is neurofeedback ───── */
 function WhatIsNeurofeedback() {
   return (
@@ -313,8 +319,6 @@ function WhatIsNeurofeedback() {
     </section>
   );
 }
-
-
 
 /* ───── How it works ───── */
 function HowItWorks() {
@@ -371,9 +375,7 @@ function HowItWorks() {
   }, []);
 
   const revealStyle = (i: number) =>
-    revealed
-      ? ({ animationDelay: `${i * 300}ms` } as React.CSSProperties)
-      : ({ opacity: 0 } as React.CSSProperties);
+    revealed ? ({ animationDelay: `${i * 300}ms` } as React.CSSProperties) : ({ opacity: 0 } as React.CSSProperties);
 
   return (
     <section ref={sectionRef} className="bg-background py-12 sm:py-16 lg:py-20">
@@ -405,7 +407,6 @@ function HowItWorks() {
     </section>
   );
 }
-
 
 /* ───── Who benefits ───── */
 function WhoBenefits() {
@@ -484,13 +485,18 @@ function VideoTestimonials() {
       const { data, error } = await supabaseVT
         .from("testimonials")
         .select("id, author, title, video_url, thumbnail_url, is_featured, sort_order")
-        .eq("type", "video").order("sort_order");
+        .eq("type", "video")
+        .order("sort_order");
       if (error) throw error;
       return (data ?? []).filter((v) => v.video_url);
     },
   });
   const dbItems: VideoT[] = (q.data ?? []).map((v: any) => ({
-    id: v.id, title: v.title ?? v.author, author: v.author, src: v.video_url, thumbnail: v.thumbnail_url,
+    id: v.id,
+    title: v.title ?? v.author,
+    author: v.author,
+    src: v.video_url,
+    thumbnail: v.thumbnail_url,
   }));
   const items = dbItems.length > 0 ? dbItems : FALLBACK_VIDEOS;
   const [paused, setPaused] = useState(false);
@@ -505,8 +511,7 @@ function VideoTestimonials() {
       <div
         className="absolute inset-0"
         style={{
-          background:
-            "linear-gradient(180deg, #0a4a4a 0%, #083535 25%, var(--navy) 60%, #051b2b 100%)",
+          background: "linear-gradient(180deg, #0a4a4a 0%, #083535 25%, var(--navy) 60%, #051b2b 100%)",
         }}
       />
       {/* animated wave lines */}
@@ -607,16 +612,13 @@ function VideoTestimonials() {
             <DialogDescription>{active?.author}</DialogDescription>
           </DialogHeader>
           <div className="aspect-video w-full bg-black">
-            {active && (
-              <video key={active.id} src={active.src} controls autoPlay className="h-full w-full" />
-            )}
+            {active && <video key={active.id} src={active.src} controls autoPlay className="h-full w-full" />}
           </div>
         </DialogContent>
       </Dialog>
     </section>
   );
 }
-
 
 /* ───── FAQ ───── */
 function FAQ() {
@@ -678,7 +680,6 @@ function FAQ() {
   );
 }
 
-
 /* ───── Final CTA ───── */
 function FinalCTA() {
   return (
@@ -726,14 +727,29 @@ function SectionHeading({
   return (
     <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
       {eyebrow && (
-        <p className={`text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "text-teal" : "text-teal"}`} data-aos="fade-up">
+        <p
+          className={`text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "text-teal" : "text-teal"}`}
+          data-aos="fade-up"
+        >
           {eyebrow}
         </p>
       )}
-      <h2 className={`font-display text-3xl font-bold sm:text-4xl ${dark ? "text-white" : "text-navy"} ${eyebrow ? "mt-3" : ""}`} data-aos="fade-up" data-aos-delay="80">
+      <h2
+        className={`font-display text-3xl font-bold sm:text-4xl ${dark ? "text-white" : "text-navy"} ${eyebrow ? "mt-3" : ""}`}
+        data-aos="fade-up"
+        data-aos-delay="80"
+      >
         {title}
       </h2>
-      {sub && <p className={`mx-auto mt-4 max-w-2xl ${dark ? "text-white/75" : "text-muted-foreground"}`} data-aos="fade-up" data-aos-delay="160">{sub}</p>}
+      {sub && (
+        <p
+          className={`mx-auto mt-4 max-w-2xl ${dark ? "text-white/75" : "text-muted-foreground"}`}
+          data-aos="fade-up"
+          data-aos-delay="160"
+        >
+          {sub}
+        </p>
+      )}
     </div>
   );
 }
