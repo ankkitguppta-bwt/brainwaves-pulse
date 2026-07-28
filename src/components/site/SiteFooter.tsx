@@ -87,13 +87,10 @@ export function SiteFooter() {
       <div className="mx-auto mt-12 max-w-7xl border-t border-white/10 px-4 lg:px-8">
         <div className="grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-3">
           <div>
-            <Link to="/" className="inline-flex items-baseline gap-1.5">
-              <span className="font-display text-2xl font-extrabold tracking-tight">
-                <span className="text-orange">Brain</span>
-                <span className="text-white">Waves</span>
-              </span>
-              <span className="font-display text-sm font-semibold text-teal">Tech</span>
+            <Link to="/" className="inline-flex rounded-lg bg-white px-3 py-2">
+              <img src={brandLogo.url} alt="BrainWaves Tech" className="h-10 w-auto" />
             </Link>
+
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/65">
               Advanced neurofeedback systems built to connect, quantify, explore — transforming raw
               biological data into empirical, real-time performance blueprints for enterprises,
