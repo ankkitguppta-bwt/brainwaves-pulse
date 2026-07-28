@@ -81,7 +81,7 @@ export function CrudManager<T extends { id: string }>({
             <tr>{columns.map((c) => <th key={c.key} className="px-4 py-2">{c.label}</th>)}<th className="px-4 py-2 w-32">Actions</th></tr>
           </thead>
           <tbody>
-            {q.isLoading && <tr><td colSpan={columns.length + 1} className="px-4 py-6 text-center">Loading…</td></tr>}
+            {q.isLoading && <TableSkeleton columns={columns.length + 1} />}
             {q.data?.map((row: any) => (
               <tr key={row.id} className="border-t border-slate-100">
                 {columns.map((c) => (
