@@ -124,18 +124,18 @@ function Hero() {
           blueprint. An evidence-based platform to assess, track, and improve focus, performance, and well-being—for
           individuals and organizations alike.
         </p>
-        <div data-aos="fade-up" data-aos-delay="300" className="mt-8 flex flex-wrap justify-center gap-3">
+        <div data-aos="fade-up" data-aos-delay="300" className="mt-8 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3">
           <Link
             to="/contact"
-            className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.02]"
+            className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full bg-teal px-4 py-2 text-xs font-semibold text-navy shadow-brand transition hover:scale-[1.02] sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
           >
-            Book Demo Now <ArrowRight className="h-4 w-4" />
+            Book Demo Now <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Link>
           <Link
             to="/practitioner"
-            className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20"
+            className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-white/40 bg-white/10 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition hover:bg-white/20 sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
           >
-            Become a Practitioner <ArrowRight className="h-4 w-4" />
+            Become a Practitioner <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Link>
         </div>
       </div>
@@ -687,16 +687,16 @@ function FinalCTA() {
           Whether you want to train your brain, add neurofeedback to your practice, or explore partnership — we'd love
           to talk.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="220">
+        <div className="mt-8 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3" data-aos="fade-up" data-aos-delay="220">
           <Link
             to="/contact"
-            className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-navy shadow-brand"
+            className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full bg-teal px-4 py-2 text-xs font-semibold text-navy shadow-brand sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
           >
-            Book Demo Now <ArrowRight className="h-4 w-4" />
+            Book Demo Now <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Link>
           <Link
             to="/practitioner"
-            className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-3 text-sm font-semibold backdrop-blur"
+            className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-white/30 bg-white/5 px-4 py-2 text-xs font-semibold backdrop-blur sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
           >
             Become a Practitioner
           </Link>
