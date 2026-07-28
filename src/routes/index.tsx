@@ -291,7 +291,7 @@ function EcosystemSection() {
 /* ───── What is neurofeedback ───── */
 function WhatIsNeurofeedback() {
   return (
-    <section className="relative overflow-hidden bg-cyan-bg py-12 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           eyebrow="What is Neurofeedback?"

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Activity, ChevronDown } from "lucide-react";
+import { Activity, ChevronRight } from "lucide-react";
 import { BANDS, type BandContent, type BandId } from "@/components/site/brainwave-content";
 
 /* ── shared curve maths: ribbon + coils sample the same function ── */
@@ -176,8 +176,8 @@ export function BrainwaveBands() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const stageRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [active, setActive] = useState<BandId | null>(null);
-  const activeRef = useRef<BandId | null>(null);
+  const [active, setActive] = useState<BandId>(BANDS[0].id);
+  const activeRef = useRef<BandId | null>(BANDS[0].id);
   const visibleRef = useRef(true);
   const [webgl, setWebgl] = useState(true);
 
