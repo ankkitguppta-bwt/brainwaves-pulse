@@ -534,9 +534,10 @@ export function BrainwaveBands() {
       <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
         {/* expanded panel */}
         <div
-          data-aos="fade-up"
+          style={{ viewTransitionName: `band-${current.id}` }}
           className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-navy/10 bg-white p-5 sm:p-6"
         >
+
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <h3 className="font-display text-xl font-semibold text-navy sm:text-2xl">{current.name}</h3>
             <span className="text-xs font-semibold uppercase tracking-[0.14em] text-teal">
