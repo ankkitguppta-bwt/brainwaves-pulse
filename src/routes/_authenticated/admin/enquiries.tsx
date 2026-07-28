@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Trash2 } from "lucide-react";
 import { listEnquiries, markEnquiryRead, deleteEnquiry } from "@/lib/data/admin.functions";
 import { CardListSkeleton } from "@/components/admin/AdminSkeleton";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 
 
 export const Route = createFileRoute("/_authenticated/admin/enquiries")({
@@ -17,6 +18,7 @@ function EnquiriesPage() {
   const mark = useServerFn(markEnquiryRead);
   const del = useServerFn(deleteEnquiry);
   const q = useQuery({ queryKey: ["enquiries"], queryFn: () => list() });
+  const { confirm, dialog } = useConfirm();
 
   return (
     <div>
@@ -40,7 +42,7 @@ function EnquiriesPage() {
                   className="rounded-full border border-input px-3 py-1 text-xs hover:bg-secondary">
                   Mark {e.is_read ? "unread" : "read"}
                 </button>
-                <button onClick={async () => { if (confirm("Delete?")) { await del({ data: { id: e.id } }); qc.invalidateQueries({ queryKey: ["enquiries"] }); } }}
+                <button onClick={async () => { if (await confirm({ title: "Delete this enquiry?", description: "This enquiry will be permanently deleted. This cannot be undone.", confirmLabel: "Delete" })) { await del({ data: { id: e.id } }); qc.invalidateQueries({ queryKey: ["enquiries"] }); } }}
                   aria-label="Delete" title="Delete"
                   className="inline-flex items-center rounded-full border border-red-200 px-2.5 py-1 text-red-600 hover:bg-red-50">
                   <Trash2 size={14} />
@@ -51,6 +53,7 @@ function EnquiriesPage() {
           </div>
         ))}
       </div>
+      {dialog}
     </div>
   );
 }
