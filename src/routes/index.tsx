@@ -121,9 +121,8 @@ function Hero() {
           Move past qualitative <span className="font-accent font-semibold text-white">guesswork</span>. Our 14 precise
           cognitive parameters instantly help to figure out your{" "}
           <span className="font-accent font-semibold text-orange">brain waves data</span> into a quantified performance
-          blueprint. An evidence-based platform to assess,{" "}
-          <span className="font-accent font-semibold text-white">track</span>, and improve focus, performance, and
-          well-being—for individuals and organizations alike.
+          blueprint. An evidence-based platform to assess, track, and improve focus, performance, and well-being—for
+          individuals and organizations alike.
         </p>
         <div data-aos="fade-up" data-aos-delay="300" className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
