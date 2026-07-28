@@ -246,3 +246,15 @@
     color: var(--navy); font-weight: 600;
   }
 }
+
+/* ── smooth morph between brainwave card states ── */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(*) {
+    animation-duration: 620ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 420ms;
+  }
+}
