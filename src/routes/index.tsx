@@ -305,13 +305,6 @@ function WhatIsNeurofeedback() {
           title="Quantify Cognitive Capital. Eliminate Structural Burnout."
           sub="Neurofeedback is a non-invasive, data-driven technology that safely maps and analyses brainwave frequencies in real time. By capturing the conscious/subconscious neurological factors that govern focus, stress tolerance, and emotional stability, it provides professionals with an empirical tool to predict individual performances and eliminate their attrition."
         />
-        <p
-          data-aos="fade-up"
-          data-aos-delay="200"
-          className="mt-3 text-center text-[11px] font-medium uppercase tracking-[0.18em] text-navy/40"
-        >
-          Click a wave to expand its live animation
-        </p>
         <div className="mt-10">
           <BrainwaveBands />
         </div>
