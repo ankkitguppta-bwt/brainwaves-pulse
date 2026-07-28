@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { Activity, ChevronRight, X } from "lucide-react";
+
 import { BANDS, type BandContent, type BandId } from "@/components/site/brainwave-content";
 
 /* ── shared curve maths: ribbon + coils sample the same function ── */
