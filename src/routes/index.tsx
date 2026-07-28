@@ -502,7 +502,13 @@ function VideoTestimonials() {
       className="group relative block aspect-[4/5] w-[260px] shrink-0 overflow-hidden rounded-2xl text-left sm:w-[300px] lg:w-[340px]"
     >
       {/* dark teal gradient base */}
-      <div className="absolute inset-0 bg-gradient-to-b from-teal-900 via-navy to-navy" />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, #0a4a4a 0%, #083535 25%, var(--navy) 60%, #051b2b 100%)",
+        }}
+      />
       {/* animated wave lines */}
       <svg
         aria-hidden
