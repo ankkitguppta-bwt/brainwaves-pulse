@@ -5,6 +5,8 @@ import {
   listEnquiries, listAllPosts, listAllPeople, listAllTestimonials,
   listAllCaseStudies, listAllMedia,
 } from "@/lib/data/admin.functions";
+import { StatCardsSkeleton, TableSkeleton } from "@/components/admin/AdminSkeleton";
+
 
 export const Route = createFileRoute("/_authenticated/admin/")({
   head: () => ({ meta: [{ title: "Admin Dashboard" }, { name: "robots", content: "noindex" }] }),
