@@ -85,13 +85,13 @@ export function ImageUpload({
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="flex h-full w-full flex-col items-center justify-center gap-2 text-sm text-slate-500 hover:bg-slate-100"
+            className="flex h-full w-full flex-col items-center justify-center gap-1.5 px-2 text-center text-xs text-slate-500 hover:bg-slate-100"
             disabled={busy}
           >
             {busy ? (
-              <><Loader2 className="h-5 w-5 animate-spin" /> Uploading…</>
+              <><Loader2 className="h-4 w-4 animate-spin" /> Uploading…</>
             ) : (
-              <><Upload className="h-5 w-5" /> Click or drop image</>
+              <><Upload className="h-4 w-4" /> Click or drop image</>
             )}
           </button>
         )}
