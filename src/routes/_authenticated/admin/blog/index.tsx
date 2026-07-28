@@ -55,6 +55,15 @@ function BlogListPage() {
           + New Post
         </Link>
       </div>
+      {actionError && (
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <span>{actionError.message}</span>
+          <div className="flex gap-2">
+            <button onClick={actionError.retry} className="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700">Retry</button>
+            <button onClick={() => setActionError(null)} className="rounded-full border border-red-300 px-3 py-1 text-xs font-semibold hover:bg-red-100">Dismiss</button>
+          </div>
+        </div>
+      )}
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
         <table className="w-full text-sm">
           <thead className="bg-slate-50 text-left">
@@ -80,7 +89,7 @@ function BlogListPage() {
                   {p.status === "published" && (
                     <Link to="/blog/$slug" params={{ slug: p.slug }} className="mr-3 text-sm text-slate-500 hover:underline">View</Link>
                   )}
-                  <button onClick={async () => { if (await confirm({ title: "Delete this post?", description: "The blog post will be permanently deleted and removed from your site.", confirmLabel: "Delete" })) { await del({ data: { id: p.id } }); qc.invalidateQueries({ queryKey: ["posts", "all"] }); } }}
+                  <button onClick={() => void confirmDelete(p.id)}
                     aria-label="Delete" title="Delete" className="inline-flex items-center text-red-600 hover:opacity-70">
                     <Trash2 size={16} />
                   </button>
