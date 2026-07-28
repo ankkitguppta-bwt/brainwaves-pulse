@@ -25,7 +25,7 @@ import {
   Mail,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
-import heroVideo from "@/assets/video/hero-loop.mp4.asset.json";
+import heroVideo from "@/assets/video/final_landing_page_loop.mp4.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { BrainwaveBands } from "@/components/site/BrainwaveBands";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -116,7 +116,7 @@ function Hero() {
         <p
           data-aos="fade-up"
           data-aos-delay="250"
-          className="mx-auto mt-4 max-w-3xl font-display text-sm font-medium leading-relaxed text-white/75 sm:text-base"
+          className="mx-auto mt-4 max-w-3xl font-display text-sm font-medium leading-relaxed text-white sm:text-base"
         >
           Move past qualitative <span className="font-accent font-semibold text-white">guesswork</span>. Our 14 precise cognitive parameters instantly help to figure out your brain waves data into a quantified performance blueprint. An evidence-based platform to assess, <span className="font-accent font-semibold text-white">track</span>, and improve focus, performance, and well-being—for individuals and organizations alike.
         </p>
@@ -694,7 +694,7 @@ function Newsletter() {
           <h2 className="mt-6 font-display text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
             Stay Ahead of the Curve
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white sm:text-base">
             Get the latest neurofeedback insights, product updates, and practitioner resources delivered straight to your inbox.
           </p>
 
