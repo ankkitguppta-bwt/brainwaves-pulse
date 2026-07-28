@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Pencil, Trash2 } from "lucide-react";
 import { listAllPosts, deletePost } from "@/lib/data/admin.functions";
+import { TableSkeleton } from "@/components/admin/AdminSkeleton";
+
 
 export const Route = createFileRoute("/_authenticated/admin/blog/")({
   head: () => ({ meta: [{ title: "Blog — Admin" }, { name: "robots", content: "noindex" }] }),
