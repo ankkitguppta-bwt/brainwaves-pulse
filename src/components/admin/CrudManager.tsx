@@ -5,6 +5,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { TableSkeleton } from "@/components/admin/AdminSkeleton";
 import { useConfirm } from "@/components/admin/ConfirmDialog";
+import { toast } from "sonner";
 
 
 type FieldType = "text" | "textarea" | "url" | "number" | "select" | "checkbox" | "date" | "image";
