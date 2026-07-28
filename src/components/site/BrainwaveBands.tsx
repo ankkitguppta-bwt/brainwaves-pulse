@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
-import { Activity, ChevronRight, X } from "lucide-react";
+import { Activity, ChevronRight, Eye, EyeOff, X } from "lucide-react";
 
 import { BANDS, type BandContent, type BandId } from "@/components/site/brainwave-content";
 import alphaReport from "@/assets/reports/alpha-report.png.asset.json";
