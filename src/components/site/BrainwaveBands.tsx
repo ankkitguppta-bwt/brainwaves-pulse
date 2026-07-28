@@ -471,6 +471,20 @@ export function BrainwaveBands() {
   const current = BANDS.find((b) => b.id === active) ?? BANDS[0];
   const rest = BANDS.filter((b) => b.id !== current.id);
 
+  const switchTo = (id: BandId | null) => {
+    const doc = document as Document & {
+      startViewTransition?: (cb: () => void) => { finished: Promise<void> };
+    };
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    if (!doc.startViewTransition || reduce) {
+      setActive(id);
+      return;
+    }
+    doc.startViewTransition(() => {
+      flushSync(() => setActive(id));
+    });
+  };
+
   if (!active) {
     return (
       <div ref={sectionRef} className="relative isolate">
@@ -481,7 +495,8 @@ export function BrainwaveBands() {
               type="button"
               data-aos="fade-up"
               data-aos-delay={i * 80}
-              onClick={() => setActive(b.id)}
+              style={{ viewTransitionName: `band-${b.id}` }}
+              onClick={() => switchTo(b.id)}
               className="group flex h-full flex-col rounded-2xl border border-navy/10 bg-white p-5 text-left transition-colors duration-300 hover:border-teal/50"
             >
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy text-white">
@@ -502,6 +517,7 @@ export function BrainwaveBands() {
       </div>
     );
   }
+
 
   return (
     <div ref={sectionRef} className="relative isolate">
