@@ -1,25 +1,40 @@
-## 1. Hero section
-- Register the uploaded `final_landing_page_loop.mp4` as a Lovable asset and point the hero `<video>` at it (replacing `hero-loop.mp4`).
-- Change the sub-sub heading from `text-white/75` to full `text-white` (keep the accent spans as-is).
+# About Us section rebuild (from ABOUT_US.docx)
 
-## 2. Global background
-- Set the base `--background` token in `src/styles.css` to `#f0f0f0` (oklch equivalent) and replace the hardcoded `bg-white` section classes on the home page and shared sections with `bg-background` so the whole site reads as light grey. Cards/panels keep white surfaces for contrast.
+## 0. Pre-existing build fix
+`src/routes/blog.$slug.tsx` currently fails typecheck: `Route.useLoaderData()` is typed as possibly undefined (10 errors). Add an early `if (!post) return null;` guard in `PostPage` before the hooks/markup use it. Unrelated to the About work, but blocks the build.
 
-## 3. "A Four-Stage Neuro-Wellness Journey" one-by-one reveal
-- Re-verify the AOS `step-reveal` wiring (custom animation names need explicit `data-aos-duration`/`aos-animate` handling). Replace it with a reliable in-view stagger: an IntersectionObserver on the section that adds `animate-step-in` with per-card `animationDelay` (160ms increments), so cards appear one after another on both the mobile grid and desktop row. The existing fade/entry styling stays.
 
-## 4. Footer redesign (per reference image)
-Rebuild `src/components/site/SiteFooter.tsx` on the dark navy background as:
-- Top band: "Stop Guessing, Start Measuring" + subscribe line, email input + teal "Subscribe Now" button (moves the newsletter into the footer; the separate newsletter section on the home page is removed to avoid duplication).
-- Divider, then 3 columns:
-  - Brand: "BrainWaves Tech" wordmark, the descriptive paragraph, circular social icons.
-  - LEGAL & COMPLIANCE: Disclaimer, Terms & Conditions, Privacy Policy, Refund & Return Policy, Shipping Policy.
-  - CORPORATE CONTACT: Office address (A-268, New Minal Residency, Near Gate No. 4, In Front of D-Mart, Ayodhya Bypass Road, Bhopal, M.P. - 462023), Inquiries: contact@brainwavestech.com, Contact: +91 98930 64372.
-- Keep the existing copyright strip.
+Three separate pages, all copy taken verbatim from the document.
 
-## 5. Video testimonials → horizontal carousel
-- Replace the vertical multi-column marquee with a single horizontal auto-scrolling track (left-moving marquee, duplicated list for seamless loop), pausing on hover/touch, with the existing edge fade mask applied horizontally. Cards keep the current 4:5 poster style and open the same popup modal on click.
+## 1. `/about` — Our Mission
+- Hero banner with the quote: "Transformating Mental Healthcare: Where Advanced Neuroscience Meets Human Potential" plus the intro paragraph on eliminating guesswork.
+- Three numbered story blocks:
+  1. The Origin — The Blueprint (2013, NSDC mentoring) and The Realization (patented neurofeedback + customised soundtrack).
+  2. The Scalable B2B Mandate — The Transition (12,000+ served, The Brain Seeder limits) and The Mission Scale (B2B framework).
+  3. The 3-Year Strategic Horizon — Targeted Reach and Our Goal (1,000+ practitioners, 500+ enterprise ecosystems).
+- Key Impact callout box with the Dr. Gupta quote ("What people say can be influenced by perception…").
+- Footer CTA band: "Start Your Neurofeedback Journey Today" + Book Demo Now / Become a Practitioner buttons.
 
-### Technical notes
-- Files: `src/routes/index.tsx`, `src/components/site/SiteFooter.tsx`, `src/styles.css`, new `src/assets/video/*.asset.json`.
-- Legal pages don't exist yet; footer legal links will point to placeholder anchors unless you want those routes created.
+## 2. `/team` — Meet the Team (new route)
+- Title: "Pioneered by Leading Mental Health Professionals. Backed by Decades of Global Innovation" + intro paragraph.
+- Leadership Team cards (photo or initials, name, designation, credentials, professional profile): Dr. Ankit Gupta, Mrs. Nitya Gupta, Swapnil Prabhat, Mr. Vikas Patel.
+- Board of Advisors cards (advisory role, credentials, advisory scope): Francesco Garripoli, Dr. Paras Kaul, Amruta Singhwekar.
+- Key Impact callout box ("Our strength lies in bridging neuroscience…").
+- Same footer CTA band.
+- Team data comes from the database so it stays editable in the admin panel. A migration replaces the current roster with exactly these 7 people (correct categories, designations, full bios, sort order). Existing photos for Dr. Ankit Gupta, Nitya Gupta, Dr. Paras Kaul and Amruta Singhwekar are reused; Swapnil Prabhat, Mr. Vikas Patel and Francesco Garripoli render styled initials avatars until photos are uploaded via the admin panel.
+- Navbar "Meet the Team" points to `/team` (currently it duplicates `/about`).
+
+## 3. `/research` — Scientific Research (replaces the placeholder)
+- Title: "Grounded in Data. Backed by 120,000+ Neural Data Points." + intro paragraph.
+- Section 1: Massive Data Architecture & Algorithmic Benchmarking — The Scale, The Accuracy (>92%), Zero Human Bias, shown as three stat/feature cards.
+- Section 2: Comprehensive 15-Parameter Neural Mapping — 5 frequency bands (Delta, Theta, Alpha, Beta, Gamma with their descriptions) plus the 10 proprietary metric indicators as chips.
+- Section 3: Patented BCI Signal Technology & Global IP Rights — U.S. patented engine, exclusive regional rights, safe receiver architecture.
+- Published Research Papers: three cards for BWT_Research_01/02/03 showing document title, authors, category and abstract. No download buttons (PDFs not supplied yet).
+- Same footer CTA band.
+
+## Technical notes
+- New files: `src/routes/team.tsx`, `src/components/site/JourneyCta.tsx` (shared footer CTA band), `src/components/site/ImpactCallout.tsx`.
+- Edited: `src/routes/about.tsx` (mission content, team markup removed), `src/routes/research.tsx` (full page replacing `PlaceholderPage`), `src/components/site/SiteNavbar.tsx` (Meet the Team → `/team`).
+- One migration on the `people` table: delete rows not in the doc, upsert the 7 doc entries with full descriptions. No schema/RLS changes.
+- Each route gets its own `head()` with unique title, description, og:title, og:description.
+- Styling reuses existing tokens (navy/teal/orange, `glass-card`, `font-display`) and the AOS fade animations already used elsewhere, so the new pages match the rest of the site.
