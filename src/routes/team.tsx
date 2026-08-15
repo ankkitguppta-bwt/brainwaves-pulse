@@ -74,7 +74,7 @@ function splitBio(description: string | null) {
 }
 
 function PersonCard({ p, kind }: { p: Person; kind: "leadership" | "advisor" }) {
-  const img = p.image_url || PHOTO_BY_NAME[p.name] || null;
+  const img = PHOTO_BY_NAME[p.name] || p.image_url || null;
   const { credentials, profile } = splitBio(p.description);
   return (
     <article
