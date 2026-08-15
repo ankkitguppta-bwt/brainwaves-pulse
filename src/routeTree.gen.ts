@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as TechnologyRouteImport } from './routes/technology'
+import { Route as TeamRouteImport } from './routes/team'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as PractitionerRouteImport } from './routes/practitioner'
@@ -52,6 +53,11 @@ const TestimonialsRoute = TestimonialsRouteImport.update({
 const TechnologyRoute = TechnologyRouteImport.update({
   id: '/technology',
   path: '/technology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StoriesRoute = StoriesRouteImport.update({
@@ -230,6 +236,7 @@ export interface FileRoutesByFullPath {
   '/practitioner': typeof PractitionerRoute
   '/research': typeof ResearchRoute
   '/stories': typeof StoriesRoute
+  '/team': typeof TeamRoute
   '/technology': typeof TechnologyRoute
   '/testimonials': typeof TestimonialsRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -265,6 +272,7 @@ export interface FileRoutesByTo {
   '/practitioner': typeof PractitionerRoute
   '/research': typeof ResearchRoute
   '/stories': typeof StoriesRoute
+  '/team': typeof TeamRoute
   '/technology': typeof TechnologyRoute
   '/testimonials': typeof TestimonialsRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -302,6 +310,7 @@ export interface FileRoutesById {
   '/practitioner': typeof PractitionerRoute
   '/research': typeof ResearchRoute
   '/stories': typeof StoriesRoute
+  '/team': typeof TeamRoute
   '/technology': typeof TechnologyRoute
   '/testimonials': typeof TestimonialsRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -339,6 +348,7 @@ export interface FileRouteTypes {
     | '/practitioner'
     | '/research'
     | '/stories'
+    | '/team'
     | '/technology'
     | '/testimonials'
     | '/blog/$slug'
@@ -374,6 +384,7 @@ export interface FileRouteTypes {
     | '/practitioner'
     | '/research'
     | '/stories'
+    | '/team'
     | '/technology'
     | '/testimonials'
     | '/blog/$slug'
@@ -410,6 +421,7 @@ export interface FileRouteTypes {
     | '/practitioner'
     | '/research'
     | '/stories'
+    | '/team'
     | '/technology'
     | '/testimonials'
     | '/blog/$slug'
@@ -447,6 +459,7 @@ export interface RootRouteChildren {
   PractitionerRoute: typeof PractitionerRoute
   ResearchRoute: typeof ResearchRoute
   StoriesRoute: typeof StoriesRoute
+  TeamRoute: typeof TeamRoute
   TechnologyRoute: typeof TechnologyRoute
   TestimonialsRoute: typeof TestimonialsRoute
   ProductsAccessoriesRoute: typeof ProductsAccessoriesRoute
@@ -478,6 +491,13 @@ declare module '@tanstack/react-router' {
       path: '/technology'
       fullPath: '/technology'
       preLoaderRoute: typeof TechnologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/stories': {
@@ -753,6 +773,7 @@ const rootRouteChildren: RootRouteChildren = {
   PractitionerRoute: PractitionerRoute,
   ResearchRoute: ResearchRoute,
   StoriesRoute: StoriesRoute,
+  TeamRoute: TeamRoute,
   TechnologyRoute: TechnologyRoute,
   TestimonialsRoute: TestimonialsRoute,
   ProductsAccessoriesRoute: ProductsAccessoriesRoute,

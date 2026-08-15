@@ -50,8 +50,11 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function PostPage() {
-  const post = Route.useLoaderData();
+  const post = Route.useLoaderData() as any;
+  if (!post) return null;
+
   // Client-side sanitize just to be defensive (server sanitize on save would be even stricter).
+
   const q = useQuery({
     queryKey: ["post", "sanitized", post.id],
     queryFn: () => sanitize(post.content_html || ""),
