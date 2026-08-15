@@ -36,10 +36,13 @@ export const Route = createFileRoute("/team")({
 });
 
 const PHOTO_BY_NAME: Record<string, string> = {
-  "Dr. Ankit Gupta": founder,
-  "Mrs. Nitya Gupta": teamNitya,
-  "Dr. Paras Kaul": teamParas,
-  "Amruta Singhwekar": teamAmruta,
+  "Dr. Ankit Gupta": ankitAsset.url,
+  "Mrs. Nitya Gupta": nityaAsset.url,
+  "Swapnil Prabhat": swapnilAsset.url,
+  "Mr. Vikas Patel": vikasAsset.url,
+  "Francesco Garripoli": francescoAsset.url,
+  "Dr. Paras Kaul": parasAsset.url,
+  "Amruta Singhwekar": amrutaAsset.url,
 };
 
 type Person = {
