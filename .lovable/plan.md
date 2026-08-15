@@ -1,5 +1,9 @@
 # About Us section rebuild (from ABOUT_US.docx)
 
+## 0. Pre-existing build fix
+`src/routes/blog.$slug.tsx` currently fails typecheck: `Route.useLoaderData()` is typed as possibly undefined (10 errors). Add an early `if (!post) return null;` guard in `PostPage` before the hooks/markup use it. Unrelated to the About work, but blocks the build.
+
+
 Three separate pages, all copy taken verbatim from the document.
 
 ## 1. `/about` — Our Mission
