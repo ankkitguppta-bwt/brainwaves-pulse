@@ -4,10 +4,13 @@ import { PageHero } from "@/components/site/PageHero";
 import { ImpactCallout } from "@/components/site/ImpactCallout";
 import { JourneyCta } from "@/components/site/JourneyCta";
 import { supabase } from "@/integrations/supabase/client";
-import founder from "@/assets/docx/founder-ankit.jpg";
-import teamParas from "@/assets/docx/team-paras.jpeg";
-import teamNitya from "@/assets/docx/team-nitya.jpeg";
-import teamAmruta from "@/assets/docx/team-amruta.jpg";
+import ankitAsset from "@/assets/team/ankit.png.asset.json";
+import nityaAsset from "@/assets/team/nitya.png.asset.json";
+import swapnilAsset from "@/assets/team/swapnil.png.asset.json";
+import vikasAsset from "@/assets/team/vikas.png.asset.json";
+import francescoAsset from "@/assets/team/francesco.png.asset.json";
+import parasAsset from "@/assets/team/paras.png.asset.json";
+import amrutaAsset from "@/assets/team/amruta.png.asset.json";
 
 export const Route = createFileRoute("/team")({
   head: () => ({
