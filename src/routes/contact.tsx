@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
-import { Phone, Mail, MapPin } from "lucide-react";
-import whatsappIcon from "@/assets/whatsapp.svg.asset.json";
+import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -70,7 +69,7 @@ function ContactPage() {
               className="glass-card flex items-center gap-3 rounded-2xl p-4 transition hover:shadow-lg"
             >
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#25D366]/15">
-                <img src={whatsappIcon.url} alt="" className="h-5 w-5" />
+                <MessageCircle aria-hidden="true" className="h-5 w-5 fill-[#25D366] text-[#128C3E]" strokeWidth={1.8} />
               </div>
               <div className="min-w-0">
                 <p className="font-semibold text-navy">WhatsApp</p>

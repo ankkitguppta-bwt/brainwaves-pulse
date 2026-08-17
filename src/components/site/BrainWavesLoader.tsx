@@ -1,5 +1,5 @@
 import "./BrainWavesLoader.css";
-import logoAsset from "@/assets/brand/brainwaves-logo.png.asset.json";
+import logoAsset from "@/assets/brand/logo-light.png";
 
 interface BrainWavesLoaderProps {
   size?: number;
@@ -32,14 +32,14 @@ export default function BrainWavesLoader({
     >
       <div className="brainwaves-loader__logo">
         <img
-          src={logoAsset.url}
+          src={logoAsset}
           alt=""
           aria-hidden="true"
           className="brainwaves-loader__image brainwaves-loader__image--base"
         />
         <div className="brainwaves-loader__reveal">
           <img
-            src={logoAsset.url}
+            src={logoAsset}
             alt=""
             aria-hidden="true"
             className="brainwaves-loader__image"

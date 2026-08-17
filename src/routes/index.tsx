@@ -24,7 +24,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
-import heroVideo from "@/assets/video/final_landing_page_loop.mp4.asset.json";
+import heroImage from "@/assets/banners/hero-realistic.jpg";
 import { CountUp } from "@/components/site/CountUp";
 import { BrainwaveBands } from "@/components/site/BrainwaveBands";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -86,14 +86,10 @@ function HomePage() {
 function Hero() {
   return (
     <section className="relative -mt-16 flex min-h-[100svh] w-full items-center overflow-hidden bg-navy text-white">
-      <video
-        src={heroVideo.url}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        aria-hidden
+      <img
+        src={heroImage}
+        alt=""
+        aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover"
       />
       <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/50 to-navy/80" />
@@ -216,6 +212,7 @@ function EcosystemSection() {
         "Deploy Non-Invasive Dry Electrode Hardware.",
         "Establish Live, Zero-Delay Wireless Telemetry.",
         "Automated Sensor Grounding Verification.",
+        "Record Raw Brainwaves in 2 Minutes.",
       ],
     },
     {
@@ -232,9 +229,10 @@ function EcosystemSection() {
       key: "EXPLORE",
       dot: "#a855f7",
       points: [
-        "Isolate Hidden Operational Attrition Triggers.",
-        "Deep-Dive Into Historical Neuro-Trends.",
+        "Analyse Hidden Operational Attrition Triggers.",
+        "Deep-Dive into Historical Neuro-Trends.",
         "Scale Targeted Performance Plan Solutions.",
+        "Smart Solutions Personalised for Every Requirement.",
       ],
     },
   ];
@@ -467,12 +465,7 @@ function WhoBenefits() {
 type VideoT = { id: string; title: string; author: string; src: string; thumbnail?: string | null };
 import { useQuery as useVideoQuery } from "@tanstack/react-query";
 import { supabase as supabaseVT } from "@/integrations/supabase/client";
-const FALLBACK_VIDEOS: VideoT[] = [
-  { id: "f1", title: "Focus training results", author: "Dr. A. Sharma", src: heroVideo.url },
-  { id: "f2", title: "Classroom neurofeedback", author: "Priya, Educator", src: heroVideo.url },
-  { id: "f3", title: "Clinic transformation", author: "Dr. R. Menon", src: heroVideo.url },
-];
-
+import { clientTestimonialVideos } from "@/lib/client-testimonials";
 function VideoTestimonials() {
   const [active, setActive] = useState<VideoT | null>(null);
   const q = useVideoQuery({
@@ -494,7 +487,7 @@ function VideoTestimonials() {
     src: v.video_url,
     thumbnail: v.thumbnail_url,
   }));
-  const items = dbItems.length > 0 ? dbItems : FALLBACK_VIDEOS;
+  const items = dbItems.length > 0 ? dbItems : clientTestimonialVideos.map((v) => ({ id: v.id, title: v.title, author: v.author, src: v.video_url }));
   const [paused, setPaused] = useState(false);
 
   const Card = ({ v }: { v: VideoT }) => (
@@ -580,33 +573,39 @@ function VideoTestimonials() {
         </div>
       </div>
 
-      <div
-        data-aos="fade-up"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onTouchStart={() => setPaused((p) => !p)}
-        className="marquee-mask mt-10 overflow-hidden"
-      >
+      {items.length > 0 ? (
         <div
-          className={`flex w-max gap-5 pl-4 will-change-transform marquee-horizontal ${paused ? "marquee-paused" : ""} lg:pl-8`}
-          style={{ ["--marquee-duration" as any]: `${Math.max(30, items.length * 10)}s` }}
+          data-aos="fade-up"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onTouchStart={() => setPaused((p) => !p)}
+          className="marquee-mask mt-10 overflow-hidden"
         >
-          {loop.map((v, i) => (
-            <Card key={`${v.id}-${i}`} v={v} />
-          ))}
+          <div
+            className={`flex w-max gap-5 pl-4 will-change-transform marquee-horizontal ${paused ? "marquee-paused" : ""} lg:pl-8`}
+            style={{ ["--marquee-duration" as any]: `${Math.max(30, items.length * 10)}s` }}
+          >
+            {loop.map((v, i) => (
+              <Card key={`${v.id}-${i}`} v={v} />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <p className="mx-auto mt-8 max-w-7xl px-4 text-sm text-muted-foreground lg:px-8">
+          Video testimonials will be available soon.
+        </p>
+      )}
 
       <div className="mx-auto max-w-7xl px-4 lg:px-8"></div>
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
-        <DialogContent className="max-w-3xl overflow-hidden p-0">
+        <DialogContent className="max-h-[90svh] w-[calc(100%-1rem)] max-w-5xl overflow-hidden p-0 sm:w-[calc(100%-2rem)]">
           <DialogHeader className="px-6 pt-5">
             <DialogTitle>{active?.title}</DialogTitle>
             <DialogDescription>{active?.author}</DialogDescription>
           </DialogHeader>
           <div className="aspect-video w-full bg-black">
-            {active && <video key={active.id} src={active.src} controls autoPlay className="h-full w-full" />}
+            {active && <video key={active.id} src={active.src} controls autoPlay playsInline preload="metadata" className="max-h-[78svh] h-full w-full object-contain" />}
           </div>
         </DialogContent>
       </Dialog>

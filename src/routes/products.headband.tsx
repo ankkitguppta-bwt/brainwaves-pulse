@@ -1,23 +1,29 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { PlaceholderPage } from "@/components/site/PlaceholderPage";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { BatteryCharging, Bluetooth, Clock3, ShieldCheck } from "lucide-react";
+import { PageHero } from "@/components/site/PageHero";
+import headset from "@/assets/client/hardware/bwt-headset.png";
+import technicalDataset from "@/assets/client/hardware/technical-dataset.pdf";
+import licence1 from "@/assets/client/licences/HARDWARE LICENSE 1.png";
+import licence2 from "@/assets/client/licences/HARDWARE LICENSE 2.png";
+import licence3 from "@/assets/client/licences/HARDWARE LICENSE 3.png";
+import licence4 from "@/assets/client/licences/HARDWARE LICENSE 4.png";
 
 export const Route = createFileRoute("/products/headband")({
-  head: () => ({
-    meta: [
-      { title: "Smart EEG Headband — BrainWaves Tech" },
-      { name: "description", content: "Dry-sensor EEG headband engineered for real-time brainwave monitoring and neurofeedback." },
-    ],
-  }),
-  component: () => (
-    <PlaceholderPage
-      eyebrow="EEG Headband"
-      title="Smart EEG Headband for Live Brainwave Capture"
-      subtitle="Multi-angle renders, product tour and specs land here in Phase 9."
-      sections={[
-        { title: "Dry Sensors", body: "Clinical-grade signal quality without gel — comfortable for long sessions." },
-        { title: "Wireless Sync", body: "Low-latency Bluetooth streaming to the BrainWaves software." },
-        { title: "Long Battery", body: "Full-day sessions on a single charge." },
-      ]}
-    />
-  ),
+  head: () => ({ meta: [{ title: "BWT-2508 Neurofeedback Hardware | BrainWaves Tech" }, { name: "description", content: "Dry-electrode neurofeedback hardware for real-time brainwave telemetry." }] }),
+  component: HeadbandPage,
 });
+
+const features = [
+  ["Advanced Dry Sensor Array", "No Gels. No Cleanup. Instant Contact.", "Three high-conductivity dry electrodes along the FP1 axis capture clean signals without wet EEG caps or scalp preparation."],
+  ["Ultra-Low Latency Telemetry", "Powered by Bluetooth 5.2 Connectivity.", "Transmit raw neural feedback to the BWT platform through stable, encrypted Bluetooth 5.2 streaming."],
+  ["Intelligent Contact Quality Check", "Automated Impedance & Fit Verification.", "The hardware verifies grounding before recording and prompts instant realignment if a sensor loses contact."],
+  ["All-Day Endurance", "9-Hour Battery for High-Volume Sessions.", "A lightweight rechargeable battery supports back-to-back corporate, classroom, and clinical sessions."],
+];
+
+const specs = [["Model Designation", "BWT-2508"], ["Sensor Quantity", "3"], ["Sensor Technology", "Medical-Grade Dry Electrodes"], ["Anatomical Sensor Placement", "Fixed Position, FP1 Forehead Axis (Prefrontal Cortex)"], ["Setup Time", "2 minutes"], ["Wireless Protocol", "Bluetooth 5.2 Low Energy"], ["Power System", "Internal Rechargeable Battery"], ["Active Battery Runtime", "Up to 9 Hours"], ["Data Quality Rating", "High-Fidelity Signal-to-Noise Ratio"], ["Headband Design", "Ergonomic, Adjustable Fixed Position Strap"]];
+
+function HeadbandPage() { return <><PageHero eyebrow="BWT-2508 Hardware" title="BWT-2508: The Neurofeedback Hardware" sub="Engineered with dry-electrode sensor technology, the BWT-2508 captures raw electrical micro-voltages from the prefrontal cortex in real time, without conductive gels or messy preparation." />
+  <section className="bg-background py-16 lg:py-24"><div className="mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-2 lg:px-8"><img src={headset} alt="BWT-2508 neurofeedback headset" className="w-full rounded-3xl object-contain" /><div><div className="grid grid-cols-2 gap-3">{[[ShieldCheck,"3 Precision Sensors"],[Clock3,"2-Minute Brainwave Reading"],[BatteryCharging,"9 Hours Continuous Battery"],[Bluetooth,"Bluetooth 5.2 Wireless"]].map(([Icon,label]) => <div key={String(label)} className="rounded-2xl bg-white p-5 shadow-sm"><Icon className="h-5 w-5 text-teal" /><p className="mt-3 text-sm font-semibold text-navy">{String(label)}</p></div>)}</div><div className="mt-6 flex flex-wrap gap-3"><Link to="/contact" className="rounded-full bg-teal px-5 py-3 text-sm font-semibold text-navy">Request a Demo</Link><a href={technicalDataset} target="_blank" rel="noreferrer" className="rounded-full border border-navy/20 px-5 py-3 text-sm font-semibold text-navy">Download Technical Dataset</a></div></div></div></section>
+  <section className="bg-white py-16"><div className="mx-auto max-w-6xl px-4 lg:px-8"><h2 className="font-display text-3xl font-bold text-navy">Designed for Portability. Built for Biometric Accuracy.</h2><div className="mt-8 grid gap-5 md:grid-cols-2">{features.map(([title,headline,body]) => <article key={title} className="rounded-2xl border border-navy/10 p-6"><p className="text-xs font-bold uppercase tracking-wider text-teal">{title}</p><h3 className="mt-3 font-display text-xl font-bold text-navy">{headline}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p></article>)}</div></div></section>
+  <section className="bg-background py-16"><div className="mx-auto max-w-4xl px-4"><h2 className="font-display text-3xl font-bold text-navy">Technical Specifications</h2><div className="mt-6 overflow-hidden rounded-2xl border border-navy/10 bg-white"><table className="w-full text-left text-sm"><tbody>{specs.map(([label,value]) => <tr key={label} className="border-b border-navy/10 last:border-0"><th className="w-2/5 bg-navy/[.03] px-4 py-3 font-semibold text-navy">{label}</th><td className="px-4 py-3 text-muted-foreground">{value}</td></tr>)}</tbody></table></div></div></section>
+  <section className="bg-white py-16"><div className="mx-auto max-w-6xl px-4 lg:px-8"><div className="max-w-3xl"><p className="text-xs font-bold uppercase tracking-[0.18em] text-teal">Global certifications &amp; compliance</p><h2 className="mt-3 font-display text-3xl font-bold text-navy">Documented Standards for the BWT-2508</h2><p className="mt-3 text-sm leading-relaxed text-muted-foreground">Review the client-provided hardware licence and certification documents for the BWT-2508 system.</p></div><div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{[licence1,licence2,licence3,licence4].map((licence,index)=><a key={licence} href={licence} target="_blank" rel="noreferrer" className="group overflow-hidden rounded-2xl border border-navy/10 bg-background p-3 shadow-sm transition hover:-translate-y-1 hover:border-teal/50"><img src={licence} alt={`BWT-2508 hardware licence ${index+1}`} loading="lazy" className="aspect-[3/4] w-full object-cover"/><p className="mt-3 text-center text-xs font-semibold text-navy">View licence {index+1}</p></a>)}</div></div></section></> }

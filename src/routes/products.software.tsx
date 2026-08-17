@@ -1,23 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { PlaceholderPage } from "@/components/site/PlaceholderPage";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Activity, FileText, Gauge, History } from "lucide-react";
+import { PageHero } from "@/components/site/PageHero";
+import alphaReport from "@/assets/client/reports/Alpha.png";
 
-export const Route = createFileRoute("/products/software")({
-  head: () => ({
-    meta: [
-      { title: "Software Platform — BrainWaves Tech" },
-      { name: "description", content: "Live neurofeedback dashboard, session recording, brainwave analysis and cloud reporting." },
-    ],
-  }),
-  component: () => (
-    <PlaceholderPage
-      eyebrow="Software Platform"
-      title="Live Neurofeedback Dashboard & Analysis Suite"
-      subtitle="Animated product tour and game-based training screens land in Phase 9."
-      sections={[
-        { title: "Live Dashboard", body: "Real-time attention, calm and focus metrics with EEG waveform overlays." },
-        { title: "Game-based Training", body: "The dolphin training game and future titles for reward-based sessions." },
-        { title: "Cloud Reporting", body: "Session history, exports and shareable practitioner reports." },
-      ]}
-    />
-  ),
-});
+export const Route = createFileRoute("/products/software")({ head: () => ({ meta: [{ title: "BWT-1408 Neurofeedback Software | BrainWaves Tech" }] }), component: SoftwarePage });
+const modules = [[Activity,"Real-Time 3D Waveform Rendering","Monitor incoming signals at 0.5 Hz resolution with live visualisation across Alpha, Beta, Gamma, Delta, and Theta bands."],[Gauge,"The 14-Parameter Decoding Engine","Translate spectral interactions into clear, usable performance parameters without manual mathematical interpretation."],[FileText,"Automated PDF Report Generation","Create client-facing analytic reports that compare baseline signals to standard population ranges."],[History,"Cloud-Based Longitudinal Progress Tracking","Compare pre- and post-analysis outputs across 30, 60, and 90 days to document progress."]];
+const bands = ["Alpha (8–12 Hz): control over mind, thought balancing, positivity, and visionary thought.","Beta (12–38 Hz): active intellect, learning, grasping ability, and memory retention.","Gamma (38–42+ Hz): action, implementation, processing speed, and anxiety markers.","Delta (0.5–3 Hz): deep sleep quality, satisfaction, self-esteem, and physical rest.","Theta (3–8 Hz): emotion processing, overthinking, and creative ideation."];
+function SoftwarePage(){return <><PageHero eyebrow="BWT-1408 Software" title="BWT-1408: Patent-Backed Neurofeedback Software" sub="The BWT-1408 platform connects directly to neurofeedback hardware to capture, process, and decode raw brainwave frequencies into quantifiable mental-state parameters."/><section className="bg-background py-16"><div className="mx-auto max-w-6xl px-4"><div className="grid gap-4 sm:grid-cols-3">{["14 Quantifiable Metrics","2-Minute Scan & Graphical Output","92%+ Reading Accuracy"].map(x=><div key={x} className="rounded-2xl bg-white p-6 text-center font-display text-lg font-bold text-navy">{x}</div>)}</div><Link to="/contact" className="mt-7 inline-flex rounded-full bg-teal px-5 py-3 text-sm font-semibold text-navy">Request Live Demo</Link></div></section><section className="bg-white py-16"><div className="mx-auto max-w-6xl px-4"><h2 className="font-display text-3xl font-bold text-navy">From Raw Micro-Volts to Actionable Cognitive Baselines.</h2><div className="mt-8 grid gap-5 md:grid-cols-2">{modules.map(([Icon,title,body])=><article key={String(title)} className="rounded-2xl border border-navy/10 p-6"><Icon className="h-6 w-6 text-teal"/><h3 className="mt-4 font-display text-xl font-bold text-navy">{String(title)}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{String(body)}</p></article>)}</div></div></section><section className="bg-background py-16"><div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-2"><div><h2 className="font-display text-3xl font-bold text-navy">The 15 Decoded Parameters</h2><h3 className="mt-6 font-semibold text-navy">The 5 Fundamental Brain Waves</h3><ul className="mt-4 space-y-3">{bands.map(x=><li key={x} className="rounded-xl bg-white p-4 text-sm leading-relaxed text-muted-foreground">{x}</li>)}</ul></div><div><img src={alphaReport} alt="Sample Alpha brainwave report" className="w-full rounded-2xl border border-navy/10 bg-white"/><a href={alphaReport} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-full border border-navy/20 px-5 py-3 text-sm font-semibold text-navy">View Sample Report</a></div></div></section><section className="bg-navy py-16 text-white"><div className="mx-auto max-w-4xl px-4 text-center"><h2 className="font-display text-3xl font-bold">Precision Time-Syncing Protected under Patented Architecture.</h2><p className="mt-4 leading-relaxed text-white/75">BWT-1408 time-syncs brainwave recordings to visual and audio stimuli, helping practitioners isolate causal triggers for anxiety, focus breaks, and emotional responses.</p></div></section></>}

@@ -4,13 +4,13 @@ import { PageHero } from "@/components/site/PageHero";
 import { ImpactCallout } from "@/components/site/ImpactCallout";
 import { JourneyCta } from "@/components/site/JourneyCta";
 import { supabase } from "@/integrations/supabase/client";
-import ankitAsset from "@/assets/team/ankit.png.asset.json";
-import nityaAsset from "@/assets/team/nitya.png.asset.json";
-import swapnilAsset from "@/assets/team/swapnil.png.asset.json";
-import vikasAsset from "@/assets/team/vikas.png.asset.json";
-import francescoAsset from "@/assets/team/francesco.png.asset.json";
-import parasAsset from "@/assets/team/paras.png.asset.json";
-import amrutaAsset from "@/assets/team/amruta.png.asset.json";
+import ankitAsset from "@/assets/client/team/ANKIT.png";
+import nityaAsset from "@/assets/client/team/NITYA.png";
+import swapnilAsset from "@/assets/client/team/SWAPNIL.png";
+import vikasAsset from "@/assets/client/team/VIKAS.png";
+import francescoAsset from "@/assets/client/team/FRANCESCO.png";
+import parasAsset from "@/assets/client/team/PARAS.png";
+import amrutaAsset from "@/assets/client/team/AMRUTA.png";
 
 export const Route = createFileRoute("/team")({
   head: () => ({
@@ -36,13 +36,13 @@ export const Route = createFileRoute("/team")({
 });
 
 const PHOTO_BY_NAME: Record<string, string> = {
-  "Dr. Ankit Gupta": ankitAsset.url,
-  "Mrs. Nitya Gupta": nityaAsset.url,
-  "Swapnil Prabhat": swapnilAsset.url,
-  "Mr. Vikas Patel": vikasAsset.url,
-  "Francesco Garripoli": francescoAsset.url,
-  "Dr. Paras Kaul": parasAsset.url,
-  "Amruta Singhwekar": amrutaAsset.url,
+  "Dr. Ankit Gupta": ankitAsset,
+  "Mrs. Nitya Gupta": nityaAsset,
+  "Swapnil Prabhat": swapnilAsset,
+  "Mr. Vikas Patel": vikasAsset,
+  "Francesco Garripoli": francescoAsset,
+  "Dr. Paras Kaul": parasAsset,
+  "Amruta Singhwekar": amrutaAsset,
 };
 
 type Person = {

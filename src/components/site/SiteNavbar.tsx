@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
-import brandLogo from "@/assets/brand/brainwaves-logo.png.asset.json";
+import brandLogo from "@/assets/brand/logo-light.png";
 
 type NavItem =
   | { label: string; to: string }
@@ -43,7 +43,7 @@ const nav: NavItem[] = [
 function Wordmark(_props: { solid?: boolean }) {
   return (
     <img
-      src={brandLogo.url}
+      src={brandLogo}
       alt="BrainWaves Tech"
       className="h-9 w-auto sm:h-10 lg:h-11"
     />

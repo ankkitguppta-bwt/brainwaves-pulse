@@ -1,29 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { PlaceholderPage } from "@/components/site/PlaceholderPage";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Award, BookOpen, CircleCheck, HeartHandshake } from "lucide-react";
+import { PageHero } from "@/components/site/PageHero";
 
-export const Route = createFileRoute("/practitioner")({
-  head: () => ({
-    meta: [
-      { title: "Become a Certified Neurofeedback Practitioner — BrainWaves Tech" },
-      { name: "description", content: "Hands-on training, certification and ongoing support to practise neurofeedback professionally in India." },
-      { property: "og:title", content: "Become a Certified Neurofeedback Practitioner" },
-      { property: "og:description", content: "Training, certification and 3 months of handholding support." },
-    ],
-  }),
-  component: () => (
-    <PlaceholderPage
-      eyebrow="Become a Practitioner"
-      title="Certified Neurofeedback Practitioner Programme"
-      subtitle="Training, certification and the six-pillar ecosystem — full page ships in Phase 9."
-      ctaLabel="Apply for Training"
-      sections={[
-        { title: "7 Days Intensive Training", body: "Theory, hands-on sessions, report interpretation." },
-        { title: "Hardware + Software Package", body: "Everything you need to begin practising immediately." },
-        { title: "3 Months Handholding", body: "Live guidance from senior practitioners." },
-        { title: "Certification", body: "Recognised Neurofeedback Practitioner certificate." },
-        { title: "Ecosystem Access", body: "Continued access to updates and community." },
-        { title: "Ongoing Support", body: "Technical and clinical support pathways." },
-      ]}
-    />
-  ),
-});
+export const Route = createFileRoute("/practitioner")({ head: () => ({ meta: [{ title: "Accredited Neurofeedback Practitioner Certification | BrainWaves Tech" }, { name: "description", content: "A seven-day certification programme for tech-enabled clinical and wellness practices." }] }), component: PractitionerPage });
+
+const benefits = [["92%+ Diagnostic Accuracy Without Questionnaires", "Capture real-time prefrontal cortex micro-voltages without survey bias or patient hesitation."], ["2-Minute Scan vs. 50-Minute Interviews", "Reduce initial evaluation time while providing visual evidence of a neural baseline."], ["15 Quantified Mind Parameters", "Deliver reports across the five core wave bands and ten performance indicators."], ["Turn-Key Revenue Expansion", "Add diagnostic scans, custom 60-day sound therapy protocols, and post-analysis tracking."]];
+const curriculum = [["Fundamentals of EEG & Neuro-Frequency Spectrum", "Understand Delta, Theta, Alpha, Beta, and Gamma bands and their behavioural correlations."], ["Hardware Operation & Sensor Calibration", "Learn FP1 placement, dry-electrode conductivity, grounding, and troubleshooting."], ["Interpreting the Decoding Engine", "Read live waveform spirals and qualitative performance gauges."], ["Clinical Case Study Analysis", "Work through corporate burnout, student anxiety, fatigue, and related participant profiles."], ["Generating Brainwave Analysis Reports", "Turn a baseline into clear, empowering client communication."], ["Practice Growth & Retention", "Package services, set pricing, and create repeatable progress-tracking programmes."]];
+
+function PractitionerPage() { return <><PageHero eyebrow="NFP Certification" title="Build a Modern, Tech-Enabled Clinical Practice Powered by Patented BCI Analytics" sub="Gain the complete ecosystem: patented software, medical-grade BCI hardware, and clinical certification to identify root-cause mental stress in under two minutes." />
+  <section className="bg-background py-16"><div className="mx-auto max-w-6xl px-4"><h2 className="font-display text-3xl font-bold text-navy">Transform Your Practice. Eliminate Guesswork. Scale Your Revenue.</h2><p className="mt-4 max-w-3xl leading-relaxed text-muted-foreground">Traditional mental-health intake can rely on subjective questionnaires, long diagnostic sittings, and patient trust barriers. Certified partners gain a practical, data-backed clinical workflow.</p><div className="mt-8 grid gap-5 md:grid-cols-2">{benefits.map(([title,body])=><article key={title} className="rounded-2xl bg-white p-6"><CircleCheck className="h-6 w-6 text-teal"/><h3 className="mt-4 font-display text-xl font-bold text-navy">{title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p></article>)}</div></div></section>
+  <section className="bg-white py-16"><div className="mx-auto max-w-6xl px-4"><h2 className="font-display text-3xl font-bold text-navy">Accredited Neurofeedback Practitioner Certification Programme</h2><p className="mt-4 max-w-3xl text-muted-foreground">Elevate your clinical practice, therapy practice, or wellness centre with our intensive seven-day certification programme.</p><div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{[[BookOpen,"7-Day Interactive Online Training"],[Award,"50+ Real-World Case Study Reviews"],[HeartHandshake,"2 Months Dedicated Hand-Holding Support"],[CircleCheck,"NABS Recognised NFP Certification"]].map(([Icon,label])=><div key={String(label)} className="rounded-2xl bg-secondary p-5"><Icon className="h-6 w-6 text-teal"/><p className="mt-3 font-semibold text-navy">{String(label)}</p></div>)}</div><h2 className="mt-16 font-display text-3xl font-bold text-navy">The 7-Day Curriculum Breakdown</h2><div className="mt-8 grid gap-4 md:grid-cols-2">{curriculum.map(([title,body],i)=><article key={title} className="rounded-2xl border border-navy/10 p-5"><p className="text-xs font-bold text-teal">MODULE {i+1}</p><h3 className="mt-2 font-semibold text-navy">{title}</h3><p className="mt-2 text-sm text-muted-foreground">{body}</p></article>)}</div></div></section>
+  <section className="bg-navy py-16 text-white"><div className="mx-auto max-w-4xl px-4 text-center"><h2 className="font-display text-3xl font-bold">Take the First Step Toward Becoming a Certified Practitioner.</h2><p className="mx-auto mt-4 max-w-2xl text-white/75">Join certified professionals using BrainWaves Tech to transform how mental health is measured and supported.</p><div className="mt-7 flex justify-center gap-3"><Link to="/contact" className="rounded-full bg-teal px-5 py-3 text-sm font-semibold text-navy">Become a Certified Practitioner</Link><Link to="/contact" className="rounded-full border border-white/30 px-5 py-3 text-sm font-semibold">Schedule a Call</Link></div></div></section></> }

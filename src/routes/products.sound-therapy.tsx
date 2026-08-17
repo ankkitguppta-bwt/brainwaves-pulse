@@ -1,22 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { PlaceholderPage } from "@/components/site/PlaceholderPage";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { CheckCircle2 } from "lucide-react";
+import { PageHero } from "@/components/site/PageHero";
 
-export const Route = createFileRoute("/products/sound-therapy")({
-  head: () => ({
-    meta: [
-      { title: "Customized Sound Therapy — BrainWaves Tech" },
-      { name: "description", content: "Personalised sound therapy tuned to your brainwave pattern for focus, calm and sleep." },
-    ],
-  }),
-  component: () => (
-    <PlaceholderPage
-      eyebrow="Sound Therapy"
-      title="Customized Sound Therapy tuned to your Brainwave Pattern"
-      sections={[
-        { title: "Focus Frequencies", body: "Beta-range acoustic modulation for attention and study focus." },
-        { title: "Calm & Sleep", body: "Alpha / theta / delta programmes for relaxation and restorative sleep." },
-        { title: "Meditation", body: "Programmes designed to support deeper meditation states." },
-      ]}
-    />
-  ),
-});
+export const Route = createFileRoute("/products/sound-therapy")({ head: () => ({ meta: [{ title: "Customised Sound Therapy | BrainWaves Tech" }] }), component: SoundTherapyPage });
+
+const pillars = [["The Hearing Dominance", "Sound is processed and acted on by the brain in milliseconds, making acoustic frequencies a rapid route to neural influence."], ["Tatva & Frequency Fusion", "We blend neuro-frequency entrainment with Vedic Panchtatva acoustic combinations to support the parameters identified in your analysis."], ["Zero Effort Required", "Play your custom soundtrack through headphones each night for 60 days while you rest."]];
+function SoundTherapyPage() { return <><PageHero eyebrow="Customised Solutions" title="Targeted Sound Therapy Engineered for Your Specific Brainwave DNA" sub="No two brains burn out the same way. We use your brainwave analysis to engineer a 60-day personalised frequency audio soundtrack for your needs." /><section className="bg-background py-16"><div className="mx-auto max-w-5xl px-4"><div className="grid gap-4 sm:grid-cols-2">{["100% Drug-Free & Non-Invasive","Mapped to Your Unique Brainwave Baseline","Lifelong Personalised Nightly Protocol","Pre & Post Objective Progress Tracking"].map(x => <div key={x} className="flex items-center gap-3 rounded-2xl bg-white p-5"><CheckCircle2 className="h-5 w-5 text-teal" /><span className="font-semibold text-navy">{x}</span></div>)}</div><Link to="/contact" className="mt-8 inline-flex rounded-full bg-teal px-5 py-3 text-sm font-semibold text-navy">Schedule a Call</Link></div></section><section className="bg-white py-16"><div className="mx-auto max-w-6xl px-4"><h2 className="font-display text-3xl font-bold text-navy">Why Sound is the Fastest Gateway to Neural Alignment.</h2><div className="mt-8 grid gap-5 md:grid-cols-3">{pillars.map(([title,body],i)=><article key={title} className="rounded-2xl border border-navy/10 p-6"><span className="font-display text-2xl font-bold text-teal">0{i+1}</span><h3 className="mt-4 font-display text-xl font-bold text-navy">{title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p></article>)}</div></div></section><section className="bg-background py-16"><div className="mx-auto max-w-4xl px-4"><h2 className="font-display text-3xl font-bold text-navy">The 2-Stage Remediation Process</h2><div className="mt-8 grid gap-5 md:grid-cols-2"><article className="rounded-2xl bg-white p-6"><p className="text-xs font-bold uppercase tracking-wider text-teal">Stage 1</p><h3 className="mt-2 font-display text-xl font-bold text-navy">Identification & Mapping</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">A two-minute non-invasive scan identifies neural bottlenecks such as overthinking, study-focus blocks, or chronic sleep deprivation.</p></article><article className="rounded-2xl bg-white p-6"><p className="text-xs font-bold uppercase tracking-wider text-teal">Stage 2</p><h3 className="mt-2 font-display text-xl font-bold text-navy">Custom Sound Engineering</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">Our team composes a calibrated soundtrack. After 60 nights, a post-scan tracks the change objectively.</p></article></div></div></section></> }

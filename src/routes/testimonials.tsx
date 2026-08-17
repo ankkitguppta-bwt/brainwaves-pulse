@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Play } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { clientTestimonialVideos } from "@/lib/client-testimonials";
 
 export const Route = createFileRoute("/testimonials")({
   head: () => ({
@@ -30,7 +31,8 @@ function TestimonialsPage() {
     },
   });
 
-  const videos = (q.data ?? []).filter((t) => t.type === "video");
+  const databaseVideos = (q.data ?? []).filter((t) => t.type === "video" && t.video_url);
+  const videos = databaseVideos.length > 0 ? databaseVideos : clientTestimonialVideos;
   const texts = (q.data ?? []).filter((t) => t.type === "text");
   const [active, setActive] = useState<any | null>(null);
 
@@ -79,9 +81,9 @@ function TestimonialsPage() {
       </section>
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
-        <DialogContent className="max-w-3xl p-0 overflow-hidden">
+        <DialogContent className="max-h-[90svh] w-[calc(100%-1rem)] max-w-5xl overflow-hidden p-0 sm:w-[calc(100%-2rem)]">
           {active?.video_url && (
-            <video controls autoPlay className="h-full w-full" src={active.video_url} />
+            <video controls autoPlay playsInline preload="metadata" className="max-h-[78svh] w-full bg-black object-contain" src={active.video_url} />
           )}
         </DialogContent>
       </Dialog>
@@ -94,9 +96,7 @@ function VideoCard({ v, onOpen }: { v: any; onOpen: () => void }) {
     <button onClick={onOpen} className="glass-card group relative aspect-video w-full overflow-hidden rounded-2xl text-left">
       {v.thumbnail_url ? (
         <img src={v.thumbnail_url} alt={v.author} className="absolute inset-0 h-full w-full object-cover" />
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-navy to-teal" />
-      )}
+      ) : <video src={v.video_url} muted playsInline preload="metadata" className="absolute inset-0 h-full w-full object-cover" />}
       <div className="absolute inset-0 flex items-center justify-center bg-black/30 transition group-hover:bg-black/40">
         <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 text-navy">
           <Play className="h-7 w-7 ml-1" />

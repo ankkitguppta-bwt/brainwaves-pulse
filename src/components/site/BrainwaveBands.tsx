@@ -3,18 +3,18 @@ import { flushSync } from "react-dom";
 import { Activity, ChevronRight, Eye, EyeOff, X } from "lucide-react";
 
 import { BANDS, type BandContent, type BandId } from "@/components/site/brainwave-content";
-import alphaReport from "@/assets/reports/alpha-report.png.asset.json";
-import betaReport from "@/assets/reports/beta-report.png.asset.json";
-import gammaReport from "@/assets/reports/gamma-report.png.asset.json";
-import deltaReport from "@/assets/reports/delta-report.png.asset.json";
-import thetaReport from "@/assets/reports/theta-report.png.asset.json";
+import alphaReport from "@/assets/client/reports/Alpha.png";
+import betaReport from "@/assets/client/reports/Beta.png";
+import gammaReport from "@/assets/client/reports/Gamma.png";
+import deltaReport from "@/assets/client/reports/Delta.png";
+import thetaReport from "@/assets/client/reports/Theta.png";
 
 const REPORTS: Record<BandId, string> = {
-  alpha: alphaReport.url,
-  beta: betaReport.url,
-  gamma: gammaReport.url,
-  delta: deltaReport.url,
-  theta: thetaReport.url,
+  alpha: alphaReport,
+  beta: betaReport,
+  gamma: gammaReport,
+  delta: deltaReport,
+  theta: thetaReport,
 };
 
 /* ── shared curve maths: ribbon + coils sample the same function ── */
