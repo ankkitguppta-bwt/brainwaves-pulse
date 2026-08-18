@@ -83,7 +83,15 @@ function TestimonialsPage() {
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
         <DialogContent className="max-h-[90svh] w-[calc(100%-1rem)] max-w-5xl overflow-hidden p-0 sm:w-[calc(100%-2rem)]">
           {active?.video_url && (
-            <video controls autoPlay playsInline preload="metadata" className="max-h-[78svh] w-full bg-black object-contain" src={active.video_url} />
+            <video
+              controls
+              autoPlay
+              playsInline
+              preload="metadata"
+              poster={active.thumbnail_url ?? undefined}
+              className="max-h-[78svh] w-full bg-black object-contain"
+              src={active.video_url}
+            />
           )}
         </DialogContent>
       </Dialog>

@@ -104,7 +104,7 @@ function Hero() {
         <p
           data-aos="fade-up"
           data-aos-delay="200"
-          className="mx-auto mt-5 max-w-2xl font-display text-base font-bold text-white sm:text-lg"
+          className="mx-auto mt-5 max-w-2xl [text-wrap:balance] font-display text-base font-bold text-white sm:text-lg"
         >
           India’s advanced neurofeedback platform mapping{" "}
           <span className="font-accent font-semibold text-orange">real-time</span> cognitive data in 2 minutes.
@@ -112,7 +112,7 @@ function Hero() {
         <p
           data-aos="fade-up"
           data-aos-delay="250"
-          className="mx-auto mt-4 max-w-3xl font-display text-sm font-medium leading-relaxed text-white sm:text-base"
+          className="mx-auto mt-4 max-w-3xl [text-wrap:balance] font-display text-sm font-medium leading-relaxed text-white sm:text-base"
         >
           Move past qualitative <span className="font-accent font-semibold text-white">guesswork</span>. Our 14 precise
           cognitive parameters instantly help to figure out your{" "}
@@ -177,7 +177,7 @@ function StatsStrip() {
             <p
               data-aos="fade-up"
               data-aos-delay="120"
-              className="mx-auto mt-6 max-w-3xl text-center font-display text-base font-bold leading-relaxed text-white sm:text-lg"
+              className="mx-auto mt-6 max-w-3xl [text-wrap:balance] text-center font-display text-base font-bold leading-relaxed text-white sm:text-lg"
             >
               <span className="text-teal">Brain Waves Tech</span> uses an innovative USA patented technology, which
               quantifies state of mind in minutes with an accuracy of more than{" "}
@@ -250,7 +250,7 @@ function EcosystemSection() {
           <p
             data-aos="fade-up"
             data-aos-delay="120"
-            className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base"
+            className="mx-auto mt-4 max-w-2xl [text-wrap:balance] text-sm leading-relaxed text-muted-foreground sm:text-base"
           >
             Move away from outdated checklists and biased self-reporting. Our integrated system bridges high-fidelity
             neuro-sensing hardware directly with cloud-based AI analytics, providing business leaders and clinicians
@@ -320,22 +320,22 @@ function HowItWorks() {
     {
       icon: Activity,
       title: "Brainwave Assessment",
-      desc: "Pure, real-time data capture. Zero subjective bias — a quick, non-invasive 2-minute capture using our patented technology.",
+      desc: "Pure, real-time data capture with zero subjective bias — a quick, non-invasive 2-minute session using our patented sensing technology.",
     },
     {
       icon: Gauge,
       title: "Detailed Analysis",
-      desc: "Turning hidden neural patterns into clear, quantified parameters — the proprietary system filters and charts your cognitive matrix across 14 distinct parameters.",
+      desc: "Hidden neural patterns become clear, quantified parameters as our proprietary engine charts your cognitive matrix across 14 distinct metrics.",
     },
     {
       icon: Users,
       title: "Professional Interpretation",
-      desc: "Translating algorithmic complexity into actionable institutional insights — certified network practitioners and enterprise dashboards translate automated metrics into a comprehensive cognitive health blueprint.",
+      desc: "Certified practitioners translate automated metrics into actionable insights, turning algorithmic complexity into a clear cognitive health blueprint.",
     },
     {
       icon: Target,
       title: "Personalised Solutions",
-      desc: "Custom care for your mind. After analyzing your brain data, your practitioner designs a tailored plan to balance your brain activity. With regular follow-ups and progress tracking, you can actually see your mental performance improve over time.",
+      desc: "Your practitioner designs a tailored plan from your brain data, with regular follow-ups and tracking so you can see real performance improve over time.",
     },
   ];
   const Step = ({ s, i }: { s: (typeof steps)[number]; i: number }) => (
@@ -347,7 +347,7 @@ function HowItWorks() {
         </span>
       </div>
       <h3 className="mt-4 font-display text-base font-semibold text-navy">{s.title}</h3>
-      <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
+      <p className="mt-1 [text-wrap:balance] text-sm text-muted-foreground">{s.desc}</p>
     </div>
   );
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -532,17 +532,25 @@ function VideoTestimonials() {
           />
         ))}
       </svg>
-      {/* subtle vignette */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
       {v.thumbnail ? (
         <img
           src={v.thumbnail}
           alt={v.title}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover opacity-30 transition duration-500 group-hover:opacity-40"
+          className="absolute inset-0 h-full w-full object-cover"
         />
-      ) : null}
+      ) : (
+        <video
+          src={v.src}
+          muted
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
+
+      {/* subtle vignette */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
       <div className="absolute inset-0 flex items-center justify-center">
         <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-navy shadow-xl transition duration-300 group-hover:scale-110 group-hover:shadow-2xl">
@@ -605,7 +613,18 @@ function VideoTestimonials() {
             <DialogDescription>{active?.author}</DialogDescription>
           </DialogHeader>
           <div className="aspect-video w-full bg-black">
-            {active && <video key={active.id} src={active.src} controls autoPlay playsInline preload="metadata" className="max-h-[78svh] h-full w-full object-contain" />}
+            {active && (
+              <video
+                key={active.id}
+                src={active.src}
+                poster={active.thumbnail ?? undefined}
+                controls
+                autoPlay
+                playsInline
+                preload="metadata"
+                className="max-h-[78svh] h-full w-full object-contain"
+              />
+            )}
           </div>
         </DialogContent>
       </Dialog>
@@ -682,7 +701,7 @@ function FinalCTA() {
         <h2 className="font-display text-3xl font-bold sm:text-5xl" data-aos="fade-up">
           Start Your <span className="text-gradient-brand">Neurofeedback Journey</span> Today
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-white/75" data-aos="fade-up" data-aos-delay="120">
+        <p className="mx-auto mt-4 max-w-2xl [text-wrap:balance] text-white/75" data-aos="fade-up" data-aos-delay="120">
           Whether you want to train your brain, add neurofeedback to your practice, or explore partnership — we'd love
           to talk.
         </p>
@@ -736,7 +755,7 @@ function SectionHeading({
       </h2>
       {sub && (
         <p
-          className={`mx-auto mt-4 max-w-2xl ${dark ? "text-white/75" : "text-muted-foreground"}`}
+          className={`mx-auto mt-4 max-w-2xl [text-wrap:balance] ${dark ? "text-white/75" : "text-muted-foreground"}`}
           data-aos="fade-up"
           data-aos-delay="160"
         >
