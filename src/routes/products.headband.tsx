@@ -25,22 +25,22 @@ const features = [
   [
     "Advanced Dry Sensor Array",
     "No Gels. No Cleanup. Instant Contact.",
-    "Three high-conductivity dry electrodes along the FP1 axis capture clean signals without wet EEG caps or scalp preparation.",
+    "Three high-conductivity dry electrodes are positioned along the FP1 forehead axis to capture clean prefrontal signals. There are no wet EEG caps, no scalp abrasion, and no preparation time.",
   ],
   [
     "Ultra-Low Latency Telemetry",
     "Powered by Bluetooth 5.2 Connectivity.",
-    "Transmit raw neural feedback to the BWT platform through stable, encrypted Bluetooth 5.2 streaming.",
+    "Transmit raw neural feedback to the BWT-1408 platform through stable, encrypted Bluetooth 5.2 Low Energy streaming—without tethered cables or signal interruptions.",
   ],
   [
     "Intelligent Contact Quality Check",
     "Automated Impedance & Fit Verification.",
-    "The hardware verifies grounding before recording and prompts instant realignment if a sensor loses contact.",
+    "Before each recording, the BWT-2508 automatically verifies electrode grounding and fit. If a sensor loses contact, the software prompts instant realignment before the scan begins.",
   ],
   [
     "All-Day Endurance",
     "9-Hour Battery for High-Volume Sessions.",
-    "A lightweight rechargeable battery supports back-to-back corporate, classroom, and clinical sessions.",
+    "The lightweight internal rechargeable battery delivers up to nine hours of continuous use, supporting back-to-back corporate, classroom, and clinical sessions from a single charge.",
   ],
 ];
 
@@ -53,9 +53,25 @@ const specs = [
   ["Wireless Protocol", "Bluetooth 5.2 Low Energy"],
   ["Power System", "Internal Rechargeable Battery"],
   ["Active Battery Runtime", "Up to 9 Hours"],
-  ["Data Quality Rating", "High-Fidelity Signal-to-Noise Ratio"],
+  ["Data Quality Rating", "High-Fidelity Signal-to-Noise Ratio (Good/Clinical Grade)"],
   ["Headband Design", "Ergonomic, Adjustable Fixed Position Strap"],
 ];
+
+const certifications = [
+  [
+    "ISO 13485 Certified",
+    "Compliant with international quality-management standards for medical devices.",
+  ],
+  ["CE Certified", "Meets European health, safety, and environmental protection standards."],
+  [
+    "ISO 9001:2015 Certified",
+    "Built within a standardized quality-management system for consistent product and service delivery.",
+  ],
+  [
+    "RoHS Compliant",
+    "Free from restricted hazardous substances in accordance with RoHS requirements.",
+  ],
+] as const;
 
 function HeadbandPage() {
   return (
@@ -63,7 +79,7 @@ function HeadbandPage() {
       <PageHero
         eyebrow="BWT-2508 Hardware"
         title="BWT-2508: The Neurofeedback Hardware"
-        sub="Engineered with dry-electrode sensor technology, the BWT-2508 captures raw electrical micro-voltages from the prefrontal cortex in real time, without conductive gels or messy preparation."
+        sub="Engineered with dry-electrode sensor technology, the BWT-2508 captures raw electrical micro-voltages from the prefrontal cortex in real time—without conductive gels, scalp preparation, or messy cleanup."
       />
       <section className="bg-background py-16 lg:py-24">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-2 lg:px-8">
@@ -150,8 +166,8 @@ function HeadbandPage() {
               Documented Standards for the BWT-2508
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              ISO 13485 medical-device quality management, CE health and safety requirements, ISO
-              9001:2015 quality standards, and RoHS hazardous-substance compliance.
+              The BWT-2508 is manufactured to internationally recognized medical-device, quality,
+              safety, and environmental standards.
             </p>
           </div>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -170,9 +186,17 @@ function HeadbandPage() {
                   className="aspect-[3/4] w-full object-cover"
                 />
                 <p className="mt-3 text-center text-xs font-semibold text-navy">
-                  View certification {index + 1}
+                  {certifications[index][0]}
                 </p>
               </a>
+            ))}
+          </div>
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {certifications.map(([title, description]) => (
+              <div key={title} className="rounded-2xl border border-navy/10 bg-background p-5">
+                <h3 className="font-semibold text-navy">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
+              </div>
             ))}
           </div>
         </div>

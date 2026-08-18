@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { ImpactCallout } from "@/components/site/ImpactCallout";
 import { JourneyCta } from "@/components/site/JourneyCta";
-import { BANDS } from "@/components/site/brainwave-content";
 import { FileText, Activity, Database, Clock, Users, ShieldCheck, Target, Cpu } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -69,6 +68,23 @@ const metrics = [
   "Empathy",
 ];
 
+const coreBands = [
+  { name: "Delta", body: "Biological sleep quality, internal satisfaction, and self-esteem." },
+  {
+    name: "Theta",
+    body: "Thought process, feelings, emotions, rigidness, bluntness, overthinking, negative thinking, emotional thinking and behavioral adaptability.",
+  },
+  { name: "Alpha", body: "Control over mind, thought balancing, positivity, and visionary." },
+  {
+    name: "Beta",
+    body: "Active logic, intellectual interpretation, learning, grasping, and memory retention.",
+  },
+  {
+    name: "Gamma",
+    body: "Implementation, action, reaction, aggression, irritation, anxiety, mood swings, and behavioural regulation states.",
+  },
+];
+
 const ipRights = [
   {
     icon: Cpu,
@@ -89,21 +105,27 @@ const ipRights = [
 
 const papers = [
   {
-    title: "Quantitative Brainwave Analysis: Eliminating Human Observer Bias in Mental Health Intake Protocols",
+    filename: "BWT_Research_01_qEEG_Diagnostic_Accuracy.pdf",
+    title:
+      "Quantitative Brainwave Analysis: Eliminating Human Observer Bias in Mental Health Intake Protocols",
     authors: "Dr. Ankit Gupta, Francesco Garripoli, Dr. Paras Kaul",
     category: "Clinical Psychology | BCI Algorithms",
     abstract:
       "Comparative study evaluating qualitative diagnostic interviews against automated 0.5Hz Fast Fourier Transform (FFT) prefrontal cortex signal processing. Demonstrates how non-invasive, questionnaire-free intake achieves >92% accuracy across diverse age groups while reducing initial evaluation time from 50 minutes to 2 minutes.",
   },
   {
-    title: "Algorithmic Pattern Recognition Across 120,000 Neural Data Points for Mind Parameter Extraction",
+    filename: "BWT_Research_02_120K_Dataset_Validation.pdf",
+    title:
+      "Algorithmic Pattern Recognition Across 120,000 Neural Data Points for Mind Parameter Extraction",
     authors: "Brain Waves Tech Data Science Group & WujiTech Research Division",
     category: "Data Science | Neuro-Telemetry",
     abstract:
       "Detailed technical breakdown of the 120,000+ data point benchmark collected across 20,000+ participants. Explains the mathematical mapping connecting raw Alpha, Beta, Theta, Delta, and Gamma frequency bands to 10 distinct metric indicators including Study Focus, Inner Calm, and Stress Reduction.",
   },
   {
-    title: "Longitudinal Assessment of Neuro-Acoustic Interventions Based on Real-Time Brainwave Baseline Telemetry",
+    filename: "BWT_Research_03_Customized_Sound_Therapy_Outcomes.pdf",
+    title:
+      "Longitudinal Assessment of Neuro-Acoustic Interventions Based on Real-Time Brainwave Baseline Telemetry",
     authors: "Dr. Ankit Gupta",
     category: "Alternative Therapy | Neurofeedback Interventions",
     abstract:
@@ -160,39 +182,48 @@ function ResearchPage() {
               >
                 <d.icon className="h-6 w-6 text-teal" />
                 <h3 className="mt-3 font-display text-base font-bold text-navy">{d.title}</h3>
-                <p className="mt-2 [text-wrap:balance] text-sm leading-relaxed text-muted-foreground">{d.body}</p>
+                <p className="mt-2 [text-wrap:balance] text-sm leading-relaxed text-muted-foreground">
+                  {d.body}
+                </p>
               </div>
             ))}
           </div>
 
           <div className="mt-20">
-            <h2 className="font-display text-2xl font-bold text-navy">Comprehensive 15-Parameter Neural Mapping</h2>
+            <h2 className="font-display text-2xl font-bold text-navy">
+              Comprehensive 15-Parameter Neural Mapping
+            </h2>
             <p className="mt-3 max-w-3xl [text-wrap:balance] text-sm leading-relaxed text-muted-foreground">
-              Our system processes incoming signal telemetry at an intensive 0.5Hz resolution, deconstructing raw
-              brainwave frequencies into 15 distinct, measurable parameters.
+              Our system processes incoming signal telemetry at an intensive 0.5Hz resolution,
+              deconstructing raw brainwave frequencies into 15 distinct, measurable parameters.
             </p>
           </div>
 
           <div className="mt-8 grid gap-8 lg:grid-cols-2">
             <div data-aos="fade-up" data-aos-duration="900">
-              <h3 className="font-display text-lg font-bold text-navy">5 Core Frequency Spectrum Bands</h3>
+              <h3 className="font-display text-lg font-bold text-navy">
+                5 Core Frequency Spectrum Bands
+              </h3>
               <ul className="mt-6 space-y-4">
-                {BANDS.map((b) => (
-                  <li key={b.id} className="glass-card rounded-2xl bg-white p-5">
-                    <p className="font-display text-sm font-bold text-navy">
-                      {b.name} <span className="font-normal text-muted-foreground">({b.frequency})</span>
+                {coreBands.map((band) => (
+                  <li key={band.name} className="glass-card rounded-2xl bg-white p-5">
+                    <p className="font-display text-sm font-bold text-navy">{band.name}</p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                      {band.body}
                     </p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{b.measures}</p>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div data-aos="fade-up" data-aos-duration="900" data-aos-delay="120">
-              <h3 className="font-display text-lg font-bold text-navy">10 Proprietary Metric Indicators</h3>
+              <h3 className="font-display text-lg font-bold text-navy">
+                10 Proprietary Metric Indicators
+              </h3>
               <p className="mt-3 [text-wrap:balance] text-sm leading-relaxed text-muted-foreground">
-                Derived through patented signal-processing models, these metrics convert band activity into
-                decision-ready indicators for clinicians, educators and enterprise leaders.
+                Derived through patented signal-processing models, these metrics convert band
+                activity into decision-ready indicators for clinicians, educators and enterprise
+                leaders.
               </p>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {metrics.map((m, i) => (
@@ -223,7 +254,9 @@ function ResearchPage() {
               >
                 <r.icon className="h-6 w-6 text-teal" />
                 <h3 className="mt-3 font-display text-base font-bold text-navy">{r.title}</h3>
-                <p className="mt-2 [text-wrap:balance] text-sm leading-relaxed text-muted-foreground">{r.body}</p>
+                <p className="mt-2 [text-wrap:balance] text-sm leading-relaxed text-muted-foreground">
+                  {r.body}
+                </p>
               </div>
             ))}
           </div>
@@ -242,7 +275,10 @@ function ResearchPage() {
                 <FileText className="mt-0.5 h-5 w-5 shrink-0 text-teal" />
                 <div>
                   <h3 className="font-display text-base font-bold text-navy">{p.title}</h3>
-                  <p className="mt-1.5 text-xs font-semibold uppercase tracking-wider text-teal">{p.category}</p>
+                  <p className="mt-1 text-xs font-medium text-navy/65">{p.filename}</p>
+                  <p className="mt-1.5 text-xs font-semibold uppercase tracking-wider text-teal">
+                    {p.category}
+                  </p>
                   <p className="mt-1 text-xs text-muted-foreground">{p.authors}</p>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.abstract}</p>
                 </div>

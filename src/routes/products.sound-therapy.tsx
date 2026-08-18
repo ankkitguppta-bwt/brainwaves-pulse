@@ -10,15 +10,15 @@ export const Route = createFileRoute("/products/sound-therapy")({
 const pillars = [
   [
     "The Hearing Dominance",
-    "Sound is processed and acted on by the brain in milliseconds, making acoustic frequencies a rapid route to neural influence.",
+    "Sound is processed and acted on by the brain in milliseconds, making acoustic frequencies one of the fastest routes to neural influence. A precisely structured soundscape can support the brain without requiring active effort during the day.",
   ],
   [
     "Tatva & Frequency Fusion",
-    "We blend neuro-frequency entrainment with Vedic Panchtatva acoustic combinations to support the parameters identified in your analysis.",
+    "We blend neuro-frequency entrainment with Vedic Panchtatva acoustic combinations to support the parameters identified in your analysis. Each soundtrack is built around the brainwave patterns and cognitive bottlenecks found during the scan.",
   ],
   [
     "Zero Effort Required",
-    "Play your custom soundtrack through headphones each night for 60 days while you rest.",
+    "Play your custom soundtrack through headphones each night for 60 days while you rest. The protocol is designed to fit naturally into an existing sleep routine, with no pills, invasive treatment, or daytime exercises required.",
   ],
 ];
 function SoundTherapyPage() {
@@ -86,7 +86,7 @@ function SoundTherapyPage() {
                 </li>
                 <li>
                   <b className="text-navy">The Findings:</b> BWT-1408 pinpoints overthinking, focus
-                  blocks, suppressed Delta, and other measured bottlenecks.
+                  blocks, suppressed Delta, elevated stress markers, and other measured bottlenecks.
                 </li>
               </ul>
             </article>
@@ -98,7 +98,8 @@ function SoundTherapyPage() {
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-muted-foreground">
                 <li>
                   <b className="text-navy">The Composition:</b> A multi-layered soundtrack
-                  calibrated to rebalance flagged parameters.
+                  calibrated to support and rebalance the flagged parameters identified in your
+                  brainwave profile.
                 </li>
                 <li>
                   <b className="text-navy">The Protocol:</b> Listen nightly for 60 days.

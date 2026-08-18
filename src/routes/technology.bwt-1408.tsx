@@ -87,7 +87,7 @@ function SoftwarePage() {
     <>
       <PageHero
         eyebrow="BWT-1408"
-        title="The Neurofeedback Software Technology"
+        title="BWT 1408: The Neurofeedback Software Technology"
         sub="A platform built on 120,000 data points that converts sub-Hertz EEG streams into five major brainwaves and quantifiable cognitive metrics with FFT analytics and millisecond-precise stimulus synchronisation."
       />
       <section className="bg-background py-16">

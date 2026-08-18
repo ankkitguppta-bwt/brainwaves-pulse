@@ -248,16 +248,28 @@ function StoriesPage() {
       </MediaSection>
       <Dialog open={!!activeVideo} onOpenChange={(open) => !open && setActiveVideo(null)}>
         <DialogContent className="max-h-[90svh] w-[calc(100%-1rem)] max-w-5xl overflow-hidden p-0 sm:w-[calc(100%-2rem)]">
-          {activeVideo && (
-            <video
-              src={activeVideo.url}
-              title={activeVideo.title}
-              controls
-              autoPlay
-              playsInline
-              className="max-h-[82svh] w-full bg-black object-contain"
-            />
-          )}
+          {activeVideo &&
+            (() => {
+              const embed = youtubeEmbed(activeVideo.url);
+              return embed ? (
+                <iframe
+                  src={embed}
+                  title={activeVideo.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="aspect-video w-full bg-black"
+                />
+              ) : (
+                <video
+                  src={activeVideo.url}
+                  title={activeVideo.title}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="max-h-[82svh] w-full bg-black object-contain"
+                />
+              );
+            })()}
         </DialogContent>
       </Dialog>
     </>

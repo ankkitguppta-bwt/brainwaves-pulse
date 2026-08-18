@@ -29,19 +29,19 @@ export const Route = createFileRoute("/practitioner")({
 const benefits = [
   [
     "92%+ Diagnostic Accuracy Without Questionnaires",
-    "Capture prefrontal cortex micro-voltages without survey bias or patient hesitation.",
+    "Eliminate subjective survey bias and patient hesitation. Capture real-time prefrontal cortex micro-voltages without asking a single question.",
   ],
   [
     "2-Minute Scan vs. 50-Minute Interviews",
-    "Serve more clients while providing immediate visual evidence of their neural baseline.",
+    "Reduce initial evaluation time from 50 minutes to 2 minutes, allowing you to serve more clients while providing instant, visual proof of their neural baseline.",
   ],
   [
     "15 Quantified Mind Parameters",
-    "Deliver reports covering five brainwave bands and ten qualitative performance indicators.",
+    "Deliver actionable, clinical-grade reports covering 5 core wave spectrum bands (Alpha, Beta, Theta, Delta, Gamma) and 10 metric indicators including Study Focus, Stress Reduction, Inner Calm, and Empathy.",
   ],
   [
     "Turn-Key Revenue Expansion",
-    "Add scans, custom 60-day sound protocols, and ongoing post-analysis tracking.",
+    "Add high-margin services to your practice: non-invasive diagnostic scans, custom 60-day sound therapy protocols, and ongoing post-analysis tracking.",
   ],
 ] as const;
 const practiceBenefits = [
@@ -120,8 +120,8 @@ function PractitionerPage() {
     <>
       <PageHero
         eyebrow="Become a Practitioner"
-        title="Build a Modern, Tech-Enabled Clinical Practice Powered by Patented BCI Analytics"
-        sub="Gain the complete ecosystem—patented software, medical-grade BCI hardware, and clinical certification—to identify root-cause mental stress in under two minutes with more than 92% reading accuracy."
+        title="Build a Modern, Tech-Enabled Clinical Practice powered by Patented Brain-Computer Interface (BCI) Analytics"
+        sub="Traditional mental health intake relies on subjective questionnaires, long diagnostic sittings, and patient trust barriers. By becoming a Certified Partner with Brain Waves Tech, you gain the complete ecosystem: patented AI software, medical-grade BCI hardware, and clinical certification, allowing you to identify root-cause mental stress in under 2 minutes with over 92% diagnostic accuracy."
       />
       <section className="bg-background py-16 lg:py-24">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
@@ -129,9 +129,7 @@ function PractitionerPage() {
             Transform Your Practice. Eliminate Guesswork. Scale Your Revenue.
           </h2>
           <p className="mt-4 max-w-4xl leading-relaxed text-muted-foreground">
-            Traditional mental-health intake relies on subjective questionnaires, long diagnostic
-            sittings, and patient trust barriers. Certified BrainWaves Tech partners receive a
-            practical, data-backed workflow for assessment, interpretation, intervention, and
+            Build a complete, data-backed workflow for assessment, interpretation, intervention, and
             progress tracking.
           </p>
           <h3 className="mt-12 font-display text-2xl font-bold text-navy">
@@ -218,10 +216,10 @@ function PractitionerPage() {
         <div className="mx-auto max-w-5xl px-4 lg:px-8">
           <div className="text-center">
             <p className="text-xs font-bold uppercase tracking-[.18em] text-teal">
-              Master Practitioner Bundle
+              Price Breakdown Strategy
             </p>
             <h2 className="mt-3 font-display text-3xl font-bold text-navy">
-              Complete Ecosystem. One Partner Package.
+              The Master Practitioner Bundle Offer
             </h2>
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-[1fr_1.15fr]">
@@ -244,15 +242,15 @@ function PractitionerPage() {
             <div className="rounded-3xl bg-navy p-7 text-white">
               <BrainCircuit className="h-8 w-8 text-teal" />
               <h3 className="mt-5 font-display text-2xl font-bold">
-                Bundle Package: ₹1,35,998 + 18% GST
+                Bundle Package Price: ₹1,35,998 + 18% GST
               </h3>
-              <p className="mt-2 font-semibold text-orange">Save ₹10,000 instantly</p>
+              <p className="mt-2 font-semibold text-orange">Saves ₹10,000 instantly!</p>
               <ul className="mt-6 space-y-3 text-sm text-white/75">
                 {[
-                  "BWT-2508 flagship headset",
-                  "Annual BWT-1408 platform software",
-                  "Licensed NFP certification",
-                  "Bonus marketing and practitioner-directory suite",
+                  "BWT 2508 Flagship Headset (Discounted)",
+                  "Annual BWT Platform Software",
+                  "Licensed NFP Certification",
+                  "Bonus Marketing & Directory Suite",
                 ].map((item) => (
                   <li key={item} className="flex gap-2">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-teal" />

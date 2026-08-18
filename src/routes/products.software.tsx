@@ -12,22 +12,26 @@ const modules = [
   [
     Activity,
     "Real-Time 3D Waveform Rendering",
-    "Monitor raw signals at 0.5 Hz resolution with FFT-powered live visualisation across Alpha, Beta, Gamma, Delta, and Theta.",
+    "Live Multi-Frequency Visualizer.",
+    "Monitor raw micro-volt signals at 0.5 Hz resolution with FFT-powered, live 3D visualization across Alpha, Beta, Gamma, Delta, and Theta. See exactly how the brain responds throughout a two-minute session.",
   ],
   [
     Gauge,
     "The 15-Parameter Decoding Engine",
-    "Translate complex spectral interactions into five fundamental bands and ten clear qualitative performance gauges.",
+    "Natural Language AI Interpretation.",
+    "The proprietary algorithm converts complex spectral interactions into five fundamental brainwave bands and ten qualitative performance gauges—making technical EEG data clear, usable, and human-readable.",
   ],
   [
     FileText,
     "Automated PDF Report Generation",
-    "Create expert-supported, client-facing reports that compare baseline signals with standard population ranges.",
+    "Complete Clinical-Style Reports in 60 Minutes.",
+    "Generate expert-supported, client-facing reports that compare baseline signals with standard population ranges, describe the measured parameters, and support a clear next-step conversation.",
   ],
   [
     History,
     "Cloud-Based Longitudinal Progress Tracking",
-    "Securely compare pre- and post-analysis outputs across 30, 60, and 90 days to document progress.",
+    "Historical Session Comparison & Pre/Post Analysis.",
+    "Securely compare pre- and post-analysis outputs across 30, 60, and 90 days to document measurable progress over time.",
   ],
 ] as const;
 const bands = [
@@ -91,10 +95,11 @@ function SoftwarePage() {
             From Raw Micro-Volts to Actionable Cognitive Baselines.
           </h2>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {modules.map(([Icon, title, body]) => (
+            {modules.map(([Icon, title, headline, body]) => (
               <article key={title} className="rounded-2xl border border-navy/10 p-6">
                 <Icon className="h-6 w-6 text-teal" />
                 <h3 className="mt-4 font-display text-xl font-bold text-navy">{title}</h3>
+                <p className="mt-2 text-sm font-semibold text-teal">{headline}</p>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p>
               </article>
             ))}
@@ -183,6 +188,22 @@ function SoftwarePage() {
             Eliminate analytic guesswork, track long-term progress, and deliver high-trust brainwave
             reports in minutes.
           </p>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <Link
+              to="/contact"
+              className="rounded-full bg-teal px-5 py-3 text-sm font-semibold text-navy"
+            >
+              Request Demo Call
+            </Link>
+            <a
+              href={sampleReport}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-white/30 px-5 py-3 text-sm font-semibold"
+            >
+              View Sample Report (PDF)
+            </a>
+          </div>
         </div>
       </section>
     </>
