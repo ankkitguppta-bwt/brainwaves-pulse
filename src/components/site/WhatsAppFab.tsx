@@ -5,14 +5,13 @@ export function WhatsAppFab() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
-      className="fixed bottom-5 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-2xl ring-4 ring-[#25D366]/20 transition hover:scale-110"
+      className="fixed bottom-5 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-transparent transition hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
     >
-      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#25D366] opacity-30" />
       <img
         src="/whatsapp-icon-logo-svgrepo-com.svg"
         alt=""
         aria-hidden="true"
-        className="relative h-9 w-9"
+        className="h-12 w-12 drop-shadow-lg"
       />
     </a>
   );

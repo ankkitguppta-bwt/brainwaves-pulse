@@ -194,11 +194,20 @@ export const deleteCaseStudy = createServerFn({ method: "POST" })
 // ================= MEDIA / RECOGNITION =================
 const mediaSchema = z.object({
   id: z.string().uuid().optional(),
-  kind: z.enum(["media", "recognition"]),
+  kind: z.enum([
+    "media",
+    "recognition",
+    "explainer_video",
+    "youtube_podcast",
+    "video_testimonial",
+    "audio_testimonial",
+    "written_testimonial",
+  ]),
   title: z.string().min(1).max(300),
   outlet: z.string().max(200).nullable().optional(),
   url: z.string().url().max(1000).nullable().optional().or(z.literal("")),
   image_url: z.string().url().max(1000).nullable().optional().or(z.literal("")),
+  body: z.string().max(4000).nullable().optional(),
   entry_date: z.string().nullable().optional(),
   sort_order: z.number().int().default(0),
 });
@@ -211,6 +220,7 @@ export const upsertMedia = createServerFn({ method: "POST" })
       ...data,
       url: data.url || null,
       image_url: data.image_url || null,
+      body: data.body || null,
       entry_date: data.entry_date || null,
     };
     const { data: row, error } = data.id

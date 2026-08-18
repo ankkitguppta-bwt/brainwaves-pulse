@@ -54,6 +54,72 @@ type Person = {
   category: string;
 };
 
+const fallbackPeople: Person[] = [
+  {
+    id: "ankit",
+    name: "Dr. Ankit Gupta",
+    role: "Founder & Chief Executive Officer (CEO)",
+    category: "leadership",
+    image_url: null,
+    description:
+      "Credentials: RCI-Registered Psychologist | Triple Master’s Degree: Clinical Psychology, Organizational & Employee Psychology, and Production Engineering | Honorary Ph.D. | Mechanical Engineer\n\nWith over 12 years of domain experience and more than 20,000 hours of counselling and brainwave analysis, Dr. Gupta has personally helped over 11,000 individual clients. After identifying the limitations of qualitative questionnaires and physical B2C clinic scalability, he engineered Brain Waves Tech’s patented B2B analytic model to deliver objective, real-time brainwave analytics without human-intervention bias.",
+  },
+  {
+    id: "nitya",
+    name: "Mrs. Nitya Gupta",
+    role: "Co-Founder & Chief Marketing Officer (CMO)",
+    category: "leadership",
+    image_url: null,
+    description:
+      "With more than seven years of experience, Mrs. Nitya Gupta guides strategic frameworks, brand positioning, and B2B partner engagement. She oversees long-term marketing initiatives integrating neurofeedback solutions across educational institutions, enterprise organisations, and healthcare verticals.",
+  },
+  {
+    id: "swapnil",
+    name: "Swapnil Prabhat",
+    role: "Technical Product and Marketing Manager",
+    category: "leadership",
+    image_url: null,
+    description:
+      "A computer science engineer specialising in AI/ML with over three years of ground-level experience in mental health, Gen-Z engagement, and social initiatives. He bridges technical innovation with commercial growth, driving B2B expansion, product positioning, and market adoption.",
+  },
+  {
+    id: "vikas",
+    name: "Mr. Vikas Patel",
+    role: "Chief Technology & Web Infrastructure Manager",
+    category: "leadership",
+    image_url: null,
+    description:
+      "Founder of Jeevijay Technologies Pvt. Ltd., Vikas is a technology builder and strategist specialising in AI-powered SaaS, business automation, and digital transformation. His enterprise experience includes work for Aditya Birla Group, Jio, TCS, and Tata.",
+  },
+  {
+    id: "francesco",
+    name: "Francesco Garripoli",
+    role: "Chief Technology Advisor & Global Technology Partner",
+    category: "advisor",
+    image_url: null,
+    description:
+      "Credentials: CTO\n\nA pioneer in neuroscience, software design, and digital health, Francesco is a technology founder, U.S. patent holder, and software designer. His experience spans enterprise healthcare software, the Qigong Institute, and Emmy Award–winning production.",
+  },
+  {
+    id: "paras",
+    name: "Dr. Paras Kaul",
+    role: "Senior Neurofeedback & BCI Research Advisor",
+    category: "advisor",
+    image_url: null,
+    description:
+      "Credentials: California-based Neurofeedback Researcher & BCI Specialist\n\nAn internationally recognised neurofeedback researcher, BCI pioneer, and author working with real-time brainwave interfaces since 1992. Her work connects neurofeedback analysis, cognitive performance, and integrative wellness.",
+  },
+  {
+    id: "amruta",
+    name: "Amruta Singhwekar",
+    role: "Principal Financial & Strategic Growth Advisor",
+    category: "advisor",
+    image_url: null,
+    description:
+      "Credentials: Serial Entrepreneur\n\nCo-Founder of ezeseed and Founder Director at Anaadi Ventures, Amruta is a finance strategist, startup investor, and capital-allocation expert. She guides institutional financial planning, governance, risk calibration, and sustainable enterprise growth.",
+  },
+];
+
 function initials(name: string) {
   return name
     .replace(/^(Dr\.|Mr\.|Mrs\.|Ms\.)\s+/i, "")
@@ -66,7 +132,10 @@ function initials(name: string) {
 
 function splitBio(description: string | null) {
   const text = description ?? "";
-  const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
+  const lines = text
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
   const credLine = lines.find((l) => l.toLowerCase().startsWith("credentials:"));
   const credentials = credLine ? credLine.replace(/^credentials:\s*/i, "") : null;
   const profile = lines.filter((l) => l !== credLine).join("\n\n");
@@ -133,7 +202,7 @@ function TeamPage() {
     },
   });
 
-  const people = q.data ?? [];
+  const people = q.data && q.data.length > 0 ? q.data : fallbackPeople;
   const leadership = people.filter((p) => p.category === "leadership");
   const advisors = people.filter((p) => p.category !== "leadership");
 

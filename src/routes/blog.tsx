@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -8,10 +9,16 @@ import { Newspaper } from "lucide-react";
 export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
-      { title: "Blog — Neurofeedback Insights | BrainWaves Tech" },
-      { name: "description", content: "Articles, research notes and updates from BrainWaves Tech." },
+      { title: "Blog: Neurofeedback Insights | BrainWaves Tech" },
+      {
+        name: "description",
+        content: "Articles, research notes and updates from BrainWaves Tech.",
+      },
       { property: "og:title", content: "BrainWaves Tech Blog" },
-      { property: "og:description", content: "Articles on neurofeedback, brainwaves and sound therapy." },
+      {
+        property: "og:description",
+        content: "Articles on neurofeedback, brainwaves and sound therapy.",
+      },
       { property: "og:url", content: "/blog" },
     ],
     links: [{ rel: "canonical", href: "/blog" }],
@@ -53,17 +60,33 @@ function BlogPage() {
           {q.data && q.data.length > 0 && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {q.data.map((p) => (
-                <Link key={p.id} to="/blog/$slug" params={{ slug: p.slug }}
-                  className="glass-card group overflow-hidden rounded-2xl transition hover:shadow-xl">
+                <Link
+                  key={p.id}
+                  to="/blog/$slug"
+                  params={{ slug: p.slug }}
+                  className="glass-card group overflow-hidden rounded-2xl transition hover:shadow-xl"
+                >
                   {p.cover_image_url && (
-                    <img src={p.cover_image_url} alt={p.title} className="h-48 w-full object-cover transition group-hover:scale-105" />
+                    <img
+                      src={p.cover_image_url}
+                      alt={p.title}
+                      className="h-48 w-full object-cover transition group-hover:scale-105"
+                    />
                   )}
                   <div className="p-5">
                     <p className="text-xs text-muted-foreground">
-                      {p.published_at ? new Date(p.published_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) : ""}
+                      {p.published_at
+                        ? new Date(p.published_at).toLocaleDateString(undefined, {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })
+                        : ""}
                     </p>
                     <h2 className="mt-1 font-display text-lg font-bold text-navy">{p.title}</h2>
-                    {p.excerpt && <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{p.excerpt}</p>}
+                    {p.excerpt && (
+                      <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{p.excerpt}</p>
+                    )}
                   </div>
                 </Link>
               ))}
@@ -91,14 +114,77 @@ function PostCardSkeleton() {
 
 function BlogEmptyState() {
   return (
-    <div className="glass-card mx-auto flex max-w-md flex-col items-center gap-3 rounded-2xl px-8 py-16 text-center">
+    <div className="glass-card mx-auto max-w-2xl rounded-2xl px-6 py-14 text-center sm:px-10">
       <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-teal/10 text-teal">
         <Newspaper className="h-7 w-7" aria-hidden="true" />
       </span>
-      <h2 className="font-display text-lg font-bold text-navy">No posts published yet</h2>
-      <p className="text-sm leading-relaxed text-muted-foreground">
-        We're working on new articles, research notes and practitioner stories. Check back soon.
+      <h2 className="mt-4 font-display text-2xl font-bold text-navy">Coming soon</h2>
+      <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
+        We&apos;re preparing practical articles, research notes and practitioner stories. Subscribe
+        to receive the latest updates when they are published.
       </p>
+      <BlogSubscribeForm />
     </div>
+  );
+}
+
+function BlogSubscribeForm() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus("sending");
+    setErrorMessage("");
+    try {
+      const response = await fetch("/api/public/enquiries", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name: "Newsletter Subscriber",
+          email,
+          phone: "",
+          interest: "Newsletter Subscription",
+          message: "Subscribed via Blog coming soon section",
+        }),
+      });
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body.error ?? "Unable to subscribe right now.");
+      }
+      setEmail("");
+      setStatus("success");
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(error instanceof Error ? error.message : "Unable to subscribe right now.");
+    }
+  }
+
+  return (
+    <form onSubmit={onSubmit} className="mx-auto mt-7 flex max-w-lg flex-col gap-3 sm:flex-row">
+      <input
+        type="email"
+        required
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        placeholder="Enter your email address"
+        aria-label="Email address"
+        className="min-h-11 flex-1 rounded-full border border-navy/15 bg-white px-4 text-sm text-navy outline-none transition placeholder:text-muted-foreground focus:border-teal"
+      />
+      <button
+        type="submit"
+        disabled={status === "sending"}
+        className="min-h-11 rounded-full bg-navy px-5 text-sm font-semibold text-white transition hover:bg-navy/90 disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {status === "sending" ? "Subscribing..." : "Subscribe"}
+      </button>
+      {status === "success" && (
+        <p className="basis-full text-sm font-medium text-emerald-700">You&apos;re subscribed.</p>
+      )}
+      {status === "error" && (
+        <p className="basis-full text-sm font-medium text-red-600">{errorMessage}</p>
+      )}
+    </form>
   );
 }

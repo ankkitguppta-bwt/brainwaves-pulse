@@ -22,8 +22,11 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TechnologyIndexRouteImport } from './routes/technology.index'
 import { Route as SolutionsIndexRouteImport } from './routes/solutions.index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
+import { Route as TechnologyBwt2508RouteImport } from './routes/technology.bwt-2508'
+import { Route as TechnologyBwt1408RouteImport } from './routes/technology.bwt-1408'
 import { Route as SolutionsRehabRouteImport } from './routes/solutions.rehab'
 import { Route as SolutionsPsychologistsRouteImport } from './routes/solutions.psychologists'
 import { Route as SolutionsHealthcareRouteImport } from './routes/solutions.healthcare'
@@ -109,6 +112,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TechnologyIndexRoute = TechnologyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TechnologyRoute,
+} as any)
 const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
   id: '/solutions/',
   path: '/solutions/',
@@ -118,6 +126,16 @@ const ProductsIndexRoute = ProductsIndexRouteImport.update({
   id: '/products/',
   path: '/products/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const TechnologyBwt2508Route = TechnologyBwt2508RouteImport.update({
+  id: '/bwt-2508',
+  path: '/bwt-2508',
+  getParentRoute: () => TechnologyRoute,
+} as any)
+const TechnologyBwt1408Route = TechnologyBwt1408RouteImport.update({
+  id: '/bwt-1408',
+  path: '/bwt-1408',
+  getParentRoute: () => TechnologyRoute,
 } as any)
 const SolutionsRehabRoute = SolutionsRehabRouteImport.update({
   id: '/solutions/rehab',
@@ -237,7 +255,7 @@ export interface FileRoutesByFullPath {
   '/research': typeof ResearchRoute
   '/stories': typeof StoriesRoute
   '/team': typeof TeamRoute
-  '/technology': typeof TechnologyRoute
+  '/technology': typeof TechnologyRouteWithChildren
   '/testimonials': typeof TestimonialsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/products/accessories': typeof ProductsAccessoriesRoute
@@ -249,8 +267,11 @@ export interface FileRoutesByFullPath {
   '/solutions/healthcare': typeof SolutionsHealthcareRoute
   '/solutions/psychologists': typeof SolutionsPsychologistsRoute
   '/solutions/rehab': typeof SolutionsRehabRoute
+  '/technology/bwt-1408': typeof TechnologyBwt1408Route
+  '/technology/bwt-2508': typeof TechnologyBwt2508Route
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
+  '/technology/': typeof TechnologyIndexRoute
   '/admin/case-studies': typeof AuthenticatedAdminCaseStudiesRoute
   '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
@@ -273,7 +294,6 @@ export interface FileRoutesByTo {
   '/research': typeof ResearchRoute
   '/stories': typeof StoriesRoute
   '/team': typeof TeamRoute
-  '/technology': typeof TechnologyRoute
   '/testimonials': typeof TestimonialsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/products/accessories': typeof ProductsAccessoriesRoute
@@ -285,8 +305,11 @@ export interface FileRoutesByTo {
   '/solutions/healthcare': typeof SolutionsHealthcareRoute
   '/solutions/psychologists': typeof SolutionsPsychologistsRoute
   '/solutions/rehab': typeof SolutionsRehabRoute
+  '/technology/bwt-1408': typeof TechnologyBwt1408Route
+  '/technology/bwt-2508': typeof TechnologyBwt2508Route
   '/products': typeof ProductsIndexRoute
   '/solutions': typeof SolutionsIndexRoute
+  '/technology': typeof TechnologyIndexRoute
   '/admin/case-studies': typeof AuthenticatedAdminCaseStudiesRoute
   '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
@@ -311,7 +334,7 @@ export interface FileRoutesById {
   '/research': typeof ResearchRoute
   '/stories': typeof StoriesRoute
   '/team': typeof TeamRoute
-  '/technology': typeof TechnologyRoute
+  '/technology': typeof TechnologyRouteWithChildren
   '/testimonials': typeof TestimonialsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/products/accessories': typeof ProductsAccessoriesRoute
@@ -323,8 +346,11 @@ export interface FileRoutesById {
   '/solutions/healthcare': typeof SolutionsHealthcareRoute
   '/solutions/psychologists': typeof SolutionsPsychologistsRoute
   '/solutions/rehab': typeof SolutionsRehabRoute
+  '/technology/bwt-1408': typeof TechnologyBwt1408Route
+  '/technology/bwt-2508': typeof TechnologyBwt2508Route
   '/products/': typeof ProductsIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
+  '/technology/': typeof TechnologyIndexRoute
   '/_authenticated/admin/case-studies': typeof AuthenticatedAdminCaseStudiesRoute
   '/_authenticated/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
@@ -361,8 +387,11 @@ export interface FileRouteTypes {
     | '/solutions/healthcare'
     | '/solutions/psychologists'
     | '/solutions/rehab'
+    | '/technology/bwt-1408'
+    | '/technology/bwt-2508'
     | '/products/'
     | '/solutions/'
+    | '/technology/'
     | '/admin/case-studies'
     | '/admin/enquiries'
     | '/admin/media'
@@ -385,7 +414,6 @@ export interface FileRouteTypes {
     | '/research'
     | '/stories'
     | '/team'
-    | '/technology'
     | '/testimonials'
     | '/blog/$slug'
     | '/products/accessories'
@@ -397,8 +425,11 @@ export interface FileRouteTypes {
     | '/solutions/healthcare'
     | '/solutions/psychologists'
     | '/solutions/rehab'
+    | '/technology/bwt-1408'
+    | '/technology/bwt-2508'
     | '/products'
     | '/solutions'
+    | '/technology'
     | '/admin/case-studies'
     | '/admin/enquiries'
     | '/admin/media'
@@ -434,8 +465,11 @@ export interface FileRouteTypes {
     | '/solutions/healthcare'
     | '/solutions/psychologists'
     | '/solutions/rehab'
+    | '/technology/bwt-1408'
+    | '/technology/bwt-2508'
     | '/products/'
     | '/solutions/'
+    | '/technology/'
     | '/_authenticated/admin/case-studies'
     | '/_authenticated/admin/enquiries'
     | '/_authenticated/admin/media'
@@ -460,7 +494,7 @@ export interface RootRouteChildren {
   ResearchRoute: typeof ResearchRoute
   StoriesRoute: typeof StoriesRoute
   TeamRoute: typeof TeamRoute
-  TechnologyRoute: typeof TechnologyRoute
+  TechnologyRoute: typeof TechnologyRouteWithChildren
   TestimonialsRoute: typeof TestimonialsRoute
   ProductsAccessoriesRoute: typeof ProductsAccessoriesRoute
   ProductsHeadbandRoute: typeof ProductsHeadbandRoute
@@ -570,6 +604,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/technology/': {
+      id: '/technology/'
+      path: '/'
+      fullPath: '/technology/'
+      preLoaderRoute: typeof TechnologyIndexRouteImport
+      parentRoute: typeof TechnologyRoute
+    }
     '/solutions/': {
       id: '/solutions/'
       path: '/solutions'
@@ -583,6 +624,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/products/'
       preLoaderRoute: typeof ProductsIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/technology/bwt-2508': {
+      id: '/technology/bwt-2508'
+      path: '/bwt-2508'
+      fullPath: '/technology/bwt-2508'
+      preLoaderRoute: typeof TechnologyBwt2508RouteImport
+      parentRoute: typeof TechnologyRoute
+    }
+    '/technology/bwt-1408': {
+      id: '/technology/bwt-1408'
+      path: '/bwt-1408'
+      fullPath: '/technology/bwt-1408'
+      preLoaderRoute: typeof TechnologyBwt1408RouteImport
+      parentRoute: typeof TechnologyRoute
     }
     '/solutions/rehab': {
       id: '/solutions/rehab'
@@ -762,6 +817,22 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
+interface TechnologyRouteChildren {
+  TechnologyBwt1408Route: typeof TechnologyBwt1408Route
+  TechnologyBwt2508Route: typeof TechnologyBwt2508Route
+  TechnologyIndexRoute: typeof TechnologyIndexRoute
+}
+
+const TechnologyRouteChildren: TechnologyRouteChildren = {
+  TechnologyBwt1408Route: TechnologyBwt1408Route,
+  TechnologyBwt2508Route: TechnologyBwt2508Route,
+  TechnologyIndexRoute: TechnologyIndexRoute,
+}
+
+const TechnologyRouteWithChildren = TechnologyRoute._addFileChildren(
+  TechnologyRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -774,7 +845,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResearchRoute: ResearchRoute,
   StoriesRoute: StoriesRoute,
   TeamRoute: TeamRoute,
-  TechnologyRoute: TechnologyRoute,
+  TechnologyRoute: TechnologyRouteWithChildren,
   TestimonialsRoute: TestimonialsRoute,
   ProductsAccessoriesRoute: ProductsAccessoriesRoute,
   ProductsHeadbandRoute: ProductsHeadbandRoute,

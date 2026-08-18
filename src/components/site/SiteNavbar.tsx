@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
-import brandLogo from "@/assets/brand/logo-light.png";
+import brandLogo from "@/assets/brand/brainwaves-logo.png";
 
 type NavItem =
   | { label: string; to: string }
@@ -12,17 +12,33 @@ const nav: NavItem[] = [
   {
     label: "Products",
     children: [
-      { label: "BWT-2508 Headset", to: "/products/headband", desc: "High-density EEG headset" },
-      { label: "BWT-1408 Software", to: "/products/software", desc: "Live neurofeedback dashboard" },
-      { label: "NFP Certification", to: "/practitioner", desc: "Certified practitioner programme" },
-      { label: "Customised Solutions", to: "/contact", desc: "Tailored neurofeedback systems" },
+      {
+        label: "BWT-2508",
+        to: "/products/headband",
+        desc: "Wireless brainwave recording hardware",
+      },
+      {
+        label: "BWT-1408",
+        to: "/products/software",
+        desc: "Brainwaves analytics and report platform",
+      },
+      {
+        label: "NFP Certification",
+        to: "/practitioner",
+        desc: "Accredited Brain Waves Analyst certification",
+      },
+      {
+        label: "Customised Solutions",
+        to: "/products/sound-therapy",
+        desc: "Tailored Neurofeedback Systems",
+      },
     ],
   },
   {
     label: "Technology",
     children: [
-      { label: "BWT-2508", to: "/technology" },
-      { label: "BWT-1408", to: "/technology" },
+      { label: "BWT-2508", to: "/technology/bwt-2508", desc: "Dry-electrode hardware technology" },
+      { label: "BWT-1408", to: "/technology/bwt-1408", desc: "Neurofeedback software technology" },
     ],
   },
   { label: "Become a Practitioner", to: "/practitioner" },
@@ -34,22 +50,14 @@ const nav: NavItem[] = [
       { label: "Scientific Research", to: "/research" },
       { label: "Meet the Team", to: "/team" },
       { label: "Media", to: "/stories" },
-      { label: "Testimonials", to: "/testimonials" },
       { label: "Contact Us", to: "/contact" },
     ],
   },
 ];
 
 function Wordmark(_props: { solid?: boolean }) {
-  return (
-    <img
-      src={brandLogo}
-      alt="BrainWaves Tech"
-      className="h-9 w-auto sm:h-10 lg:h-11"
-    />
-  );
+  return <img src={brandLogo} alt="BrainWaves Tech" className="h-9 w-auto sm:h-10 lg:h-11" />;
 }
-
 
 export function SiteNavbar() {
   const [open, setOpen] = useState(false);
@@ -88,7 +96,11 @@ export function SiteNavbar() {
         }`}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-          <Link to="/" className="flex h-10 shrink-0 items-center" aria-label="BrainWaves Tech home">
+          <Link
+            to="/"
+            className="flex h-10 shrink-0 items-center"
+            aria-label="BrainWaves Tech home"
+          >
             <Wordmark solid={solid} />
           </Link>
 
@@ -127,7 +139,9 @@ export function SiteNavbar() {
                     aria-expanded={isOpen}
                   >
                     {item.label}
-                    <ChevronDown className={`h-3.5 w-3.5 transition ${isOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 transition ${isOpen ? "rotate-180" : ""}`}
+                    />
                   </button>
                   {isOpen && (
                     <div className="absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-2">
@@ -141,7 +155,9 @@ export function SiteNavbar() {
                                 onClick={() => setOpenDrop(null)}
                               >
                                 <p className="text-sm font-semibold text-black">{c.label}</p>
-                                {c.desc && <p className="mt-0.5 text-xs text-muted-foreground">{c.desc}</p>}
+                                {c.desc && (
+                                  <p className="mt-0.5 text-xs text-muted-foreground">{c.desc}</p>
+                                )}
                               </Link>
                             </li>
                           ))}
@@ -232,7 +248,9 @@ export function SiteNavbar() {
                         aria-expanded={expanded}
                       >
                         {item.label}
-                        <ChevronDown className={`h-4 w-4 transition ${expanded ? "rotate-180" : ""}`} />
+                        <ChevronDown
+                          className={`h-4 w-4 transition ${expanded ? "rotate-180" : ""}`}
+                        />
                       </button>
                       {expanded && (
                         <ul className="mt-2 flex flex-col gap-1 border-l-2 border-teal/40 pl-3">

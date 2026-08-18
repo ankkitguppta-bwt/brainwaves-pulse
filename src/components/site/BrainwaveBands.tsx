@@ -525,11 +525,15 @@ export function BrainwaveBands() {
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy text-white">
                 <Activity className="h-5 w-5" />
               </span>
-              <span className="mt-4 block font-display text-base font-semibold text-navy">{b.name}</span>
+              <span className="mt-4 block font-display text-base font-semibold text-navy">
+                {b.name}
+              </span>
               <span className="mt-1 block text-[11px] font-semibold uppercase tracking-[0.12em] text-teal">
                 {b.frequency}
               </span>
-              <span className="mt-3 block text-sm leading-relaxed text-muted-foreground">{b.hook}</span>
+              <span className="mt-3 block text-sm leading-relaxed text-muted-foreground">
+                {b.hook}
+              </span>
               <span className="mt-auto pt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/60 transition-colors group-hover:text-teal">
                 Explore
                 <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -538,93 +542,100 @@ export function BrainwaveBands() {
           ))}
         </div>
       ) : (
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
-
-        {/* expanded panel */}
-        <div
-          style={{ viewTransitionName: `band-${current.id}` }}
-          className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-navy/10 bg-white p-5 sm:p-6"
-        >
-
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <h3 className="font-display text-xl font-semibold text-navy sm:text-2xl">{current.name}</h3>
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-teal">
-              {current.frequency}
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={() => switchTo(null)}
-
-            className="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-navy/10 text-navy/50 transition-colors hover:border-teal/50 hover:text-teal"
-            aria-label="Close"
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
+          {/* expanded panel */}
+          <div
+            style={{ viewTransitionName: `band-${current.id}` }}
+            className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-navy/10 bg-white p-5 sm:p-6"
           >
-            <X className="h-4 w-4" />
-          </button>
-          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{current.hook}</p>
-
-          {/* live 3D wave stage */}
-          <div className="relative mt-5 overflow-hidden rounded-xl bg-navy">
-            <div
-              key={current.id}
-              ref={(el) => {
-                stageRefs.current[current.id] = el;
-              }}
-              className="h-44 w-full sm:h-56 lg:h-64"
-            />
-          </div>
-
-          {/* sample report download */}
-          <a
-            href={REPORTS[current.id]}
-            download={`${current.name.replace(/\s+/g, "-")}-sample-report.png`}
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-navy px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-navy/90"
-          >
-            <Download className="h-3.5 w-3.5" /> Download sample
-          </a>
-
-          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{current.body}</p>
-          <dl className="mt-4">
-            <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-navy/50">
-              What it measures
-            </dt>
-            <dd className="mt-1 text-sm leading-relaxed text-navy/80">{current.measures}</dd>
-          </dl>
-        </div>
-
-        {/* collapsed stack */}
-        <div className="flex w-full shrink-0 flex-col gap-3 lg:w-72">
-          {rest.map((b) => (
-            <button
-              key={b.id}
-              type="button"
-              style={{ viewTransitionName: `band-${b.id}` }}
-              onClick={() => switchTo(b.id)}
-
-              className="group flex flex-1 items-start gap-3 rounded-2xl border border-navy/10 bg-white p-4 text-left transition-colors duration-300 hover:border-teal/50"
-            >
-              <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-navy text-white">
-                <Activity className="h-4 w-4" />
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h3 className="font-display text-xl font-semibold text-navy sm:text-2xl">
+                {current.name}
+              </h3>
+              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-teal">
+                {current.frequency}
               </span>
-              <span className="min-w-0 flex-1">
-                <span className="flex flex-wrap items-baseline gap-x-2">
-                  <span className="font-display text-sm font-semibold text-navy">{b.name}</span>
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-teal">
-                    {b.frequency}
+            </div>
+            <button
+              type="button"
+              onClick={() => switchTo(null)}
+
+              className="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-navy/10 text-navy/50 transition-colors hover:border-teal/50 hover:text-teal"
+              aria-label="Close"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{current.hook}</p>
+
+            {/* live 3D wave stage */}
+            <div className="relative mt-5 overflow-hidden rounded-xl bg-navy">
+              <div
+                key={current.id}
+                ref={(el) => {
+                  stageRefs.current[current.id] = el;
+                }}
+                className="h-44 w-full sm:h-56 lg:h-64"
+              />
+            </div>
+
+            <div className="mt-5 flex flex-wrap gap-3">
+              <a
+                href={REPORTS[current.id]}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-navy px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-navy/90"
+              >
+                View sample report
+              </a>
+              <a
+                href={REPORTS[current.id]}
+                download={`${current.name.replace(/\s+/g, "-")}-sample-report.png`}
+                className="inline-flex items-center gap-2 rounded-full border border-navy/15 px-4 py-2 text-xs font-semibold text-navy transition-colors hover:border-teal hover:text-teal"
+              >
+                <Download className="h-3.5 w-3.5" /> Download image
+              </a>
+            </div>
+
+            <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{current.body}</p>
+            <dl className="mt-4">
+              <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-navy/50">
+                What it measures
+              </dt>
+              <dd className="mt-1 text-sm leading-relaxed text-navy/80">{current.measures}</dd>
+            </dl>
+          </div>
+
+          {/* collapsed stack */}
+          <div className="flex w-full shrink-0 flex-col gap-3 lg:w-72">
+            {rest.map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                style={{ viewTransitionName: `band-${b.id}` }}
+                onClick={() => switchTo(b.id)}
+
+                className="group flex flex-1 items-start gap-3 rounded-2xl border border-navy/10 bg-white p-4 text-left transition-colors duration-300 hover:border-teal/50"
+              >
+                <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-navy text-white">
+                  <Activity className="h-4 w-4" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="flex flex-wrap items-baseline gap-x-2">
+                    <span className="font-display text-sm font-semibold text-navy">{b.name}</span>
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-teal">
+                      {b.frequency}
+                    </span>
+                  </span>
+                  <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-muted-foreground">
+                    {b.hook}
                   </span>
                 </span>
-                <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-muted-foreground">
-                  {b.hook}
-                </span>
-              </span>
-              <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-navy/30 transition-transform duration-300 group-hover:translate-x-0.5" />
-            </button>
-          ))}
+                <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-navy/30 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
       )}
     </div>
-
   );
 }
-

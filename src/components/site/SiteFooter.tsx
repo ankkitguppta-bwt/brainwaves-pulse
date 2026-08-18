@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
-import brandLogo from "@/assets/brand/logo-light.png";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-
+import brandLogo from "@/assets/brand/brainwaves-logo.png";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { LegalPolicyContent } from "@/components/site/LegalPolicyContent";
 
 const legalLinks = [
   "Disclaimer",
@@ -12,14 +18,6 @@ const legalLinks = [
   "Refund & Return Policy",
   "Shipping Policy",
 ];
-
-const legalContent: Record<string, string> = {
-  Disclaimer: "Products sold by Brain Waves Tech Pvt Ltd are intended for research applications and personal use only. They are not medical devices under Indian law and are not designed or intended for the diagnosis or treatment of any disease.",
-  "Terms & Conditions": "The Brain Waves Tech Pvt Ltd software, service, and website are provided for use with the BWT-2508 neuroheadset and Insight. By accessing, installing, or using them, you accept these Terms of Use. The software and website are informational tools only and are not intended for diagnosis, prevention, treatment, or cure of any medical condition. Use by persons under 16 is prohibited. Brain Waves Tech retains its intellectual-property and proprietary rights; users may not reverse engineer, decompile, copy, transmit, publish, or otherwise make unauthorised use of the software, service, website, or associated property.",
-  "Privacy Policy": "Protecting your privacy is important to Brain Waves Tech Pvt Ltd. We collect and use data only as required to provide and improve the service, maintain accounts, and meet legal obligations. Scan-data ownership remains with the user; the service is granted the permissions required to process that data, provide the service, and share it only with authorised recipients.",
-  "Refund & Return Policy": "For product, service, training, and subscription queries, please contact Brain Waves Tech before purchase. Eligibility for any refund or return is assessed against the applicable invoice, delivery status, and service activation terms.",
-  "Shipping Policy": "Shipping timelines, delivery coverage, and any applicable charges are confirmed at the time of order. Please contact our team for dispatch and tracking support.",
-};
 
 function NewsletterBand() {
   const [email, setEmail] = useState("");
@@ -48,9 +46,9 @@ function NewsletterBand() {
       }
       setStatus("success");
       setEmail("");
-    } catch (err: any) {
+    } catch (err: unknown) {
       setStatus("error");
-      setErrorMsg(err.message);
+      setErrorMsg(err instanceof Error ? err.message : "Subscribe failed");
     }
   }
 
@@ -60,7 +58,8 @@ function NewsletterBand() {
         Stop Guessing, Start Measuring
       </h2>
       <p className="mt-2 max-w-2xl text-sm text-white/65">
-        Subscribe for exclusive monthly blogs, data updates, and neuroscience-backed corporate welfare models.
+        Subscribe for exclusive monthly blogs, data updates, and neuroscience-backed corporate
+        welfare models.
       </p>
       <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <input
@@ -129,7 +128,11 @@ export function SiteFooter() {
             <ul className="mt-5 space-y-3 text-sm text-white/65">
               {legalLinks.map((l) => (
                 <li key={l}>
-                  <button type="button" onClick={() => setOpenLegal(l)} className="text-left transition hover:text-teal">
+                  <button
+                    type="button"
+                    onClick={() => setOpenLegal(l)}
+                    className="text-left transition hover:text-teal"
+                  >
                     {l}
                   </button>
                 </li>
@@ -143,8 +146,9 @@ export function SiteFooter() {
             </h4>
             <ul className="mt-5 space-y-3 text-sm text-white/65">
               <li>
-                <span className="font-semibold text-white">Office:</span> A-268, New Minal Residency,
-                Near Gate No. 4, In Front of D-Mart, Ayodhya Bypass Road, Bhopal, M.P. - 462023
+                <span className="font-semibold text-white">Office:</span> A-268, New Minal
+                Residency, Near Gate No. 4, In Front of D-Mart, Ayodhya Bypass Road, Bhopal, M.P. -
+                462023
               </li>
               <li>
                 <span className="font-semibold text-white">Inquiries: </span>
@@ -167,8 +171,14 @@ export function SiteFooter() {
         </div>
       </div>
       <Dialog open={!!openLegal} onOpenChange={(open) => !open && setOpenLegal(null)}>
-        <DialogContent className="max-h-[80svh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto">
-          <DialogHeader><DialogTitle>{openLegal}</DialogTitle><DialogDescription className="pt-3 text-left leading-relaxed">{openLegal ? legalContent[openLegal] : ""}</DialogDescription></DialogHeader>
+        <DialogContent className="max-h-[88svh] w-[calc(100%-2rem)] max-w-4xl overflow-y-auto p-5 sm:p-7">
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl text-navy">{openLegal}</DialogTitle>
+            <DialogDescription className="sr-only">
+              Full {openLegal} for Brain Waves Tech Pvt Ltd.
+            </DialogDescription>
+          </DialogHeader>
+          {openLegal && <LegalPolicyContent title={openLegal} />}
         </DialogContent>
       </Dialog>
     </footer>

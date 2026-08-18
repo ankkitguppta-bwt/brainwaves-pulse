@@ -136,6 +136,7 @@ export type Database = {
       }
       media_recognition: {
         Row: {
+          body: string | null
           created_at: string
           entry_date: string | null
           id: string
@@ -148,6 +149,7 @@ export type Database = {
           url: string | null
         }
         Insert: {
+          body?: string | null
           created_at?: string
           entry_date?: string | null
           id?: string
@@ -160,6 +162,7 @@ export type Database = {
           url?: string | null
         }
         Update: {
+          body?: string | null
           created_at?: string
           entry_date?: string | null
           id?: string
@@ -281,7 +284,14 @@ export type Database = {
     }
     Enums: {
       app_role: "admin"
-      media_kind: "media" | "recognition"
+      media_kind:
+        | "media"
+        | "recognition"
+        | "explainer_video"
+        | "youtube_podcast"
+        | "video_testimonial"
+        | "audio_testimonial"
+        | "written_testimonial"
       person_category: "leadership" | "team" | "advisor"
       post_status: "draft" | "published"
       testimonial_type: "text" | "video"
@@ -413,7 +423,15 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin"],
-      media_kind: ["media", "recognition"],
+      media_kind: [
+        "media",
+        "recognition",
+        "explainer_video",
+        "youtube_podcast",
+        "video_testimonial",
+        "audio_testimonial",
+        "written_testimonial",
+      ],
       person_category: ["leadership", "team", "advisor"],
       post_status: ["draft", "published"],
       testimonial_type: ["text", "video"],

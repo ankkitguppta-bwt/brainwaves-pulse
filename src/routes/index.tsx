@@ -25,24 +25,45 @@ import {
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
 import heroImage from "@/assets/banners/hero-realistic.jpg";
+import heroVideo from "@/assets/video/final_landing_page_loop.mp4";
 import { CountUp } from "@/components/site/CountUp";
 import { BrainwaveBands } from "@/components/site/BrainwaveBands";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "BrainWaves Tech — India's Advanced Neurofeedback & Brainwave Analysis Platform" },
+      { title: "BrainWaves Tech: India's Advanced Neurofeedback & Brainwave Analysis Platform" },
       {
         name: "description",
         content:
           "Assess brain activity, understand cognitive patterns and deliver customized neurofeedback & sound therapy solutions.",
       },
-      { property: "og:title", content: "India's Advanced Neurofeedback & Brainwave Analysis Platform" },
+      {
+        property: "og:title",
+        content: "India's Advanced Neurofeedback & Brainwave Analysis Platform",
+      },
       {
         property: "og:description",
         content:
@@ -86,14 +107,22 @@ function HomePage() {
 function Hero() {
   return (
     <section className="relative -mt-16 flex min-h-[100svh] w-full items-center overflow-hidden bg-navy text-white">
-      <img
-        src={heroImage}
-        alt=""
+      <video
+        src={heroVideo}
+        poster={heroImage}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover"
       />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/50 to-navy/80" />
-      <div className="relative mx-auto w-full max-w-4xl px-4 pb-16 pt-28 text-center sm:px-6 md:pb-20 md:pt-32 lg:px-8">
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/50 to-navy/80"
+      />
+      <div className="relative mx-auto w-full max-w-5xl px-4 pb-16 pt-32 text-center sm:px-6 md:pb-20 md:pt-36 lg:pt-40 lg:px-8">
         <h1
           data-aos="fade-up"
           data-aos-delay="100"
@@ -104,23 +133,17 @@ function Hero() {
         <p
           data-aos="fade-up"
           data-aos-delay="200"
-          className="mx-auto mt-5 max-w-2xl [text-wrap:balance] font-display text-base font-bold text-white sm:text-lg"
+          className="mx-auto mt-7 max-w-5xl font-display text-base font-bold text-white sm:text-lg lg:whitespace-nowrap"
         >
-          India’s advanced neurofeedback platform mapping{" "}
-          <span className="font-accent font-semibold text-orange">real-time</span> cognitive data in 2 minutes.
+          India’s advanced neurofeedback platform mapping
+          <span className="font-accent font-semibold text-orange"> real-time</span> cognitive data
+          in 2 minutes.
         </p>
-        <p
+        <div
           data-aos="fade-up"
-          data-aos-delay="250"
-          className="mx-auto mt-4 max-w-3xl [text-wrap:balance] font-display text-sm font-medium leading-relaxed text-white sm:text-base"
+          data-aos-delay="300"
+          className="mt-8 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3"
         >
-          Move past qualitative <span className="font-accent font-semibold text-white">guesswork</span>. Our 14 precise
-          cognitive parameters instantly help to figure out your{" "}
-          <span className="font-accent font-semibold text-orange">brain waves data</span> into a quantified performance
-          blueprint. An evidence-based platform to assess, track, and improve focus, performance, and well-being—for
-          individuals and organizations alike.
-        </p>
-        <div data-aos="fade-up" data-aos-delay="300" className="mt-8 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3">
           <Link
             to="/contact"
             className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full bg-teal px-4 py-2 text-xs font-semibold text-navy shadow-brand transition hover:scale-[1.02] sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
@@ -172,22 +195,31 @@ function StatsStrip() {
               className="mx-auto flex max-w-4xl flex-wrap items-baseline justify-center gap-x-3 text-center font-display text-2xl font-extrabold uppercase leading-tight tracking-[-0.01em] sm:text-3xl lg:text-[2.5rem]"
             >
               <span className="text-gradient-red text-[1.5em] font-black leading-none">Stop</span>
-              <span className="text-gradient-stop">Guessing about mental wellness and cognitive performance.</span>
+              <span className="text-gradient-stop">
+                Guessing about mental wellness and cognitive performance.
+              </span>
             </h2>
             <p
               data-aos="fade-up"
               data-aos-delay="120"
               className="mx-auto mt-6 max-w-3xl [text-wrap:balance] text-center font-display text-base font-bold leading-relaxed text-white sm:text-lg"
             >
-              <span className="text-teal">Brain Waves Tech</span> uses an innovative USA patented technology, which
-              quantifies state of mind in minutes with an accuracy of more than{" "}
-              <span className="align-baseline text-2xl font-black text-[#3ddc84] sm:text-3xl">92%</span>
+              <span className="text-teal">Brain Waves Tech</span> uses an innovative USA patented
+              technology, which quantifies state of mind in minutes with an accuracy of more than{" "}
+              <span className="align-baseline text-2xl font-black text-[#3ddc84] sm:text-3xl">
+                92%
+              </span>
             </p>
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-4 border-t border-white/15 pt-8 sm:grid-cols-4">
             {stats.map((s, i) => (
-              <div key={s.l} className="text-center" data-aos="fade-up" data-aos-delay={100 + i * 100}>
+              <div
+                key={s.l}
+                className="text-center"
+                data-aos="fade-up"
+                data-aos-delay={100 + i * 100}
+              >
                 <p className="font-display text-3xl font-bold text-white sm:text-4xl">
                   <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
                 </p>
@@ -196,7 +228,6 @@ function StatsStrip() {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );
@@ -212,7 +243,7 @@ function EcosystemSection() {
         "Deploy Non-Invasive Dry Electrode Hardware.",
         "Establish Live, Zero-Delay Wireless Telemetry.",
         "Automated Sensor Grounding Verification.",
-        "Record Raw Brainwaves in 2 Minutes.",
+        "Record Raw Brain waves In 2 Minutes.",
       ],
     },
     {
@@ -229,10 +260,10 @@ function EcosystemSection() {
       key: "EXPLORE",
       dot: "#a855f7",
       points: [
-        "Analyse Hidden Operational Attrition Triggers.",
+        "Analyze Hidden Operational Attrition Triggers.",
         "Deep-Dive into Historical Neuro-Trends.",
         "Scale Targeted Performance Plan Solutions.",
-        "Smart Solutions Personalised for Every Requirement.",
+        "Smart Solutions Personalized for Every Requirement.",
       ],
     },
   ];
@@ -245,34 +276,32 @@ function EcosystemSection() {
             data-aos="fade-up"
             className="font-display text-2xl font-extrabold leading-tight tracking-[-0.01em] text-navy sm:text-3xl lg:text-[2.5rem]"
           >
-            One Patented Ecosystem. <span className="text-gradient-brand">Zero Subjective Guesswork.</span>
+            One Patented Ecosystem.{" "}
+            <span className="text-gradient-brand">Zero Subjective Guesswork.</span>
           </h2>
           <p
             data-aos="fade-up"
             data-aos-delay="120"
             className="mx-auto mt-4 max-w-2xl [text-wrap:balance] text-sm leading-relaxed text-muted-foreground sm:text-base"
           >
-            Move away from outdated checklists and biased self-reporting. Our integrated system bridges high-fidelity
-            neuro-sensing hardware directly with cloud-based AI analytics, providing business leaders and clinicians
-            with concrete cognitive telemetry.
+            Move away from outdated checklists and biased self-reporting. Our integrated system
+            bridges high-fidelity neuro-sensing hardware directly with cloud-based AI analytics,
+            providing business leaders and clinicians with concrete cognitive telemetry.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        <div className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {pillars.map((p, i) => (
-            <div
-              key={p.key}
-              data-aos="fade-up"
-              data-aos-delay={100 + i * 140}
-              className={i === 1 ? "lg:-mt-6" : i === 2 ? "lg:mt-4" : ""}
-            >
+            <div key={p.key} data-aos="fade-up" data-aos-delay={100 + i * 140} className="flex">
               <div
-                className="animate-float h-full rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] sm:p-7"
+                className="animate-float h-full w-full rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] sm:p-7"
                 style={{ animationDelay: `${i * 0.9}s` }}
               >
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full" style={{ background: p.dot }} />
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-navy">{p.key}</span>
+                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-navy">
+                    {p.key}
+                  </span>
                 </div>
                 <ul className="mt-5 space-y-4">
                   {p.points.map((pt) => (
@@ -320,22 +349,22 @@ function HowItWorks() {
     {
       icon: Activity,
       title: "Brainwave Assessment",
-      desc: "Pure, real-time data capture with zero subjective bias — a quick, non-invasive 2-minute session using our patented sensing technology.",
+      desc: "Pure, real-time data capture with zero subjective bias. A quick, non-invasive, 2 minutes scan using our patented neurofeedback technology.",
     },
     {
       icon: Gauge,
       title: "Detailed Analysis",
-      desc: "Hidden neural patterns become clear, quantified parameters as our proprietary engine charts your cognitive matrix across 14 distinct metrics.",
+      desc: "Turning raw neural patterns into clear metrics, our patented algorithm charts your live cognitive matrix across 14 distinct parameters.",
     },
     {
       icon: Users,
       title: "Professional Interpretation",
-      desc: "Certified practitioners translate automated metrics into actionable insights, turning algorithmic complexity into a clear cognitive health blueprint.",
+      desc: "Translating algorithmic output into actionable care certified network practitioners deliver a signed, detailed report, with enterprise-grade quantitative blueprint.",
     },
     {
       icon: Target,
       title: "Personalised Solutions",
-      desc: "Your practitioner designs a tailored plan from your brain data, with regular follow-ups and tracking so you can see real performance improve over time.",
+      desc: "Deploying targeted care for your mind. Your practitioner designs custom solutions and related protocols with multi-session progress tracking.",
     },
   ];
   const Step = ({ s, i }: { s: (typeof steps)[number]; i: number }) => (
@@ -369,14 +398,16 @@ function HowItWorks() {
   }, []);
 
   const revealStyle = (i: number) =>
-    revealed ? ({ animationDelay: `${i * 300}ms` } as React.CSSProperties) : ({ opacity: 0 } as React.CSSProperties);
+    revealed
+      ? ({ animationDelay: `${i * 500}ms` } as React.CSSProperties)
+      : ({ opacity: 0 } as React.CSSProperties);
 
   return (
     <section ref={sectionRef} className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           title="A Four-Stage Neuro-Wellness Journey"
-          sub="From non-invasive sensor link to targeted cognitive alignment — a data-backed clinical protocol built for B2B environments and delivered by certified wellness practitioners."
+          sub="From non-invasive technology to quantitative data output, a data-backed clinical protocol built for B2B environments and delivered by certified wellness practitioners."
         />
         {/* Mobile / tablet 2-col grid */}
         <div className="mt-10 grid grid-cols-2 gap-6 lg:hidden">
@@ -391,7 +422,11 @@ function HowItWorks() {
           <div className="absolute left-0 right-0 top-8 h-px bg-gradient-to-r from-transparent via-teal/40 to-transparent" />
           <ol className="grid gap-8 lg:grid-cols-4">
             {steps.map((s, i) => (
-              <li key={s.title} className={revealed ? "animate-step-in" : ""} style={revealStyle(i)}>
+              <li
+                key={s.title}
+                className={revealed ? "animate-step-in" : ""}
+                style={revealStyle(i)}
+              >
                 <Step s={s} i={i} />
               </li>
             ))}
@@ -434,27 +469,34 @@ function WhoBenefits() {
     <section className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading title="Built for professionals. Scaled for visionary organizations. Accessible to everyone." />
-        <div className="marquee-mask mt-12 space-y-4 !shadow-none" data-aos="fade-up" data-aos-delay="150">
-          {[audiences.slice(0, Math.ceil(audiences.length / 2)), audiences.slice(Math.ceil(audiences.length / 2))].map(
-            (row, idx) => (
-              <div key={idx} className="marquee-track overflow-hidden">
-                <div
-                  className="flex w-max gap-3"
-                  style={{ animation: `${idx % 2 === 0 ? "marquee-left" : "marquee-right"} 40s linear infinite` }}
-                >
-                  {[...row, ...row].map((a, i) => (
-                    <div
-                      key={`${a.t}-${i}`}
-                      className="glass-card flex w-40 shrink-0 flex-col items-center gap-2 rounded-xl p-4 text-center !shadow-none"
-                    >
-                      <a.i className="h-6 w-6 text-teal" />
-                      <p className="text-xs font-medium text-navy">{a.t}</p>
-                    </div>
-                  ))}
-                </div>
+        <div
+          className="marquee-mask mt-12 space-y-4 !shadow-none"
+          data-aos="fade-up"
+          data-aos-delay="150"
+        >
+          {[
+            audiences.slice(0, Math.ceil(audiences.length / 2)),
+            audiences.slice(Math.ceil(audiences.length / 2)),
+          ].map((row, idx) => (
+            <div key={idx} className="marquee-track overflow-hidden">
+              <div
+                className="flex w-max gap-3"
+                style={{
+                  animation: `${idx % 2 === 0 ? "marquee-left" : "marquee-right"} 40s linear infinite`,
+                }}
+              >
+                {[...row, ...row].map((a, i) => (
+                  <div
+                    key={`${a.t}-${i}`}
+                    className="glass-card flex w-40 shrink-0 flex-col items-center gap-2 rounded-xl p-4 text-center !shadow-none"
+                  >
+                    <a.i className="h-6 w-6 text-teal" />
+                    <p className="text-xs font-medium text-navy">{a.t}</p>
+                  </div>
+                ))}
               </div>
-            ),
-          )}
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -480,16 +522,22 @@ function VideoTestimonials() {
       return (data ?? []).filter((v) => v.video_url);
     },
   });
-  const dbItems: VideoT[] = (q.data ?? []).map((v: any) => ({
+  const dbItems: VideoT[] = (q.data ?? []).map((v) => ({
     id: v.id,
     title: v.title ?? v.author,
     author: v.author,
     src: v.video_url,
     thumbnail: v.thumbnail_url,
   }));
-  const items = dbItems.length > 0 ? dbItems : clientTestimonialVideos.map((v) => ({ id: v.id, title: v.title, author: v.author, src: v.video_url }));
-  const [paused, setPaused] = useState(false);
-
+  const items =
+    dbItems.length > 0
+      ? dbItems
+      : clientTestimonialVideos.map((v) => ({
+          id: v.id,
+          title: v.title,
+          author: v.author,
+          src: v.video_url,
+        }));
   const Card = ({ v }: { v: VideoT }) => (
     <button
       type="button"
@@ -500,7 +548,8 @@ function VideoTestimonials() {
       <div
         className="absolute inset-0"
         style={{
-          background: "linear-gradient(180deg, #0a4a4a 0%, #083535 25%, var(--navy) 60%, #051b2b 100%)",
+          background:
+            "linear-gradient(180deg, #0a4a4a 0%, #083535 25%, var(--navy) 60%, #051b2b 100%)",
         }}
       />
       {/* animated wave lines */}
@@ -537,6 +586,7 @@ function VideoTestimonials() {
           src={v.thumbnail}
           alt={v.title}
           loading="lazy"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
         />
       ) : (
@@ -584,14 +634,13 @@ function VideoTestimonials() {
       {items.length > 0 ? (
         <div
           data-aos="fade-up"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onTouchStart={() => setPaused((p) => !p)}
-          className="marquee-mask mt-10 overflow-hidden"
+          className="marquee-mask marquee-pause-on-hover mt-10 overflow-hidden"
         >
           <div
-            className={`flex w-max gap-5 pl-4 will-change-transform marquee-horizontal ${paused ? "marquee-paused" : ""} lg:pl-8`}
-            style={{ ["--marquee-duration" as any]: `${Math.max(30, items.length * 10)}s` }}
+            className="marquee-horizontal flex w-max gap-5 pl-4 will-change-transform lg:pl-8"
+            style={
+              { "--marquee-duration": `${Math.max(30, items.length * 10)}s` } as React.CSSProperties
+            }
           >
             {loop.map((v, i) => (
               <Card key={`${v.id}-${i}`} v={v} />
@@ -701,11 +750,19 @@ function FinalCTA() {
         <h2 className="font-display text-3xl font-bold sm:text-5xl" data-aos="fade-up">
           Start Your <span className="text-gradient-brand">Neurofeedback Journey</span> Today
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl [text-wrap:balance] text-white/75" data-aos="fade-up" data-aos-delay="120">
-          Whether you want to train your brain, add neurofeedback to your practice, or explore partnership — we'd love
-          to talk.
+        <p
+          className="mx-auto mt-4 max-w-2xl [text-wrap:balance] text-white/75"
+          data-aos="fade-up"
+          data-aos-delay="120"
+        >
+          Whether you want to train your brain, add neurofeedback to your practice, or explore
+          partnership, we'd love to talk.
         </p>
-        <div className="mt-8 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3" data-aos="fade-up" data-aos-delay="220">
+        <div
+          className="mt-8 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3"
+          data-aos="fade-up"
+          data-aos-delay="220"
+        >
           <Link
             to="/contact"
             className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full bg-teal px-4 py-2 text-xs font-semibold text-navy shadow-brand sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
