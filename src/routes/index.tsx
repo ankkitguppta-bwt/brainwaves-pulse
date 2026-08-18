@@ -522,13 +522,19 @@ function VideoTestimonials() {
       return (data ?? []).filter((v) => v.video_url);
     },
   });
-  const dbItems: VideoT[] = (q.data ?? []).map((v) => ({
-    id: v.id,
-    title: v.title ?? v.author,
-    author: v.author,
-    src: v.video_url,
-    thumbnail: v.thumbnail_url,
-  }));
+  const dbItems: VideoT[] = (q.data ?? []).flatMap((v) =>
+    v.video_url
+      ? [
+          {
+            id: v.id,
+            title: v.title ?? v.author,
+            author: v.author,
+            src: v.video_url,
+            thumbnail: v.thumbnail_url,
+          },
+        ]
+      : [],
+  );
   const items =
     dbItems.length > 0
       ? dbItems
