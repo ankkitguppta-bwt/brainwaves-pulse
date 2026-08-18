@@ -502,7 +502,6 @@ function WhoBenefits() {
     </section>
   );
 }
-
 /* ───── Video testimonials ───── */
 type VideoT = { id: string; title: string; author: string; src: string; thumbnail?: string | null };
 import { useQuery as useVideoQuery } from "@tanstack/react-query";
@@ -525,25 +524,25 @@ function VideoTestimonials() {
   const dbItems: VideoT[] = (q.data ?? []).flatMap((v) =>
     v.video_url
       ? [
-          {
-            id: v.id,
-            title: v.title ?? v.author,
-            author: v.author,
-            src: v.video_url,
-            thumbnail: v.thumbnail_url,
-          },
-        ]
+        {
+          id: v.id,
+          title: v.title ?? v.author,
+          author: v.author,
+          src: v.video_url,
+          thumbnail: v.thumbnail_url,
+        },
+      ]
       : [],
   );
   const items =
     dbItems.length > 0
       ? dbItems
       : clientTestimonialVideos.map((v) => ({
-          id: v.id,
-          title: v.title,
-          author: v.author,
-          src: v.video_url,
-        }));
+        id: v.id,
+        title: v.title,
+        author: v.author,
+        src: v.video_url,
+      }));
   const Card = ({ v }: { v: VideoT }) => (
     <button
       type="button"
