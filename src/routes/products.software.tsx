@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Activity, FileText, Gauge, History } from "lucide-react";
+import { Activity, BarChart3, FileText, Gauge, History, Target, Timer } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import alphaReport from "@/assets/client/reports/Alpha.png";
 import sampleReport from "@/assets/reports/brainwaves-sample-report.pdf";
@@ -17,9 +17,9 @@ const modules = [
   ],
   [
     Gauge,
-    "The 15-Parameter Decoding Engine",
+    "The 14-Parameter Decoding Engine",
     "Natural Language AI Interpretation.",
-    "The proprietary algorithm converts complex spectral interactions into five fundamental brainwave bands and ten qualitative performance gauges—making technical EEG data clear, usable, and human-readable.",
+    "The proprietary algorithm converts complex spectral interactions into five fundamental brainwave bands and nine qualitative performance gauges, turning technical EEG data into something genuinely easy to read.",
   ],
   [
     FileText,
@@ -45,6 +45,11 @@ const bands = [
   ["Delta", "0.5–3 Hz", "Deep-sleep quality, satisfaction, self-esteem, and physical rest."],
   ["Theta", "3–8 Hz", "Emotional processing, rigidity, overthinking, and creative ideation."],
 ] as const;
+const heroMetrics = [
+  [BarChart3, "#14b8a6", "14", "Quantifiable Metrics"],
+  [Timer, "#f97316", "2-Min", "Scan & Graphical Output"],
+  [Target, "#14b8a6", "92%+", "Reading Accuracy"],
+] as const;
 const gauges = [
   ["Attention Level", "Real-time active focus and resistance to distractions."],
   ["Study Focus", "Sustained persistence for comprehending and retaining complex material."],
@@ -53,7 +58,6 @@ const gauges = [
   ["Inner Peace", "Deep emotional quietude and stability."],
   ["Schumann Resonance", "Alignment with restorative bio-rhythms."],
   ["Deep Meditation", "Slow-wave entrainment reflecting inward quietude."],
-  ["Joy", "Positive emotional valence and neurological contentment."],
   ["Empathy Quotient", "Emotional openness and interpersonal responsiveness."],
   ["Creative Relaxation", "Fluid, uncensored ideation."],
 ] as const;
@@ -62,22 +66,31 @@ function SoftwarePage() {
     <>
       <PageHero
         eyebrow="BWT-1408 Software"
-        title="BWT-1408: Patent-Backed Neurofeedback Software"
-        sub="Connect directly to BWT hardware and decode raw brainwave frequencies into 15 quantifiable parameters with more than 92% reading accuracy."
+        title={
+          <>
+            <span className="font-medium text-white/60">BWT-1408:</span>{" "}
+            <span className="font-bold text-white">Patent-Backed Neurofeedback Software</span>
+          </>
+        }
+        sub="Connect directly to BWT hardware and decode raw brainwave frequencies into 14 quantifiable parameters with more than 92% reading accuracy."
       />
       <section className="bg-background py-16">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <div className="grid gap-4 sm:grid-cols-3">
-            {[
-              "15 Quantifiable Metrics",
-              "2-Minute Scan & Graphical Output",
-              "92%+ Reading Accuracy",
-            ].map((x) => (
+            {heroMetrics.map(([Icon, color, headline, label]) => (
               <div
-                key={x}
-                className="rounded-2xl bg-white p-6 text-center font-display text-lg font-bold text-navy"
+                key={label}
+                className="group relative overflow-hidden rounded-2xl border border-navy/5 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-18px_rgba(15,23,42,0.42)]"
+                style={{ backgroundImage: `linear-gradient(135deg, #ffffff, ${color}0d)` }}
               >
-                {x}
+                <span
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: `${color}1a`, color }}
+                >
+                  <Icon className="h-6 w-6" />
+                </span>
+                <p className="mt-4 font-display text-3xl font-bold text-navy">{headline}</p>
+                <p className="mt-1 text-sm font-semibold text-muted-foreground">{label}</p>
               </div>
             ))}
           </div>
@@ -108,7 +121,7 @@ function SoftwarePage() {
       </section>
       <section className="bg-background py-16 lg:py-24">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
-          <h2 className="font-display text-3xl font-bold text-navy">The 15 Decoded Parameters</h2>
+          <h2 className="font-display text-3xl font-bold text-navy">The 14 Decoded Parameters</h2>
           <div className="mt-8 grid gap-8 lg:grid-cols-2">
             <div>
               <h3 className="font-display text-xl font-bold text-navy">
@@ -127,11 +140,14 @@ function SoftwarePage() {
             </div>
             <div>
               <h3 className="font-display text-xl font-bold text-navy">
-                Ten Qualitative Performance Gauges
+                Nine Qualitative Performance Gauges
               </h3>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                {gauges.map(([name, text]) => (
-                  <div key={name} className="rounded-xl bg-white p-4">
+                {gauges.map(([name, text], i) => (
+                  <div
+                    key={name}
+                    className={`rounded-xl bg-white p-4 ${i === gauges.length - 1 ? "sm:col-span-2" : ""}`}
+                  >
                     <p className="font-semibold text-navy">{name}</p>
                     <p className="mt-1 text-sm text-muted-foreground">{text}</p>
                   </div>
@@ -141,24 +157,29 @@ function SoftwarePage() {
           </div>
         </div>
       </section>
-      <section className="bg-white py-16">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-2 lg:px-8">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[.18em] text-teal">
+      <section className="relative overflow-hidden bg-background py-16 lg:py-24">
+        <div aria-hidden className="absolute -left-32 top-1/3 h-80 w-80 rounded-full bg-teal/10 blur-[110px]" />
+        <div aria-hidden className="absolute inset-0 opacity-50" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.05) 1px, transparent 0)", backgroundSize: "28px 28px", maskImage: "linear-gradient(90deg, black, transparent 75%)" }} />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-[0.92fr_1.08fr] lg:px-8">
+          <div className="max-w-xl">
+            <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.18em] text-teal">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-teal/10"><FileText className="h-3.5 w-3.5" /></span>
               Patent-backed architecture
             </p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-navy">
+            <div className="mt-5 h-px w-14 bg-gradient-to-r from-teal to-transparent" />
+            <h2 className="mt-5 font-display text-3xl font-extrabold leading-tight tracking-tight text-navy sm:text-4xl">
               Precision Time-Syncing Protected under Patented Architecture.
             </h2>
-            <p className="mt-4 leading-relaxed text-muted-foreground">
+            <p className="mt-5 text-[15px] leading-7 text-muted-foreground sm:text-base">
               BWT-1408 time-syncs raw brainwave recordings to visual and audio stimuli. Exact
               second-by-second reactions help isolate causal triggers for anxiety, focus breaks, and
               emotional responses.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-7 flex items-center gap-3 text-xs font-semibold text-navy/65"><span className="h-2 w-2 rounded-full bg-teal" /> Time-synchronised neurofeedback analysis</div>
+            <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/contact"
-                className="rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white"
+                className="rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_35px_-18px_rgba(6,36,58,0.7)] transition hover:-translate-y-0.5 hover:bg-navy-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
               >
                 Request Demo Call
               </Link>
@@ -166,17 +187,19 @@ function SoftwarePage() {
                 href={sampleReport}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-navy/20 px-5 py-3 text-sm font-semibold text-navy"
+                className="rounded-full border border-navy/15 bg-white/70 px-6 py-3 text-sm font-semibold text-navy transition hover:-translate-y-0.5 hover:border-teal/50 hover:text-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
               >
                 View Sample Report (PDF)
               </a>
             </div>
           </div>
-          <img
-            src={alphaReport}
-            alt="Sample brainwave analysis report"
-            className="w-full rounded-2xl border border-navy/10"
-          />
+          <div className="relative mx-auto w-full max-w-2xl">
+            <div aria-hidden className="absolute -inset-6 rounded-[2.25rem] bg-gradient-to-br from-teal/25 via-transparent to-orange/15 blur-2xl" />
+            <div className="relative overflow-hidden rounded-[1.75rem] border border-navy/10 bg-white p-2 shadow-[0_28px_60px_-30px_rgba(15,23,42,0.5)] sm:p-3">
+              <div className="flex items-center justify-between rounded-t-2xl bg-navy px-4 py-3 text-[10px] font-bold uppercase tracking-[0.14em] text-white/65"><span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-teal" /> BWT-1408 report preview</span><span>Sample data</span></div>
+              <img src={alphaReport} alt="Sample brainwave analysis report" className="w-full rounded-b-xl" />
+            </div>
+          </div>
         </div>
       </section>
       <section className="bg-navy py-16 text-white">
@@ -195,14 +218,6 @@ function SoftwarePage() {
             >
               Request Demo Call
             </Link>
-            <a
-              href={sampleReport}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white/30 px-5 py-3 text-sm font-semibold"
-            >
-              View Sample Report (PDF)
-            </a>
           </div>
         </div>
       </section>

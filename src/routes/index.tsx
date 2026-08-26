@@ -118,22 +118,20 @@ function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover"
       />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/50 to-navy/80"
-      />
-      <div className="relative mx-auto w-full max-w-5xl px-4 pb-16 pt-32 text-center sm:px-6 md:pb-20 md:pt-36 lg:pt-40 lg:px-8">
+      <div aria-hidden className="absolute inset-0 bg-[linear-gradient(105deg,rgba(6,36,58,0.7)_4%,rgba(6,36,58,0.48)_52%,rgba(6,36,58,0.32)_100%)]" />
+      <div className="relative mx-auto w-full max-w-5xl px-4 pb-20 pt-32 text-center sm:px-6 md:pb-24 md:pt-36 lg:pt-40 lg:px-8">
+        <p data-aos="fade-up" className="mx-auto inline-flex items-center gap-2 rounded-full border border-teal/30 bg-teal/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-teal backdrop-blur-md"><span className="h-1.5 w-1.5 rounded-full bg-teal motion-safe:animate-pulse" /> Precision neurofeedback</p>
         <h1
           data-aos="fade-up"
           data-aos-delay="100"
-          className="font-display text-4xl font-extrabold leading-[1.05] tracking-[-0.02em] text-gradient-hero sm:text-5xl lg:text-6xl"
+          className="mt-5 font-display text-4xl font-extrabold leading-[1.04] tracking-[-0.035em] text-white sm:text-5xl lg:text-6xl"
         >
-          Connect. Quantify. Explore.
+          Connect. <span className="text-teal">Quantify.</span> Explore.
         </h1>
         <p
           data-aos="fade-up"
           data-aos-delay="200"
-          className="mx-auto mt-7 max-w-5xl font-display text-base font-bold text-white sm:text-lg lg:whitespace-nowrap"
+          className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/85 sm:text-lg"
         >
           India’s advanced neurofeedback platform mapping
           <span className="font-accent font-semibold text-orange"> real-time</span> cognitive data
@@ -142,17 +140,19 @@ function Hero() {
         <div
           data-aos="fade-up"
           data-aos-delay="300"
-          className="mt-8 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3"
+          className="mt-9 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3"
         >
-          <Link
-            to="/contact"
-            className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full bg-teal px-4 py-2 text-xs font-semibold text-navy shadow-brand transition hover:scale-[1.02] sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
+          <a
+            href="/contact?highlight=booking"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full bg-teal px-4 py-2 text-xs font-semibold text-navy shadow-brand transition hover:scale-[1.02] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
           >
             Book Demo Now <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-          </Link>
+          </a>
           <Link
             to="/practitioner"
-            className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-white/40 bg-white/10 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition hover:bg-white/20 sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
+            className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
           >
             Become a Practitioner <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Link>
@@ -161,7 +161,7 @@ function Hero() {
       {/* Fade to stats section */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent via-navy/80 to-navy"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent via-navy/60 to-navy"
       />
     </section>
   );
@@ -294,7 +294,7 @@ function EcosystemSection() {
           {pillars.map((p, i) => (
             <div key={p.key} data-aos="fade-up" data-aos-delay={100 + i * 140} className="flex">
               <div
-                className="animate-float h-full w-full rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] sm:p-7"
+                className="animate-float flex h-full w-full flex-col rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] sm:p-7"
                 style={{ animationDelay: `${i * 0.9}s` }}
               >
                 <div className="flex items-center gap-2">
@@ -303,7 +303,7 @@ function EcosystemSection() {
                     {p.key}
                   </span>
                 </div>
-                <ul className="mt-5 space-y-4">
+                <ul className="mt-5 flex flex-1 flex-col justify-between gap-4">
                   {p.points.map((pt) => (
                     <li key={pt} className="flex gap-3 text-sm leading-relaxed text-slate-600">
                       <span
@@ -333,9 +333,64 @@ function WhatIsNeurofeedback() {
         <SectionHeading
           eyebrow="What is Neurofeedback?"
           title="Quantify Cognitive Capital. Eliminate Structural Burnout."
-          sub="Neurofeedback is a non-invasive, data-driven technology that safely maps and analyses brainwave frequencies in real time. By capturing the conscious/subconscious neurological factors that govern focus, stress tolerance, and emotional stability, it provides professionals with an empirical tool to predict individual performances and eliminate their attrition."
         />
-        <div className="mt-10">
+        <p
+          className="mx-auto mt-4 max-w-xl [text-wrap:balance] text-center text-base leading-relaxed text-muted-foreground"
+          data-aos="fade-up"
+          data-aos-delay="120"
+        >
+          A <span className="font-semibold text-teal">non-invasive</span>, data-driven technology
+          that safely maps and analyses your brainwave frequencies in{" "}
+          <span className="font-semibold text-orange">real time</span>.
+        </p>
+
+        <div className="mx-auto mt-8 grid max-w-4xl gap-4 sm:grid-cols-3">
+          {[
+            {
+              icon: Activity,
+              color: "#14b8a6",
+              bg: "bg-teal/10",
+              title: "Real-Time Brain Mapping",
+              desc: "Captures live brainwave activity with zero subjective guesswork.",
+            },
+            {
+              icon: Gauge,
+              color: "#f97316",
+              bg: "bg-orange/10",
+              title: "Tracks Focus & Stress",
+              desc: "Reads the conscious and subconscious signals behind emotional stability.",
+            },
+            {
+              icon: Target,
+              color: "#a855f7",
+              bg: "bg-[#a855f7]/10",
+              title: "Predicts Performance",
+              desc: "An empirical tool to forecast outcomes and eliminate attrition.",
+            },
+          ].map((item, i) => (
+            <div
+              key={item.title}
+              data-aos="fade-up"
+              data-aos-delay={200 + i * 120}
+              className="flex flex-col items-center rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)]"
+            >
+              <span
+                className={`flex h-11 w-11 items-center justify-center rounded-xl ${item.bg}`}
+                style={{ color: item.color }}
+              >
+                <item.icon className="h-5 w-5" />
+              </span>
+              <span className="mt-3 font-display text-sm font-semibold text-navy">
+                {item.title}
+              </span>
+              <span className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                {item.desc}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12">
           <BrainwaveBands />
         </div>
       </div>
@@ -768,12 +823,14 @@ function FinalCTA() {
           data-aos="fade-up"
           data-aos-delay="220"
         >
-          <Link
-            to="/contact"
+          <a
+            href="/contact?highlight=booking"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full bg-teal px-4 py-2 text-xs font-semibold text-navy shadow-brand sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
           >
             Book Demo Now <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-          </Link>
+          </a>
           <Link
             to="/practitioner"
             className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-white/30 bg-white/5 px-4 py-2 text-xs font-semibold backdrop-blur sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"

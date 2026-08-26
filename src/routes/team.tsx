@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { ImpactCallout } from "@/components/site/ImpactCallout";
 import { JourneyCta } from "@/components/site/JourneyCta";
@@ -142,48 +143,99 @@ function splitBio(description: string | null) {
   return { credentials, profile };
 }
 
-function PersonCard({ p, kind }: { p: Person; kind: "leadership" | "advisor" }) {
+function PersonCard({
+  p,
+  kind,
+  index,
+  isVisible,
+  shouldAnimate,
+}: {
+  p: Person;
+  kind: "leadership" | "advisor";
+  index: number;
+  isVisible: boolean;
+  shouldAnimate: boolean;
+}) {
   const img = PHOTO_BY_NAME[p.name] || p.image_url || null;
   const { credentials, profile } = splitBio(p.description);
+  const isLeft = index % 2 === 0;
   return (
     <article
-      data-aos="fade-up"
-      data-aos-duration="900"
-      className="glass-card flex h-full flex-col rounded-3xl bg-white p-6"
+      data-person-id={p.id}
+      className={`group relative grid gap-5 lg:grid-cols-[minmax(13rem,0.66fr)_minmax(0,1.34fr)] lg:items-center lg:gap-10 ${
+        isLeft ? "" : "lg:grid-cols-[minmax(0,1.34fr)_minmax(13rem,0.66fr)]"
+      }`}
     >
-      <div className="flex items-center gap-4">
+      <div
+        data-person-photo
+        className={`relative mx-auto w-full max-w-[18rem] transition-all duration-700 motion-reduce:translate-x-0 motion-reduce:opacity-100 ${
+          !shouldAnimate || isVisible
+            ? "translate-y-0 opacity-100"
+            : `${isLeft ? "-translate-x-6" : "translate-x-6"} translate-y-4 opacity-0`
+        } ${isLeft ? "lg:order-1" : "lg:order-2"}`}
+      >
+        <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-teal/30 via-transparent to-orange/20 blur-xl" />
+        {shouldAnimate && isVisible && <span aria-hidden className="team-portrait-pulse absolute -inset-2 rounded-[1.9rem] border border-teal/35" />}
         {img ? (
           <img
             src={img}
-            alt={p.name}
-            className="h-16 w-16 shrink-0 rounded-2xl object-cover ring-2 ring-teal/40"
+            alt={`${p.name}, ${p.role ?? kind}`}
+            className={`relative aspect-[4/5] w-full rounded-[1.75rem] border border-white/80 object-cover shadow-[0_28px_55px_-24px_rgba(15,23,42,0.55)] ${
+              shouldAnimate && isVisible ? "team-portrait-float" : ""
+            }`}
           />
         ) : (
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-teal/15 font-display text-lg font-bold text-navy ring-2 ring-teal/40">
+          <div className="relative flex aspect-[4/5] items-center justify-center rounded-[1.75rem] border border-teal/20 bg-teal/10 font-display text-4xl font-bold text-navy shadow-[0_28px_55px_-24px_rgba(15,23,42,0.55)]">
             {initials(p.name)}
           </div>
         )}
-        <div>
-          <h3 className="font-display text-lg font-bold text-navy">{p.name}</h3>
-          {p.role && (
-            <p className="mt-0.5 text-xs font-semibold uppercase tracking-wider text-orange">
-              {kind === "advisor" ? "Advisory Role: " : ""}
-              {p.role}
-            </p>
-          )}
-        </div>
+        <span
+          className={`absolute top-6 flex h-8 w-8 items-center justify-center rounded-full border-4 border-background bg-teal shadow-sm ${
+            isLeft ? "-right-2" : "-left-2"
+          }`}
+          aria-hidden
+        />
       </div>
 
-      {credentials && (
+      <div
+        className={`relative h-full rounded-3xl border border-navy/5 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.38)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_58px_-22px_rgba(15,23,42,0.45)] sm:p-7 ${
+          !shouldAnimate || isVisible
+            ? "translate-y-0 opacity-100"
+            : `${isLeft ? "translate-x-6" : "-translate-x-6"} translate-y-4 opacity-0`
+        } motion-reduce:translate-x-0 motion-reduce:opacity-100 ${isLeft ? "lg:order-2" : "lg:order-1"}`}
+      >
+        <span className="absolute inset-x-0 top-0 h-1 rounded-t-3xl bg-gradient-to-r from-teal via-teal/50 to-transparent" />
+        <div className="flex items-center gap-4">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal/10 font-display text-sm font-bold text-teal">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <div>
+            <h3 className="font-display text-xl font-bold text-navy">{p.name}</h3>
+            {p.role && (
+              <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-orange sm:text-[11px]">
+                {kind === "advisor" ? "Advisory Role: " : ""}
+                {p.role}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-5 h-px bg-navy/5" />
+
+        {img ? (
+          <span className="sr-only">Profile photo displayed alongside this biography.</span>
+        ) : null}
+        {credentials && (
         <p className="mt-4 rounded-xl bg-navy/[0.04] px-4 py-3 text-xs leading-relaxed text-navy">
           <span className="font-semibold">Credentials:</span> {credentials}
         </p>
-      )}
-      {profile && (
-        <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
-          {profile}
-        </p>
-      )}
+        )}
+        {profile && (
+          <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
+            {profile}
+          </p>
+        )}
+      </div>
     </article>
   );
 }
@@ -193,6 +245,19 @@ function SkeletonCard() {
 }
 
 function TeamPage() {
+  const storyRef = useRef<HTMLElement>(null);
+  const frameRef = useRef<number | null>(null);
+  const [pathProgress, setPathProgress] = useState(0);
+  const [visiblePeople, setVisiblePeople] = useState<Set<string>>(new Set());
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [animationsReady, setAnimationsReady] = useState(false);
+  const [connectorPath, setConnectorPath] = useState({
+    d: "",
+    width: 0,
+    height: 0,
+    startY: 0,
+    endY: 1,
+  });
   const q = useQuery({
     queryKey: ["people", "public"],
     queryFn: async () => {
@@ -203,31 +268,201 @@ function TeamPage() {
   });
 
   const people = q.data && q.data.length > 0 ? q.data : fallbackPeople;
-  const leadership = people.filter((p) => p.category === "leadership");
-  const advisors = people.filter((p) => p.category !== "leadership");
+  const leadership = useMemo(
+    () => people.filter((p) => p.category === "leadership"),
+    [people],
+  );
+  const advisors = useMemo(
+    () => people.filter((p) => p.category !== "leadership"),
+    [people],
+  );
+  const storyPeople = useMemo(() => [...leadership, ...advisors], [leadership, advisors]);
+
+  useEffect(() => {
+    const section = storyRef.current;
+    if (!section || q.isLoading) return;
+
+    const updateConnector = () => {
+      const sectionRect = section.getBoundingClientRect();
+      const anchors = Array.from(section.querySelectorAll<HTMLElement>("[data-person-photo]"));
+      if (!sectionRect.width || !sectionRect.height || anchors.length === 0) return;
+
+      const getLayoutPosition = (element: HTMLElement) => {
+        let x = 0;
+        let y = 0;
+        let current: HTMLElement | null = element;
+        while (current && current !== section) {
+          x += current.offsetLeft;
+          y += current.offsetTop;
+          current = current.offsetParent as HTMLElement | null;
+        }
+        return { x, y };
+      };
+      const points = anchors.map((anchor, index) => {
+        const position = getLayoutPosition(anchor);
+        const isLeft = index % 2 === 0;
+        return {
+          x: isLeft ? position.x + anchor.offsetWidth - 15 : position.x + 15,
+          y: position.y + 40,
+        };
+      });
+      let previous = points[0];
+      const d = points.slice(1).reduce((path, point) => {
+        const bend = Math.max(72, Math.abs(point.y - previous.y) * 0.42);
+        const segment = `${path} C ${previous.x} ${previous.y + bend} ${point.x} ${point.y - bend} ${point.x} ${point.y}`;
+        previous = point;
+        return segment;
+      }, `M ${previous.x} ${previous.y}`);
+
+      setConnectorPath({
+        d,
+        width: sectionRect.width,
+        height: sectionRect.height,
+        startY: points[0].y,
+        endY: points.at(-1)?.y ?? points[0].y,
+      });
+    };
+
+    const resizeObserver = new ResizeObserver(updateConnector);
+    resizeObserver.observe(section);
+    section.querySelectorAll<HTMLElement>("[data-person-photo]").forEach((anchor) => resizeObserver.observe(anchor));
+    window.addEventListener("resize", updateConnector);
+    window.requestAnimationFrame(updateConnector);
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateConnector);
+    };
+  }, [q.isLoading, storyPeople]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreference = () => setReducedMotion(mediaQuery.matches);
+    updatePreference();
+    setAnimationsReady(true);
+    mediaQuery.addEventListener("change", updatePreference);
+    return () => mediaQuery.removeEventListener("change", updatePreference);
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion) {
+      setPathProgress(1);
+      setVisiblePeople(new Set(storyPeople.map((person) => person.id)));
+      return;
+    }
+
+    const updateProgress = () => {
+      frameRef.current = null;
+      const element = storyRef.current;
+      if (!element) return;
+      const rect = element.getBoundingClientRect();
+      const lineHeight = Math.max(1, connectorPath.endY - connectorPath.startY);
+      const revealPoint = window.innerHeight * 0.7;
+      const progress = Math.min(
+        1,
+        Math.max(0, (revealPoint - rect.top - connectorPath.startY) / lineHeight),
+      );
+      setPathProgress(progress);
+    };
+    const onScroll = () => {
+      if (frameRef.current === null) frameRef.current = window.requestAnimationFrame(updateProgress);
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setVisiblePeople((current) => {
+          const next = new Set(current);
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) next.add(entry.target.getAttribute("data-person-id") ?? "");
+          });
+          return next;
+        });
+      },
+      { threshold: 0.22 },
+    );
+    storyRef.current?.querySelectorAll<HTMLElement>("[data-person-id]").forEach((element) => observer.observe(element));
+    updateProgress();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current);
+    };
+  }, [connectorPath.endY, connectorPath.startY, reducedMotion, storyPeople]);
 
   return (
     <>
       <PageHero
         eyebrow="Meet the Team"
-        title="Pioneered by Leading Mental Health Professionals. Backed by Decades of Global Innovation"
+        title={
+          <>
+            <span className="font-medium text-white/60">
+              Pioneered by Leading Mental Health Professionals.
+            </span>{" "}
+            <span className="font-bold text-white">Backed by Decades of Global Innovation</span>
+          </>
+        }
         sub="Our leadership bridges deep clinical psychology, brain-computer interface (BCI) engineering, digital product architecture, and enterprise growth strategies. Together with our global advisory network, we are transforming qualitative mental health analysis into an empirical, data-driven science."
       />
 
-      <section className="bg-background py-16 lg:py-24">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
-          <h2 className="font-display text-2xl font-bold text-navy">Leadership Team</h2>
-          <div className="mt-6 grid gap-6 md:grid-cols-2">
+      <section ref={storyRef} className="relative overflow-hidden bg-background py-16 lg:py-24">
+        <svg
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 left-1/2 z-0 block h-full w-full -translate-x-1/2 overflow-visible opacity-70 lg:opacity-100"
+          preserveAspectRatio="none"
+          viewBox={`0 0 ${connectorPath.width || 1} ${connectorPath.height || 1}`}
+        >
+          <path
+            d={connectorPath.d}
+            fill="none"
+            stroke="rgb(20 184 166 / 0.4)"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="4"
+          />
+          <path
+            d={connectorPath.d}
+            fill="none"
+            pathLength="1"
+            stroke="rgb(13 148 136)"
+            strokeDasharray="1"
+            strokeDashoffset={1 - pathProgress}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="5.5"
+            className="motion-reduce:transition-none"
+          />
+        </svg>
+        <div className="relative z-10 mx-auto max-w-6xl px-4 lg:px-8">
+          <div className="relative space-y-14 lg:space-y-20">
+            <div>
+              <h2 className="font-display text-2xl font-bold text-navy">Leadership Team</h2>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                The people translating clinical insight and neural data into scalable wellbeing technology.
+              </p>
+            </div>
+
             {q.isLoading
               ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
-              : leadership.map((p) => <PersonCard key={p.id} p={p} kind="leadership" />)}
-          </div>
-
-          <h2 className="mt-16 font-display text-2xl font-bold text-navy">Board of Advisors</h2>
-          <div className="mt-6 grid gap-6 md:grid-cols-2">
-            {q.isLoading
-              ? Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)
-              : advisors.map((p) => <PersonCard key={p.id} p={p} kind="advisor" />)}
+              : storyPeople.map((person, index) => (
+                  <div key={person.id}>
+                    {index === leadership.length && (
+                      <div className="pb-2 pt-4 lg:pt-8">
+                        <h2 className="font-display text-2xl font-bold text-navy">Board of Advisors</h2>
+                        <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                          Global expertise guiding the next chapter of neurofeedback innovation.
+                        </p>
+                      </div>
+                    )}
+                    <PersonCard
+                      p={person}
+                      kind={person.category === "leadership" ? "leadership" : "advisor"}
+                      index={index}
+                      isVisible={visiblePeople.has(person.id)}
+                      shouldAnimate={animationsReady && !reducedMotion}
+                    />
+                  </div>
+                ))}
           </div>
 
           <div className="mt-16">

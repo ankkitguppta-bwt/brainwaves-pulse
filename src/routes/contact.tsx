@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 
@@ -20,6 +20,19 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [highlightTarget, setHighlightTarget] = useState<"booking" | "message" | null>(null);
+  const bookingCardRef = useRef<HTMLDivElement | null>(null);
+  const messageFormRef = useRef<HTMLFormElement | null>(null);
+
+  useEffect(() => {
+    const param = new URLSearchParams(window.location.search).get("highlight");
+    if (param !== "booking" && param !== "message") return;
+    setHighlightTarget(param);
+    const targetRef = param === "booking" ? bookingCardRef : messageFormRef;
+    targetRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    const timer = window.setTimeout(() => setHighlightTarget(null), 8000);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -53,7 +66,7 @@ function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Let's talk"
-        sub="Book a demo, request an assessment or apply for the practitioner programme — we'd love to hear from you."
+        sub="Book a demo, request an assessment or apply for the practitioner programme. We'd love to hear from you."
       />
       <section className="bg-background py-12 lg:py-16">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -81,8 +94,12 @@ function ContactPage() {
           {/* Form + Booking side by side */}
           <div className="mt-6 grid gap-6 lg:grid-cols-12 lg:gap-8">
             <form
+              ref={messageFormRef}
               onSubmit={onSubmit}
-              className="glass-card rounded-2xl p-6 lg:col-span-7"
+              onClick={() => setHighlightTarget(null)}
+              className={`glass-card rounded-2xl p-6 transition-colors duration-500 lg:col-span-7 ${
+                highlightTarget === "message" ? "highlight-pulse" : ""
+              }`}
             >
               <h2 className="font-display text-xl font-bold text-navy">Send a message</h2>
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -103,7 +120,7 @@ function ContactPage() {
                 </div>
                 {status === "sent" && (
                   <p className="sm:col-span-2 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
-                    Thanks — we'll get back to you shortly.
+                    Thanks! We'll get back to you shortly.
                   </p>
                 )}
                 {status === "error" && (
@@ -117,10 +134,16 @@ function ContactPage() {
               </div>
             </form>
 
-            <div className="glass-card overflow-hidden rounded-2xl p-4 lg:col-span-5">
+            <div
+              ref={bookingCardRef}
+              onClick={() => setHighlightTarget(null)}
+              className={`glass-card overflow-hidden rounded-2xl p-4 transition-colors duration-500 lg:col-span-5 ${
+                highlightTarget === "booking" ? "highlight-pulse" : ""
+              }`}
+            >
               <div className="px-2">
                 <h2 className="font-display text-xl font-bold text-navy">Book a meeting</h2>
-                <p className="text-sm text-muted-foreground">Pick a time that works — schedule directly via Cal.com.</p>
+                <p className="text-sm text-muted-foreground">Pick a time that works and schedule directly via Cal.com.</p>
               </div>
               <iframe
                 src="https://cal.com/brainwaves-tech?theme=light"

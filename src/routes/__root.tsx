@@ -131,12 +131,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function AppLoader() {
-  const [mounted, setMounted] = useState(false);
   const [hiding, setHiding] = useState(false);
   const [gone, setGone] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const start = Date.now();
     const MIN = 500;
     const MAX = 4000;
@@ -170,7 +168,7 @@ function AppLoader() {
     return () => window.clearTimeout(safety);
   }, []);
 
-  if (!mounted || gone) return null;
+  if (gone) return null;
   return <BrainWavesLoader hiding={hiding} />;
 }
 

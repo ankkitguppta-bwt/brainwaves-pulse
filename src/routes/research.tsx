@@ -3,7 +3,16 @@ import { useEffect } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { ImpactCallout } from "@/components/site/ImpactCallout";
 import { JourneyCta } from "@/components/site/JourneyCta";
-import { FileText, Activity, Database, Clock, Users, ShieldCheck, Target, Cpu } from "lucide-react";
+import {
+  FileText,
+  Activity,
+  Database,
+  Clock,
+  Users,
+  ShieldCheck,
+  Target,
+  Cpu,
+} from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -14,13 +23,13 @@ export const Route = createFileRoute("/research")({
       {
         name: "description",
         content:
-          "Grounded in data, not guesswork: 120,000+ neural data points across 20,000+ participants, a 15-parameter cognitive mapping model, and 92%+ verified diagnostic accuracy.",
+          "Grounded in data, not guesswork: 120,000+ neural data points across 20,000+ participants, a 14-parameter cognitive mapping model, and 92%+ verified diagnostic accuracy.",
       },
       { property: "og:title", content: "Scientific Research — BrainWaves Tech" },
       {
         property: "og:description",
         content:
-          "Evidence-based neurofeedback: five brainwave bands plus ten proprietary cognitive metrics, validated across 120,000+ data points and 20,000+ participants.",
+          "Evidence-based neurofeedback: five brainwave bands plus nine proprietary cognitive metrics, validated across 120,000+ data points and 20,000+ participants.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -56,7 +65,6 @@ const dataArchitecture = [
 ];
 
 const metrics = [
-  "Joy",
   "Attention",
   "Inner Calm",
   "Study Focus",
@@ -99,12 +107,13 @@ const ipRights = [
   {
     icon: Activity,
     title: "Safe Receiver Architecture",
-    body: "The BWT-2508 headset utilises medical-grade dry sensors operating purely as passive signal receivers — introducing zero electrical currents into the user's brain.",
+    body: "The BWT-2508 headset utilises medical-grade dry sensors that operate purely as passive signal receivers, introducing zero electrical currents into the user's brain.",
   },
 ];
 
 const papers = [
   {
+    color: "#14b8a6",
     filename: "BWT_Research_01_qEEG_Diagnostic_Accuracy.pdf",
     title:
       "Quantitative Brainwave Analysis: Eliminating Human Observer Bias in Mental Health Intake Protocols",
@@ -114,6 +123,7 @@ const papers = [
       "Comparative study evaluating qualitative diagnostic interviews against automated 0.5Hz Fast Fourier Transform (FFT) prefrontal cortex signal processing. Demonstrates how non-invasive, questionnaire-free intake achieves >92% accuracy across diverse age groups while reducing initial evaluation time from 50 minutes to 2 minutes.",
   },
   {
+    color: "#f97316",
     filename: "BWT_Research_02_120K_Dataset_Validation.pdf",
     title:
       "Algorithmic Pattern Recognition Across 120,000 Neural Data Points for Mind Parameter Extraction",
@@ -123,6 +133,7 @@ const papers = [
       "Detailed technical breakdown of the 120,000+ data point benchmark collected across 20,000+ participants. Explains the mathematical mapping connecting raw Alpha, Beta, Theta, Delta, and Gamma frequency bands to 10 distinct metric indicators including Study Focus, Inner Calm, and Stress Reduction.",
   },
   {
+    color: "#a855f7",
     filename: "BWT_Research_03_Customized_Sound_Therapy_Outcomes.pdf",
     title:
       "Longitudinal Assessment of Neuro-Acoustic Interventions Based on Real-Time Brainwave Baseline Telemetry",
@@ -148,23 +159,32 @@ function ResearchPage() {
     <>
       <PageHero
         eyebrow="Scientific Research"
-        title="Grounded in Data. Backed by 120,000+ Neural Data Points."
+        title={
+          <>
+            <span className="font-medium text-white/60">Grounded in Data.</span>{" "}
+            <span className="font-bold text-white">Backed by 120,000+ Neural Data Points.</span>
+          </>
+        }
         sub="Subjective questionnaires and qualitative surveys are inherently prone to human bias, selective memory, and manipulation. Brain Waves Tech replaces guesswork with raw biological metrics, transforming complex EEG signal processing into verifiable, actionable cognitive parameters in under 2 minutes."
       />
 
       <section className="bg-background py-16 lg:py-24">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((s) => (
               <div
                 key={s.label}
                 data-aos="fade-up"
                 data-aos-duration="900"
-                className="glass-card rounded-2xl bg-white p-6 text-center"
+                className="group rounded-2xl border border-navy/5 bg-white p-6 text-center shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_55px_-18px_rgba(15,23,42,0.42)]"
               >
-                <s.icon className="mx-auto h-6 w-6 text-teal" />
-                <p className="mt-3 font-display text-2xl font-bold text-navy">{s.value}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{s.label}</p>
+                <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-teal/10 text-teal transition-colors duration-300 group-hover:bg-teal group-hover:text-white">
+                  <s.icon className="h-5 w-5" />
+                </span>
+                <p className="mt-4 font-display text-3xl font-extrabold text-gradient-brand">
+                  {s.value}
+                </p>
+                <p className="mt-1.5 text-xs text-muted-foreground">{s.label}</p>
               </div>
             ))}
           </div>
@@ -178,10 +198,13 @@ function ResearchPage() {
                 key={d.title}
                 data-aos="fade-up"
                 data-aos-duration="900"
-                className="glass-card rounded-2xl bg-white p-6"
+                className="group relative overflow-hidden rounded-2xl border border-navy/5 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_55px_-18px_rgba(15,23,42,0.42)]"
               >
-                <d.icon className="h-6 w-6 text-teal" />
-                <h3 className="mt-3 font-display text-base font-bold text-navy">{d.title}</h3>
+                <span className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-teal via-teal/60 to-teal/20" />
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-teal/10 text-teal transition-colors duration-300 group-hover:bg-teal group-hover:text-white">
+                  <d.icon className="h-5 w-5" />
+                </span>
+                <h3 className="mt-4 font-display text-base font-bold text-navy">{d.title}</h3>
                 <p className="mt-2 [text-wrap:balance] text-sm leading-relaxed text-muted-foreground">
                   {d.body}
                 </p>
@@ -191,11 +214,11 @@ function ResearchPage() {
 
           <div className="mt-20">
             <h2 className="font-display text-2xl font-bold text-navy">
-              Comprehensive 15-Parameter Neural Mapping
+              Comprehensive 14-Parameter Neural Mapping
             </h2>
             <p className="mt-3 max-w-3xl [text-wrap:balance] text-sm leading-relaxed text-muted-foreground">
               Our system processes incoming signal telemetry at an intensive 0.5Hz resolution,
-              deconstructing raw brainwave frequencies into 15 distinct, measurable parameters.
+              deconstructing raw brainwave frequencies into 14 distinct, measurable parameters.
             </p>
           </div>
 
@@ -218,22 +241,19 @@ function ResearchPage() {
 
             <div data-aos="fade-up" data-aos-duration="900" data-aos-delay="120">
               <h3 className="font-display text-lg font-bold text-navy">
-                10 Proprietary Metric Indicators
+                9 Proprietary Metric Indicators
               </h3>
               <p className="mt-3 [text-wrap:balance] text-sm leading-relaxed text-muted-foreground">
                 Derived through patented signal-processing models, these metrics convert band
                 activity into decision-ready indicators for clinicians, educators and enterprise
                 leaders.
               </p>
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                {metrics.map((m, i) => (
+              <div className="mt-6 grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {metrics.map((m) => (
                   <div
                     key={m}
-                    className="flex items-center gap-3 rounded-xl border border-navy/10 bg-white px-4 py-3"
+                    className="group flex items-center justify-center rounded-2xl border border-navy/5 bg-white p-5 text-center shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-18px_rgba(15,23,42,0.42)]"
                   >
-                    <span className="font-display text-xs font-bold text-teal">
-                      {String(i + 6).padStart(2, "0")}
-                    </span>
                     <span className="text-sm font-medium text-navy">{m}</span>
                   </div>
                 ))}
@@ -264,30 +284,74 @@ function ResearchPage() {
           <h2 className="mt-20 font-display text-2xl font-bold text-navy">
             Published Research Papers & Clinical Validation Reports
           </h2>
-          <div className="mt-6 grid gap-5 md:grid-cols-2">
-            {papers.map((p) => (
-              <article
-                key={p.title}
-                data-aos="fade-up"
-                data-aos-duration="900"
-                className="glass-card flex gap-4 rounded-2xl bg-white p-6"
-              >
-                <FileText className="mt-0.5 h-5 w-5 shrink-0 text-teal" />
-                <div>
-                  <h3 className="font-display text-base font-bold text-navy">{p.title}</h3>
-                  <p className="mt-1 text-xs font-medium text-navy/65">{p.filename}</p>
-                  <p className="mt-1.5 text-xs font-semibold uppercase tracking-wider text-teal">
-                    {p.category}
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">{p.authors}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.abstract}</p>
-                </div>
-              </article>
-            ))}
+          <div className="mt-6 space-y-5">
+            {papers.map((p) => {
+              const tags = p.category.split(" | ");
+              return (
+                <article
+                  key={p.title}
+                  data-aos="fade-up"
+                  data-aos-duration="900"
+                  className="group relative overflow-hidden rounded-2xl border border-navy/5 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-18px_rgba(15,23,42,0.42)] sm:p-7"
+                >
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 top-0 h-1"
+                    style={{
+                      background: `linear-gradient(to right, ${p.color}, ${p.color}55, ${p.color}15)`,
+                    }}
+                  />
+                  <div className="flex gap-4 sm:gap-5">
+                    <div className="flex shrink-0 flex-col items-center gap-1.5">
+                      <span
+                        className="inline-flex h-12 w-12 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
+                        style={{ background: `${p.color}1a`, color: p.color }}
+                      >
+                        <FileText className="h-6 w-6" />
+                      </span>
+                      <span className="rounded-full bg-navy/5 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-navy/50">
+                        PDF
+                      </span>
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-display text-lg font-bold leading-snug text-navy">
+                        {p.title}
+                      </h3>
+                      <p className="mt-1 truncate font-mono text-[11px] text-muted-foreground/60">
+                        {p.filename}
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider"
+                            style={{ background: `${p.color}1a`, color: p.color }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                        {p.abstract}
+                      </p>
+
+                      <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-navy/5 pt-4">
+                        <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <Users className="h-3.5 w-3.5 shrink-0" /> {p.authors}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
 
           <div className="mt-16">
-            <ImpactCallout quote="Analysing 120,000+ neural data points across 20,000+ participants has let us translate raw neural activity into an empirical performance blueprint — repeatable, comparable and free from reporting bias, at over 92% verified diagnostic accuracy." />
+            <ImpactCallout quote="Analysing 120,000+ neural data points across 20,000+ participants has let us translate raw neural activity into an empirical performance blueprint: repeatable, comparable and free from reporting bias, at over 92% verified diagnostic accuracy." />
           </div>
         </div>
       </section>

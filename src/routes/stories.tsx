@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ExternalLink, Headphones, Newspaper, Play, Quote, Video } from "lucide-react";
-import { useState } from "react";
+import { BadgeCheck, ChevronLeft, ChevronRight, Database as DatabaseIcon, HandHeart, Headphones, Newspaper, Play, Quote, Video, ZoomIn } from "lucide-react";
+import { useEffect, useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
@@ -22,7 +22,7 @@ const achievements = Object.entries(achievementModules)
     image_url: src,
     url: null,
     outlet: "BrainWaves Tech",
-    body: path.split("/").at(-1)?.replace(/[_-]/g, " ") ?? "",
+    body: null,
   }));
 
 export const Route = createFileRoute("/stories")({
@@ -69,6 +69,8 @@ function StoriesPage() {
   const byKind = (kind: MediaItem["kind"]) => items.filter((item) => item.kind === kind);
   const coverage = [...byKind("media"), ...byKind("recognition")];
   const [activeVideo, setActiveVideo] = useState<{ url: string; title: string } | null>(null);
+  const coverageItems = coverage.length ? coverage : achievements;
+  const [activeCoverageIndex, setActiveCoverageIndex] = useState<number | null>(null);
   const explainer = byKind("explainer_video");
   const podcasts = byKind("youtube_podcast");
   const databaseVideos = byKind("video_testimonial");
@@ -81,33 +83,68 @@ function StoriesPage() {
         thumbnail_url: item.image_url,
       }))
     : clientTestimonialVideos;
+  const activeCoverage = activeCoverageIndex === null ? null : coverageItems[activeCoverageIndex];
+
+  useEffect(() => {
+    if (activeCoverageIndex === null) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") {
+        setActiveCoverageIndex((current) =>
+          current === null ? null : (current + 1) % coverageItems.length,
+        );
+      }
+      if (event.key === "ArrowLeft") {
+        setActiveCoverageIndex((current) =>
+          current === null ? null : (current - 1 + coverageItems.length) % coverageItems.length,
+        );
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [activeCoverageIndex, coverageItems.length]);
   return (
     <>
       <PageHero
         eyebrow="Media & Impact"
-        title="Impact of Neuroscience: From Research Labs to Real Lives"
+        title={
+          <>
+            <span className="font-medium text-white/60">Impact of Neuroscience:</span>{" "}
+            <span className="font-bold text-white">From Research Labs to Real Lives</span>
+          </>
+        }
         sub="The people, institutions, and communities reached through BrainWaves Tech neurofeedback."
       />
       <section className="bg-background py-14">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-3">
             {[
-              ["12,000+", "Lives Impacted"],
-              ["120,000+", "Brainwave Data Points Collected"],
-              ["27+", "Certified Practitioners Nationwide"],
-            ].map(([value, label]) => (
-              <div key={label} className="rounded-2xl bg-white p-6 text-center">
-                <p className="font-display text-3xl font-bold text-teal">{value}</p>
+              { value: "12,000+", label: "Lives Impacted", icon: HandHeart },
+              { value: "120,000+", label: "Brainwave Data Points Collected", icon: DatabaseIcon },
+              { value: "27+", label: "Certified Practitioners Nationwide", icon: BadgeCheck },
+            ].map(({ value, label, icon: Icon }) => (
+              <div
+                key={label}
+                className="group rounded-2xl border border-navy/5 bg-white p-6 text-center shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_56px_-20px_rgba(15,23,42,0.45)] sm:p-7"
+              >
+                <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-teal/10 text-teal transition-all duration-300 group-hover:scale-105 group-hover:bg-teal group-hover:text-white">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <p className="mt-4 font-display text-3xl font-extrabold text-gradient-brand sm:text-4xl">
+                  {value}
+                </p>
                 <p className="mt-2 text-sm font-semibold text-navy">{label}</p>
               </div>
             ))}
           </div>
-          <p className="mx-auto mt-10 max-w-4xl text-center leading-relaxed text-muted-foreground">
+          <p className="mx-auto mt-12 max-w-3xl text-center text-[15px] leading-8 text-muted-foreground sm:text-base">
             Mental-health support cannot remain locked behind expensive private-clinic doors.
             BrainWaves Tech was built to scale across public infrastructure. Its non-invasive
             two-minute neurofeedback technology has reached broad communities through government and
-            institutional programmes including SPIO, CWSM, Police Training, the Indian Army, the
-            Indian Navy, and corporate organisations.
+            institutional programmes including <span className="font-semibold text-navy/75">SPIO</span>,{" "}
+            <span className="font-semibold text-navy/75">CWSM</span>,{" "}
+            <span className="font-semibold text-navy/75">Police Training</span>, the{" "}
+            <span className="font-semibold text-navy/75">Indian Army</span>, the{" "}
+            <span className="font-semibold text-navy/75">Indian Navy</span>, and corporate organisations.
           </p>
         </div>
       </section>
@@ -123,19 +160,15 @@ function StoriesPage() {
         )}
       </MediaSection>
       <MediaSection title="Media Coverage & Recognition" icon={Newspaper} tone="muted">
-        {coverage.length ? (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {coverage.map((item) => (
-              <CoverageCard key={item.id} item={item} />
-            ))}
-          </div>
-        ) : (
-          <div className="columns-1 gap-5 sm:columns-2 lg:columns-3 xl:columns-4">
-            {achievements.map((item) => (
-              <CoverageCard key={item.id} item={item} />
-            ))}
-          </div>
-        )}
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {coverageItems.map((item, index) => (
+            <CoverageCard
+              key={item.id}
+              item={item}
+              onOpen={() => item.image_url && setActiveCoverageIndex(index)}
+            />
+          ))}
+        </div>
       </MediaSection>
       <MediaSection title="YouTube Podcasts" icon={Play}>
         {podcasts.length ? (
@@ -272,6 +305,50 @@ function StoriesPage() {
             })()}
         </DialogContent>
       </Dialog>
+      <Dialog
+        open={activeCoverageIndex !== null}
+        onOpenChange={(open) => !open && setActiveCoverageIndex(null)}
+      >
+        <DialogContent className="w-[calc(100%-1rem)] max-w-6xl border-white/15 bg-navy p-2 text-white sm:w-[calc(100%-2rem)] sm:p-3">
+          {activeCoverage?.image_url && (
+            <div className="relative flex min-h-[50svh] items-center justify-center">
+              <img
+                src={activeCoverage.image_url}
+                alt={activeCoverage.title}
+                className="max-h-[78svh] w-full rounded-xl object-contain"
+              />
+              {coverageItems.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    aria-label="Previous gallery image"
+                    onClick={() =>
+                      setActiveCoverageIndex((current) =>
+                        current === null ? null : (current - 1 + coverageItems.length) % coverageItems.length,
+                      )
+                    }
+                    className="absolute left-2 grid h-10 w-10 place-items-center rounded-full bg-navy/80 text-white transition hover:bg-teal sm:left-4 sm:h-12 sm:w-12"
+                  >
+                    <ChevronLeft className="h-6 w-6" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next gallery image"
+                    onClick={() =>
+                      setActiveCoverageIndex((current) =>
+                        current === null ? null : (current + 1) % coverageItems.length,
+                      )
+                    }
+                    className="absolute right-2 grid h-10 w-10 place-items-center rounded-full bg-navy/80 text-white transition hover:bg-teal sm:right-4 sm:h-12 sm:w-12"
+                  >
+                    <ChevronRight className="h-6 w-6" />
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
@@ -350,6 +427,7 @@ function VideoItem({
 }
 function CoverageCard({
   item,
+  onOpen,
 }: {
   item: {
     id: string;
@@ -359,38 +437,35 @@ function CoverageCard({
     outlet: string | null;
     body: string | null;
   };
+  onOpen: () => void;
 }) {
-  const content = (
-    <>
-      {item.image_url && (
-        <img src={item.image_url} alt={item.title} loading="lazy" className="w-full object-cover" />
-      )}
+  return (
+    <article className="group overflow-hidden rounded-2xl border border-navy/5 bg-white shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_56px_-20px_rgba(15,23,42,0.45)]">
+      <button
+        type="button"
+        onClick={onOpen}
+        className="relative block aspect-[4/3] w-full overflow-hidden bg-navy/5 text-left disabled:cursor-default"
+        aria-label={`View ${item.title} in full size`}
+        disabled={!item.image_url}
+      >
+        {item.image_url && (
+          <img
+            src={item.image_url}
+            alt={item.title}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          />
+        )}
+        <span className="absolute inset-0 grid place-items-center bg-navy/35 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <span className="grid h-11 w-11 place-items-center rounded-full bg-white text-navy shadow-lg">
+            <ZoomIn className="h-5 w-5" />
+          </span>
+        </span>
+      </button>
       <div className="p-5">
         <h3 className="font-display font-bold text-navy">{item.title}</h3>
-        {item.outlet && <p className="mt-1 text-sm text-teal">{item.outlet}</p>}
-        {item.body && (
-          <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{item.body}</p>
-        )}
-        {item.url && (
-          <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy">
-            Open story <ExternalLink className="h-3.5 w-3.5" />
-          </span>
-        )}
+        {item.outlet && <p className="mt-1 text-sm font-medium text-teal">{item.outlet}</p>}
       </div>
-    </>
-  );
-  return item.url ? (
-    <a
-      href={item.url}
-      target="_blank"
-      rel="noreferrer"
-      className="mb-5 block break-inside-avoid overflow-hidden rounded-2xl bg-white shadow-sm transition hover:-translate-y-1"
-    >
-      {content}
-    </a>
-  ) : (
-    <article className="mb-5 break-inside-avoid overflow-hidden rounded-2xl bg-white shadow-sm">
-      {content}
     </article>
   );
 }

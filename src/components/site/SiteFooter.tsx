@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { ArrowRight, Facebook, Instagram, Linkedin, Mail, Youtube } from "lucide-react";
 import brandLogo from "@/assets/brand/brainwaves-logo.png";
+import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
 import {
   Dialog,
   DialogContent,
@@ -54,37 +55,63 @@ function NewsletterBand() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 pt-14 lg:px-8">
-      <h2 className="font-display text-xl font-bold text-white sm:text-2xl">
-        Stop Guessing, Start Measuring
-      </h2>
-      <p className="mt-2 max-w-2xl text-sm text-white/65">
-        Subscribe for exclusive monthly blogs, data updates, and neuroscience-backed corporate
-        welfare models.
-      </p>
-      <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <input
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your professional email"
-          aria-label="Email address"
-          className="w-full rounded-md border border-white/20 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/45 transition focus:border-teal focus:outline-none sm:max-w-sm"
-        />
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className="inline-flex min-h-[46px] shrink-0 items-center justify-center rounded-md bg-teal px-6 text-sm font-semibold text-navy transition hover:brightness-110 disabled:opacity-60"
-        >
-          {status === "sending" ? "Subscribing…" : "Subscribe Now"}
-        </button>
-      </form>
-      {status === "success" && (
-        <p className="mt-3 text-sm font-medium text-emerald-300">
-          You&apos;re subscribed — welcome to the BrainWaves community.
-        </p>
-      )}
-      {status === "error" && <p className="mt-3 text-sm font-medium text-red-300">{errorMsg}</p>}
+      <div
+        data-aos="fade-up"
+        className="glass-card-dark relative isolate overflow-hidden rounded-3xl px-6 py-10 sm:px-10 sm:py-12"
+      >
+        <BrainwaveBackdrop className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-25" />
+
+        <div className="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-16">
+          <div>
+            <h2 className="font-display text-xl font-bold text-white sm:text-2xl">
+              Stop Guessing, Start Measuring
+            </h2>
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-white/65">
+              Subscribe for exclusive monthly blogs, data updates, and neuroscience-backed
+              corporate welfare models.
+            </p>
+          </div>
+
+          <div>
+            <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row sm:items-start">
+              <div className="relative w-full sm:max-w-sm">
+                <Mail
+                  aria-hidden
+                  className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40"
+                />
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your professional email"
+                  aria-label="Email address"
+                  className="w-full rounded-full border border-white/20 bg-white/5 py-3 pl-11 pr-4 text-sm text-white placeholder:text-white/45 transition focus:border-teal focus:bg-white/10 focus:shadow-brand focus:outline-none"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="group inline-flex min-h-[46px] shrink-0 items-center justify-center gap-1.5 rounded-full bg-teal px-6 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.03] hover:brightness-110 disabled:opacity-60 disabled:hover:scale-100"
+              >
+                {status === "sending" ? "Subscribing…" : "Subscribe Now"}
+                {status !== "sending" && (
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                )}
+              </button>
+            </form>
+            <p className="mt-3 text-xs text-white/40">No spam. Unsubscribe anytime.</p>
+            {status === "success" && (
+              <p className="mt-2 text-sm font-medium text-emerald-300">
+                You&apos;re subscribed! Welcome to the BrainWaves community.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="mt-2 text-sm font-medium text-red-300">{errorMsg}</p>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -103,7 +130,7 @@ export function SiteFooter() {
             </Link>
 
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/65">
-              Advanced neurofeedback systems built to connect, quantify, explore — transforming raw
+              Advanced neurofeedback systems built to connect, quantify, and explore, transforming raw
               biological data into empirical, real-time performance blueprints for enterprises,
               academic networks, and clinical practices.
             </p>
@@ -152,12 +179,12 @@ export function SiteFooter() {
               </li>
               <li>
                 <span className="font-semibold text-white">Inquiries: </span>
-                <a href="mailto:contact@brainwavestech.com" className="text-teal hover:underline">
-                  contact@brainwavestech.com
+                <a href="mailto:support.brainwavestech@gmail.com" className="text-teal hover:underline">
+                  support.brainwavestech@gmail.com
                 </a>
               </li>
               <li>
-                <span className="font-semibold text-white">Contact:</span> +91 98930 64372
+                <span className="font-semibold text-white">Contact:</span> +91 92440 24033
               </li>
             </ul>
           </div>

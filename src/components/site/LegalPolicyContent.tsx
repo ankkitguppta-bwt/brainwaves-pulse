@@ -138,13 +138,32 @@ export function LegalPolicyContent({ title }: { title: string }) {
   return (
     <div className="space-y-4 text-left text-sm leading-7 text-slate-600">
       {blocks.map((block, index) => {
-        const heading = block.match(/^#{1,6}\s+(.*)$/s);
-        if (heading)
+        const heading = block.match(/^#{1,6}\s+([^\n]*)\n?([\s\S]*)$/);
+        if (heading) {
+          const [, headingLine, body] = heading;
+          const bodyText = body.trim();
+          const bodyLines = bodyText
+            .split(/\r?\n/)
+            .map((line) => line.trim())
+            .filter(Boolean);
+          const isList = bodyLines.length > 0 && bodyLines.every((line) => line.startsWith("- "));
           return (
-            <h3 key={index} className="pt-3 font-display text-lg font-bold text-navy">
-              {inline(heading[1].replace(/^\*\*|\*\*$/g, ""))}
-            </h3>
+            <Fragment key={index}>
+              <h3 className="pt-3 font-display text-lg font-bold text-navy">
+                {inline(headingLine.replace(/^\*\*|\*\*$/g, "").trim())}
+              </h3>
+              {isList ? (
+                <ul className="list-disc space-y-2 pl-5">
+                  {bodyLines.map((line) => (
+                    <li key={line}>{inline(line.replace(/^-\s*/, ""))}</li>
+                  ))}
+                </ul>
+              ) : (
+                bodyText && <p>{inline(bodyText.replace(/\r?\n/g, " "))}</p>
+              )}
+            </Fragment>
           );
+        }
         if (block.startsWith("- "))
           return (
             <ul key={index} className="list-disc space-y-2 pl-5">

@@ -171,12 +171,14 @@ export function SiteNavbar() {
           </nav>
 
           <div className="hidden shrink-0 lg:flex">
-            <Link
-              to="/contact"
+            <a
+              href="/contact?highlight=booking"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center rounded-full bg-teal px-4 py-2 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.03]"
             >
               Book Demo Now
-            </Link>
+            </a>
           </div>
 
           <button
@@ -273,13 +275,15 @@ export function SiteNavbar() {
               </ul>
             </nav>
             <div className="border-t border-border p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
-              <Link
-                to="/contact"
+              <a
+                href="/contact?highlight=booking"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
                 className="flex min-h-[52px] w-full items-center justify-center rounded-full bg-navy px-4 py-3 text-base font-semibold text-white shadow-brand"
               >
                 Book Demo Now
-              </Link>
+              </a>
             </div>
           </div>
         </div>

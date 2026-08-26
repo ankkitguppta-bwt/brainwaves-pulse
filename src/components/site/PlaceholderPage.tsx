@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { ArrowRight, Construction } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
 
@@ -29,20 +28,22 @@ export function PlaceholderPage({
       <section className="relative -mt-16 overflow-hidden bg-gradient-hero pt-16 text-white">
         <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-40" />
         <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-12 lg:px-8 lg:pb-20 lg:pt-16">
-          <span className="inline-flex items-center gap-2 rounded-full border border-teal/40 bg-teal/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-teal">
+          <span className="inline-flex items-center gap-2 rounded-full border border-teal/20 bg-teal/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-teal shadow-[0_0_30px_-4px_rgba(20,184,166,0.6)]">
             <Construction className="h-3.5 w-3.5" /> {eyebrow}
           </span>
-          <h1 className="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight sm:text-5xl">
+          <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.08] tracking-[-0.025em] [text-wrap:balance] sm:text-5xl lg:text-[3.25rem]">
             {title}
           </h1>
-          <p className="mt-4 max-w-2xl text-white/75">{subtitle}</p>
+          <p className="mt-5 max-w-2xl text-base leading-[1.55] text-white/70">{subtitle}</p>
           <div className="mt-8">
-            <Link
-              to={ctaTo}
+            <a
+              href={ctaTo === "/contact" ? "/contact?highlight=booking" : ctaTo}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-teal px-5 py-3 text-sm font-semibold text-navy shadow-brand"
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
-            </Link>
+            </a>
           </div>
         </div>
       </section>

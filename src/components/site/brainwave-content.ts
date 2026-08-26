@@ -99,7 +99,7 @@ export const BANDS: BandContent[] = [
     id: "theta",
     name: "Theta Waves",
     frequency: "4 Hz – 8 Hz",
-    hook: "The gateway to your deep mind — where your emotions either power your performance or secretly pull the strings.",
+    hook: "The gateway to your deep mind, where your emotions quietly steer performance from behind the scenes.",
     body: "The twilight frequency commonly experienced during deep drowsiness, active dreaming, or profound meditation. It represents a state where automatic tasks allow the mind to disengage from sensory input without losing memory performance.",
     measures:
       "Thought process, feelings, emotions, rigidness, bluntness, overthinking, negative thinking, emotional thinking and behavioural adaptability.",

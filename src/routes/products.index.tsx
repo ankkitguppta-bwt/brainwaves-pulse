@@ -30,7 +30,7 @@ const products = [
     to: "/products/software",
     eyebrow: "BWT-1408",
     title: "Neurofeedback Software",
-    body: "Patent-backed processing that converts raw EEG streams into five brainwave bands and ten qualitative gauges.",
+    body: "Patent-backed processing that converts raw EEG streams into five brainwave bands and nine qualitative gauges.",
     image: software,
     Icon: MonitorSmartphone,
   },
