@@ -135,11 +135,34 @@ export function SiteFooter() {
               academic networks, and clinical practices.
             </p>
             <div className="mt-6 flex gap-3">
-              {[Facebook, Instagram, Linkedin, Youtube].map((Icon, i) => (
+              {[
+                {
+                  Icon: Facebook,
+                  label: "Facebook",
+                  href: "https://www.facebook.com/people/Brain-Waves-Tech/100084467359447/?rdid=cL4DfN8YkjEZGeJU&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F14D7AmrV3B%2F%3Futm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio",
+                },
+                {
+                  Icon: Instagram,
+                  label: "Instagram",
+                  href: "https://www.instagram.com/brain_waves_tech",
+                },
+                {
+                  Icon: Linkedin,
+                  label: "LinkedIn",
+                  href: "https://www.linkedin.com/company/brain-waves-tech",
+                },
+                {
+                  Icon: Youtube,
+                  label: "YouTube",
+                  href: "https://www.youtube.com/@brainwavestech",
+                },
+              ].map(({ Icon, label, href }) => (
                 <a
-                  key={i}
-                  href="#"
-                  aria-label="social"
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition hover:bg-teal hover:text-navy"
                 >
                   <Icon className="h-4 w-4" />
