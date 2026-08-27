@@ -159,58 +159,99 @@ function StatsStrip() {
     { end: 27, suffix: "+", l: "Certified Practitioners" },
   ];
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#051c2d] via-navy to-[#051c2d] pb-16 pt-12 sm:pb-24 sm:pt-16 lg:pb-28 lg:pt-20">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#041a2e] via-navy to-[#041a2e] py-20 sm:py-28 lg:py-32">
       <NeuralWaveBackdrop />
 
-      {/* Top Headline Content */}
-      <div className="relative mx-auto w-full max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-        <div data-aos="fade-up" className="flex justify-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-teal/30 bg-teal/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.22em] text-teal backdrop-blur-md shadow-[0_0_20px_-5px_rgba(20,184,166,0.3)] sm:text-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-teal motion-safe:animate-ping" />
-            STOP
-          </span>
+      <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
+        {/* ── Editorial Split: Left text + Right metric ── */}
+        <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-16">
+          {/* Left Column — Headline */}
+          <div className="lg:col-span-7" data-aos="fade-right">
+            {/* Thin kicker line */}
+            <div className="mb-5 flex items-center gap-3">
+              <span className="h-px w-10 bg-teal" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-teal">
+                Precision Neuroscience
+              </span>
+            </div>
+
+            <h2 className="font-accent text-4xl font-semibold not-italic leading-[1.15] tracking-[-0.01em] text-white sm:text-5xl lg:text-[3.5rem]">
+              <span className="relative mr-1 inline-block translate-y-[-2px] rounded-xl bg-gradient-to-r from-orange via-amber-400 to-orange px-3 py-0.5 font-display text-[0.8em] font-extrabold not-italic text-navy shadow-lg shadow-orange/25">
+                STOP
+              </span>{" "}
+              guessing about{" "}
+              <span className="relative">
+                mental wellness
+                <span className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-gradient-to-r from-teal to-cyan-400 opacity-60" />
+              </span>{" "}
+              and cognitive performance.
+            </h2>
+
+            <p
+              data-aos="fade-up"
+              data-aos-delay="80"
+              className="mt-7 max-w-xl text-[15px] font-normal leading-relaxed text-slate-300/90 sm:text-base lg:text-lg"
+            >
+              <span className="font-semibold text-white">Brain Waves Tech</span> deploys{" "}
+              <span className="font-medium text-teal">USA-patented EEG telemetry</span> to quantify
+              your state of mind in under 2 minutes — with clinically verified accuracy exceeding{" "}
+              <span className="font-display text-lg font-extrabold text-teal sm:text-xl">92%</span>.
+            </p>
+          </div>
+
+          {/* Right Column — Highlighted Precision Metric */}
+          <div className="lg:col-span-5" data-aos="fade-left" data-aos-delay="120">
+            <div className="relative overflow-hidden rounded-3xl border border-teal/25 bg-white/[0.03] p-8 shadow-2xl backdrop-blur-xl sm:p-10">
+              {/* Glow accents */}
+              <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-teal/20 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-orange/15 blur-3xl" />
+
+              <div className="relative text-center">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                  Clinical Diagnostic Accuracy
+                </p>
+                <p className="mt-3 font-display text-7xl font-extrabold tracking-tight text-white sm:text-8xl">
+                  92<span className="text-teal">%</span><span className="text-3xl text-teal sm:text-4xl">+</span>
+                </p>
+                <p className="mt-2 text-sm font-medium text-slate-400">
+                  Verified via peer-reviewed analysis
+                </p>
+
+                {/* Micro specs */}
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                  <div className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-center">
+                    <p className="font-display text-xl font-bold text-white">2 min</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-teal">Scan time</p>
+                  </div>
+                  <div className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-center">
+                    <p className="font-display text-xl font-bold text-white">5 bands</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-orange">EEG analysis</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <h2
-          data-aos="fade-up"
-          data-aos-delay="60"
-          className="mx-auto mt-6 max-w-4xl font-display text-3xl font-extrabold tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl lg:leading-[1.14]"
-        >
-          Guessing about mental wellness and cognitive performance.
-        </h2>
-
-        <p
-          data-aos="fade-up"
-          data-aos-delay="120"
-          className="mx-auto mt-6 max-w-3xl [text-wrap:balance] text-base font-normal leading-relaxed text-slate-200/90 sm:text-lg lg:text-xl"
-        >
-          <span className="font-semibold text-white">Brain Waves Tech</span> uses an innovative USA patented
-          technology, which quantifies state of mind in minutes with an accuracy of more than{" "}
-          <span className="inline-block font-display font-extrabold text-teal">
-            92%
-          </span>
-        </p>
-      </div>
-
-      {/* Bottom Stats Content - Full screen horizontal spread */}
-      <div className="relative mt-12 w-full px-4 sm:mt-16 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-        <div
-          data-aos="fade-up"
-          data-aos-delay="180"
-          className="w-full rounded-2xl border border-white/15 bg-white/[0.04] px-6 py-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6)] backdrop-blur-2xl sm:rounded-3xl sm:px-8 sm:py-10 lg:px-12 lg:py-12"
-        >
-          <div className="grid grid-cols-2 gap-6 divide-y divide-white/10 sm:grid-cols-4 sm:gap-4 sm:divide-y-0 sm:divide-x sm:divide-white/10 lg:gap-8">
+        {/* ── Stats Row ── */}
+        <div className="relative mt-14 sm:mt-20" data-aos="fade-up" data-aos-delay="160">
+          <div className="absolute -inset-x-4 top-1/2 h-px bg-gradient-to-r from-transparent via-teal/25 to-transparent" />
+          <div className="relative grid grid-cols-2 gap-y-8 sm:grid-cols-4">
             {stats.map((s, i) => (
               <div
                 key={s.l}
-                className="text-center pt-4 first:pt-0 sm:pt-0 sm:px-4 lg:px-8"
+                className="relative text-center"
                 data-aos="fade-up"
-                data-aos-delay={200 + i * 80}
+                data-aos-delay={180 + i * 60}
               >
-                <p className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl xl:text-6xl">
+                {/* Vertical divider */}
+                {i > 0 && (
+                  <span className="pointer-events-none absolute -left-px top-1/2 hidden h-12 w-px -translate-y-1/2 bg-white/10 sm:block" />
+                )}
+                <p className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
                   <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
                 </p>
-                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-300 sm:text-sm lg:text-base">
+                <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400 sm:text-xs">
                   {s.l}
                 </p>
               </div>

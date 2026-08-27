@@ -18,6 +18,7 @@ import { ScrollToTop } from "@/components/site/ScrollToTop";
 import BrainWavesLoader from "@/components/site/BrainWavesLoader";
 import { Toaster } from "@/components/ui/sonner";
 import heroVideo from "@/assets/video/final_landing_page_loop.mp4";
+import { HeroVideoPrewarmer } from "@/components/site/HeroBackgroundVideo";
 
 function NotFoundComponent() {
   return (
@@ -181,6 +182,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ScrollToTop />
+      <HeroVideoPrewarmer />
       <AppLoader />
       <Toaster position="top-right" richColors closeButton />
       {isBare ? (
