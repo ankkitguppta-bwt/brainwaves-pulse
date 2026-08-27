@@ -208,7 +208,10 @@ function MissionPage() {
           <div className="mt-14">
             <ImpactCallout
               quote="What people say can be influenced by perception; what the brain reveals is objective. Understanding the mind first enables more accurate counselling and personalized care."
-              author="Dr. Gupta, Founder & CEO"
+              author="Dr. Ankit Gupta"
+              role="Brain Wave Analyst, Counsellor & Sound Therapist • Founder & CEO"
+              image="/dr-ankit-speaking.jpg"
+              badge="Clinical Philosophy"
             />
           </div>
         </div>

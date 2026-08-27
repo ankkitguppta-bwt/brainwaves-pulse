@@ -12,9 +12,15 @@ import {
   ShieldCheck,
   Target,
   Cpu,
+  ArrowUpRight,
+  BookOpen,
 } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
+import whitePaperPdf from "@/assets/reports/White Paper - Realtime Brainwave Measurement and Data Analytics.pdf";
+import workEfficiencyPdf from "@/assets/reports/Enhancement of Work Efficiency in an Organization byApplying Ergonomics and Sound Waves Sessions (1) (1).pdf";
+import wujiReportPdf from "@/assets/reports/Wuji Report - IIT India Research 2-3.pdf";
 
 export const Route = createFileRoute("/research")({
   head: () => ({
@@ -114,7 +120,8 @@ const ipRights = [
 const papers = [
   {
     color: "#14b8a6",
-    filename: "BWT_Research_01_qEEG_Diagnostic_Accuracy.pdf",
+    fileUrl: whitePaperPdf,
+    filename: "White Paper - Realtime Brainwave Measurement and Data Analytics.pdf",
     title:
       "Quantitative Brainwave Analysis: Eliminating Human Observer Bias in Mental Health Intake Protocols",
     authors: "Dr. Ankit Gupta, Francesco Garripoli, Dr. Paras Kaul",
@@ -124,23 +131,25 @@ const papers = [
   },
   {
     color: "#f97316",
-    filename: "BWT_Research_02_120K_Dataset_Validation.pdf",
+    fileUrl: wujiReportPdf,
+    filename: "Wuji Report - IIT India Research 2-3.pdf",
     title:
       "Algorithmic Pattern Recognition Across 120,000 Neural Data Points for Mind Parameter Extraction",
     authors: "Brain Waves Tech Data Science Group & WujiTech Research Division",
     category: "Data Science | Neuro-Telemetry",
     abstract:
-      "Detailed technical breakdown of the 120,000+ data point benchmark collected across 20,000+ participants. Explains the mathematical mapping connecting raw Alpha, Beta, Theta, Delta, and Gamma frequency bands to 10 distinct metric indicators including Study Focus, Inner Calm, and Stress Reduction.",
+      "Detailed technical breakdown of the 120,000+ data point benchmark collected across 20,000+ participants in collaboration with IIT India. Explains the mathematical mapping connecting raw Alpha, Beta, Theta, Delta, and Gamma frequency bands to distinct metric indicators including Study Focus, Inner Calm, and Stress Reduction.",
   },
   {
     color: "#a855f7",
-    filename: "BWT_Research_03_Customized_Sound_Therapy_Outcomes.pdf",
+    fileUrl: workEfficiencyPdf,
+    filename: "Enhancement of Work Efficiency in an Organization by Applying Ergonomics and Sound Waves Sessions.pdf",
     title:
-      "Longitudinal Assessment of Neuro-Acoustic Interventions Based on Real-Time Brainwave Baseline Telemetry",
+      "Enhancement of Work Efficiency in an Organization by Applying Ergonomics and Sound Waves Sessions",
     authors: "Dr. Ankit Gupta",
-    category: "Alternative Therapy | Neurofeedback Interventions",
+    category: "Organizational Wellness | Neuro-Acoustic Therapy",
     abstract:
-      "Clinical review tracking 8,000+ B2C participants over an 8-year period (The Brain Seeder study). Evaluates pre- and post-analysis EEG spectrum shifts following customised acoustic vibration protocols, proving statistically significant baseline improvements in emotional regulation and focus retention.",
+      "Clinical review and organizational study tracking workplace participants over customized acoustic vibration and ergonomic sessions, proving statistically significant baseline improvements in emotional regulation, focus retention, stress reduction, and employee productivity.",
   },
 ];
 
@@ -155,6 +164,7 @@ function ResearchPage() {
     });
     AOS.refresh();
   }, []);
+
   return (
     <>
       <PageHero
@@ -284,7 +294,7 @@ function ResearchPage() {
           <h2 className="mt-20 font-display text-2xl font-bold text-navy">
             Published Research Papers & Clinical Validation Reports
           </h2>
-          <div className="mt-6 space-y-5">
+          <div className="mt-6 space-y-6">
             {papers.map((p) => {
               const tags = p.category.split(" | ");
               return (
@@ -292,35 +302,51 @@ function ResearchPage() {
                   key={p.title}
                   data-aos="fade-up"
                   data-aos-duration="900"
-                  className="group relative overflow-hidden rounded-2xl border border-navy/5 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-18px_rgba(15,23,42,0.42)] sm:p-7"
+                  className="group relative overflow-hidden rounded-2xl border border-navy/5 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:border-teal/30 hover:shadow-[0_22px_55px_-18px_rgba(15,23,42,0.42)] sm:p-7"
                 >
                   <span
                     aria-hidden
-                    className="absolute inset-x-0 top-0 h-1"
+                    className="absolute inset-x-0 top-0 h-1.5"
                     style={{
                       background: `linear-gradient(to right, ${p.color}, ${p.color}55, ${p.color}15)`,
                     }}
                   />
-                  <div className="flex gap-4 sm:gap-5">
-                    <div className="flex shrink-0 flex-col items-center gap-1.5">
-                      <span
-                        className="inline-flex h-12 w-12 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
+                  <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-6">
+                    <div className="flex shrink-0 items-center gap-3 sm:flex-col sm:items-center sm:gap-1.5">
+                      <a
+                        href={p.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex h-13 w-13 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105"
                         style={{ background: `${p.color}1a`, color: p.color }}
+                        title="Open PDF Document"
+                        aria-label={`Open ${p.title}`}
                       >
                         <FileText className="h-6 w-6" />
-                      </span>
+                      </a>
                       <span className="rounded-full bg-navy/5 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-navy/50">
                         PDF
                       </span>
                     </div>
 
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-display text-lg font-bold leading-snug text-navy">
-                        {p.title}
-                      </h3>
-                      <p className="mt-1 truncate font-mono text-[11px] text-muted-foreground/60">
-                        {p.filename}
-                      </p>
+                      <div className="flex flex-wrap items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="font-display text-lg font-bold leading-snug text-navy sm:text-xl">
+                            <a
+                              href={p.fileUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="transition-colors hover:text-teal"
+                            >
+                              {p.title}
+                            </a>
+                          </h3>
+                          <p className="mt-1 truncate font-mono text-[11px] text-muted-foreground/60">
+                            {p.filename}
+                          </p>
+                        </div>
+                      </div>
 
                       <div className="mt-3 flex flex-wrap gap-2">
                         {tags.map((tag) => (
@@ -338,10 +364,22 @@ function ResearchPage() {
                         {p.abstract}
                       </p>
 
-                      <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-navy/5 pt-4">
+                      <div className="mt-5 flex flex-col gap-4 border-t border-navy/5 pt-4 sm:flex-row sm:items-center sm:justify-between">
                         <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                          <Users className="h-3.5 w-3.5 shrink-0" /> {p.authors}
+                          <Users className="h-3.5 w-3.5 shrink-0 text-navy/40" /> {p.authors}
                         </p>
+
+                        <a
+                          href={p.fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all duration-200 hover:scale-105 hover:shadow-md active:scale-95"
+                          style={{ backgroundColor: p.color }}
+                        >
+                          <BookOpen className="h-3.5 w-3.5" />
+                          <span>Read Full Report</span>
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </a>
                       </div>
                     </div>
                   </div>

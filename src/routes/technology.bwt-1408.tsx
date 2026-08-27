@@ -1,41 +1,98 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { AudioWaveform, Box, Brain, Cog, Cpu, FileText, Timer, Waves } from "lucide-react";
+import {
+  AudioWaveform,
+  Box,
+  Brain,
+  Cog,
+  Cpu,
+  FileText,
+  Maximize2,
+  Timer,
+  Waves,
+} from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import softwareImage from "@/assets/client/software/Step 4.png";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+
+import step1 from "@/assets/client/software/Step 1.jpg";
+import step2 from "@/assets/client/software/Step 2.png";
+import step3 from "@/assets/client/software/Step 3.png";
+import step4 from "@/assets/client/software/Step 4.png";
+import step5 from "@/assets/client/software/Step 5.png";
+import step6 from "@/assets/client/software/Step 6.png";
+import step7 from "@/assets/client/software/Step 7.png";
 
 export const Route = createFileRoute("/technology/bwt-1408")({
   head: () => ({ meta: [{ title: "BWT-1408 Neurofeedback Software | BrainWaves Tech" }] }),
   component: SoftwarePage,
 });
+
 const specs = [
   [Cpu, "0.5 Hz Signal Resolution Processing"],
   [Brain, "Fast Fourier Transform (FFT) Spectral Analysis"],
   [Timer, "U.S. Patent #9,268,905 B2 Time-Sync Architecture"],
   [FileText, "Automated AI Mind Profile Generation in 2 Minutes"],
 ] as const;
+
 const pipeline = [
-  [
-    Waves,
-    "High-Speed Sampling & Artifact Stripping",
-    "Raw digital EEG packets are ingested at high sampling rates and digitally filtered to isolate genuine cerebral activity from ocular, facial, and ambient artefacts.",
-  ],
-  [
-    AudioWaveform,
-    "Fast Fourier Transform (FFT) Spectral Decomposition",
-    "Continuous voltage traces are decomposed at 0.5 Hz resolution into five fundamental brainwave bandwidths.",
-  ],
-  [
-    Cog,
-    "Proprietary Algorithmic Value Mapping",
-    "Frequency ratios feed proprietary algorithms that convert complex EEG data into nine qualitative, human-understandable performance gauges.",
-  ],
-  [
-    Box,
-    "Real-Time 3D Rendering & Automated Report Export",
-    "Values update live waveform spirals during the two-minute scan and compile into a multi-page AI PDF report at completion.",
-  ],
+  {
+    step: "STEP 01",
+    badge: "Hardware Telemetry",
+    title: "Headband Placement & Sensor Grounding",
+    text: "Deploy the non-invasive dry electrode hardware comfortably across the prefrontal cortex to capture clean, raw micro-volt EEG signals.",
+    image: step1,
+    Icon: Waves,
+  },
+  {
+    step: "STEP 02",
+    badge: "Module Selection",
+    title: "Session Configuration & Module Selection",
+    text: "Launch the BWT-1408 software suite and choose from targeted training modules, baseline assessments, or multimedia mind sessions.",
+    image: step2,
+    Icon: Cog,
+  },
+  {
+    step: "STEP 03",
+    badge: "Signal Calibration",
+    title: "Wireless Telemetry & Real-Time Sync",
+    text: "Establish zero-delay wireless communication while the software automatically verifies signal integrity and strips ocular and ambient artifacts.",
+    image: step3,
+    Icon: AudioWaveform,
+  },
+  {
+    step: "STEP 04",
+    badge: "Live 3D Interface",
+    title: "Brain Connection & 3D Waveform Initialization",
+    text: "Real-time connection is confirmed, initializing live 3D waveform spirals across 5 fundamental bandwidths and 9 qualitative gauges.",
+    image: step4,
+    Icon: Brain,
+  },
+  {
+    step: "STEP 05",
+    badge: "Spectral Analysis",
+    title: "Live 2-Minute FFT Spectral Decomposition",
+    text: "Sub-Hertz frequency ratios are continuously analyzed at 0.5 Hz resolution as live neural spikes dynamically move the interactive frequency helixes.",
+    image: step5,
+    Icon: Cpu,
+  },
+  {
+    step: "STEP 06",
+    badge: "Data Aggregation",
+    title: "Comprehensive Session Completion",
+    text: "Complete the 2-minute scan capturing continuous EEG data points, mapping cognitive resilience, attention, calm, and inner peace.",
+    image: step6,
+    Icon: Timer,
+  },
+  {
+    step: "STEP 07",
+    badge: "AI Mind Profile",
+    title: "Instant Session Records & Automated Report Export",
+    text: "Export instant AI-driven Mind Profile reports, compare historical neuro-trends, and formulate targeted sound therapy interventions.",
+    image: step7,
+    Icon: Box,
+  },
 ] as const;
+
 const bands = [
   [
     "Alpha",
@@ -63,6 +120,7 @@ const bands = [
     "Low-arousal twilight states, emotional processing, fluid ideation, intuition, overthinking, and memory consolidation.",
   ],
 ] as const;
+
 const gauges = [
   ["Attention Level", "Real-time active mental focus and resistance to external distractions."],
   [
@@ -86,121 +144,194 @@ const gauges = [
   ],
   ["Creative Relaxation", "Fluid, uncensored ideation."],
 ] as const;
-function AlgorithmicPipeline() {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const [revealed, setRevealed] = useState(false);
 
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setRevealed(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.2 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+function AlgorithmicPipeline() {
+  const [zoomImage, setZoomImage] = useState<{ src: string; title: string; badge: string } | null>(
+    null,
+  );
 
   return (
-    <section className="relative overflow-hidden bg-white py-16 lg:py-24">
+    <section className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-28">
+      {/* Background decorations */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-60"
+        className="pointer-events-none absolute inset-0 opacity-40"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.05) 1px, transparent 0)",
-          backgroundSize: "28px 28px",
+            "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.06) 1px, transparent 0)",
+          backgroundSize: "32px 32px",
           maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
         }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-40 top-1/3 h-[420px] w-[420px] rounded-full bg-teal/10 blur-[110px]"
+        className="pointer-events-none absolute -right-40 top-1/4 h-[500px] w-[500px] rounded-full bg-teal/10 blur-[130px]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/2 lg:block"
-        style={{
-          background:
-            "radial-gradient(ellipse 65% 65% at 70% 45%, rgba(15,23,42,0.07), rgba(168,85,247,0.05) 45%, transparent 75%)",
-        }}
+        className="pointer-events-none absolute -left-40 top-2/3 h-[500px] w-[500px] rounded-full bg-cyan-500/10 blur-[130px]"
       />
-      <div
-        ref={sectionRef}
-        className="relative mx-auto grid max-w-6xl items-start gap-12 px-4 lg:grid-cols-2 lg:px-8"
-      >
-        <div>
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.18em] text-teal">
-            <span className="h-1.5 w-1.5 rounded-full bg-teal" />
+
+      <div className="relative mx-auto max-w-6xl px-4 lg:px-8">
+        {/* Section Header */}
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-teal/30 bg-teal/10 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.2em] text-teal">
+            <span className="h-1.5 w-1.5 rounded-full bg-teal motion-safe:animate-pulse" />
             The algorithmic pipeline
           </span>
-          <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">
+          <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-navy sm:text-4xl lg:text-5xl">
             From raw micro-volts to useful insight.
           </h2>
-          <p className="mt-5 font-semibold text-teal">
-            Raw Micro-Volts → 0.5–42+ Hz Processing → Algorithmic Decoding → 14-Parameter Analytic
-            Output
+          <p className="mt-4 text-sm font-semibold text-teal sm:text-base">
+            Raw Micro-Volts → 0.5–42+ Hz Processing → Algorithmic Decoding → 14-Parameter Analytic Output
           </p>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            Explore the complete 7-stage neurofeedback workflow, from dry-sensor telemetry to real-time 3D frequency helix rendering and automated AI Mind Profile reporting.
+          </p>
+        </div>
 
-          <div className="relative mt-10">
-            <div
-              className="absolute bottom-2 left-5 top-2 w-[3px] rounded-full bg-navy/10"
-              aria-hidden
-            />
-            <div
-              className="absolute left-5 top-2 w-[3px] rounded-full bg-gradient-to-b from-teal to-teal/20 shadow-[0_0_12px_-1px_rgba(20,184,166,0.65)] transition-[height] duration-[1400ms] ease-out"
-              style={{ height: revealed ? "calc(100% - 16px)" : "0%" }}
-              aria-hidden
-            />
-            <div className="space-y-3">
-              {pipeline.map(([Icon, title, text], i) => (
+        {/* 7 Step-by-Step Simultaneous Cards */}
+        <div className="mt-16 space-y-12 sm:mt-20 sm:space-y-16 lg:space-y-20">
+          {pipeline.map((item, index) => {
+            const Icon = item.Icon;
+            const isEven = index % 2 === 1;
+
+            return (
+              <article
+                key={item.title}
+                className="group relative overflow-hidden rounded-3xl border border-navy/10 bg-white p-6 shadow-[0_15px_45px_-20px_rgba(15,23,42,0.15)] transition-all duration-300 hover:border-teal/30 hover:shadow-[0_25px_60px_-15px_rgba(15,23,42,0.22)] sm:p-8 lg:p-10"
+              >
                 <div
-                  key={title}
-                  className={`group relative flex gap-5 rounded-2xl border border-navy/5 bg-navy/[0.02] p-5 transition-all duration-500 ease-out hover:border-teal/25 hover:bg-teal/5 ${
-                    revealed ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                  className={`grid items-center gap-8 lg:grid-cols-12 lg:gap-12 ${
+                    isEven ? "lg:grid-flow-dense" : ""
                   }`}
-                  style={{ transitionDelay: revealed ? `${i * 150}ms` : "0ms" }}
                 >
-                  <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-teal bg-teal/10 text-teal shadow-sm transition-transform duration-300 group-hover:scale-110">
-                    <Icon className="h-4 w-4" strokeWidth={2.5} />
-                  </span>
-                  <div>
-                    <p className="text-xs font-bold tracking-[0.2em] text-teal">STEP 0{i + 1}</p>
-                    <h3 className="mt-1 font-display text-lg font-bold leading-snug text-navy">
-                      {title}
+                  {/* Text Details Column */}
+                  <div
+                    className={`flex flex-col justify-center lg:col-span-5 ${
+                      isEven ? "lg:col-start-8" : ""
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-teal/10 text-teal font-bold transition-all duration-300 group-hover:bg-teal group-hover:text-white group-hover:scale-105">
+                        <Icon className="h-5 w-5" strokeWidth={2.2} />
+                      </span>
+                      <span className="rounded-full bg-teal/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-teal">
+                        {item.badge}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-4 font-display text-2xl font-bold leading-snug text-navy sm:text-3xl">
+                      {item.title}
                     </h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{text}</p>
+
+                    <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+                      {item.text}
+                    </p>
+
+                    <div className="mt-6 flex items-center gap-2 text-xs font-semibold text-teal">
+                      <span className="h-1.5 w-1.5 rounded-full bg-teal" />
+                      <span>Simultaneous Real-Time Telemetry</span>
+                    </div>
+                  </div>
+
+                  {/* Image Display Column */}
+                  <div className={`lg:col-span-7 ${isEven ? "lg:col-start-1" : ""}`}>
+                    <div className="overflow-hidden rounded-2xl border border-navy/15 bg-navy shadow-[0_20px_50px_-20px_rgba(15,23,42,0.5)] transition-all duration-500 group-hover:shadow-[0_25px_65px_-15px_rgba(15,23,42,0.6)]">
+                      {/* Top Window Bar with traffic light dots */}
+                      <div className="flex items-center justify-between border-b border-white/10 bg-navy/90 px-4 py-3 backdrop-blur-md">
+                        <div className="flex items-center gap-2">
+                          <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
+                          <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
+                          <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+                        </div>
+                        <span className="text-[11px] font-medium text-white/70">
+                          {item.badge}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setZoomImage({
+                              src: item.image,
+                              title: item.title,
+                              badge: item.badge,
+                            })
+                          }
+                          className="grid h-6 w-6 place-items-center rounded text-white/60 transition hover:bg-white/10 hover:text-white"
+                          title="Click to enlarge"
+                          aria-label="Click to enlarge screenshot"
+                        >
+                          <Maximize2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+
+                      {/* Image container */}
+                      <div
+                        role="button"
+                        tabIndex={0}
+                        onClick={() =>
+                          setZoomImage({
+                            src: item.image,
+                            title: item.title,
+                            badge: item.badge,
+                          })
+                        }
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            setZoomImage({
+                              src: item.image,
+                              title: item.title,
+                              badge: item.badge,
+                            });
+                          }
+                        }}
+                        className="group/img relative aspect-[16/9] w-full cursor-zoom-in overflow-hidden bg-slate-950 focus-visible:outline-none"
+                      >
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover/img:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/25 opacity-0 transition-opacity duration-300 group-hover/img:opacity-100">
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-navy/85 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md shadow-lg">
+                            <Maximize2 className="h-3.5 w-3.5 text-teal" /> Enlarge View
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="relative lg:sticky lg:top-28">
-          <div
-            aria-hidden
-            className="absolute -inset-10 -z-10 rounded-[2.5rem] bg-gradient-to-br from-teal/30 via-[#a855f7]/15 to-orange/20 blur-3xl"
-          />
-          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-navy shadow-[0_30px_80px_-30px_rgba(15,23,42,0.5)]">
-            <div className="flex items-center gap-1.5 border-b border-white/10 bg-navy/90 px-4 py-3">
-              <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-              <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-              <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            </div>
-            <img
-              src={softwareImage}
-              alt="BWT-1408 software dashboard showing live brainwave telemetry spirals"
-              className="aspect-[1366/768] w-full bg-navy object-contain"
-            />
-          </div>
+              </article>
+            );
+          })}
         </div>
       </div>
+
+      {/* Fullscreen Lightbox Modal */}
+      <Dialog open={!!zoomImage} onOpenChange={(open) => !open && setZoomImage(null)}>
+        <DialogContent className="max-h-[95svh] w-[calc(100%-1rem)] max-w-6xl overflow-hidden border-white/15 bg-navy p-3 text-white sm:w-[calc(100%-2rem)] sm:p-5">
+          {zoomImage && (
+            <>
+              <div className="mb-3 px-2">
+                <p className="text-xs font-bold uppercase tracking-widest text-teal">
+                  {zoomImage.badge}
+                </p>
+                <h3 className="font-display text-lg font-bold text-white sm:text-xl">
+                  {zoomImage.title}
+                </h3>
+              </div>
+              <div className="relative flex max-h-[78svh] items-center justify-center overflow-hidden rounded-xl bg-black/60 p-1">
+                <img
+                  src={zoomImage.src}
+                  alt={zoomImage.title}
+                  className="max-h-[78svh] w-full object-contain"
+                />
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
@@ -232,34 +363,76 @@ function PatentDeepDive() {
 
   return (
     <>
-    <section ref={sectionRef} className="relative overflow-hidden border-y border-navy/10 bg-white py-16 text-navy lg:py-24">
-      <div aria-hidden className="absolute -right-24 top-0 h-96 w-96 rounded-full bg-teal/15 blur-[120px]" />
-      <div aria-hidden className="absolute -bottom-36 left-1/4 h-80 w-80 rounded-full bg-orange/10 blur-[120px]" />
-      <div aria-hidden className="absolute inset-0 opacity-55" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.05) 1px, transparent 0)", backgroundSize: "28px 28px", maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 35%, transparent 100%)" }} />
-      <div className="relative mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:px-8">
-        <div className={revealed ? "animate-step-in" : "opacity-0"}>
-          <p className="inline-flex items-center gap-2 rounded-full border border-teal/25 bg-teal/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.17em] text-teal"><span className="h-1.5 w-1.5 rounded-full bg-teal motion-safe:animate-pulse" /> Patent deep dive</p>
-          <h2 className="mt-5 font-display text-3xl font-extrabold leading-tight tracking-tight text-navy sm:text-4xl">Causal neuro-analytics via precision time-stamped stimuli.</h2>
-          <p className="mt-6 leading-7 text-muted-foreground">
-            Standard neurofeedback captures state changes without knowing what triggered them. Protected under U.S. Patent #9,268,905 B2, BWT-1408 time-synchronizes EEG recording to millisecond markers from visual and audio stimuli, including embedded video and YouTube streams.
-          </p>
-          <div className="mt-8 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-navy/55"><span className="h-px w-10 bg-teal" /> Stimulus → timestamp → neural response</div>
-        </div>
-        <div className="relative">
-          <div aria-hidden className={`absolute left-8 right-8 top-8 hidden h-px bg-teal/35 transition-transform duration-[1600ms] ease-out motion-reduce:scale-x-100 sm:block ${revealed ? "scale-x-100" : "scale-x-0"}`} style={{ transformOrigin: "left" }} />
-          <div className="grid gap-4 sm:grid-cols-3">
-            {capabilities.map(([title, text], index) => (
-              <article key={title} className={`group relative rounded-2xl border border-navy/5 bg-white p-5 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:border-teal/35 hover:shadow-[0_24px_55px_-20px_rgba(15,23,42,0.42)] ${revealed ? "animate-step-in" : "opacity-0"}`} style={{ animationDelay: `${220 + index * 180}ms` }}>
-                <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl border border-teal/35 bg-teal/10 font-display text-sm font-bold text-teal transition-all duration-300 group-hover:bg-teal group-hover:text-white">0{index + 1}</span>
-                <h3 className="mt-5 font-display text-base font-bold text-navy">{title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
-              </article>
-            ))}
+      <section
+        ref={sectionRef}
+        className="relative overflow-hidden border-y border-navy/10 bg-white py-16 text-navy lg:py-24"
+      >
+        <div
+          aria-hidden
+          className="absolute -right-24 top-0 h-96 w-96 rounded-full bg-teal/15 blur-[120px]"
+        />
+        <div
+          aria-hidden
+          className="absolute -bottom-36 left-1/4 h-80 w-80 rounded-full bg-orange/10 blur-[120px]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-55"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.05) 1px, transparent 0)",
+            backgroundSize: "28px 28px",
+            maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 35%, transparent 100%)",
+          }}
+        />
+        <div className="relative mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:px-8">
+          <div className={revealed ? "animate-step-in" : "opacity-0"}>
+            <p className="inline-flex items-center gap-2 rounded-full border border-teal/25 bg-teal/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.17em] text-teal">
+              <span className="h-1.5 w-1.5 rounded-full bg-teal motion-safe:animate-pulse" /> Patent
+              deep dive
+            </p>
+            <h2 className="mt-5 font-display text-3xl font-extrabold leading-tight tracking-tight text-navy sm:text-4xl">
+              Causal neuro-analytics via precision time-stamped stimuli.
+            </h2>
+            <p className="mt-6 leading-7 text-muted-foreground">
+              Standard neurofeedback captures state changes without knowing what triggered them.
+              Protected under U.S. Patent #9,268,905 B2, BWT-1408 time-synchronizes EEG recording to
+              millisecond markers from visual and audio stimuli, including embedded video and
+              YouTube streams.
+            </p>
+            <div className="mt-8 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-navy/55">
+              <span className="h-px w-10 bg-teal" /> Stimulus → timestamp → neural response
+            </div>
+          </div>
+          <div className="relative">
+            <div
+              aria-hidden
+              className={`absolute left-8 right-8 top-8 hidden h-px bg-teal/35 transition-transform duration-[1600ms] ease-out motion-reduce:scale-x-100 sm:block ${
+                revealed ? "scale-x-100" : "scale-x-0"
+              }`}
+              style={{ transformOrigin: "left" }}
+            />
+            <div className="grid gap-4 sm:grid-cols-3">
+              {capabilities.map(([title, text], index) => (
+                <article
+                  key={title}
+                  className={`group relative rounded-2xl border border-navy/5 bg-white p-5 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:border-teal/35 hover:shadow-[0_24px_55px_-20px_rgba(15,23,42,0.42)] ${
+                    revealed ? "animate-step-in" : "opacity-0"
+                  }`}
+                  style={{ animationDelay: `${220 + index * 180}ms` }}
+                >
+                  <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl border border-teal/35 bg-teal/10 font-display text-sm font-bold text-teal transition-all duration-300 group-hover:bg-teal group-hover:text-white">
+                    0{index + 1}
+                  </span>
+                  <h3 className="mt-5 font-display text-base font-bold text-navy">{title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-    <div aria-hidden className="h-12 border-b border-navy/10 bg-background sm:h-16" />
+      </section>
+      <div aria-hidden className="h-12 border-b border-navy/10 bg-background sm:h-16" />
     </>
   );
 }
@@ -349,7 +522,9 @@ function SoftwarePage() {
             {gauges.map(([title, text], i) => (
               <article
                 key={title}
-                className={`rounded-2xl border border-navy/10 bg-white p-5 ${i === gauges.length - 1 ? "sm:col-span-2" : ""}`}
+                className={`rounded-2xl border border-navy/10 bg-white p-5 ${
+                  i === gauges.length - 1 ? "sm:col-span-2" : ""
+                }`}
               >
                 <h3 className="font-display font-bold text-navy">{title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>

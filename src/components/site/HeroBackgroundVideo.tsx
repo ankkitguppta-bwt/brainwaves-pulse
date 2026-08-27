@@ -1,101 +1,81 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import heroVideo from "@/assets/video/final_landing_page_loop.mp4";
 
-const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+export function HeroBackgroundVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoReady, setIsVideoReady] = useState(false);
 
-let cachedHeroVideo: HTMLVideoElement | null = null;
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
 
-function getOrCreateHeroVideo(): HTMLVideoElement | null {
-  if (typeof window === "undefined") return null;
-
-  if (!cachedHeroVideo) {
-    const video = document.createElement("video");
-    video.src = heroVideo;
-    video.autoplay = true;
-    video.loop = true;
+    // Ensure audio is completely muted for guaranteed autoplay
     video.muted = true;
     video.defaultMuted = true;
-    video.playsInline = true;
-    video.preload = "auto";
-    video.setAttribute("playsinline", "");
-    video.setAttribute("webkit-playsinline", "");
-    video.setAttribute("muted", "");
-    video.setAttribute("autoplay", "");
-    video.setAttribute("loop", "");
-    video.className = "pointer-events-none absolute inset-0 h-full w-full object-cover";
-    video.style.position = "absolute";
-    video.style.inset = "0";
-    video.style.width = "100%";
-    video.style.height = "100%";
-    video.style.objectFit = "cover";
-    video.style.pointerEvents = "none";
 
-    // Start warming up the decoder and buffering immediately
-    video.load();
-    const p = video.play();
-    if (p !== undefined) {
-      p.catch(() => {
-        // Autoplay may wait for user interaction in some strict environments
-      });
+    const playVideo = () => {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise
+          .then(() => {
+            setIsVideoReady(true);
+          })
+          .catch(() => {
+            // Autoplay policy retry on user touch/click/scroll if blocked
+            const onInteraction = () => {
+              video.play().catch(() => {});
+              window.removeEventListener("touchstart", onInteraction);
+              window.removeEventListener("click", onInteraction);
+              window.removeEventListener("scroll", onInteraction);
+            };
+            window.addEventListener("touchstart", onInteraction, { passive: true, once: true });
+            window.addEventListener("click", onInteraction, { passive: true, once: true });
+            window.addEventListener("scroll", onInteraction, { passive: true, once: true });
+          });
+      }
+    };
+
+    if (video.readyState >= 2) {
+      playVideo();
+    } else {
+      video.addEventListener("loadeddata", playVideo, { once: true });
+      video.addEventListener("canplay", playVideo, { once: true });
     }
 
-    cachedHeroVideo = video;
-  }
-
-  return cachedHeroVideo;
-}
-
-// Prewarm video instance on module load
-if (typeof window !== "undefined") {
-  if ("requestIdleCallback" in window) {
-    (window as any).requestIdleCallback(() => getOrCreateHeroVideo());
-  } else {
-    setTimeout(() => getOrCreateHeroVideo(), 0);
-  }
-}
-
-export function HeroBackgroundVideo() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    const video = getOrCreateHeroVideo();
-    const container = containerRef.current;
-    if (!video || !container) return;
-
-    if (!container.contains(video)) {
-      container.appendChild(video);
-    }
-
-    video.muted = true;
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Autoplay policy handled
-      });
-    }
+    // Resume video playback if user returns from another browser tab
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible" && video.paused) {
+        playVideo();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      // Pause on unmount to save resources, but keep decoded frames and buffer alive in memory
-      video.pause();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
   return (
     <div
-      ref={containerRef}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 h-full w-full overflow-hidden"
+      className="pointer-events-none absolute inset-0 h-full w-full overflow-hidden bg-navy"
     >
-      <noscript>
-        <video
-          src={heroVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-        />
-      </noscript>
+      {/* Ambient Neural Glow Backdrop for Instant First Paint */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(20,184,166,0.25),rgba(6,36,58,0.95))]" />
+
+      {/* Declarative High-Performance Video Element */}
+      <video
+        ref={videoRef}
+        src={heroVideo}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${
+          isVideoReady ? "opacity-100" : "opacity-90"
+        }`}
+      />
     </div>
   );
 }

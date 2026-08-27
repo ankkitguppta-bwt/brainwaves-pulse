@@ -1,11 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { BadgeCheck, ChevronLeft, ChevronRight, Database as DatabaseIcon, HandHeart, Headphones, Newspaper, Play, Quote, Video, ZoomIn } from "lucide-react";
+import { BadgeCheck, CheckCircle2, ChevronLeft, ChevronRight, Database as DatabaseIcon, HandHeart, Headphones, Newspaper, Play, Quote, Video, ZoomIn } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { clientTestimonialVideos } from "@/lib/client-testimonials";
+import { clientAudioTestimonials } from "@/lib/client-audio-testimonials";
+import { researchBackedWrittenTestimonials } from "@/lib/research-testimonials";
+import { AudioTestimonialCard } from "@/components/site/AudioTestimonialCard";
 import type { Database } from "@/integrations/supabase/types";
 
 type MediaItem = Database["public"]["Tables"]["media_recognition"]["Row"];
@@ -59,6 +62,51 @@ function youtubeThumbnail(url: string | null) {
   return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : null;
 }
 
+const defaultExplainerVideos = [
+  {
+    id: "explainer-1",
+    title: "Mental Health Matters: Discover Brain Waves Tech’s Neurofeedback System",
+    outlet: "BrainWaves Tech",
+    url: "https://www.youtube.com/watch?v=uiPXm0X_6t4",
+    body: "An overview of BrainWaves Tech neurofeedback technology, brainwave analysis, and real-time cognitive quantification.",
+  },
+  {
+    id: "explainer-2",
+    title: "Brain Wave Analysis",
+    outlet: "BrainWaves Tech",
+    url: "https://www.youtube.com/watch?v=TQS2it2jsGY",
+    body: "Explore how 2-minute non-invasive EEG mapping translates raw frequency patterns into actionable wellness insights.",
+  },
+  {
+    id: "explainer-3",
+    title: "Mental Health and Student Support: How Brain Waves Tech Empowers a Stress-Free Life",
+    outlet: "BrainWaves Tech",
+    url: "https://www.youtube.com/watch?v=bj8ttYUqKXU",
+    body: "How targeted neurofeedback and customized sound therapy support students with focus, exam anxiety, and emotional resilience.",
+  },
+  {
+    id: "explainer-4",
+    title: "Transforming Mental Health: A Revolutionary Neurofeedback Solution for All Sectors",
+    outlet: "BrainWaves Tech",
+    url: "https://www.youtube.com/watch?v=gNWz_iz-6zs",
+    body: "Discovering scalable neuroscience applications across clinical, corporate, institutional, and defense ecosystems.",
+  },
+  {
+    id: "explainer-5",
+    title: "Transform Your Mental Health Practice with Brain Waves Tech",
+    outlet: "BrainWaves Tech",
+    url: "https://www.youtube.com/watch?v=86fvbps-wZA",
+    body: "Equipping psychologists, clinicians, and wellness practitioners with accredited NFP certification and assessment tools.",
+  },
+  {
+    id: "explainer-6",
+    title: "Enhancing Corporate Success with Brain Waves Tech: Boost Retention, Productivity & Mental Health",
+    outlet: "BrainWaves Tech",
+    url: "https://www.youtube.com/watch?v=jXB3yGJb0DI",
+    body: "Quantifying workplace cognitive fatigue, reducing burnout, and optimizing executive mental performance.",
+  },
+] as const;
+
 const youtubePodcasts = [
   {
     id: "podcast-1",
@@ -99,7 +147,17 @@ function StoriesPage() {
   const [activeVideo, setActiveVideo] = useState<{ url: string; title: string } | null>(null);
   const coverageItems = coverage.length ? coverage : achievements;
   const [activeCoverageIndex, setActiveCoverageIndex] = useState<number | null>(null);
-  const explainer = byKind("explainer_video");
+  const databaseExplainer = byKind("explainer_video");
+  const explainer = databaseExplainer.length
+    ? databaseExplainer.map((item) => ({
+        id: item.id,
+        title: item.title,
+        outlet: item.outlet,
+        url: item.url,
+        body: item.body,
+        image_url: item.image_url,
+      }))
+    : defaultExplainerVideos;
   const databasePodcasts = byKind("youtube_podcast");
   const podcasts = databasePodcasts.length
     ? databasePodcasts.map((item) => ({
@@ -119,6 +177,41 @@ function StoriesPage() {
         thumbnail_url: item.image_url,
       }))
     : clientTestimonialVideos;
+  const databaseAudio = byKind("audio_testimonial");
+  const audioTestimonials = databaseAudio.length
+    ? databaseAudio.map((item) => ({
+        id: item.id,
+        title: item.title,
+        role: "BrainWaves Tech Client",
+        category: "Cognitive Wellness",
+        tag: "Verified Client",
+        durationApprox: "0:45",
+        summary: item.body || "Real recovery and cognitive wellness outcome shared directly by client.",
+        url: item.url ?? "",
+      }))
+    : clientAudioTestimonials;
+
+  const [activeAudioId, setActiveAudioId] = useState<string | null>(null);
+
+  const databaseWritten = byKind("written_testimonial");
+  const writtenTestimonials = databaseWritten.length
+    ? databaseWritten.map((item) => ({
+        id: item.id,
+        title: item.title,
+        outlet: item.outlet,
+        body: item.body,
+        metricBadge: null,
+        verifiedStudy: null,
+      }))
+    : researchBackedWrittenTestimonials.map((item) => ({
+        id: item.id,
+        title: item.author,
+        outlet: `${item.role} • ${item.institution}`,
+        body: item.quote,
+        metricBadge: item.metricBadge,
+        verifiedStudy: item.verifiedStudy,
+      }));
+
   const activeCoverage = activeCoverageIndex === null ? null : coverageItems[activeCoverageIndex];
 
   useEffect(() => {
@@ -186,7 +279,7 @@ function StoriesPage() {
       </section>
       <MediaSection title="Explainer Videos" icon={Video}>
         {explainer.length ? (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {explainer.map((item) => (
               <VideoItem key={item.id} item={item} onOpen={setActiveVideo} />
             ))}
@@ -280,18 +373,21 @@ function StoriesPage() {
           ))}
         </div>
       </MediaSection>
-      <MediaSection title="Audio Testimonials" icon={Headphones}>
-        {byKind("audio_testimonial").length ? (
-          <div className="grid gap-5 md:grid-cols-2">
-            {byKind("audio_testimonial").map((item) => (
-              <article key={item.id} className="rounded-2xl border border-navy/10 bg-white p-5">
-                <h3 className="font-display font-bold text-navy">{item.title}</h3>
-                {item.outlet && <p className="mt-1 text-sm text-teal">{item.outlet}</p>}
-                {item.body && <p className="mt-3 text-sm text-muted-foreground">{item.body}</p>}
-                {item.url && (
-                  <audio controls preload="metadata" className="mt-4 w-full" src={item.url} />
-                )}
-              </article>
+      <MediaSection
+        title="Audio Testimonials"
+        subtitle="Listen to real experiences, recovery journeys, and cognitive wellness outcomes shared directly by our clients."
+        icon={Headphones}
+      >
+        {audioTestimonials.length ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {audioTestimonials.map((item) => (
+              <AudioTestimonialCard
+                key={item.id}
+                item={item}
+                isPlaying={activeAudioId === item.id}
+                onPlay={() => setActiveAudioId(item.id)}
+                onPause={() => setActiveAudioId((curr) => (curr === item.id ? null : curr))}
+              />
             ))}
           </div>
         ) : (
@@ -299,15 +395,33 @@ function StoriesPage() {
         )}
       </MediaSection>
       <MediaSection title="Written Testimonials" icon={Quote} tone="muted">
-        {byKind("written_testimonial").length ? (
+        {writtenTestimonials.length ? (
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {byKind("written_testimonial").map((item) => (
-              <blockquote key={item.id} className="rounded-2xl bg-white p-6">
-                <Quote className="h-6 w-6 text-teal" />
-                <p className="mt-4 leading-relaxed text-slate-700">“{item.body}”</p>
-                <footer className="mt-5">
+            {writtenTestimonials.map((item) => (
+              <blockquote
+                key={item.id}
+                className="group relative flex flex-col justify-between rounded-2xl border border-navy/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-teal/30 hover:shadow-md"
+              >
+                <div>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <Quote className="h-5 w-5 text-teal" />
+                    {item.metricBadge && (
+                      <span className="inline-flex items-center rounded-full bg-orange/10 px-2.5 py-0.5 text-[11px] font-bold text-orange">
+                        {item.metricBadge}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-4 text-sm leading-relaxed text-slate-700">“{item.body}”</p>
+                </div>
+                <footer className="mt-5 border-t border-navy/5 pt-4">
                   <p className="font-semibold text-navy">{item.title}</p>
-                  {item.outlet && <p className="text-sm text-muted-foreground">{item.outlet}</p>}
+                  {item.outlet && <p className="text-xs text-muted-foreground">{item.outlet}</p>}
+                  {item.verifiedStudy && (
+                    <div className="mt-2 flex items-center gap-1 text-[10px] font-semibold text-teal">
+                      <CheckCircle2 className="h-3.5 w-3.5" />
+                      <span>{item.verifiedStudy}</span>
+                    </div>
+                  )}
                 </footer>
               </blockquote>
             ))}
@@ -392,11 +506,13 @@ function StoriesPage() {
 
 function MediaSection({
   title,
+  subtitle,
   icon: Icon,
   tone = "white",
   children,
 }: {
   title: string;
+  subtitle?: string;
   icon: typeof Video;
   tone?: "white" | "muted";
   children: React.ReactNode;
@@ -404,11 +520,18 @@ function MediaSection({
   return (
     <section className={tone === "muted" ? "bg-background py-16" : "bg-white py-16"}>
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="flex items-center gap-3">
-          <span className="grid h-11 w-11 place-items-center rounded-xl bg-navy text-teal">
-            <Icon className="h-5 w-5" />
-          </span>
-          <h2 className="font-display text-3xl font-bold text-navy">{title}</h2>
+        <div>
+          <div className="flex items-center gap-3">
+            <span className="grid h-11 w-11 place-items-center rounded-xl bg-navy text-teal">
+              <Icon className="h-5 w-5" />
+            </span>
+            <h2 className="font-display text-3xl font-bold text-navy">{title}</h2>
+          </div>
+          {subtitle && (
+            <p className="mt-2.5 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+              {subtitle}
+            </p>
+          )}
         </div>
         <div className="mt-8">{children}</div>
       </div>
@@ -426,40 +549,63 @@ function VideoItem({
   item,
   onOpen,
 }: {
-  item: MediaItem;
+  item: {
+    id: string;
+    title: string;
+    url: string | null;
+    image_url?: string | null;
+    outlet?: string | null;
+    body?: string | null;
+  };
   onOpen: (item: { url: string; title: string }) => void;
 }) {
-  const embed = youtubeEmbed(item.url);
-  if (embed)
-    return (
-      <article className="overflow-hidden rounded-2xl border border-navy/10 bg-white">
-        <iframe
-          src={embed}
-          title={item.title}
-          loading="lazy"
-          allowFullScreen
-          className="aspect-video w-full"
-        />
-        <div className="p-5">
-          <h3 className="font-display font-bold text-navy">{item.title}</h3>
-          {item.body && <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>}
-        </div>
-      </article>
-    );
+  const thumb = item.image_url || (item.url ? youtubeThumbnail(item.url) : null);
+
   return (
-    <button
-      type="button"
-      onClick={() => item.url && onOpen({ url: item.url, title: item.title })}
-      className="group overflow-hidden rounded-2xl border border-navy/10 bg-white text-left"
-    >
-      {item.image_url && (
-        <img src={item.image_url} alt="" className="aspect-video w-full object-cover" />
-      )}
-      <div className="p-5">
-        <h3 className="font-display font-bold text-navy">{item.title}</h3>
-        {item.body && <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>}
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+      <button
+        type="button"
+        onClick={() => item.url && onOpen({ url: item.url, title: item.title })}
+        className="relative aspect-video w-full overflow-hidden bg-navy text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
+        aria-label={`Play video: ${item.title}`}
+      >
+        {thumb && (
+          <img
+            src={thumb}
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          />
+        )}
+        <span className="absolute inset-0 flex items-center justify-center bg-black/35 transition-colors duration-300 group-hover:bg-black/50">
+          <span className="grid h-12 w-12 place-items-center rounded-full bg-white text-navy shadow-lg transition-transform duration-300 group-hover:scale-110 group-active:scale-95 sm:h-14 sm:w-14">
+            <Play className="ml-0.5 h-5 w-5 text-navy fill-navy sm:h-6 sm:w-6" />
+          </span>
+        </span>
+        <span className="absolute left-3 top-3 rounded-md bg-navy/80 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-teal backdrop-blur-sm">
+          Explainer
+        </span>
+      </button>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-display text-base font-bold leading-snug text-navy transition-colors group-hover:text-teal sm:text-lg line-clamp-2">
+          {item.title}
+        </h3>
+        {item.outlet && (
+          <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-teal">
+            {item.outlet}
+          </p>
+        )}
+        {item.body && (
+          <p className="mt-2 text-xs leading-relaxed text-muted-foreground line-clamp-2 sm:text-sm">
+            {item.body}
+          </p>
+        )}
+        <div className="mt-auto pt-4 flex items-center gap-1.5 text-xs font-semibold text-teal group-hover:text-navy transition-colors">
+          <span>Watch video</span>
+          <Play className="h-3 w-3 fill-current" />
+        </div>
       </div>
-    </button>
+    </article>
   );
 }
 function CoverageCard({

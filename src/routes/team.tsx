@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { ImpactCallout } from "@/components/site/ImpactCallout";
 import { JourneyCta } from "@/components/site/JourneyCta";
+import { TeamPaintBrushCanvas } from "@/components/site/TeamPaintBrushCanvas";
 import { supabase } from "@/integrations/supabase/client";
 import ankitAsset from "@/assets/client/team/ANKIT.png";
 import nityaAsset from "@/assets/client/team/NITYA.png";
@@ -131,64 +132,20 @@ function initials(name: string) {
     .join("");
 }
 
-type BrushSegment = {
-  start: { x: number; y: number };
-  end: { x: number; y: number };
-  d: string;
-};
-
-/** Each photo-to-photo segment gets one solid color, cycling through this palette. */
-const SEGMENT_COLORS = ["#14b8a6", "#38bdf8", "#f97316"] as const;
-
-function buildPathD(start: BrushSegment["start"], end: BrushSegment["end"]) {
-  const midY = (start.y + end.y) / 2;
-  return `M ${start.x} ${start.y} C ${start.x} ${midY}, ${end.x} ${midY}, ${end.x} ${end.y}`;
-}
-
-/**
- * One thick brush-stroke path per consecutive photo pair, anchored horizontally
- * to each photo's center but vertically bounded strictly to the gap between the
- * two rows (never the photo/card's own vertical span), so it can never touch
- * either photo or card regardless of how tall a given bio makes its row.
- */
-function buildBrushSegments(
-  rows: HTMLElement[],
-  photos: HTMLElement[],
-  sectionRect: DOMRect,
-  skipIndex: number,
-) {
-  const clearance = 16;
-  const segments: BrushSegment[] = [];
-  for (let i = 0; i < rows.length - 1 && i < photos.length - 1; i++) {
-    if (i === skipIndex) continue; // the "Board of Advisors" heading sits in this gap
-    const rowA = rows[i].getBoundingClientRect();
-    const rowB = rows[i + 1].getBoundingClientRect();
-    const photoA = photos[i].getBoundingClientRect();
-    const photoB = photos[i + 1].getBoundingClientRect();
-
-    const start = {
-      x: photoA.left - sectionRect.left + photoA.width / 2,
-      y: rowA.bottom - sectionRect.top + clearance,
-    };
-    const end = {
-      x: photoB.left - sectionRect.left + photoB.width / 2,
-      y: rowB.top - sectionRect.top - clearance,
-    };
-
-    if (end.y - start.y < 20) continue;
-    segments.push({ start, end, d: buildPathD(start, end) });
-  }
-  return segments;
-}
-
-function splitBio(description: string | null) {
+function splitBio(description: string | null, name?: string) {
   const text = description ?? "";
   const lines = text
     .split("\n")
     .map((l) => l.trim())
     .filter(Boolean);
   const credLine = lines.find((l) => l.toLowerCase().startsWith("credentials:"));
-  const credentials = credLine ? credLine.replace(/^credentials:\s*/i, "") : null;
+  let credentials = credLine ? credLine.replace(/^credentials:\s*/i, "") : null;
+
+  if (!credentials && name === "Dr. Ankit Gupta") {
+    credentials =
+      "RCI-Registered Psychologist | Triple Master’s Degree: Clinical Psychology, Organizational & Employee Psychology, and Production Engineering | Honorary Ph.D. | Mechanical Engineer";
+  }
+
   const profile = lines.filter((l) => l !== credLine).join("\n\n");
   return { credentials, profile };
 }
@@ -207,7 +164,7 @@ function PersonCard({
   shouldAnimate: boolean;
 }) {
   const img = PHOTO_BY_NAME[p.name] || p.image_url || null;
-  const { profile } = splitBio(p.description);
+  const { credentials, profile } = splitBio(p.description, p.name);
   const isLeft = index % 2 === 0;
   return (
     <article
@@ -251,19 +208,26 @@ function PersonCard({
         } motion-reduce:translate-x-0 motion-reduce:opacity-100 ${isLeft ? "lg:order-2" : "lg:order-1"}`}
       >
         <span className="absolute inset-x-0 top-0 h-1 rounded-t-3xl bg-gradient-to-r from-teal via-teal/50 to-transparent" />
-        <div className="flex items-center gap-4">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal/10 font-display text-sm font-bold text-teal">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-          <div>
-            <h3 className="font-display text-xl font-bold text-navy">{p.name}</h3>
-            {p.role && (
-              <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-orange sm:text-[11px]">
-                {kind === "advisor" ? "Advisory Role: " : ""}
-                {p.role}
-              </p>
-            )}
-          </div>
+        <div>
+          <h3 className="font-display text-xl font-bold text-navy">{p.name}</h3>
+          {p.role && (
+            <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-orange sm:text-[11px]">
+              {kind === "advisor" ? "Advisory Role: " : ""}
+              {p.role}
+            </p>
+          )}
+          {credentials && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {credentials.split("|").map((cred, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center rounded-lg border border-teal/20 bg-teal/5 px-2.5 py-1 text-xs font-semibold text-teal"
+                >
+                  {cred.trim()}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="mt-5 h-px bg-navy/5" />
@@ -290,9 +254,7 @@ function TeamPage() {
   const [visiblePeople, setVisiblePeople] = useState<Set<string>>(new Set());
   const [reducedMotion, setReducedMotion] = useState(false);
   const [animationsReady, setAnimationsReady] = useState(false);
-  const [segments, setSegments] = useState<BrushSegment[]>([]);
-  const [segmentProgress, setSegmentProgress] = useState<number[]>([]);
-  const [sectionSize, setSectionSize] = useState({ width: 0, height: 0 });
+
   const q = useQuery({
     queryKey: ["people", "public"],
     queryFn: async () => {
@@ -312,74 +274,6 @@ function TeamPage() {
     [people],
   );
   const storyPeople = useMemo(() => [...leadership, ...advisors], [leadership, advisors]);
-
-  useEffect(() => {
-    const section = storyRef.current;
-    if (!section || q.isLoading) return;
-
-    let raf: number | null = null;
-    const recompute = () => {
-      raf = null;
-      const sectionRect = section.getBoundingClientRect();
-      const rows = Array.from(section.querySelectorAll<HTMLElement>("[data-person-id]"));
-      const photos = Array.from(section.querySelectorAll<HTMLElement>("[data-person-photo]"));
-      if (!sectionRect.width || !sectionRect.height || rows.length < 2 || photos.length < 2) {
-        setSegments([]);
-        return;
-      }
-      setSegments(buildBrushSegments(rows, photos, sectionRect, leadership.length - 1));
-      setSectionSize({ width: sectionRect.width, height: sectionRect.height });
-    };
-
-    const resizeObserver = new ResizeObserver(() => {
-      if (raf !== null) window.cancelAnimationFrame(raf);
-      raf = window.requestAnimationFrame(recompute);
-    });
-    resizeObserver.observe(section);
-    window.requestAnimationFrame(recompute);
-    return () => {
-      resizeObserver.disconnect();
-      if (raf !== null) window.cancelAnimationFrame(raf);
-    };
-  }, [q.isLoading, storyPeople]);
-
-  useEffect(() => {
-    if (segments.length === 0) return;
-    if (reducedMotion) {
-      setSegmentProgress(segments.map(() => 1));
-      return;
-    }
-    let raf: number | null = null;
-    const updateProgress = () => {
-      raf = null;
-      const section = storyRef.current;
-      if (!section) return;
-      const sectionTop = section.getBoundingClientRect().top;
-      const revealPoint = window.innerHeight * 0.85;
-      // Draw distance is deliberately decoupled from each segment's own (short)
-      // pixel length — using that made the stroke snap in over ~100px, feeling
-      // instant. Tying it to viewport height instead makes the draw-in track
-      // a proportionate, comfortable amount of scrolling.
-      const drawDistance = Math.max(240, window.innerHeight * 0.9);
-      setSegmentProgress(
-        segments.map((segment) => {
-          const segmentTopInViewport = sectionTop + segment.start.y;
-          return Math.min(1, Math.max(0, (revealPoint - segmentTopInViewport) / drawDistance));
-        }),
-      );
-    };
-    const onScroll = () => {
-      if (raf === null) raf = window.requestAnimationFrame(updateProgress);
-    };
-    updateProgress();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf !== null) window.cancelAnimationFrame(raf);
-    };
-  }, [segments, reducedMotion]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -428,50 +322,12 @@ function TeamPage() {
       />
 
       <section ref={storyRef} className="relative overflow-hidden bg-background py-16 lg:py-24">
-        <svg
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-0 hidden lg:block"
-          preserveAspectRatio="none"
-          viewBox={`0 0 ${sectionSize.width || 1} ${sectionSize.height || 1}`}
-        >
-          <defs>
-            <filter id="team-brush-glow" x="-60%" y="-60%" width="220%" height="220%">
-              <feGaussianBlur stdDeviation="4" />
-            </filter>
-          </defs>
-          {segments.map((segment, i) => {
-            const progress = segmentProgress[i] ?? 0;
-            const color = SEGMENT_COLORS[i % SEGMENT_COLORS.length];
-            return (
-              <g key={i}>
-                <path
-                  d={segment.d}
-                  fill="none"
-                  stroke={color}
-                  strokeOpacity="0.25"
-                  strokeLinecap="round"
-                  strokeWidth="7"
-                  pathLength="1"
-                  strokeDasharray="1"
-                  strokeDashoffset={1 - progress}
-                  filter="url(#team-brush-glow)"
-                  className="motion-reduce:transition-none"
-                />
-                <path
-                  d={segment.d}
-                  fill="none"
-                  stroke={color}
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                  pathLength="1"
-                  strokeDasharray="1"
-                  strokeDashoffset={1 - progress}
-                  className="motion-reduce:transition-none"
-                />
-              </g>
-            );
-          })}
-        </svg>
+        {/* Canvas Paint Brush Animation */}
+        <TeamPaintBrushCanvas
+          containerRef={storyRef}
+          skipIndex={leadership.length - 1}
+          reducedMotion={reducedMotion}
+        />
         <div className="relative z-10 mx-auto max-w-6xl px-4 lg:px-8">
           <div className="relative space-y-16 lg:space-y-32">
             <div>

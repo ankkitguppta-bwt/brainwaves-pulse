@@ -290,7 +290,7 @@ function GetPricingDialog({
     fd.append("phone", fields.phone);
     fd.append("email", fields.email);
     fd.append("profession", fields.profession);
-    fd.append("practitioner_category", fields.practitionerGoal);
+    fd.append("wants_to_be_certified", fields.practitionerGoal);
     fd.append("subject", "New Practitioner Bundle Pricing Request — BrainWaves Tech Website");
     fd.append("from_name", "BrainWaves Tech Website");
     try {
@@ -305,7 +305,7 @@ function GetPricingDialog({
           email: fields.email,
           phone: fields.phone,
           interest: "Master Practitioner Bundle Pricing",
-          message: `Profession: ${fields.profession}\nWants to become a Certified Neurofeedback Practitioner in the category of: ${fields.practitionerGoal}`,
+          message: `Profession: ${fields.profession}\nDo you want to be a Certified Neurofeedback Practitioner: ${fields.practitionerGoal}`,
         }),
       }).catch(() => {});
     } catch (err: any) {
@@ -394,17 +394,14 @@ function GetPricingDialog({
             </SelectField>
             <SelectField
               id="pricing-goal"
-              label="Do you want to be a Certified Neurofeedback Practitioner in the category of:"
+              label="Do you want to be a Certified Neurofeedback Practitioner"
               value={fields.practitionerGoal}
               onChange={(e) => update("practitionerGoal", e.target.value)}
               error={fieldErrors.practitionerGoal}
             >
-              <option value="">Select a category</option>
-              {PRACTITIONER_CATEGORIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
+              <option value="">Select an option</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </SelectField>
             {status === "error" && (
               <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{errorMsg}</p>
@@ -529,16 +526,13 @@ function PractitionerPage() {
             The 7-Day Curriculum Breakdown
           </h3>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {curriculum.map(([title, body], i) => (
+            {curriculum.map(([title, body]) => (
               <article
                 key={title}
                 className="group rounded-2xl border border-navy/5 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_-18px_rgba(15,23,42,0.42)]"
               >
-                <span className="inline-flex items-center rounded-full bg-teal/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-teal transition-transform duration-300 group-hover:scale-105">
-                  Module {i + 1}
-                </span>
-                <h4 className="mt-4 font-semibold text-navy">{title}</h4>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
+                <h4 className="font-display text-lg font-bold text-navy">{title}</h4>
+                <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{body}</p>
               </article>
             ))}
           </div>

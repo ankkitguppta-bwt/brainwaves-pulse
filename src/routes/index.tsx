@@ -24,6 +24,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
+import { NeuralWaveBackdrop } from "@/components/site/NeuralWaveBackdrop";
 import { HeroBackgroundVideo } from "@/components/site/HeroBackgroundVideo";
 import { CountUp } from "@/components/site/CountUp";
 import { BrainwaveBands } from "@/components/site/BrainwaveBands";
@@ -109,32 +110,21 @@ function Hero() {
       <HeroBackgroundVideo />
       <div aria-hidden className="absolute inset-0 bg-[linear-gradient(105deg,rgba(6,36,58,0.7)_4%,rgba(6,36,58,0.48)_52%,rgba(6,36,58,0.32)_100%)]" />
       <div className="relative mx-auto w-full max-w-5xl px-4 pb-20 pt-32 text-center sm:px-6 md:pb-24 md:pt-36 lg:pt-40 lg:px-8">
-        <h1
-          data-aos="fade-up"
-          className="relative font-display text-5xl font-extrabold leading-[1.02] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl"
-        >
+        <h1 className="relative font-display text-5xl font-extrabold leading-[1.02] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl animate-in fade-in slide-in-from-bottom-3 duration-500 fill-mode-both">
           Connect.{" "}
           <span className="relative bg-gradient-to-r from-teal via-teal to-emerald-300 bg-clip-text text-transparent [text-shadow:0_0_60px_rgba(20,184,166,0.55)]">
             Quantify.
           </span>{" "}
           Explore.
         </h1>
-        <p
-          data-aos="fade-up"
-          data-aos-delay="100"
-          className="mx-auto mt-6 max-w-2xl text-lg font-light leading-relaxed tracking-wide text-white/70 sm:text-xl"
-        >
+        <p className="mx-auto mt-6 max-w-2xl text-lg font-light leading-relaxed tracking-wide text-white/70 sm:text-xl animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both">
           India’s advanced neurofeedback platform mapping{" "}
           <span className="font-accent bg-gradient-to-r from-orange to-amber-300 bg-clip-text font-semibold italic text-transparent [text-shadow:0_0_40px_rgba(249,115,22,0.45)]">
             real-time
           </span>{" "}
           cognitive data in 2 minutes.
         </p>
-        <div
-          data-aos="fade-up"
-          data-aos-delay="200"
-          className="mt-9 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3"
-        >
+        <div className="mt-9 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3 animate-in fade-in slide-in-from-bottom-5 duration-700 fill-mode-both">
           <a
             href="/contact?highlight=booking"
             target="_blank"
@@ -169,52 +159,47 @@ function StatsStrip() {
     { end: 27, suffix: "+", l: "Certified Practitioners" },
   ];
   return (
-    <section
-      className="relative pb-16 pt-8 sm:pb-20 sm:pt-12"
-      style={{
-        background:
-          "linear-gradient(180deg, var(--navy) 0%, color-mix(in oklab, var(--navy) 80%, var(--teal)) 22%, color-mix(in oklab, var(--navy) 45%, #c9a84c 35%) 48%, color-mix(in oklab, #f0f0f0 60%, #f0d78c 40%) 78%, #f0f0f0 100%)",
-      }}
-    >
-      {/* Top Headline Content - Separated directly onto the gradient background */}
-      <div className="mx-auto w-full max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-        <span
-          data-aos="fade-up"
-          className="inline-block text-gradient-red text-3xl font-black uppercase tracking-wider sm:text-4xl lg:text-5xl"
-        >
-          STOP
-        </span>
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#051c2d] via-navy to-[#051c2d] pb-16 pt-12 sm:pb-24 sm:pt-16 lg:pb-28 lg:pt-20">
+      <NeuralWaveBackdrop />
+
+      {/* Top Headline Content */}
+      <div className="relative mx-auto w-full max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+        <div data-aos="fade-up" className="flex justify-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-teal/30 bg-teal/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.22em] text-teal backdrop-blur-md shadow-[0_0_20px_-5px_rgba(20,184,166,0.3)] sm:text-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-teal motion-safe:animate-ping" />
+            STOP
+          </span>
+        </div>
+
         <h2
           data-aos="fade-up"
           data-aos-delay="60"
-          className="mx-auto mt-3 max-w-4xl font-display text-2xl font-extrabold uppercase leading-tight tracking-[-0.01em] sm:text-3xl lg:text-[2.6rem]"
+          className="mx-auto mt-6 max-w-4xl font-display text-3xl font-extrabold tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl lg:leading-[1.14]"
         >
-          <span className="text-gradient-stop">
-            Guessing about mental wellness and cognitive performance.
-          </span>
+          Guessing about mental wellness and cognitive performance.
         </h2>
+
         <p
           data-aos="fade-up"
           data-aos-delay="120"
-          className="mx-auto mt-6 max-w-3xl [text-wrap:balance] font-display text-base font-bold leading-relaxed text-white sm:text-lg lg:text-xl"
+          className="mx-auto mt-6 max-w-3xl [text-wrap:balance] text-base font-normal leading-relaxed text-slate-200/90 sm:text-lg lg:text-xl"
         >
-          <span className="text-teal font-extrabold">Brain Waves Tech</span> uses an innovative USA patented
+          <span className="font-semibold text-white">Brain Waves Tech</span> uses an innovative USA patented
           technology, which quantifies state of mind in minutes with an accuracy of more than{" "}
-          <span className="align-baseline font-display text-2xl font-black text-[#3ddc84] sm:text-3xl">
+          <span className="inline-block font-display font-extrabold text-teal">
             92%
           </span>
         </p>
       </div>
 
       {/* Bottom Stats Content - Full screen horizontal spread */}
-      <div className="mt-10 w-full px-4 sm:mt-14 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+      <div className="relative mt-12 w-full px-4 sm:mt-16 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div
           data-aos="fade-up"
           data-aos-delay="180"
-          className="w-full rounded-2xl border border-white/20 px-6 py-8 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 sm:rounded-3xl sm:px-8 sm:py-10 lg:px-12 lg:py-12"
-          style={{ background: "color-mix(in oklab, var(--navy) 60%, transparent)" }}
+          className="w-full rounded-2xl border border-white/15 bg-white/[0.04] px-6 py-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6)] backdrop-blur-2xl sm:rounded-3xl sm:px-8 sm:py-10 lg:px-12 lg:py-12"
         >
-          <div className="grid grid-cols-2 gap-6 divide-y divide-white/10 sm:grid-cols-4 sm:gap-4 sm:divide-y-0 sm:divide-x lg:gap-8">
+          <div className="grid grid-cols-2 gap-6 divide-y divide-white/10 sm:grid-cols-4 sm:gap-4 sm:divide-y-0 sm:divide-x sm:divide-white/10 lg:gap-8">
             {stats.map((s, i) => (
               <div
                 key={s.l}
@@ -225,7 +210,7 @@ function StatsStrip() {
                 <p className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl xl:text-6xl">
                   <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
                 </p>
-                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/80 sm:text-sm lg:text-base">
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-300 sm:text-sm lg:text-base">
                   {s.l}
                 </p>
               </div>
@@ -405,7 +390,7 @@ function WhatIsNeurofeedback() {
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
               <p className="text-xs font-bold uppercase tracking-[.18em] text-teal">The science</p>
-              <h3 className="mt-2 font-display text-2xl font-bold text-navy sm:text-3xl">The 5 brainwave types we track.</h3>
+              <h3 className="mt-2 font-display text-2xl font-bold text-navy sm:text-3xl">The 5 brainwave types.</h3>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-muted-foreground">Select a frequency range to explore the measured patterns behind each brainwave state.</p>
           </div>
