@@ -176,7 +176,7 @@ function MissionPage() {
                       <h2 className="font-display text-xl font-bold text-navy sm:text-2xl">
                         {c.title}
                       </h2>
-                      <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                      <div className="mt-6 grid items-stretch gap-5 sm:grid-cols-2">
                         {c.points.map((p, pi) => (
                           <div key={p.label} className="relative">
                             {pi === 1 && (
@@ -187,7 +187,7 @@ function MissionPage() {
                                 →
                               </span>
                             )}
-                            <div className="h-full rounded-2xl bg-navy/[0.025] p-5">
+                            <div className="flex h-full flex-col justify-center rounded-2xl bg-navy/[0.025] p-5">
                               <p className="text-[11px] font-bold uppercase tracking-wider text-teal">
                                 {p.label}
                               </p>

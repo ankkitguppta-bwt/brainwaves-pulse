@@ -520,18 +520,19 @@ export function BrainwaveBands() {
               data-aos-delay={i * 80}
               style={{ viewTransitionName: `band-${b.id}` }}
               onClick={() => switchTo(b.id)}
-              className="group flex h-full flex-col rounded-2xl border border-navy/10 bg-white p-5 text-left transition-colors duration-300 hover:border-teal/50"
+              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-navy/10 bg-white p-5 text-left shadow-[0_14px_35px_-28px_rgba(15,23,42,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-teal/50 hover:shadow-[0_22px_42px_-24px_rgba(15,23,42,0.5)]"
             >
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy text-white">
+              <span aria-hidden className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-teal via-teal/50 to-transparent" />
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy text-white transition-colors duration-300 group-hover:bg-teal">
                 <Activity className="h-5 w-5" />
               </span>
               <span className="mt-4 block font-display text-base font-semibold text-navy">
                 {b.name}
               </span>
-              <span className="mt-1 block text-[11px] font-semibold uppercase tracking-[0.12em] text-teal">
+              <span className="mt-3 inline-flex w-fit rounded-full bg-teal/10 px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-teal">
                 {b.frequency}
               </span>
-              <span className="mt-3 block text-sm leading-relaxed text-muted-foreground">
+              <span className="mt-4 block text-sm leading-relaxed text-muted-foreground">
                 {b.hook}
               </span>
               <span className="mt-auto pt-4 inline-flex items-center gap-1 text-xs font-semibold text-navy/60 transition-colors group-hover:text-teal">

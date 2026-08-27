@@ -86,7 +86,12 @@ function HardwarePage() {
     <>
       <PageHero
         eyebrow="BWT-2508"
-        title="Neurofeedback Hardware Engineered for Zero-Noise Brainwave Telemetry"
+        title={
+          <>
+            <span className="font-medium text-white/60">Neurofeedback Hardware Engineered for</span>{" "}
+            <span className="font-bold text-white">Zero-Noise Brainwave Telemetry</span>
+          </>
+        }
         sub="Discover the electrical engineering, dry-sensor metallurgy, and micro-voltage signal conditioning that allow safe, real-time capture of brainwave spectrums from the prefrontal cortex."
       />
       <section className="bg-background py-16">
@@ -175,7 +180,6 @@ function HardwarePage() {
             Hardware telemetry, from signal to software.
           </h2>
           <div className="relative mt-10">
-            <div className="absolute inset-x-0 top-8 hidden h-px bg-gradient-to-r from-transparent via-teal/40 to-transparent lg:block" />
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {pipeline.map(([Icon, title, text], i) => (
                 <article key={title} className={`group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-6 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1.5 hover:border-teal/40 hover:shadow-[0_25px_60px_-15px_rgba(20,184,166,0.25)] ${pipelineRevealed ? "animate-step-in" : ""}`} style={pipelineRevealStyle(i)}>

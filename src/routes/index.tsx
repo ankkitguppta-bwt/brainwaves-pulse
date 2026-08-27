@@ -24,7 +24,6 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
-import heroImage from "@/assets/banners/hero-realistic.jpg";
 import heroVideo from "@/assets/video/final_landing_page_loop.mp4";
 import { CountUp } from "@/components/site/CountUp";
 import { BrainwaveBands } from "@/components/site/BrainwaveBands";
@@ -109,7 +108,6 @@ function Hero() {
     <section className="relative -mt-16 flex min-h-[100svh] w-full items-center overflow-hidden bg-navy text-white">
       <video
         src={heroVideo}
-        poster={heroImage}
         autoPlay
         loop
         muted
@@ -120,39 +118,43 @@ function Hero() {
       />
       <div aria-hidden className="absolute inset-0 bg-[linear-gradient(105deg,rgba(6,36,58,0.7)_4%,rgba(6,36,58,0.48)_52%,rgba(6,36,58,0.32)_100%)]" />
       <div className="relative mx-auto w-full max-w-5xl px-4 pb-20 pt-32 text-center sm:px-6 md:pb-24 md:pt-36 lg:pt-40 lg:px-8">
-        <p data-aos="fade-up" className="mx-auto inline-flex items-center gap-2 rounded-full border border-teal/30 bg-teal/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-teal backdrop-blur-md"><span className="h-1.5 w-1.5 rounded-full bg-teal motion-safe:animate-pulse" /> Precision neurofeedback</p>
         <h1
           data-aos="fade-up"
-          data-aos-delay="100"
-          className="mt-5 font-display text-4xl font-extrabold leading-[1.04] tracking-[-0.035em] text-white sm:text-5xl lg:text-6xl"
+          className="relative font-display text-5xl font-extrabold leading-[1.02] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl"
         >
-          Connect. <span className="text-teal">Quantify.</span> Explore.
+          Connect.{" "}
+          <span className="relative bg-gradient-to-r from-teal via-teal to-emerald-300 bg-clip-text text-transparent [text-shadow:0_0_60px_rgba(20,184,166,0.55)]">
+            Quantify.
+          </span>{" "}
+          Explore.
         </h1>
         <p
           data-aos="fade-up"
-          data-aos-delay="200"
-          className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/85 sm:text-lg"
+          data-aos-delay="100"
+          className="mx-auto mt-6 max-w-2xl text-lg font-light leading-relaxed tracking-wide text-white/70 sm:text-xl"
         >
-          India’s advanced neurofeedback platform mapping
-          <span className="font-accent font-semibold text-orange"> real-time</span> cognitive data
-          in 2 minutes.
+          India’s advanced neurofeedback platform mapping{" "}
+          <span className="font-accent bg-gradient-to-r from-orange to-amber-300 bg-clip-text font-semibold italic text-transparent [text-shadow:0_0_40px_rgba(249,115,22,0.45)]">
+            real-time
+          </span>{" "}
+          cognitive data in 2 minutes.
         </p>
         <div
           data-aos="fade-up"
-          data-aos-delay="300"
+          data-aos-delay="200"
           className="mt-9 flex flex-row flex-nowrap justify-center gap-2 sm:gap-3"
         >
           <a
             href="/contact?highlight=booking"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full bg-teal px-4 py-2 text-xs font-semibold text-navy shadow-brand transition hover:scale-[1.02] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-navy shadow-brand transition hover:scale-[1.03] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:min-h-[52px] sm:gap-2 sm:px-7 sm:py-3.5 sm:text-base"
           >
             Book Demo Now <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </a>
           <Link
             to="/practitioner"
-            className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:min-h-[48px] sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-md transition hover:scale-[1.03] hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:min-h-[52px] sm:gap-2 sm:px-7 sm:py-3.5 sm:text-base"
           >
             Become a Practitioner <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Link>
@@ -276,8 +278,8 @@ function EcosystemSection() {
             data-aos="fade-up"
             className="font-display text-2xl font-extrabold leading-tight tracking-[-0.01em] text-navy sm:text-3xl lg:text-[2.5rem]"
           >
-            One Patented Ecosystem.{" "}
-            <span className="text-gradient-brand">Zero Subjective Guesswork.</span>
+            One Patented Ecosystem. <span className="text-teal">Zero</span> Subjective
+            Guesswork.
           </h2>
           <p
             data-aos="fade-up"
@@ -344,7 +346,13 @@ function WhatIsNeurofeedback() {
           <span className="font-semibold text-orange">real time</span>.
         </p>
 
-        <div className="mx-auto mt-8 grid max-w-4xl gap-4 sm:grid-cols-3">
+        <div className="mx-auto mt-10 max-w-4xl">
+          <div className="mb-5 flex items-center justify-center gap-3 text-center">
+            <span className="h-px w-8 bg-teal/40" />
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-navy/55">What it enables</p>
+            <span className="h-px w-8 bg-teal/40" />
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
           {[
             {
               icon: Activity,
@@ -388,10 +396,20 @@ function WhatIsNeurofeedback() {
               </span>
             </div>
           ))}
+          </div>
         </div>
 
-        <div className="mt-12">
-          <BrainwaveBands />
+        <div className="mx-auto mt-16 max-w-6xl border-t border-navy/10 pt-12 sm:mt-20">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[.18em] text-teal">The science</p>
+              <h3 className="mt-2 font-display text-2xl font-bold text-navy sm:text-3xl">The 5 brainwave types we track.</h3>
+            </div>
+            <p className="max-w-md text-sm leading-relaxed text-muted-foreground">Select a frequency range to explore the measured patterns behind each brainwave state.</p>
+          </div>
+          <div className="mt-8 rounded-3xl border border-navy/5 bg-white/60 p-4 shadow-[0_22px_55px_-34px_rgba(15,23,42,0.4)] sm:p-6">
+            <BrainwaveBands />
+          </div>
         </div>
       </div>
     </section>

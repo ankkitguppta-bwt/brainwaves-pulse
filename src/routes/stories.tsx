@@ -39,18 +39,46 @@ export const Route = createFileRoute("/stories")({
   component: StoriesPage,
 });
 
-function youtubeEmbed(url: string | null) {
+function youtubeId(url: string | null) {
   if (!url) return null;
   try {
     const parsed = new URL(url);
-    const id = parsed.hostname.includes("youtu.be")
+    return parsed.hostname.includes("youtu.be")
       ? parsed.pathname.slice(1)
-      : (parsed.searchParams.get("v") ?? parsed.pathname.match(/\/embed\/([^/]+)/)?.[1]);
-    return id ? `https://www.youtube.com/embed/${id}` : null;
+      : (parsed.searchParams.get("v") ?? parsed.pathname.match(/\/embed\/([^/]+)/)?.[1] ?? null);
   } catch {
     return null;
   }
 }
+function youtubeEmbed(url: string | null) {
+  const id = youtubeId(url);
+  return id ? `https://www.youtube-nocookie.com/embed/${id}` : null;
+}
+function youtubeThumbnail(url: string | null) {
+  const id = youtubeId(url);
+  return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : null;
+}
+
+const youtubePodcasts = [
+  {
+    id: "podcast-1",
+    title: "Ankit Gupta, Founder of Brain Seeder — On Brainwave Analysis & Boosting Brain Power",
+    outlet: "Amit M Mishra | Tryootech",
+    url: "https://youtu.be/mlVmRpTsPNE",
+  },
+  {
+    id: "podcast-2",
+    title: "How Does Music Heal Your Heart and Brain? ft. Dr. Ankit Gupta — The Mindale Show, EP 2",
+    outlet: "MINDALE — A Lifestyle Change",
+    url: "https://youtu.be/p4MzySQIXtY",
+  },
+  {
+    id: "podcast-3",
+    title: "Brain Waves Tech Collaboration with Global Fighters Foundation",
+    outlet: "Brain Waves Tech",
+    url: "https://youtu.be/I9wd6uTe0vg",
+  },
+] as const;
 
 function StoriesPage() {
   const query = useQuery({
@@ -72,7 +100,15 @@ function StoriesPage() {
   const coverageItems = coverage.length ? coverage : achievements;
   const [activeCoverageIndex, setActiveCoverageIndex] = useState<number | null>(null);
   const explainer = byKind("explainer_video");
-  const podcasts = byKind("youtube_podcast");
+  const databasePodcasts = byKind("youtube_podcast");
+  const podcasts = databasePodcasts.length
+    ? databasePodcasts.map((item) => ({
+        id: item.id,
+        title: item.title,
+        outlet: item.outlet,
+        url: item.url,
+      }))
+    : youtubePodcasts;
   const databaseVideos = byKind("video_testimonial");
   const videoTestimonials = databaseVideos.length
     ? databaseVideos.map((item) => ({
@@ -172,34 +208,35 @@ function StoriesPage() {
       </MediaSection>
       <MediaSection title="YouTube Podcasts" icon={Play}>
         {podcasts.length ? (
-          <div className="grid gap-6 md:grid-cols-2">
-            {podcasts.map((item) => {
-              const embed = youtubeEmbed(item.url);
-              return (
-                <article
-                  key={item.id}
-                  className="overflow-hidden rounded-2xl border border-navy/10 bg-white"
-                >
-                  {embed ? (
-                    <iframe
-                      src={embed}
-                      title={item.title}
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="aspect-video w-full"
-                    />
-                  ) : item.image_url ? (
-                    <img src={item.image_url} alt="" className="aspect-video w-full object-cover" />
-                  ) : null}
-                  <div className="p-5">
-                    <h3 className="font-display text-lg font-bold text-navy">{item.title}</h3>
-                    {item.outlet && <p className="mt-1 text-sm text-teal">{item.outlet}</p>}
-                    {item.body && <p className="mt-3 text-sm text-muted-foreground">{item.body}</p>}
-                  </div>
-                </article>
-              );
-            })}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {podcasts.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => item.url && setActiveVideo({ url: item.url, title: item.title })}
+                className="group relative aspect-video overflow-hidden rounded-2xl bg-navy text-left"
+              >
+                {youtubeThumbnail(item.url) && (
+                  <img
+                    src={youtubeThumbnail(item.url)!}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  />
+                )}
+                <span className="absolute inset-0 flex items-center justify-center bg-black/35 transition group-hover:bg-black/45">
+                  <span className="grid h-14 w-14 place-items-center rounded-full bg-white text-navy shadow-lg transition group-hover:scale-105">
+                    <Play className="ml-0.5 h-6 w-6" />
+                  </span>
+                </span>
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-4 pt-10">
+                  <span className="block font-semibold leading-snug text-white">{item.title}</span>
+                  {item.outlet && (
+                    <span className="mt-1 block text-xs text-white/70">{item.outlet}</span>
+                  )}
+                </span>
+              </button>
+            ))}
           </div>
         ) : (
           <Empty text="Podcast links can be added from the Media admin panel." />
@@ -462,10 +499,6 @@ function CoverageCard({
           </span>
         </span>
       </button>
-      <div className="p-5">
-        <h3 className="font-display font-bold text-navy">{item.title}</h3>
-        {item.outlet && <p className="mt-1 text-sm font-medium text-teal">{item.outlet}</p>}
-      </div>
     </article>
   );
 }

@@ -72,8 +72,8 @@ function ContactPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           {/* Compact contact info row */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <InfoCard icon={Phone} title="Phone / WhatsApp" lines={["+91 98930 64372", "+91 92440 24033"]} />
-            <InfoCard icon={Mail} title="Email" lines={["hello@brainwavestech.com"]} />
+            <InfoCard icon={Phone} title="Phone / WhatsApp" lines={["+91 97133 37557"]} />
+            <InfoCard icon={Mail} title="Email" lines={["contact@brainwavestech.com"]} />
             <InfoCard icon={MapPin} title="Website" lines={["www.brainwavestech.com"]} />
             <a
               href="https://wa.me/919893064372"

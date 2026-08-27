@@ -428,8 +428,16 @@ function PractitionerPage() {
     <>
       <PageHero
         eyebrow="Become a Practitioner"
-        title="Build a Modern, Tech-Enabled Clinical Practice powered by Patented Brain-Computer Interface (BCI) Analytics"
+        title={
+          <>
+            Build a Modern, Tech-Enabled Clinical Practice
+            <span className="mt-3 block font-display text-xl font-medium leading-snug tracking-normal text-white/55 sm:text-2xl lg:text-[1.75rem]">
+              Powered by patented Brain-Computer Interface (BCI) analytics
+            </span>
+          </>
+        }
         sub="Traditional mental health intake relies on subjective questionnaires, long diagnostic sittings, and patient trust barriers. By becoming a Certified Partner with Brain Waves Tech, you gain the complete ecosystem: patented AI software, medical-grade BCI hardware, and clinical certification, allowing you to identify root-cause mental stress in under 2 minutes with over 92% diagnostic accuracy."
+        subClassName="mx-auto mt-7 max-w-2xl text-base leading-[1.55] text-white/70"
       />
       <section className="bg-background py-16 lg:py-24">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
@@ -551,14 +559,14 @@ function PractitionerPage() {
       <section className="bg-white py-16 lg:py-24">
         <div className="mx-auto max-w-3xl px-4 text-center lg:px-8">
           <p className="text-xs font-bold uppercase tracking-[.18em] text-teal">
-            Price Breakdown Strategy
+            Practitioner Bundle
           </p>
           <h2 className="mt-3 font-display text-3xl font-bold text-navy">
             The Master Practitioner Bundle Offer
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Bundle the BWT-2508 headset, BWT-1408 software, and NFP Certification together and
-            unlock instant savings over standalone pricing.
+            Get the BWT-2508 headset, BWT-1408 software, and NFP Certification bundled together at
+            a lower cost than buying each piece separately.
           </p>
           <div className="mt-8 flex flex-col items-center rounded-3xl bg-navy px-8 py-10 text-white">
             <BrainCircuit className="h-8 w-8 text-teal" />

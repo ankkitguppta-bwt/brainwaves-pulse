@@ -18,7 +18,7 @@ export function PageHero({
   return (
     <section className="relative -mt-16 overflow-hidden bg-gradient-hero pt-16 text-white">
       <BrainwaveBackdrop className="absolute inset-0 h-full w-full opacity-40" />
-      <div className="relative mx-auto max-w-4xl px-4 pb-16 pt-12 text-center lg:px-8 lg:pb-20 lg:pt-16">
+      <div className="relative mx-auto max-w-5xl px-4 pb-16 pt-12 text-center lg:px-8 lg:pb-20 lg:pt-16">
         <span
           className={
             eyebrowClassName ??

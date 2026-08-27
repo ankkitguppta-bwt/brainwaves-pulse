@@ -175,13 +175,13 @@ export function SiteFooter() {
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
               Legal &amp; Compliance
             </h4>
-            <ul className="mt-5 space-y-3 text-sm text-white/65">
+            <ul className="mt-5 space-y-3.5">
               {legalLinks.map((l) => (
                 <li key={l}>
                   <button
                     type="button"
                     onClick={() => setOpenLegal(l)}
-                    className="text-left transition hover:text-teal"
+                    className="text-left text-sm font-normal leading-normal text-white/65 transition hover:text-teal"
                   >
                     {l}
                   </button>
@@ -194,7 +194,7 @@ export function SiteFooter() {
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
               Corporate Contact
             </h4>
-            <ul className="mt-5 space-y-3 text-sm text-white/65">
+            <ul className="mt-5 space-y-3.5 text-sm font-normal leading-normal text-white/65">
               <li>
                 <span className="font-semibold text-white">Office:</span> A-268, New Minal
                 Residency, Near Gate No. 4, In Front of D-Mart, Ayodhya Bypass Road, Bhopal, M.P. -
@@ -202,12 +202,15 @@ export function SiteFooter() {
               </li>
               <li>
                 <span className="font-semibold text-white">Inquiries: </span>
-                <a href="mailto:support.brainwavestech@gmail.com" className="text-teal hover:underline">
-                  support.brainwavestech@gmail.com
+                <a
+                  href="mailto:contact@brainwavestech.com"
+                  className="text-sm text-teal hover:underline"
+                >
+                  contact@brainwavestech.com
                 </a>
               </li>
               <li>
-                <span className="font-semibold text-white">Contact:</span> +91 92440 24033
+                <span className="font-semibold text-white">Contact:</span> +91 97133 37557
               </li>
             </ul>
           </div>
