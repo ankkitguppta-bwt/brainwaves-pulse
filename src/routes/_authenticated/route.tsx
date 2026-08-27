@@ -7,7 +7,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useConfirm } from "@/components/admin/ConfirmDialog";
 import { toast } from "sonner";
-import logoAsset from "@/assets/brand/logo-light.png";
+import brandLogo from "@/assets/brand/brainwaves-logo.png";
 
 let authCache: { userId: string; isAdmin: boolean } | null = null;
 
@@ -102,8 +102,8 @@ function AdminShell() {
         }`}
       >
         <div className="flex items-center justify-between px-5 py-5">
-          <Link to="/admin" className="block">
-            <img src={logoAsset} alt="Brainwaves" className="h-9 w-auto" />
+          <Link to="/admin" className="inline-flex rounded-lg bg-white px-2.5 py-1.5">
+            <img src={brandLogo} alt="BrainWaves Tech" className="h-7 w-auto" />
           </Link>
           <button className="lg:hidden text-slate-300" onClick={() => setMobileOpen(false)}>
             <X className="h-5 w-5" />

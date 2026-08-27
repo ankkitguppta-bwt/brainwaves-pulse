@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { submitToWeb3Forms } from "@/lib/web3forms";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -37,7 +38,8 @@ function ContactPage() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending"); setErrorMsg(null);
-    const fd = new FormData(e.currentTarget);
+    const formEl = e.currentTarget;
+    const fd = new FormData(formEl);
     const payload = {
       name: String(fd.get("name") ?? ""),
       email: String(fd.get("email") ?? ""),
@@ -45,20 +47,21 @@ function ContactPage() {
       interest: String(fd.get("interest") ?? ""),
       message: String(fd.get("message") ?? ""),
     };
+    fd.append("subject", "New Contact Form Submission — BrainWaves Tech Website");
+    fd.append("from_name", "BrainWaves Tech Website");
     try {
-      const res = await fetch("/api/public/enquiries", {
+      await submitToWeb3Forms(fd);
+      setStatus("sent");
+      formEl.reset();
+      // Best-effort: also keep a record in the internal admin dashboard.
+      fetch("/api/public/enquiries", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.error ?? "Send failed");
-      }
-      setStatus("sent");
-      (e.target as HTMLFormElement).reset();
+      }).catch(() => {});
     } catch (err: any) {
-      setStatus("error"); setErrorMsg(err.message);
+      setStatus("error");
+      setErrorMsg(err.message || "Something went wrong. Please try again.");
     }
   }
   return (
@@ -103,8 +106,8 @@ function ContactPage() {
             >
               <h2 className="font-display text-xl font-bold text-navy">Send a message</h2>
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                <Field label="Name" name="name" />
-                <Field label="Email" name="email" type="email" />
+                <Field label="Name" name="name" required />
+                <Field label="Email" name="email" type="email" required />
                 <Field label="Phone / WhatsApp" name="phone" className="sm:col-span-2" />
                 <div className="sm:col-span-2">
                   <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Interest</label>
@@ -159,11 +162,31 @@ function ContactPage() {
   );
 }
 
-function Field({ label, name, type = "text", className = "" }: { label: string; name: string; type?: string; className?: string }) {
+function Field({
+  label,
+  name,
+  type = "text",
+  className = "",
+  required = false,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  className?: string;
+  required?: boolean;
+}) {
   return (
     <div className={className}>
-      <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</label>
-      <input name={name} type={type} className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-sm" />
+      <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        {label}
+        {required && <span className="text-red-500"> *</span>}
+      </label>
+      <input
+        name={name}
+        type={type}
+        required={required}
+        className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-sm"
+      />
     </div>
   );
 }

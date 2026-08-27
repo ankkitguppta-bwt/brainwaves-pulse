@@ -131,6 +131,56 @@ function initials(name: string) {
     .join("");
 }
 
+type BrushSegment = {
+  start: { x: number; y: number };
+  end: { x: number; y: number };
+  d: string;
+};
+
+/** Each photo-to-photo segment gets one solid color, cycling through this palette. */
+const SEGMENT_COLORS = ["#14b8a6", "#38bdf8", "#f97316"] as const;
+
+function buildPathD(start: BrushSegment["start"], end: BrushSegment["end"]) {
+  const midY = (start.y + end.y) / 2;
+  return `M ${start.x} ${start.y} C ${start.x} ${midY}, ${end.x} ${midY}, ${end.x} ${end.y}`;
+}
+
+/**
+ * One thick brush-stroke path per consecutive photo pair, anchored horizontally
+ * to each photo's center but vertically bounded strictly to the gap between the
+ * two rows (never the photo/card's own vertical span), so it can never touch
+ * either photo or card regardless of how tall a given bio makes its row.
+ */
+function buildBrushSegments(
+  rows: HTMLElement[],
+  photos: HTMLElement[],
+  sectionRect: DOMRect,
+  skipIndex: number,
+) {
+  const clearance = 16;
+  const segments: BrushSegment[] = [];
+  for (let i = 0; i < rows.length - 1 && i < photos.length - 1; i++) {
+    if (i === skipIndex) continue; // the "Board of Advisors" heading sits in this gap
+    const rowA = rows[i].getBoundingClientRect();
+    const rowB = rows[i + 1].getBoundingClientRect();
+    const photoA = photos[i].getBoundingClientRect();
+    const photoB = photos[i + 1].getBoundingClientRect();
+
+    const start = {
+      x: photoA.left - sectionRect.left + photoA.width / 2,
+      y: rowA.bottom - sectionRect.top + clearance,
+    };
+    const end = {
+      x: photoB.left - sectionRect.left + photoB.width / 2,
+      y: rowB.top - sectionRect.top - clearance,
+    };
+
+    if (end.y - start.y < 20) continue;
+    segments.push({ start, end, d: buildPathD(start, end) });
+  }
+  return segments;
+}
+
 function splitBio(description: string | null) {
   const text = description ?? "";
   const lines = text
@@ -157,13 +207,15 @@ function PersonCard({
   shouldAnimate: boolean;
 }) {
   const img = PHOTO_BY_NAME[p.name] || p.image_url || null;
-  const { credentials, profile } = splitBio(p.description);
+  const { profile } = splitBio(p.description);
   const isLeft = index % 2 === 0;
   return (
     <article
       data-person-id={p.id}
-      className={`group relative grid gap-5 lg:grid-cols-[minmax(13rem,0.66fr)_minmax(0,1.34fr)] lg:items-center lg:gap-10 ${
-        isLeft ? "" : "lg:grid-cols-[minmax(0,1.34fr)_minmax(13rem,0.66fr)]"
+      className={`group relative grid gap-5 lg:items-center lg:gap-10 ${
+        isLeft
+          ? "lg:grid-cols-[minmax(13rem,0.66fr)_minmax(0,1.34fr)]"
+          : "lg:grid-cols-[minmax(0,1.34fr)_minmax(13rem,0.66fr)]"
       }`}
     >
       <div
@@ -189,16 +241,10 @@ function PersonCard({
             {initials(p.name)}
           </div>
         )}
-        <span
-          className={`absolute top-6 flex h-8 w-8 items-center justify-center rounded-full border-4 border-background bg-teal shadow-sm ${
-            isLeft ? "-right-2" : "-left-2"
-          }`}
-          aria-hidden
-        />
       </div>
 
       <div
-        className={`relative h-full rounded-3xl border border-navy/5 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.38)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_58px_-22px_rgba(15,23,42,0.45)] sm:p-7 ${
+        className={`relative rounded-3xl border border-navy/5 bg-white p-6 shadow-[0_18px_45px_-25px_rgba(15,23,42,0.38)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_58px_-22px_rgba(15,23,42,0.45)] sm:p-7 ${
           !shouldAnimate || isVisible
             ? "translate-y-0 opacity-100"
             : `${isLeft ? "translate-x-6" : "-translate-x-6"} translate-y-4 opacity-0`
@@ -225,11 +271,6 @@ function PersonCard({
         {img ? (
           <span className="sr-only">Profile photo displayed alongside this biography.</span>
         ) : null}
-        {credentials && (
-        <p className="mt-4 rounded-xl bg-navy/[0.04] px-4 py-3 text-xs leading-relaxed text-navy">
-          <span className="font-semibold">Credentials:</span> {credentials}
-        </p>
-        )}
         {profile && (
           <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
             {profile}
@@ -246,18 +287,12 @@ function SkeletonCard() {
 
 function TeamPage() {
   const storyRef = useRef<HTMLElement>(null);
-  const frameRef = useRef<number | null>(null);
-  const [pathProgress, setPathProgress] = useState(0);
   const [visiblePeople, setVisiblePeople] = useState<Set<string>>(new Set());
   const [reducedMotion, setReducedMotion] = useState(false);
   const [animationsReady, setAnimationsReady] = useState(false);
-  const [connectorPath, setConnectorPath] = useState({
-    d: "",
-    width: 0,
-    height: 0,
-    startY: 0,
-    endY: 1,
-  });
+  const [segments, setSegments] = useState<BrushSegment[]>([]);
+  const [segmentProgress, setSegmentProgress] = useState<number[]>([]);
+  const [sectionSize, setSectionSize] = useState({ width: 0, height: 0 });
   const q = useQuery({
     queryKey: ["people", "public"],
     queryFn: async () => {
@@ -282,57 +317,69 @@ function TeamPage() {
     const section = storyRef.current;
     if (!section || q.isLoading) return;
 
-    const updateConnector = () => {
+    let raf: number | null = null;
+    const recompute = () => {
+      raf = null;
       const sectionRect = section.getBoundingClientRect();
-      const anchors = Array.from(section.querySelectorAll<HTMLElement>("[data-person-photo]"));
-      if (!sectionRect.width || !sectionRect.height || anchors.length === 0) return;
-
-      const getLayoutPosition = (element: HTMLElement) => {
-        let x = 0;
-        let y = 0;
-        let current: HTMLElement | null = element;
-        while (current && current !== section) {
-          x += current.offsetLeft;
-          y += current.offsetTop;
-          current = current.offsetParent as HTMLElement | null;
-        }
-        return { x, y };
-      };
-      const points = anchors.map((anchor, index) => {
-        const position = getLayoutPosition(anchor);
-        const isLeft = index % 2 === 0;
-        return {
-          x: isLeft ? position.x + anchor.offsetWidth - 15 : position.x + 15,
-          y: position.y + 40,
-        };
-      });
-      let previous = points[0];
-      const d = points.slice(1).reduce((path, point) => {
-        const bend = Math.max(72, Math.abs(point.y - previous.y) * 0.42);
-        const segment = `${path} C ${previous.x} ${previous.y + bend} ${point.x} ${point.y - bend} ${point.x} ${point.y}`;
-        previous = point;
-        return segment;
-      }, `M ${previous.x} ${previous.y}`);
-
-      setConnectorPath({
-        d,
-        width: sectionRect.width,
-        height: sectionRect.height,
-        startY: points[0].y,
-        endY: points.at(-1)?.y ?? points[0].y,
-      });
+      const rows = Array.from(section.querySelectorAll<HTMLElement>("[data-person-id]"));
+      const photos = Array.from(section.querySelectorAll<HTMLElement>("[data-person-photo]"));
+      if (!sectionRect.width || !sectionRect.height || rows.length < 2 || photos.length < 2) {
+        setSegments([]);
+        return;
+      }
+      setSegments(buildBrushSegments(rows, photos, sectionRect, leadership.length - 1));
+      setSectionSize({ width: sectionRect.width, height: sectionRect.height });
     };
 
-    const resizeObserver = new ResizeObserver(updateConnector);
+    const resizeObserver = new ResizeObserver(() => {
+      if (raf !== null) window.cancelAnimationFrame(raf);
+      raf = window.requestAnimationFrame(recompute);
+    });
     resizeObserver.observe(section);
-    section.querySelectorAll<HTMLElement>("[data-person-photo]").forEach((anchor) => resizeObserver.observe(anchor));
-    window.addEventListener("resize", updateConnector);
-    window.requestAnimationFrame(updateConnector);
+    window.requestAnimationFrame(recompute);
     return () => {
       resizeObserver.disconnect();
-      window.removeEventListener("resize", updateConnector);
+      if (raf !== null) window.cancelAnimationFrame(raf);
     };
   }, [q.isLoading, storyPeople]);
+
+  useEffect(() => {
+    if (segments.length === 0) return;
+    if (reducedMotion) {
+      setSegmentProgress(segments.map(() => 1));
+      return;
+    }
+    let raf: number | null = null;
+    const updateProgress = () => {
+      raf = null;
+      const section = storyRef.current;
+      if (!section) return;
+      const sectionTop = section.getBoundingClientRect().top;
+      const revealPoint = window.innerHeight * 0.85;
+      // Draw distance is deliberately decoupled from each segment's own (short)
+      // pixel length — using that made the stroke snap in over ~100px, feeling
+      // instant. Tying it to viewport height instead makes the draw-in track
+      // a proportionate, comfortable amount of scrolling.
+      const drawDistance = Math.max(240, window.innerHeight * 0.9);
+      setSegmentProgress(
+        segments.map((segment) => {
+          const segmentTopInViewport = sectionTop + segment.start.y;
+          return Math.min(1, Math.max(0, (revealPoint - segmentTopInViewport) / drawDistance));
+        }),
+      );
+    };
+    const onScroll = () => {
+      if (raf === null) raf = window.requestAnimationFrame(updateProgress);
+    };
+    updateProgress();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf !== null) window.cancelAnimationFrame(raf);
+    };
+  }, [segments, reducedMotion]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -345,27 +392,10 @@ function TeamPage() {
 
   useEffect(() => {
     if (reducedMotion) {
-      setPathProgress(1);
       setVisiblePeople(new Set(storyPeople.map((person) => person.id)));
       return;
     }
 
-    const updateProgress = () => {
-      frameRef.current = null;
-      const element = storyRef.current;
-      if (!element) return;
-      const rect = element.getBoundingClientRect();
-      const lineHeight = Math.max(1, connectorPath.endY - connectorPath.startY);
-      const revealPoint = window.innerHeight * 0.7;
-      const progress = Math.min(
-        1,
-        Math.max(0, (revealPoint - rect.top - connectorPath.startY) / lineHeight),
-      );
-      setPathProgress(progress);
-    };
-    const onScroll = () => {
-      if (frameRef.current === null) frameRef.current = window.requestAnimationFrame(updateProgress);
-    };
     const observer = new IntersectionObserver(
       (entries) => {
         setVisiblePeople((current) => {
@@ -379,16 +409,8 @@ function TeamPage() {
       { threshold: 0.22 },
     );
     storyRef.current?.querySelectorAll<HTMLElement>("[data-person-id]").forEach((element) => observer.observe(element));
-    updateProgress();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current);
-    };
-  }, [connectorPath.endY, connectorPath.startY, reducedMotion, storyPeople]);
+    return () => observer.disconnect();
+  }, [reducedMotion, storyPeople]);
 
   return (
     <>
@@ -408,33 +430,50 @@ function TeamPage() {
       <section ref={storyRef} className="relative overflow-hidden bg-background py-16 lg:py-24">
         <svg
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-1/2 z-0 block h-full w-full -translate-x-1/2 overflow-visible opacity-70 lg:opacity-100"
+          className="pointer-events-none absolute inset-0 z-0 hidden lg:block"
           preserveAspectRatio="none"
-          viewBox={`0 0 ${connectorPath.width || 1} ${connectorPath.height || 1}`}
+          viewBox={`0 0 ${sectionSize.width || 1} ${sectionSize.height || 1}`}
         >
-          <path
-            d={connectorPath.d}
-            fill="none"
-            stroke="rgb(20 184 166 / 0.4)"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="4"
-          />
-          <path
-            d={connectorPath.d}
-            fill="none"
-            pathLength="1"
-            stroke="rgb(13 148 136)"
-            strokeDasharray="1"
-            strokeDashoffset={1 - pathProgress}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="5.5"
-            className="motion-reduce:transition-none"
-          />
+          <defs>
+            <filter id="team-brush-glow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="4" />
+            </filter>
+          </defs>
+          {segments.map((segment, i) => {
+            const progress = segmentProgress[i] ?? 0;
+            const color = SEGMENT_COLORS[i % SEGMENT_COLORS.length];
+            return (
+              <g key={i}>
+                <path
+                  d={segment.d}
+                  fill="none"
+                  stroke={color}
+                  strokeOpacity="0.25"
+                  strokeLinecap="round"
+                  strokeWidth="7"
+                  pathLength="1"
+                  strokeDasharray="1"
+                  strokeDashoffset={1 - progress}
+                  filter="url(#team-brush-glow)"
+                  className="motion-reduce:transition-none"
+                />
+                <path
+                  d={segment.d}
+                  fill="none"
+                  stroke={color}
+                  strokeLinecap="round"
+                  strokeWidth="2.5"
+                  pathLength="1"
+                  strokeDasharray="1"
+                  strokeDashoffset={1 - progress}
+                  className="motion-reduce:transition-none"
+                />
+              </g>
+            );
+          })}
         </svg>
         <div className="relative z-10 mx-auto max-w-6xl px-4 lg:px-8">
-          <div className="relative space-y-14 lg:space-y-20">
+          <div className="relative space-y-16 lg:space-y-32">
             <div>
               <h2 className="font-display text-2xl font-bold text-navy">Leadership Team</h2>
               <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
@@ -447,7 +486,7 @@ function TeamPage() {
               : storyPeople.map((person, index) => (
                   <div key={person.id}>
                     {index === leadership.length && (
-                      <div className="pb-2 pt-4 lg:pt-8">
+                      <div className="pb-8 lg:pb-10">
                         <h2 className="font-display text-2xl font-bold text-navy">Board of Advisors</h2>
                         <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
                           Global expertise guiding the next chapter of neurofeedback innovation.

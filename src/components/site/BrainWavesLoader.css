@@ -26,7 +26,7 @@
 .brainwaves-loader__logo {
   position: relative;
   width: min(var(--loader-width), 82vw);
-  aspect-ratio: 1039 / 290;
+  aspect-ratio: 1385 / 389;
   overflow: hidden;
   animation: logo-breathe var(--loader-duration) ease-in-out infinite;
   will-change: transform;

@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { submitToWeb3Forms } from "@/lib/web3forms";
 
 export const Route = createFileRoute("/practitioner")({
   head: () => ({
@@ -252,7 +253,7 @@ function GetPricingDialog({
 
   useEffect(() => {
     if (status !== "sent") return;
-    const timer = window.setTimeout(() => onOpenChange(false), 5000);
+    const timer = window.setTimeout(() => onOpenChange(false), 1500);
     return () => window.clearTimeout(timer);
   }, [status, onOpenChange]);
 
@@ -284,8 +285,19 @@ function GetPricingDialog({
     }
     setStatus("sending");
     setErrorMsg(null);
+    const fd = new FormData();
+    fd.append("name", fields.name);
+    fd.append("phone", fields.phone);
+    fd.append("email", fields.email);
+    fd.append("profession", fields.profession);
+    fd.append("practitioner_category", fields.practitionerGoal);
+    fd.append("subject", "New Practitioner Bundle Pricing Request — BrainWaves Tech Website");
+    fd.append("from_name", "BrainWaves Tech Website");
     try {
-      const res = await fetch("/api/public/enquiries", {
+      await submitToWeb3Forms(fd);
+      setStatus("sent");
+      // Best-effort: also keep a record in the internal admin dashboard.
+      fetch("/api/public/enquiries", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -295,15 +307,10 @@ function GetPricingDialog({
           interest: "Master Practitioner Bundle Pricing",
           message: `Profession: ${fields.profession}\nWants to become a Certified Neurofeedback Practitioner in the category of: ${fields.practitionerGoal}`,
         }),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.error ?? "Send failed");
-      }
-      setStatus("sent");
+      }).catch(() => {});
     } catch (err: any) {
       setStatus("error");
-      setErrorMsg(err.message);
+      setErrorMsg(err.message || "Something went wrong. Please try again.");
     }
   }
 

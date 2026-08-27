@@ -24,7 +24,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
-import heroVideo from "@/assets/video/final_landing_page_loop.mp4";
+import { HeroBackgroundVideo } from "@/components/site/HeroBackgroundVideo";
 import { CountUp } from "@/components/site/CountUp";
 import { BrainwaveBands } from "@/components/site/BrainwaveBands";
 import {
@@ -106,16 +106,7 @@ function HomePage() {
 function Hero() {
   return (
     <section className="relative -mt-16 flex min-h-[100svh] w-full items-center overflow-hidden bg-navy text-white">
-      <video
-        src={heroVideo}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-      />
+      <HeroBackgroundVideo />
       <div aria-hidden className="absolute inset-0 bg-[linear-gradient(105deg,rgba(6,36,58,0.7)_4%,rgba(6,36,58,0.48)_52%,rgba(6,36,58,0.32)_100%)]" />
       <div className="relative mx-auto w-full max-w-5xl px-4 pb-20 pt-32 text-center sm:px-6 md:pb-24 md:pt-36 lg:pt-40 lg:px-8">
         <h1
@@ -179,53 +170,64 @@ function StatsStrip() {
   ];
   return (
     <section
-      className="relative pb-12 pt-0"
+      className="relative pb-16 pt-8 sm:pb-20 sm:pt-12"
       style={{
         background:
           "linear-gradient(180deg, var(--navy) 0%, color-mix(in oklab, var(--navy) 80%, var(--teal)) 22%, color-mix(in oklab, var(--navy) 45%, #c9a84c 35%) 48%, color-mix(in oklab, #f0f0f0 60%, #f0d78c 40%) 78%, #f0f0f0 100%)",
       }}
     >
-      <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
+      {/* Top Headline Content - Separated directly onto the gradient background */}
+      <div className="mx-auto w-full max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+        <span
+          data-aos="fade-up"
+          className="inline-block text-gradient-red text-3xl font-black uppercase tracking-wider sm:text-4xl lg:text-5xl"
+        >
+          STOP
+        </span>
+        <h2
+          data-aos="fade-up"
+          data-aos-delay="60"
+          className="mx-auto mt-3 max-w-4xl font-display text-2xl font-extrabold uppercase leading-tight tracking-[-0.01em] sm:text-3xl lg:text-[2.6rem]"
+        >
+          <span className="text-gradient-stop">
+            Guessing about mental wellness and cognitive performance.
+          </span>
+        </h2>
+        <p
+          data-aos="fade-up"
+          data-aos-delay="120"
+          className="mx-auto mt-6 max-w-3xl [text-wrap:balance] font-display text-base font-bold leading-relaxed text-white sm:text-lg lg:text-xl"
+        >
+          <span className="text-teal font-extrabold">Brain Waves Tech</span> uses an innovative USA patented
+          technology, which quantifies state of mind in minutes with an accuracy of more than{" "}
+          <span className="align-baseline font-display text-2xl font-black text-[#3ddc84] sm:text-3xl">
+            92%
+          </span>
+        </p>
+      </div>
+
+      {/* Bottom Stats Content - Full screen horizontal spread */}
+      <div className="mt-10 w-full px-4 sm:mt-14 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div
           data-aos="fade-up"
-          className="mx-auto w-full rounded-3xl border border-white/20 px-6 py-10 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 sm:px-10 md:w-[90%]"
-          style={{ background: "color-mix(in oklab, var(--navy) 55%, transparent)" }}
+          data-aos-delay="180"
+          className="w-full rounded-2xl border border-white/20 px-6 py-8 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 sm:rounded-3xl sm:px-8 sm:py-10 lg:px-12 lg:py-12"
+          style={{ background: "color-mix(in oklab, var(--navy) 60%, transparent)" }}
         >
-          <div>
-            <h2
-              data-aos="fade-up"
-              className="mx-auto flex max-w-4xl flex-wrap items-baseline justify-center gap-x-3 text-center font-display text-2xl font-extrabold uppercase leading-tight tracking-[-0.01em] sm:text-3xl lg:text-[2.5rem]"
-            >
-              <span className="text-gradient-red text-[1.5em] font-black leading-none">Stop</span>
-              <span className="text-gradient-stop">
-                Guessing about mental wellness and cognitive performance.
-              </span>
-            </h2>
-            <p
-              data-aos="fade-up"
-              data-aos-delay="120"
-              className="mx-auto mt-6 max-w-3xl [text-wrap:balance] text-center font-display text-base font-bold leading-relaxed text-white sm:text-lg"
-            >
-              <span className="text-teal">Brain Waves Tech</span> uses an innovative USA patented
-              technology, which quantifies state of mind in minutes with an accuracy of more than{" "}
-              <span className="align-baseline text-2xl font-black text-[#3ddc84] sm:text-3xl">
-                92%
-              </span>
-            </p>
-          </div>
-
-          <div className="mt-8 grid grid-cols-2 gap-4 border-t border-white/15 pt-8 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 divide-y divide-white/10 sm:grid-cols-4 sm:gap-4 sm:divide-y-0 sm:divide-x lg:gap-8">
             {stats.map((s, i) => (
               <div
                 key={s.l}
-                className="text-center"
+                className="text-center pt-4 first:pt-0 sm:pt-0 sm:px-4 lg:px-8"
                 data-aos="fade-up"
-                data-aos-delay={100 + i * 100}
+                data-aos-delay={200 + i * 80}
               >
-                <p className="font-display text-3xl font-bold text-white sm:text-4xl">
+                <p className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl xl:text-6xl">
                   <CountUp end={s.end} decimals={s.decimals ?? 0} suffix={s.suffix} />
                 </p>
-                <p className="mt-1 text-xs uppercase tracking-wider text-white/70">{s.l}</p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/80 sm:text-sm lg:text-base">
+                  {s.l}
+                </p>
               </div>
             ))}
           </div>
