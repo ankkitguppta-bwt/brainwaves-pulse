@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -30,14 +29,22 @@ function BlogPage() {
   const q = useQuery({
     queryKey: ["posts", "published"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .select("id, slug, title, excerpt, cover_image_url, published_at")
-        .eq("status", "published")
-        .order("published_at", { ascending: false });
-      if (error) throw error;
-      return data ?? [];
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 8000);
+      try {
+        const { data, error } = await supabase
+          .from("blog_posts")
+          .select("id, slug, title, excerpt, cover_image_url, published_at")
+          .eq("status", "published")
+          .order("published_at", { ascending: false })
+          .abortSignal(controller.signal);
+        if (error) throw error;
+        return data ?? [];
+      } finally {
+        window.clearTimeout(timeout);
+      }
     },
+    retry: false,
   });
 
   return (
@@ -56,7 +63,7 @@ function BlogPage() {
               ))}
             </div>
           )}
-          {q.data && q.data.length === 0 && <BlogEmptyState />}
+          {(q.isError || (q.data && q.data.length === 0)) && <BlogEmptyState />}
           {q.data && q.data.length > 0 && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {q.data.map((p) => (
@@ -120,71 +127,9 @@ function BlogEmptyState() {
       </span>
       <h2 className="mt-4 font-display text-2xl font-bold text-navy">Coming soon</h2>
       <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
-        We&apos;re preparing practical articles, research notes and practitioner stories. Subscribe
-        to receive the latest updates when they are published.
+        We&apos;re preparing practical articles, research notes and practitioner stories. New posts
+        are published directly from our team&apos;s admin dashboard, so check back soon.
       </p>
-      <BlogSubscribeForm />
     </div>
-  );
-}
-
-function BlogSubscribeForm() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setStatus("sending");
-    setErrorMessage("");
-    try {
-      const response = await fetch("/api/public/enquiries", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          name: "Newsletter Subscriber",
-          email,
-          phone: "",
-          interest: "Newsletter Subscription",
-          message: "Subscribed via Blog coming soon section",
-        }),
-      });
-      if (!response.ok) {
-        const body = await response.json().catch(() => ({}));
-        throw new Error(body.error ?? "Unable to subscribe right now.");
-      }
-      setEmail("");
-      setStatus("success");
-    } catch (error) {
-      setStatus("error");
-      setErrorMessage(error instanceof Error ? error.message : "Unable to subscribe right now.");
-    }
-  }
-
-  return (
-    <form onSubmit={onSubmit} className="mx-auto mt-7 flex max-w-lg flex-col gap-3 sm:flex-row">
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        placeholder="Enter your email address"
-        aria-label="Email address"
-        className="min-h-11 flex-1 rounded-full border border-navy/15 bg-white px-4 text-sm text-navy outline-none transition placeholder:text-muted-foreground focus:border-teal"
-      />
-      <button
-        type="submit"
-        disabled={status === "sending"}
-        className="min-h-11 rounded-full bg-navy px-5 text-sm font-semibold text-white transition hover:bg-navy/90 disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {status === "sending" ? "Subscribing..." : "Subscribe"}
-      </button>
-      {status === "success" && (
-        <p className="basis-full text-sm font-medium text-emerald-700">You&apos;re subscribed.</p>
-      )}
-      {status === "error" && (
-        <p className="basis-full text-sm font-medium text-red-600">{errorMessage}</p>
-      )}
-    </form>
   );
 }

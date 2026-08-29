@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Activity, BarChart3, FileText, Gauge, History, Target, Timer } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import alphaReport from "@/assets/client/reports/Alpha.png";
+import reportCover from "@/assets/client/reports/report-cover.png";
 import sampleReport from "@/assets/reports/brainwaves-sample-report.pdf";
 
 export const Route = createFileRoute("/products/software")({
@@ -197,7 +197,11 @@ function SoftwarePage() {
             <div aria-hidden className="absolute -inset-6 rounded-[2.25rem] bg-gradient-to-br from-teal/25 via-transparent to-orange/15 blur-2xl" />
             <div className="relative overflow-hidden rounded-[1.75rem] border border-navy/10 bg-white p-2 shadow-[0_28px_60px_-30px_rgba(15,23,42,0.5)] sm:p-3">
               <div className="flex items-center justify-between rounded-t-2xl bg-navy px-4 py-3 text-[10px] font-bold uppercase tracking-[0.14em] text-white/65"><span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-teal" /> BWT-1408 report preview</span><span>Sample data</span></div>
-              <img src={alphaReport} alt="Sample brainwave analysis report" className="w-full rounded-b-xl" />
+              <img
+                src={reportCover}
+                alt="Sample brainwave analysis report cover page"
+                className="aspect-[1049/687] w-full rounded-b-xl bg-white object-contain"
+              />
             </div>
           </div>
         </div>
