@@ -74,6 +74,6 @@ export const researchBackedWrittenTestimonials: ResearchTestimonial[] = [
     metricBadge: "Enterprise-Grade SaaS Platform",
     verifiedStudy: "Scalable Architecture for Aditya Birla, Jio, TCS, Tata",
     quote:
-      "Architecting the BrainWaves Tech cloud platform required building a system that handles real-time 0.5 Hz brainwave signal translation at scale, while maintaining secure digital processes for sensitive cognitive data. The AI-powered analytics engine delivers 14-parameter reports with 92%+ diagnostic accuracy, all within a plug-and-play B2B deployment framework.",
+      "Architecting the BrainWaves Tech cloud platform required building a system that handles real-time 0.5 Hz brainwave signal translation at scale, while maintaining secure digital processes for sensitive cognitive data. The AI-powered analytics engine delivers 14-parameter reports with 92%+ analytical accuracy, all within a plug-and-play B2B deployment framework.",
   },
 ];

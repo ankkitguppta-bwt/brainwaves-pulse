@@ -208,7 +208,7 @@ function StatsStrip() {
 
               <div className="relative text-center">
                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                  Clinical Diagnostic Accuracy
+                  Clinical Analytical Accuracy
                 </p>
                 <p className="mt-3 font-display text-7xl font-extrabold tracking-tight text-white sm:text-8xl">
                   92<span className="text-teal">%</span><span className="text-3xl text-teal sm:text-4xl">+</span>

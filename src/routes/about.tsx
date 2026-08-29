@@ -121,7 +121,7 @@ function MissionPage() {
             </span>
           </>
         }
-        sub="Mental health management has long relied on qualitative surveys, self-reporting, and prolonged diagnostic cycles that can be error-prone and time-consuming. We exist to eliminate the guesswork by analysing raw, real-time brainwave activity into quantified, clinical-grade parameters that empower professionals and organizations to find the root cause of psychological issues in minutes."
+        sub="Mental health management has long relied on qualitative surveys, self-reporting, and prolonged analytical cycles that can be error-prone and time-consuming. We exist to eliminate the guesswork by analysing raw, real-time brainwave activity into quantified, clinical-grade parameters that empower professionals and organizations to find the root cause of psychological issues in minutes."
       />
 
       <section className="relative overflow-hidden bg-background py-16 lg:py-24">

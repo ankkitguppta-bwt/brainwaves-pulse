@@ -29,7 +29,7 @@ export const Route = createFileRoute("/research")({
       {
         name: "description",
         content:
-          "Grounded in data, not guesswork: 120,000+ neural data points across 20,000+ participants, a 14-parameter cognitive mapping model, and 92%+ verified diagnostic accuracy.",
+          "Grounded in data, not guesswork: 120,000+ neural data points across 20,000+ participants, a 14-parameter cognitive mapping model, and 92%+ verified analytical accuracy.",
       },
       { property: "og:title", content: "Scientific Research — BrainWaves Tech" },
       {
@@ -48,7 +48,7 @@ export const Route = createFileRoute("/research")({
 const stats = [
   { icon: Database, value: "120,000+", label: "Neural data points analysed" },
   { icon: Users, value: "20,000+", label: "Participants studied" },
-  { icon: Activity, value: "92%+", label: "Verified diagnostic accuracy" },
+  { icon: Activity, value: "92%+", label: "Verified analytical accuracy" },
   { icon: Clock, value: "<2 Min", label: "Non-invasive assessment time" },
 ];
 
@@ -61,7 +61,7 @@ const dataArchitecture = [
   {
     icon: Target,
     title: "The Accuracy",
-    body: "Through continuous baseline testing and computational validation, our platform achieves a verified diagnostic accuracy rate exceeding 92%.",
+    body: "Through continuous baseline testing and computational validation, our platform achieves a verified analytical accuracy rate exceeding 92%.",
   },
   {
     icon: ShieldCheck,
@@ -127,7 +127,7 @@ const papers = [
     authors: "Dr. Ankit Gupta, Francesco Garripoli, Dr. Paras Kaul",
     category: "Clinical Psychology | BCI Algorithms",
     abstract:
-      "Comparative study evaluating qualitative diagnostic interviews against automated 0.5Hz Fast Fourier Transform (FFT) prefrontal cortex signal processing. Demonstrates how non-invasive, questionnaire-free intake achieves >92% accuracy across diverse age groups while reducing initial evaluation time from 50 minutes to 2 minutes.",
+      "Comparative study evaluating qualitative analytical interviews against automated 0.5Hz Fast Fourier Transform (FFT) prefrontal cortex signal processing. Demonstrates how non-invasive, questionnaire-free intake achieves >92% accuracy across diverse age groups while reducing initial evaluation time from 50 minutes to 2 minutes.",
   },
   {
     color: "#f97316",
@@ -389,7 +389,7 @@ function ResearchPage() {
           </div>
 
           <div className="mt-16">
-            <ImpactCallout quote="Analysing 120,000+ neural data points across 20,000+ participants has let us translate raw neural activity into an empirical performance blueprint: repeatable, comparable and free from reporting bias, at over 92% verified diagnostic accuracy." />
+            <ImpactCallout quote="Analysing 120,000+ neural data points across 20,000+ participants has let us translate raw neural activity into an empirical performance blueprint: repeatable, comparable and free from reporting bias, at over 92% verified analytical accuracy." />
           </div>
         </div>
       </section>

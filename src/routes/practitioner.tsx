@@ -41,7 +41,7 @@ export const Route = createFileRoute("/practitioner")({
 });
 const benefits = [
   [
-    "92%+ Diagnostic Accuracy Without Questionnaires",
+    "92%+ Analytical Accuracy Without Questionnaires",
     "Eliminate subjective survey bias and patient hesitation. Capture real-time prefrontal cortex micro-voltages without asking a single question.",
   ],
   [
@@ -54,7 +54,7 @@ const benefits = [
   ],
   [
     "Turn-Key Revenue Expansion",
-    "Add high-margin services to your practice: non-invasive diagnostic scans, custom 60-day sound therapy protocols, and ongoing post-analysis tracking.",
+    "Add high-margin services to your practice: non-invasive analytical scans, custom 60-day sound therapy protocols, and ongoing post-analysis tracking.",
   ],
 ] as const;
 const practiceBenefits = [
@@ -440,7 +440,7 @@ function PractitionerPage() {
             </span>
           </>
         }
-        sub="Traditional mental health intake relies on subjective questionnaires, long diagnostic sittings, and patient trust barriers. By becoming a Certified Partner with Brain Waves Tech, you gain the complete ecosystem: patented AI software, medical-grade BCI hardware, and clinical certification, allowing you to identify root-cause mental stress in under 2 minutes with over 92% diagnostic accuracy."
+        sub="Traditional mental health intake relies on subjective questionnaires, long analytical sittings, and patient trust barriers. By becoming a Certified Partner with Brain Waves Tech, you gain the complete ecosystem: patented AI software, medical-grade BCI hardware, and clinical certification, allowing you to identify root-cause mental stress in under 2 minutes with over 92% analytical accuracy."
         subClassName="mx-auto mt-7 max-w-2xl text-base leading-[1.55] text-white/70"
       />
       <section className="bg-background py-16 lg:py-24">
