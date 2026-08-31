@@ -1,4 +1,4 @@
-import { Quote, Sparkles, CheckCircle2 } from "lucide-react";
+import { Quote } from "lucide-react";
 
 interface ImpactCalloutProps {
   quote: string;
@@ -35,23 +35,6 @@ export function ImpactCallout({
                 />
                 {/* Subtle gradient vignette at bottom */}
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent" />
-              </div>
-
-              {/* Elegant floating photo caption overlay */}
-              <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-white/15 bg-navy/85 p-3.5 shadow-lg backdrop-blur-md sm:inset-x-4 sm:bottom-4 sm:p-4">
-                <div className="flex items-center justify-between gap-2">
-                  <div>
-                    <h4 className="font-display text-sm font-bold text-white sm:text-base">
-                      {author || "Dr. Ankit Gupta"}
-                    </h4>
-                    <p className="text-[11px] font-medium text-teal sm:text-xs">
-                      Founder & CEO • BrainWaves Tech
-                    </p>
-                  </div>
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-teal/15 text-teal">
-                    <CheckCircle2 className="h-4 w-4" />
-                  </span>
-                </div>
               </div>
             </div>
           </div>

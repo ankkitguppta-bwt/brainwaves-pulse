@@ -85,9 +85,9 @@ const pipeline = [
   },
   {
     step: "STEP 07",
-    badge: "AI Mind Profile",
+    badge: "Mind Profile",
     title: "Instant Session Records & Automated Report Export",
-    text: "Export instant AI-driven Mind Profile reports, compare historical neuro-trends, and formulate targeted sound therapy interventions.",
+    text: "Export instant Mind Profile reports, compare historical neuro-trends, and formulate targeted sound therapy interventions.",
     image: step7,
     Icon: Box,
   },
@@ -387,11 +387,7 @@ function PatentDeepDive() {
         />
         <div className="relative mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:px-8">
           <div className={revealed ? "animate-step-in" : "opacity-0"}>
-            <p className="inline-flex items-center gap-2 rounded-full border border-teal/25 bg-teal/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.17em] text-teal">
-              <span className="h-1.5 w-1.5 rounded-full bg-teal motion-safe:animate-pulse" /> Patent
-              deep dive
-            </p>
-            <h2 className="mt-5 font-display text-3xl font-extrabold leading-tight tracking-tight text-navy sm:text-4xl">
+            <h2 className="font-display text-3xl font-extrabold leading-tight tracking-tight text-navy sm:text-4xl">
               Causal neuro-analytics via precision time-stamped stimuli.
             </h2>
             <p className="mt-6 leading-7 text-muted-foreground">

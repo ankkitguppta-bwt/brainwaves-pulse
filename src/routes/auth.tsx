@@ -15,18 +15,33 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const navigate = useNavigate();
   const router = useRouter();
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    setNotice(null);
     setBusy(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
+      if (mode === "signup") {
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) throw error;
+        if (!data.session) {
+          setNotice(
+            "Account created. Check your email to confirm it, then sign in — if this is the first account ever created here, it will automatically get admin access.",
+          );
+          setBusy(false);
+          return;
+        }
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+      }
       await router.invalidate();
       navigate({ to: "/admin" });
     } catch (err: any) {
@@ -36,11 +51,23 @@ function AuthPage() {
     }
   }
 
+  function toggleMode() {
+    setMode((m) => (m === "signin" ? "signup" : "signin"));
+    setError(null);
+    setNotice(null);
+  }
+
   return (
     <div className="min-h-screen bg-gradient-soft flex items-center justify-center px-4 py-16">
       <div className="w-full max-w-md glass-card rounded-2xl p-8">
-        <h1 className="font-display text-2xl font-bold text-navy">Admin sign in</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Sign in to manage site content.</p>
+        <h1 className="font-display text-2xl font-bold text-navy">
+          {mode === "signin" ? "Admin sign in" : "Create admin account"}
+        </h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {mode === "signin"
+            ? "Sign in to manage site content."
+            : "Only the very first account ever created here becomes admin — if one already exists, this new account will not get admin access."}
+        </p>
         <form onSubmit={onSubmit} className="mt-6 space-y-4">
           <div>
             <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</label>
@@ -54,16 +81,27 @@ function AuthPage() {
             <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Password</label>
             <input
               type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
+              autoComplete={mode === "signin" ? "current-password" : "new-password"}
+              minLength={mode === "signup" ? 6 : undefined}
               className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2.5 text-sm"
             />
           </div>
           {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+          {notice && <p className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700">{notice}</p>}
           <button disabled={busy}
             className="w-full rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white transition hover:bg-navy-soft disabled:opacity-60">
-            {busy ? "Please wait…" : "Sign in"}
+            {busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
           </button>
         </form>
+        <button
+          type="button"
+          onClick={toggleMode}
+          className="mt-4 w-full text-center text-xs font-medium text-muted-foreground underline-offset-2 hover:text-navy hover:underline"
+        >
+          {mode === "signin"
+            ? "Need to create the first admin account? Sign up"
+            : "Already have an account? Sign in"}
+        </button>
       </div>
     </div>
   );

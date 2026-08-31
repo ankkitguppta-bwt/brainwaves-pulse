@@ -167,14 +167,6 @@ function StatsStrip() {
         <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-16">
           {/* Left Column — Headline */}
           <div className="lg:col-span-7" data-aos="fade-right">
-            {/* Thin kicker line */}
-            <div className="mb-5 flex items-center gap-3">
-              <span className="h-px w-10 bg-teal" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-teal">
-                Precision Neuroscience
-              </span>
-            </div>
-
             <h2 className="font-accent text-4xl font-semibold not-italic leading-[1.15] tracking-[-0.01em] text-white sm:text-5xl lg:text-[3.5rem]">
               <span className="relative mr-1 inline-block translate-y-[-2px] rounded-xl bg-gradient-to-r from-orange via-amber-400 to-orange px-3 py-0.5 font-display text-[0.8em] font-extrabold not-italic text-navy shadow-lg shadow-orange/25">
                 STOP
@@ -194,7 +186,7 @@ function StatsStrip() {
             >
               <span className="font-semibold text-white">Brain Waves Tech</span> deploys{" "}
               <span className="font-medium text-teal">USA-patented EEG telemetry</span> to quantify
-              your state of mind in under 2 minutes — with clinically verified accuracy exceeding{" "}
+              your state of mind in just 2 minutes — with verified accuracy exceeding{" "}
               <span className="font-display text-lg font-extrabold text-teal sm:text-xl">92%</span>.
             </p>
           </div>
@@ -208,7 +200,7 @@ function StatsStrip() {
 
               <div className="relative text-center">
                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                  Clinical Analytical Accuracy
+                  Analytical Accuracy
                 </p>
                 <p className="mt-3 font-display text-7xl font-extrabold tracking-tight text-white sm:text-8xl">
                   92<span className="text-teal">%</span><span className="text-3xl text-teal sm:text-4xl">+</span>
@@ -712,10 +704,6 @@ function VideoTestimonials() {
         <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-navy shadow-xl transition duration-300 group-hover:scale-110 group-hover:shadow-2xl">
           <Play className="ml-0.5 h-7 w-7" />
         </span>
-      </div>
-      <div className="absolute inset-x-0 bottom-0 p-5">
-        <p className="text-base font-semibold text-white">{v.title}</p>
-        <p className="text-sm text-white/80">{v.author}</p>
       </div>
     </button>
   );

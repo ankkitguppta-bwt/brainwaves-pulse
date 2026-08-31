@@ -47,8 +47,8 @@ const features = [
   ],
   [
     "All-Day Endurance",
-    "9-Hour Battery for High-Volume Sessions.",
-    "The lightweight internal rechargeable battery delivers up to nine hours of continuous use, supporting back-to-back corporate, classroom, and clinical sessions from a single charge.",
+    "6-Hour Battery for High-Volume Sessions.",
+    "The lightweight internal rechargeable battery delivers up to six hours of continuous use, supporting back-to-back corporate, classroom, and clinical sessions from a single charge.",
   ],
 ];
 
@@ -60,7 +60,7 @@ const specs = [
   ["Setup Time", "2 minutes"],
   ["Wireless Protocol", "Bluetooth 5.2 Low Energy"],
   ["Power System", "Internal Rechargeable Battery"],
-  ["Active Battery Runtime", "Up to 9 Hours"],
+  ["Active Battery Runtime", "Up to 6 Hours"],
   ["Data Quality Rating", "High-Fidelity Signal-to-Noise Ratio (Good/Clinical Grade)"],
   ["Headband Design", "Ergonomic, Adjustable Fixed Position Strap"],
 ];
@@ -126,7 +126,7 @@ function HeadbandPage() {
                 },
                 {
                   icon: BatteryCharging,
-                  label: "9 Hours Continuous Battery",
+                  label: "6 Hours Continuous Battery",
                   sub: "Full-day tracking on a single charge.",
                   color: "#a855f7",
                 },
