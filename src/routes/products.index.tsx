@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Award, Brain, Headphones, MonitorSmartphone } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import headset from "@/assets/client/hardware/bwt-headset.png";
+import headset from "@/assets/client/hardware/bwt-2508-headband.jpeg";
 import software from "@/assets/client/software/Step 4.png";
 
 export const Route = createFileRoute("/products/")({

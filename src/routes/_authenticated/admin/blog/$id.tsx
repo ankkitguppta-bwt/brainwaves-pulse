@@ -37,11 +37,12 @@ function PostEditor() {
   });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [saveNotice, setSaveNotice] = useState<string | null>(null);
 
   useEffect(() => { if (q.data) setForm(q.data); }, [q.data]);
 
   async function onSave(publish: boolean) {
-    setBusy(true); setError(null);
+    setBusy(true); setError(null); setSaveNotice(null);
     try {
       // Slug is always derived from title on save; server ensures uniqueness.
       const derivedSlug = slugify(form.title || "untitled") || "untitled";
@@ -52,6 +53,7 @@ function PostEditor() {
       };
       if (isNew) delete payload.id;
       const saved = await save({ data: payload });
+      if (saved.notification?.message) setSaveNotice(saved.notification.message);
       await qc.invalidateQueries({ queryKey: ["posts", "all"] });
       if (isNew) navigate({ to: "/admin/blog/$id", params: { id: saved.id } });
       else setForm(saved);
@@ -143,6 +145,7 @@ function PostEditor() {
           </div>
 
           {error && <p className="rounded bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+          {saveNotice && <p className="rounded bg-teal/10 px-3 py-2 text-sm text-navy">{saveNotice}</p>}
         </aside>
       </div>
     </div>

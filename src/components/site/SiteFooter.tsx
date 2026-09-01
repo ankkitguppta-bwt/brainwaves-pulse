@@ -22,7 +22,7 @@ const legalLinks = [
 
 function NewsletterBand() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "already" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -30,23 +30,21 @@ function NewsletterBand() {
     setStatus("sending");
     setErrorMsg(null);
     try {
-      const res = await fetch("/api/public/enquiries", {
+      const res = await fetch("/api/public/newsletter", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          name: "Newsletter Subscriber",
-          email,
-          phone: "",
-          interest: "Newsletter Subscription",
-          message: "Subscribed via footer newsletter",
-        }),
+        body: JSON.stringify({ email }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error ?? "Subscribe failed");
       }
-      setStatus("success");
-      setEmail("");
+      const body = await res.json();
+      if (body.status === "already_subscribed") setStatus("already");
+      else {
+        setStatus("success");
+        setEmail("");
+      }
     } catch (err: unknown) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Subscribe failed");
@@ -104,6 +102,11 @@ function NewsletterBand() {
             {status === "success" && (
               <p className="mt-2 text-sm font-medium text-emerald-300">
                 You&apos;re subscribed! Welcome to the BrainWaves community.
+              </p>
+            )}
+            {status === "already" && (
+              <p className="mt-2 text-sm font-medium text-emerald-300">
+                This email is already subscribed to BrainWaves updates.
               </p>
             )}
             {status === "error" && (

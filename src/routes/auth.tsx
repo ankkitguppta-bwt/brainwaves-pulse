@@ -19,6 +19,7 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+  const [resending, setResending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
@@ -29,7 +30,14 @@ function AuthPage() {
     setBusy(true);
     try {
       if (mode === "signup") {
-        const { data, error } = await supabase.auth.signUp({ email, password });
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            // Supabase otherwise falls back to the dashboard's Site URL, which may be an old local address.
+            emailRedirectTo: `${window.location.origin}/auth`,
+          },
+        });
         if (error) throw error;
         if (!data.session) {
           setNotice(
@@ -55,6 +63,25 @@ function AuthPage() {
     setMode((m) => (m === "signin" ? "signup" : "signin"));
     setError(null);
     setNotice(null);
+  }
+
+  async function resendConfirmation() {
+    setError(null);
+    setNotice(null);
+    setResending(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: "signup",
+        email,
+        options: { emailRedirectTo: `${window.location.origin}/auth` },
+      });
+      if (error) throw error;
+      setNotice("A fresh confirmation link has been sent. Use only the newest email link.");
+    } catch (err: any) {
+      setError(err.message ?? "Could not resend the confirmation email.");
+    } finally {
+      setResending(false);
+    }
   }
 
   return (
@@ -93,6 +120,16 @@ function AuthPage() {
             {busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
           </button>
         </form>
+        {mode === "signup" && (
+          <button
+            type="button"
+            disabled={!email || resending}
+            onClick={resendConfirmation}
+            className="mt-3 w-full text-center text-xs font-medium text-muted-foreground underline-offset-2 hover:text-navy hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {resending ? "Sending confirmation email…" : "Resend confirmation email"}
+          </button>
+        )}
         <button
           type="button"
           onClick={toggleMode}

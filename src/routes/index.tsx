@@ -24,7 +24,6 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { BrainwaveBackdrop } from "@/components/site/BrainwaveBackdrop";
-import { NeuralWaveBackdrop } from "@/components/site/NeuralWaveBackdrop";
 import { HeroBackgroundVideo } from "@/components/site/HeroBackgroundVideo";
 import { CountUp } from "@/components/site/CountUp";
 import { BrainwaveBands } from "@/components/site/BrainwaveBands";
@@ -160,8 +159,6 @@ function StatsStrip() {
   ];
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#041a2e] via-navy to-[#041a2e] py-20 sm:py-28 lg:py-32">
-      <NeuralWaveBackdrop />
-
       <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
         {/* ── Editorial Split: Left text + Right metric ── */}
         <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-16">
@@ -307,7 +304,7 @@ function EcosystemSection() {
             className="mx-auto mt-4 max-w-2xl [text-wrap:balance] text-sm leading-relaxed text-muted-foreground sm:text-base"
           >
             Move away from outdated checklists and biased self-reporting. Our integrated system
-            bridges high-fidelity neuro-sensing hardware directly with cloud-based AI analytics,
+            bridges high-fidelity neuro-sensing hardware directly with cloud-based analytics,
             providing business leaders and clinicians with concrete cognitive telemetry.
           </p>
         </div>

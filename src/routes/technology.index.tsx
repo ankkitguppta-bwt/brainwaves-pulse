@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Brain, Cpu } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import hardwareImage from "@/assets/client/hardware/bwt-1.png";
+import hardwareImage from "@/assets/client/hardware/bwt-2508-headband.jpeg";
 import softwareImage from "@/assets/client/software/Step 4.png";
 
 export const Route = createFileRoute("/technology/")({

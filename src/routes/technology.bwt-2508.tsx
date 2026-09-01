@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Activity, Bluetooth, Brain, Filter, ShieldCheck, Waves, Zap } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import hardwareImage from "@/assets/client/hardware/bwt-1.png";
+import hardwareImage from "@/assets/client/hardware/bwt-2508-headband.jpeg";
 
 export const Route = createFileRoute("/technology/bwt-2508")({
   head: () => ({ meta: [{ title: "BWT-2508 Neurofeedback Hardware | BrainWaves Tech" }] }),
@@ -50,7 +50,7 @@ const comparison = [
 const specs = [
   ["Model Number", "BWT-2508"],
   ["Electrode Channels", "3 Active Sensors (Recording, Reference, Ground)"],
-  ["Sensor Material", "Medical-Grade Dry Alloy Electrodes"],
+  ["Sensor Material", "Medical-Grade Dry Electrodes"],
   ["Frequency Range", "0.5 Hz to 42.0+ Hz (δ, θ, α, β, γ)"],
   ["Sampling Protocol", "High-resolution sub-Hertz telemetry"],
   ["Wireless Radius", "5 Meters via Bluetooth 5.2"],

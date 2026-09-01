@@ -38,6 +38,8 @@ import { Route as ProductsHeadbandRouteImport } from './routes/products.headband
 import { Route as ProductsAccessoriesRouteImport } from './routes/products.accessories'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as ApiPublicUnsubscribeRouteImport } from './routes/api/public/unsubscribe'
+import { Route as ApiPublicNewsletterRouteImport } from './routes/api/public/newsletter'
 import { Route as ApiPublicEnquiriesRouteImport } from './routes/api/public/enquiries'
 import { Route as ApiPublicBootstrapAdminRouteImport } from './routes/api/public/bootstrap-admin'
 import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin/testimonials'
@@ -192,6 +194,16 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicUnsubscribeRoute = ApiPublicUnsubscribeRouteImport.update({
+  id: '/api/public/unsubscribe',
+  path: '/api/public/unsubscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicNewsletterRoute = ApiPublicNewsletterRouteImport.update({
+  id: '/api/public/newsletter',
+  path: '/api/public/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicEnquiriesRoute = ApiPublicEnquiriesRouteImport.update({
   id: '/api/public/enquiries',
   path: '/api/public/enquiries',
@@ -279,6 +291,8 @@ export interface FileRoutesByFullPath {
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
+  '/api/public/newsletter': typeof ApiPublicNewsletterRoute
+  '/api/public/unsubscribe': typeof ApiPublicUnsubscribeRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/blog/$id': typeof AuthenticatedAdminBlogIdRoute
   '/admin/blog/': typeof AuthenticatedAdminBlogIndexRoute
@@ -317,6 +331,8 @@ export interface FileRoutesByTo {
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
+  '/api/public/newsletter': typeof ApiPublicNewsletterRoute
+  '/api/public/unsubscribe': typeof ApiPublicUnsubscribeRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/blog/$id': typeof AuthenticatedAdminBlogIdRoute
   '/admin/blog': typeof AuthenticatedAdminBlogIndexRoute
@@ -358,6 +374,8 @@ export interface FileRoutesById {
   '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/api/public/bootstrap-admin': typeof ApiPublicBootstrapAdminRoute
   '/api/public/enquiries': typeof ApiPublicEnquiriesRoute
+  '/api/public/newsletter': typeof ApiPublicNewsletterRoute
+  '/api/public/unsubscribe': typeof ApiPublicUnsubscribeRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/blog/$id': typeof AuthenticatedAdminBlogIdRoute
   '/_authenticated/admin/blog/': typeof AuthenticatedAdminBlogIndexRoute
@@ -399,6 +417,8 @@ export interface FileRouteTypes {
     | '/admin/testimonials'
     | '/api/public/bootstrap-admin'
     | '/api/public/enquiries'
+    | '/api/public/newsletter'
+    | '/api/public/unsubscribe'
     | '/admin/'
     | '/admin/blog/$id'
     | '/admin/blog/'
@@ -437,6 +457,8 @@ export interface FileRouteTypes {
     | '/admin/testimonials'
     | '/api/public/bootstrap-admin'
     | '/api/public/enquiries'
+    | '/api/public/newsletter'
+    | '/api/public/unsubscribe'
     | '/admin'
     | '/admin/blog/$id'
     | '/admin/blog'
@@ -477,6 +499,8 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/testimonials'
     | '/api/public/bootstrap-admin'
     | '/api/public/enquiries'
+    | '/api/public/newsletter'
+    | '/api/public/unsubscribe'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/blog/$id'
     | '/_authenticated/admin/blog/'
@@ -509,6 +533,8 @@ export interface RootRouteChildren {
   SolutionsIndexRoute: typeof SolutionsIndexRoute
   ApiPublicBootstrapAdminRoute: typeof ApiPublicBootstrapAdminRoute
   ApiPublicEnquiriesRoute: typeof ApiPublicEnquiriesRoute
+  ApiPublicNewsletterRoute: typeof ApiPublicNewsletterRoute
+  ApiPublicUnsubscribeRoute: typeof ApiPublicUnsubscribeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -716,6 +742,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/unsubscribe': {
+      id: '/api/public/unsubscribe'
+      path: '/api/public/unsubscribe'
+      fullPath: '/api/public/unsubscribe'
+      preLoaderRoute: typeof ApiPublicUnsubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/newsletter': {
+      id: '/api/public/newsletter'
+      path: '/api/public/newsletter'
+      fullPath: '/api/public/newsletter'
+      preLoaderRoute: typeof ApiPublicNewsletterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/enquiries': {
       id: '/api/public/enquiries'
       path: '/api/public/enquiries'
@@ -860,6 +900,8 @@ const rootRouteChildren: RootRouteChildren = {
   SolutionsIndexRoute: SolutionsIndexRoute,
   ApiPublicBootstrapAdminRoute: ApiPublicBootstrapAdminRoute,
   ApiPublicEnquiriesRoute: ApiPublicEnquiriesRoute,
+  ApiPublicNewsletterRoute: ApiPublicNewsletterRoute,
+  ApiPublicUnsubscribeRoute: ApiPublicUnsubscribeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

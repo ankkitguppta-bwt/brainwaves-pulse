@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import headset from "@/assets/client/hardware/bwt-headset.png";
+import headset from "@/assets/client/hardware/bwt-2508-headband.jpeg";
 import technicalDataset from "@/assets/client/hardware/technical-dataset.pdf";
 import licence1 from "@/assets/client/licences/HARDWARE LICENSE 1.png";
 import licence2 from "@/assets/client/licences/HARDWARE LICENSE 2.png";
