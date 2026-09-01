@@ -21,8 +21,8 @@ export const Route = createFileRoute("/api/public/unsubscribe")({
         const token = tokenSchema.safeParse(new URL(request.url).searchParams.get("token"));
         if (!token.success)
           return page("Invalid unsubscribe link", "This link is invalid or incomplete.", 400);
-        const url = process.env.SUPABASE_URL;
-        const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+        const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+        const key = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
         if (!url || !key) return page("Service unavailable", "Please try again later.", 503);
         const supabase = createClient(url, key, {
           auth: { persistSession: false, autoRefreshToken: false },

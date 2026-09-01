@@ -24,8 +24,11 @@ export const Route = createFileRoute("/api/public/enquiries")({
         if (!parsed.success) {
           return new Response(JSON.stringify({ error: "Invalid input", details: parsed.error.flatten() }), { status: 400 });
         }
-        const url = process.env.SUPABASE_URL!;
-        const key = process.env.SUPABASE_PUBLISHABLE_KEY!;
+        const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+        const key = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+        if (!url || !key) {
+          return new Response(JSON.stringify({ error: "Enquiry service is unavailable." }), { status: 503 });
+        }
         const supabase = createClient(url, key, {
           auth: { persistSession: false, autoRefreshToken: false },
           global: {

@@ -15,7 +15,7 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact BrainWaves Tech — Book a Demo or Talk to an Advisor" },
-      { name: "description", content: "Book a free demo, request an assessment or talk to a program advisor. WhatsApp +91 98930 64372." },
+      { name: "description", content: "Book a free demo, request an assessment or talk to a program advisor. WhatsApp +91 97133 37557." },
       { property: "og:title", content: "Contact BrainWaves Tech" },
       { property: "og:description", content: "Book a free demo or talk to an advisor." },
       { property: "og:url", content: "/contact" },
@@ -157,7 +157,7 @@ function ContactPage() {
             </div>
 
             <a
-              href="https://wa.me/919893064372"
+              href="https://wa.me/919713337557"
               target="_blank"
               rel="noopener noreferrer"
               className="glass-card flex items-center gap-3 rounded-2xl p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"

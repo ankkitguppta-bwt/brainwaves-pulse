@@ -107,7 +107,10 @@ function Hero() {
   return (
     <section className="relative -mt-16 flex min-h-[100svh] w-full items-center overflow-hidden bg-navy text-white">
       <HeroBackgroundVideo />
-      <div aria-hidden className="absolute inset-0 bg-[linear-gradient(105deg,rgba(6,36,58,0.7)_4%,rgba(6,36,58,0.48)_52%,rgba(6,36,58,0.32)_100%)]" />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,36,58,0.46)_0%,rgba(6,36,58,0.52)_44%,#041a2e_100%)]"
+      />
       <div className="relative mx-auto w-full max-w-5xl px-4 pb-20 pt-32 text-center sm:px-6 md:pb-24 md:pt-36 lg:pt-40 lg:px-8">
         <h1 className="relative font-display text-5xl font-extrabold leading-[1.02] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl animate-in fade-in slide-in-from-bottom-3 duration-500 fill-mode-both">
           Connect.{" "}
@@ -143,7 +146,7 @@ function Hero() {
       {/* Fade to stats section */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent via-navy/60 to-navy"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-b from-transparent via-[#041a2e]/75 to-[#041a2e]"
       />
     </section>
   );
@@ -158,7 +161,7 @@ function StatsStrip() {
     { end: 27, suffix: "+", l: "Certified Practitioners" },
   ];
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#041a2e] via-navy to-[#041a2e] py-20 sm:py-28 lg:py-32">
+    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#041a2e_0%,#063744_52%,#041a2e_100%)] py-20 sm:py-28 lg:py-32">
       <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
         {/* ── Editorial Split: Left text + Right metric ── */}
         <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-16">
@@ -203,7 +206,7 @@ function StatsStrip() {
                   92<span className="text-teal">%</span><span className="text-3xl text-teal sm:text-4xl">+</span>
                 </p>
                 <p className="mt-2 text-sm font-medium text-slate-400">
-                  Verified via peer-reviewed analysis
+                  Verified via IIT Gandhinagar
                 </p>
 
                 {/* Micro specs */}

@@ -24,8 +24,8 @@ export const Route = createFileRoute("/api/public/newsletter")({
         const parsed = schema.safeParse(body);
         if (!parsed.success) return response({ error: "Enter a valid email address." }, 400);
 
-        const url = process.env.SUPABASE_URL;
-        const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+        const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+        const key = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
         if (!url || !key) return response({ error: "Newsletter service is unavailable." }, 503);
         const supabase = createClient(url, key, {
           auth: { persistSession: false, autoRefreshToken: false },
