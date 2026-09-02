@@ -14,7 +14,7 @@ GRANT SELECT ON public.subscribers TO authenticated;
 GRANT ALL ON public.subscribers TO service_role;
 
 CREATE POLICY "admin read subscribers" ON public.subscribers FOR SELECT TO authenticated
-  USING (public.has_role(auth.uid(), 'admin'));
+  USING (private.has_role(auth.uid(), 'admin'::app_role));
 
 CREATE OR REPLACE FUNCTION public.subscribe_newsletter(p_email TEXT)
 RETURNS TEXT
