@@ -4,6 +4,7 @@ import { Lightbulb, Target, TrendingUp } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { ImpactCallout } from "@/components/site/ImpactCallout";
 import { JourneyCta } from "@/components/site/JourneyCta";
+import { canonicalUrl } from "@/lib/site-seo";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/about")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: canonicalUrl("/about") }],
   }),
   component: MissionPage,
 });

@@ -49,6 +49,7 @@ import {
 } from "@/components/ui/accordion";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { canonicalUrl } from "@/lib/site-seo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,7 +71,7 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:url", content: "/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: canonicalUrl("/") }],
   }),
   component: HomePage,
 });
@@ -369,7 +370,7 @@ function WhatIsNeurofeedback() {
         <div className="mx-auto mt-10 max-w-4xl">
           <div className="mb-5 flex items-center justify-center gap-3 text-center">
             <span className="h-px w-8 bg-teal/40" />
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-navy/55">What it enables</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-navy/80">What it enables</p>
             <span className="h-px w-8 bg-teal/40" />
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
@@ -422,7 +423,7 @@ function WhatIsNeurofeedback() {
         <div className="mx-auto mt-16 max-w-6xl border-t border-navy/10 pt-12 sm:mt-20">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[.18em] text-teal">The science</p>
+              <p className="text-xs font-bold uppercase tracking-[.18em] text-teal-text">The science</p>
               <h3 className="mt-2 font-display text-2xl font-bold text-navy sm:text-3xl">The 5 brainwave types.</h3>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-muted-foreground">Select a frequency range to explore the measured patterns behind each brainwave state.</p>
@@ -636,10 +637,15 @@ function VideoTestimonials() {
         author: v.author,
         src: v.video_url,
       }));
-  const Card = ({ v }: { v: VideoT }) => (
+  // `eager` marks the first (non-duplicated) copy of each testimonial in the
+  // tripled marquee loop below. Only that copy requests video metadata —
+  // the two visual-only duplicate copies skip the network request entirely,
+  // cutting redundant metadata fetches (and their decode cost) by ~2/3.
+  const Card = ({ v, eager }: { v: VideoT; eager: boolean }) => (
     <button
       type="button"
       onClick={() => setActive(v)}
+      aria-label={`Watch testimonial: ${v.title || v.author}`}
       className="group relative block aspect-[4/5] w-[260px] shrink-0 overflow-hidden rounded-2xl text-left sm:w-[300px] lg:w-[340px]"
     >
       {/* dark teal gradient base */}
@@ -692,7 +698,7 @@ function VideoTestimonials() {
           src={v.src}
           muted
           playsInline
-          preload="metadata"
+          preload={eager ? "metadata" : "none"}
           className="absolute inset-0 h-full w-full object-cover"
         />
       )}
@@ -737,7 +743,7 @@ function VideoTestimonials() {
             }
           >
             {loop.map((v, i) => (
-              <Card key={`${v.id}-${i}`} v={v} />
+              <Card key={`${v.id}-${i}`} v={v} eager={i < items.length} />
             ))}
           </div>
         </div>

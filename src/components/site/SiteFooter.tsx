@@ -129,7 +129,13 @@ export function SiteFooter() {
         <div className="grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-3">
           <div>
             <Link to="/" className="inline-flex rounded-lg bg-white px-3 py-2">
-              <img src={brandLogo} alt="BrainWaves Tech" className="h-10 w-auto" />
+              <img
+                src={brandLogo}
+                alt="BrainWaves Tech"
+                width={1385}
+                height={389}
+                className="h-10 w-auto"
+              />
             </Link>
 
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/65">
@@ -175,9 +181,9 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
               Legal &amp; Compliance
-            </h4>
+            </h3>
             <ul className="mt-5 space-y-3.5">
               {legalLinks.map((l) => (
                 <li key={l}>
@@ -194,9 +200,9 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
               Corporate Contact
-            </h4>
+            </h3>
             <ul className="mt-5 space-y-3.5 text-sm font-normal leading-normal text-white/65">
               <li>
                 <span className="font-semibold text-white">Office:</span> A-268, New Minal

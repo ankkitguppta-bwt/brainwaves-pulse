@@ -13,6 +13,7 @@ import vikasAsset from "@/assets/client/team/VIKAS.png";
 import francescoAsset from "@/assets/client/team/FRANCESCO.png";
 import parasAsset from "@/assets/client/team/PARAS.png";
 import amrutaAsset from "@/assets/client/team/AMRUTA.png";
+import { canonicalUrl } from "@/lib/site-seo";
 
 export const Route = createFileRoute("/team")({
   head: () => ({
@@ -32,7 +33,7 @@ export const Route = createFileRoute("/team")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/team" }],
+    links: [{ rel: "canonical", href: canonicalUrl("/team") }],
   }),
   component: TeamPage,
 });

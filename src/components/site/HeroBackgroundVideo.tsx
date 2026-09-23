@@ -16,7 +16,10 @@ function getVideo(): HTMLVideoElement {
   v.muted = true;
   v.defaultMuted = true;
   v.playsInline = true;
-  v.preload = "auto";
+  // "metadata" (not "auto") avoids forcing the full multi-MB file to buffer
+  // immediately — it lets the browser stream progressively instead of treating
+  // this decorative background loop as a high-priority blocking fetch.
+  v.preload = "metadata";
   v.setAttribute("playsinline", "");
   v.setAttribute("webkit-playsinline", "");
   v.setAttribute("muted", "");
@@ -42,11 +45,16 @@ function getVideo(): HTMLVideoElement {
   return v;
 }
 
-// Eagerly create the singleton the moment this module is first imported
-// (which happens at app boot because __root.tsx preloads the video).
+// Create the singleton once this module is imported (at app boot), but only
+// after the browser has had a chance to finish the critical first paint —
+// starting this large decorative-video fetch immediately competes with
+// fonts/CSS/JS for bandwidth and hurts FCP/LCP/Speed Index.
 if (typeof window !== "undefined") {
-  // Use microtask so it runs before the first paint
-  queueMicrotask(() => getVideo());
+  const schedule: (cb: () => void) => void =
+    typeof window.requestIdleCallback === "function"
+      ? (cb) => window.requestIdleCallback(cb, { timeout: 2000 })
+      : (cb) => window.setTimeout(cb, 300);
+  schedule(() => getVideo());
 }
 
 // ─── Component rendered inside the Hero section ───

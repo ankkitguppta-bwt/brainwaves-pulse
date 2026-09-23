@@ -195,6 +195,13 @@ export function BrainwaveBands() {
   const activeRef = useRef<BandId | null>(null);
   const visibleRef = useRef(true);
   const [webgl, setWebgl] = useState(true);
+  // Only true once the section is about to scroll into view. This section
+  // renders on the homepage well below the fold, but the WebGL setup effect
+  // below used to run unconditionally on mount, so `import("three")` (a
+  // ~200KB/734KB-uncompressed chunk) was firing immediately at page load
+  // regardless of scroll position. Gating on visibility keeps the dynamic
+  // import out of the critical path.
+  const [armed, setArmed] = useState(false);
 
   useEffect(() => {
     activeRef.current = active;
@@ -214,8 +221,26 @@ export function BrainwaveBands() {
     return () => io.disconnect();
   }, []);
 
+  /* arm the WebGL/three.js setup once the section is getting close to view */
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setArmed(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px 600px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   /* live WebGL renderer — one canvas, scissored to the open card's stage */
   useEffect(() => {
+    if (!armed) return;
     let disposed = false;
     let cleanup: (() => void) | undefined;
 
@@ -481,7 +506,7 @@ export function BrainwaveBands() {
       disposed = true;
       cleanup?.();
     };
-  }, []);
+  }, [armed]);
 
   const current = BANDS.find((b) => b.id === active) ?? BANDS[0];
   const rest = BANDS.filter((b) => b.id !== current.id);

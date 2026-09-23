@@ -56,7 +56,15 @@ const nav: NavItem[] = [
 ];
 
 function Wordmark(_props: { solid?: boolean }) {
-  return <img src={brandLogo} alt="BrainWaves Tech" className="h-9 w-auto sm:h-10 lg:h-11" />;
+  return (
+    <img
+      src={brandLogo}
+      alt="BrainWaves Tech"
+      width={1385}
+      height={389}
+      className="h-9 w-auto sm:h-10 lg:h-11"
+    />
+  );
 }
 
 export function SiteNavbar() {

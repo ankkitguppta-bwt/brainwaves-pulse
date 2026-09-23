@@ -8,6 +8,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { clientTestimonialVideos } from "@/lib/client-testimonials";
 import { researchBackedWrittenTestimonials } from "@/lib/research-testimonials";
+import { canonicalUrl } from "@/lib/site-seo";
 
 export const Route = createFileRoute("/testimonials")({
   head: () => ({
@@ -17,7 +18,7 @@ export const Route = createFileRoute("/testimonials")({
       { property: "og:title", content: "BrainWaves Tech Testimonials" },
       { property: "og:description", content: "What our community says." },
     ],
-    links: [{ rel: "canonical", href: "/testimonials" }],
+    links: [{ rel: "canonical", href: canonicalUrl("/testimonials") }],
   }),
   component: TestimonialsPage,
 });

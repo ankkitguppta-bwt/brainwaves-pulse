@@ -10,6 +10,7 @@ import {
   Youtube,
 } from "lucide-react";
 import { submitToWeb3Forms } from "@/lib/web3forms";
+import { canonicalUrl } from "@/lib/site-seo";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:description", content: "Book a free demo or talk to an advisor." },
       { property: "og:url", content: "/contact" },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: canonicalUrl("/contact") }],
   }),
   component: ContactPage,
 });

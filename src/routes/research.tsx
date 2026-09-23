@@ -21,6 +21,7 @@ import "aos/dist/aos.css";
 import whitePaperPdf from "@/assets/reports/White Paper - Realtime Brainwave Measurement and Data Analytics.pdf";
 import workEfficiencyPdf from "@/assets/reports/Enhancement of Work Efficiency in an Organization byApplying Ergonomics and Sound Waves Sessions (1) (1).pdf";
 import wujiReportPdf from "@/assets/reports/Wuji Report - IIT India Research 2-3.pdf";
+import { canonicalUrl } from "@/lib/site-seo";
 
 export const Route = createFileRoute("/research")({
   head: () => ({
@@ -40,7 +41,7 @@ export const Route = createFileRoute("/research")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/research" }],
+    links: [{ rel: "canonical", href: canonicalUrl("/research") }],
   }),
   component: ResearchPage,
 });

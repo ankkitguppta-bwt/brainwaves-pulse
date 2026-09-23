@@ -41,6 +41,7 @@
   --color-navy-soft: var(--navy-soft);
   --color-teal: var(--teal);
   --color-teal-soft: var(--teal-soft);
+  --color-teal-text: var(--teal-text);
   --color-orange: var(--orange);
   --color-orange-soft: var(--orange-soft);
   --color-cyan-bg: var(--cyan-bg);
@@ -54,6 +55,10 @@
   --navy-soft: oklch(0.34 0.05 235);
   --teal: oklch(0.72 0.13 188); /* #12B8B0 */
   --teal-soft: oklch(0.88 0.07 188);
+  /* Darker teal for text set on light backgrounds — --teal (0.72 lightness) fails
+     WCAG 4.5:1 contrast against --background (0.9551 lightness). Same hue/chroma,
+     just darker, so it still reads as "brand teal" but is accessible as body text. */
+  --teal-text: oklch(0.46 0.1 188);
   --orange: oklch(0.78 0.16 70); /* #F6A400 */
   --orange-soft: oklch(0.92 0.09 80);
   --cyan-bg: oklch(0.985 0.012 195); /* #F3FBFC */

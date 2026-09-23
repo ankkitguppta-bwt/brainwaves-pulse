@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { sanitize } from "@/lib/sanitize";
+import { canonicalUrl } from "@/lib/site-seo";
 
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ loaderData }) => {
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/blog/$slug")({
       meta.push({ name: "twitter:image", content: p.cover_image_url });
     }
     if (!p.id) meta.push({ name: "robots", content: "noindex" });
-    return { meta, links: [{ rel: "canonical", href: `/blog/${p.slug ?? ""}` }] };
+    return { meta, links: [{ rel: "canonical", href: canonicalUrl(`/blog/${p.slug ?? ""}`) }] };
   },
   loader: async ({ params }) => {
     const { data, error } = await supabase

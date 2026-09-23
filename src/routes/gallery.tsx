@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
+import { canonicalUrl } from "@/lib/site-seo";
 
 const imgs = import.meta.glob("../assets/docx/*", { eager: true, query: "?url", import: "default" }) as Record<string, string>;
 
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/gallery")({
       { property: "og:description", content: "Workshops, media coverage and recognition." },
       { property: "og:url", content: "/gallery" },
     ],
-    links: [{ rel: "canonical", href: "/gallery" }],
+    links: [{ rel: "canonical", href: canonicalUrl("/gallery") }],
   }),
   component: GalleryPage,
 });
